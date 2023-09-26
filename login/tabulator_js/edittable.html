@@ -1,0 +1,216 @@
+<html lang="en">
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+    <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
+    <!-- <link href="tabulator-master/dist/css/tabulator_midnight.css" rel="stylesheet"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        .tabulator-print-header,
+        tabulator-print-footer {
+            text-align: center;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div>
+        <button id="reactivity-add">Add New Row</button>
+        <button id="reactivity-delete">Remove Row</button>
+        <button id="reactivity-update">Update First Row Name</button>
+    </div> -->
+    <div class="col-lg-12 shadow p-6 m-6" style="padding: 20px; padding-right: 20px;">
+        <h3> printing tabulator sheet </h3>
+    </div>
+
+    <div class="col-lg-12 shadow p-6 m-6" style="padding: 20px; padding-right: 20px;">
+        <div>
+            <button id="reactivity-add">Add New Row</button>
+            <button id="reactivity-delete">Remove Row</button>
+            <button id="reactivity-update">Update First Row Name</button>
+            <button id="download-csv">Download CSV</button>
+            <button id="download-json">Download JSON</button>
+            <button id="download-xlsx">Download XLSX</button>
+            <button id="download-pdf">Download PDF</button>
+            <button id="print-table">Print Table</button>
+        </div>
+        <div id="example-table"></div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script>
+
+
+    <script>
+
+        var dateEditor = function (cell, onRendered, success, cancel) {
+            //cell - the cell component for the editable cell
+            //onRendered - function to call when the editor has been rendered
+            //success - function to call to pass thesuccessfully updated value to Tabulator
+            //cancel - function to call to abort the edit and return to a normal cell
+
+            //create and style input
+            var cellValue = luxon.DateTime.fromFormat(cell.getValue(), "dd/MM/yyyy").toFormat("yyyy-MM-dd"),
+                input = document.createElement("input");
+
+            input.setAttribute("type", "date");
+
+            input.style.padding = "4px";
+            input.style.width = "100%";
+            input.style.boxSizing = "border-box";
+
+            input.value = cellValue;
+
+            onRendered(function () {
+                input.focus();
+                input.style.height = "100%";
+            });
+
+            function onChange() {
+                if (input.value != cellValue) {
+                    success(luxon.DateTime.fromFormat(input.value, "yyyy-MM-dd").toFormat("dd/MM/yyyy"));
+                } else {
+                    cancel();
+                }
+            }
+
+            //submit new value on blur or change
+            input.addEventListener("blur", onChange);
+
+            //submit new value on enter
+            input.addEventListener("keydown", function (e) {
+                if (e.keyCode == 13) {
+                    onChange();
+                }
+
+                if (e.keyCode == 27) {
+                    cancel();
+                }
+            });
+
+            return input;
+        };
+
+
+        var tabledata = [
+            { id: 1, name: "Oli Bob", progress: 12, location: "United Kingdom", gender: "male", rating: 1, col: "red", dob: "14/04/1984", car: 1, lucky_no: 5, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 2, name: "Mary May", progress: 1, location: "Germany", gender: "female", rating: 2, col: "blue", dob: "14/05/1982", car: true, lucky_no: 10, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 3, name: "Christine Lobowski", progress: 42, location: "France", gender: "female", rating: 0, col: "green", dob: "22/05/1982", car: "true", lucky_no: 12, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 4, name: "Brendon Philips", progress: 100, location: "USA", gender: "male", rating: 1, col: "orange", dob: "01/08/1980", lucky_no: 18, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 5, name: "Margret Marmajuke", progress: 16, location: "Canada", gender: "female", rating: 5, col: "yellow", dob: "31/01/1999", lucky_no: 33, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 6, name: "Frank Harbours", progress: 38, location: "Russia", gender: "male", rating: 4, col: "red", dob: "12/05/1966", car: 1, lucky_no: 2, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 7, name: "Jamie Newhart", progress: 23, location: "India", gender: "male", rating: 3, col: "green", dob: "14/05/1985", car: true, lucky_no: 63, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 8, name: "Gemma Jane", progress: 60, location: "China", gender: "female", rating: 0, col: "red", dob: "22/05/1982", car: "true", lucky_no: 72, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 9, name: "Emily Sykes", progress: 42, location: "South Korea", gender: "female", rating: 1, col: "maroon", dob: "11/11/1970", lucky_no: 44, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+            { id: 10, name: "James Newman", progress: 73, location: "Japan", gender: "male", rating: 5, col: "red", dob: "22/03/1998", lucky_no: 9, lorem: "Lorem ipsum dolor sit amet, elit consectetur adipisicing " },
+        ];
+
+        // var tableDataNested = [
+        //     {
+        //         id: 1, name: "Oli Bob", progress: 12, location: "United Kingdom", gender: "male", rating: 1, col: "red", dob: "14/04/1984", car: 1, lucky_no: 5, _children: [
+        //             { id: 2, name: "Mary May", progress: 1, location: "Germany", gender: "female", rating: 2, col: "blue", dob: "14/05/1982", car: true, lucky_no: 10 },
+        //             { id: 3, name: "Christine Lobowski", progress: 42, location: "France", gender: "female", rating: 0, col: "green", dob: "22/05/1982", car: "true", lucky_no: 12 },
+        //             {
+        //                 id: 4, name: "Brendon Philips", progress: 100, location: "USA", gender: "male", rating: 1, col: "orange", dob: "01/08/1980", lucky_no: 18, _children: [
+        //                     { id: 5, name: "Margret Marmajuke", progress: 16, location: "Canada", gender: "female", rating: 5, col: "yellow", dob: "31/01/1999", lucky_no: 33 },
+        //                     { id: 6, name: "Frank Harbours", progress: 38, location: "Russia", gender: "male", rating: 4, col: "red", dob: "12/05/1966", car: 1, lucky_no: 2 },
+        //                 ]
+        //             },
+        //         ]
+        //     },
+        //     { id: 7, name: "Jamie Newhart", progress: 23, location: "India", gender: "male", rating: 3, col: "green", dob: "14/05/1985", car: true, lucky_no: 63 },
+        //     {
+        //         id: 8, name: "Gemma Jane", progress: 60, location: "China", gender: "female", rating: 0, col: "red", dob: "22/05/1982", car: "true", lucky_no: 72, _children: [
+        //             { id: 9, name: "Emily Sykes", progress: 42, location: "South Korea", gender: "female", rating: 1, col: "maroon", dob: "11/11/1970", lucky_no: 44 },
+        //         ]
+        //     },
+        //     { id: 10, name: "James Newman", progress: 73, location: "Japan", gender: "male", rating: 5, col: "red", dob: "22/03/1998", lucky_no: 9 },
+        // ];
+
+        // var tabledatabig = [
+        //     { id: 1, name: "Oli Bob", progress: 12, gender: "male", rating: 1, col: "red", dob: "14/04/1984", car: 1, lucky_no: 5 },
+        //     { id: 2, name: "Mary May", progress: 1, gender: "female", rating: 2, col: "blue", dob: "14/05/1982", car: true, lucky_no: 10 },
+        //     { id: 3, name: "Christine Lobowski", progress: 42, gender: "female", rating: 0, col: "green", dob: "22/05/1982", car: "true", lucky_no: 12 },
+        //     { id: 4, name: "Brendon Philips", progress: 100, gender: "male", rating: 1, col: "orange", dob: "01/08/1980", lucky_no: 18 },
+        //     { id: 5, name: "Margret Marmajuke", progress: 16, gender: "female", rating: 5, col: "yellow", dob: "31/01/1999", lucky_no: 33 },
+        //     { id: 6, name: "Frank Harbours", progress: 38, gender: "male", rating: 4, col: "red", dob: "12/05/1966", car: 1, lucky_no: 2 },
+        //     { id: 7, name: "Jamie Newhart", progress: 23, gender: "male", rating: 3, col: "green", dob: "14/05/1985", car: true, lucky_no: 63 },
+        //     { id: 8, name: "Gemma Jane", progress: 60, gender: "female", rating: 0, col: "red", dob: "22/05/1982", car: "true", lucky_no: 72 },
+        //     { id: 9, name: "Emily Sykes", progress: 42, gender: "female", rating: 1, col: "maroon", dob: "11/11/1970", lucky_no: 44 },
+        //     { id: 10, name: "James Newman", progress: 73, gender: "male", rating: 5, col: "red", dob: "22/03/1998", lucky_no: 9 },
+        //     { id: 11, name: "Martin Barryman", progress: 20, gender: "male", rating: 5, col: "violet", dob: "04/04/2001" },
+        //     { id: 12, name: "Jenny Green", progress: 56, gender: "female", rating: 4, col: "indigo", dob: "12/11/1998", car: true },
+        //     { id: 13, name: "Alan Francis", progress: 90, gender: "male", rating: 3, col: "blue", dob: "07/08/1972", car: true },
+        //     { id: 14, name: "John Phillips", progress: 80, gender: "male", rating: 1, col: "green", dob: "24/09/1950", car: true },
+        //     { id: 15, name: "Ed White", progress: 70, gender: "male", rating: 0, col: "yellow", dob: "19/06/1976" },
+        //     { id: 16, name: "Paul Branderson", progress: 60, gender: "male", rating: 5, col: "orange", dob: "01/01/1982" },
+        //     { id: 17, name: "Gemma Jane", progress: 50, gender: "female", rating: 2, col: "red", dob: "14/04/1983", car: true },
+        //     { id: 18, name: "Emma Netwon", progress: 40, gender: "female", rating: 4, col: "brown", dob: "07/10/1963", car: true },
+        //     { id: 19, name: "Hannah Farnsworth", progress: 30, gender: "female", rating: 1, col: "pink", dob: "11/02/1991" },
+        //     { id: 20, name: "Victoria Bath", progress: 20, gender: "female", rating: 2, col: "purple", dob: "22/03/1986" },
+        // ];
+
+
+        var deleteIcon = function (cell, formatterParams) { //plain text value
+            return "<i class='fa fa-trash'></i>";
+        };
+        //Build Tabulator
+        var table = new Tabulator("#example-table", {
+            height: "490px",
+            data: tabledata, layout: "fitColumns",
+            rowHeight: 40, //set rows to 40px height
+            //selectable:true, //make rows selectable
+            columns: [
+                {
+                    formatter: "rownum", hozAlign: "center", width: 40
+                },
+                { title: "Name", field: "name", width: 150, editor: "input", cellEdited: function (cell) { recal(cell); }, },
+                { title: "Location", field: "location", width: 130, editor: "list", editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
+                { title: "Progress", field: "progress", sorter: "number", hozAlign: "right", formatter: "progress", width: 140, editor: true,bottomCalc:"sum", bottomCalcParams:{precision:0} },
+                { title: "Gender", field: "gender", editor: "list", editorParams: { values: { "male": "Male", "female": "Female", "unknown": "Unknown" } } },
+                { title: "Rating", field: "rating", formatter: "star", hozAlign: "right", width: 100, editor: true, bottomCalc:"sum", bottomCalcParams:{precision:0} },
+                { title: "Date Of Birth", field: "dob", hozAlign: "center", sorter: "date", width: 140, editor: dateEditor },
+                { title: "Driver", field: "car", hozAlign: "center", editor: true, formatter: "tickCross" },
+                { formatter: deleteIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) { deleteRow( cell.getRow() ) } },
+            ],
+        });
+
+
+
+        function recal(cell) {
+            table.selectRow([1,2,3,4]); 
+            var cel = cell;
+            alert(cell);
+        }
+
+        document.getElementById("download-pdf").addEventListener("click", function () {
+            table.download("pdf", "data.pdf", {
+                orientation: "portrait", //set page orientation to portrait
+                title: "Example Report", //add title to report
+            });
+        });
+
+        document.getElementById("print-table").addEventListener("click", function () {
+            table.print(false, true);
+        });
+
+        function deleteRow ( row ) {
+            row.delete();            
+        }
+    </script>
+</body>
+
+
+</html>

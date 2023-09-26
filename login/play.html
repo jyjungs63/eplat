@@ -1,0 +1,77 @@
+<div id="elvideo"></div>
+
+<script>
+    var str = "1.mp4,2.mp4,3.mp4";
+    var n = str.includes(",");
+    if (n) {
+        var nArr = str.split(',');
+        document.getElementById('elvideo').innerHTML = "<video id='videoElement' width=100% controls controlsList='nodownload' autoplay muted playsinline><p>Tu navegador no funciona, actualizalo</p></video>";
+        var videoPlayer = document.getElementById('videoElement');
+        videoPlayer.src = "http://localhost:5502/assets/" + nArr[0];
+
+        i = 1;
+        videoPlayer.onended = function () {
+
+            if (i < nArr.length) {
+                videoPlayer.src = "http://localhost:5502/assets/" + nArr[i]
+                i++
+            }
+        }
+    }
+
+    $(document).ready(function () {
+
+        // Gets the video src from the data-src on each button
+
+        var $videoSrc;
+        $('.video-btn').click(function () {
+            $videoSrc = $(this).data("src");
+        });
+        console.log($videoSrc);
+
+        // when the modal is opened autoplay it  
+        $('#myModal').on('shown.bs.modal', function (e) {
+
+            // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+            $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0&amp;controls=0");
+        })
+
+        // stop playing the youtube video when I close the modal
+        $('#myModal').on('hide.bs.modal', function (e) {
+            // a poor man's stop video
+            $("#video").attr('src', $videoSrc);
+        })
+
+        // document ready  
+
+    });
+</script>
+
+<!-- <head>
+    <style>
+        video { background-color: red }
+    </style>
+</head>
+<video src="http://www.w3schools.com/html/mov_bbb.mp4" id="video" autoplay muted playsinline></video>
+<p>(each video is just ~ 10 seconds)</p>
+
+<script>
+    var vidElement = document.getElementById('video');
+    var vidSources = [
+      "http://www.w3schools.com/html/mov_bbb.mp4",
+      "http://www.w3schools.com/html/movie.mp4"
+      ];
+    var activeVideo = Math.floor((Math.random() * vidSources.length));
+    vidElement.src = vidSources[activeVideo];
+    vidElement.addEventListener('ended', function(e) {
+      // update the active video index
+      activeVideo = (++activeVideo) % vidSources.length;
+      if(activeVideo === vidSources.length){
+        activeVideo = 0;
+      }
+
+      // update the video source and play
+      vidElement.src = vidSources[activeVideo];
+      vidElement.play();
+    });
+</script> -->

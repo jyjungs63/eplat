@@ -1,0 +1,8 @@
+계정비밀번호 확인결과
+계정(FTP) 아이디	happyzip
+계정(FTP) 비밀번호	guidecap58@
+DB(MySQL) 호스트	localhost
+DB(MySQL) 이름	happyzip
+DB(MySQL) 사용자명	happyzip
+DB(MySQL) 비밀번호	skl32935028@
+* .net 호스팅의 경우 MSSQL이며, DB호스팅의 경우 해당 DB의 정보입니다.
