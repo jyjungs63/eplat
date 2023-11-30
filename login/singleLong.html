@@ -21,7 +21,7 @@
 
     for (const param of searchParams) {
       console.log(param);
-      vidSources.push(loc+param[1])
+      vidSources.push(loc + param[1])
     }
     var vidElement = document.getElementById('video');
 
@@ -35,7 +35,7 @@
       }
 
       // update the video source and play
-      vidElement.src = vidSources[activeVideo];
+      vidElement.src = vidSources[0];
       vidElement.play();
     });
   </script>
