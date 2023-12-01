@@ -1,0 +1,60 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <style>
+    video {
+      background-color: black
+    }
+  </style>
+</head>
+
+<body>
+  <video height="100%" width="100%" src="" id="video" autoplay muted playsinline></video>
+  <script>
+
+    var vidSources = [];
+    const loc = ""
+    //const loc = "https://www.eplat.co.kr/assets/img/online_study_room/v3/"
+    const searchParams = new URLSearchParams(location.search);
+
+    for (const param of searchParams) {
+      console.log(param);
+      vidSources.push(loc + param[1])
+    }
+    studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
+
+    var vidElement = document.getElementById('video');
+    vidElement.src = vidSources[0];
+    vidElement.play();
+
+    // vidElement.addEventListener('ended', function (e) {
+    //   if (Number(vidElement.currentTime) > 10)
+    //     studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
+    // });
+
+    // window.onbeforeunload = function () {
+    //   if (Number(vidElement.currentTime) > 10)
+    //     studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
+    // }
+
+    function studyRecord(id, uid, vol, stp) {
+      alert('anchor click!');
+      // var data = {id: "admin", step: "S1", volume: "1", uid: "w1_1"};
+      var data = { id: id, step: stp, volume: vol, uid: uid };
+      $.ajax({
+        url: "SstudyRecord.php",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        async: false,
+        success: function (res) {
+          alert(res)
+        },
+        error: function (jqXFR, textStatus, errorThrown) {
+          if (textStatus == "error") {
+            alert(loc + ' ' + textStatus);
+          }
+        }
+      });
+    }    
+  </script>
+</body>

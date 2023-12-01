@@ -1,0 +1,51 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <style>
+    video {
+      background-color: black
+    }
+  </style>
+</head>
+
+<body>
+  <video height="100%" width="100%" src="" id="video" autoplay muted playsinline></video>
+  <script>
+    var vidSources = [
+      "http://localhost:3000/login/1.mp4"
+    ];
+
+    const loc = ""
+
+    var vidElement = document.getElementById('video');
+
+    var activeVideo = Math.floor((Math.random() * vidSources.length));
+    vidElement.src = vidSources[activeVideo];
+    vidElement.addEventListener('play', function (e) {
+      console.log("start time = " + vidElement.currentTime)
+    });
+    // video.addEventListener("pause", function () {
+    // video.addEventListener("pause", function () {
+    //   console.log("Video is paused" + vidElement.currentTime);
+    //   // 원하는 작업 수행
+    // });
+    // video.addEventListener("timeupdate", function () {
+    //   console.log("Current time: " + vidElement.currentTime);
+    //   // 원하는 작업 수행
+    // });
+    vidElement.addEventListener('ended', function (e) {
+      // update the active video index
+      activeVideo = (++activeVideo) % vidSources.length;
+      if (activeVideo === vidSources.length) {
+        activeVideo = 0;
+      }
+
+      // update the video source and play
+      console.log("End time: " + vidElement.currentTime);
+      vidElement.src = vidSources[0];
+      vidElement.play();
+    });
+    window.onbeforeunload = function () {
+      alert(vidElement.currentTime);
+    }
+  </script>
+</body>

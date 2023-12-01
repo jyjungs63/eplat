@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- Webix Library -->
+    <script type="text/javascript" src="https://cdn.webix.com/edge/webix.min.js"></script>
+    <link id="stylesheet" rel="stylesheet" type="text/css" href="https://cdn.webix.com/edge/skins/material.min.css">
+
+    <link rel="stylesheet" href="https://cdn.webix.com/materialdesignicons/5.8.95/css/materialdesignicons.min.css?v=10.1.0"
+        type="text/css" charset="utf-8">
+
+    <!-- jQuery 3.4.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css" />
+
+    <!-- Font Awesome  Free 5.11.2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <title>Responsive Layout - Hidden cells</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <span id="toplink" class="text" tabindex="0" style="display:none;">
+        <span>Compact Skin</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path
+                d="M11.7272311,15.49995 C9.79423111,15.49995 8.22722111,13.93295 8.22722111,11.99995 C8.22722111,10.06705 9.79423111,8.5 11.7272311,8.5 C13.6602311,8.5 15.2272311,10.06705 15.2272311,11.99995 C15.2272311,13.93295 13.6602311,15.49995 11.7272311,15.49995 Z M19.1562311,12.97605 C19.1982311,12.65505 19.2262311,12.33095 19.2262311,11.99995 C19.2262311,11.66905 19.1982311,11.34495 19.1562311,11.02395 L21.2692311,9.36999 C21.4572311,9.21801 21.5122311,8.94799 21.3872311,8.73199 L19.3872311,5.268 C19.2632311,5.052 19.0012311,4.96399 18.7752311,5.05102 L16.2862311,6.05401 C15.7702311,5.65802 15.2052311,5.32299 14.5962311,5.07098 L14.2212311,2.42102 C14.1832311,2.18298 13.9762311,2 13.7272311,2 L9.72722111,2 C9.47722111,2 9.27123111,2.18298 9.23323111,2.42102 L8.85823111,5.07 C8.24822111,5.32299 7.68321111,5.65802 7.16722111,6.05401 L4.67922111,5.05102 C4.45323111,4.96399 4.19121111,5.052 4.06722111,5.268 L2.06722111,8.73199 C1.94222111,8.94799 1.99721111,9.21801 2.18523111,9.36999 L4.29723111,11.02395 C4.25523111,11.34395 4.22722111,11.66905 4.22722111,11.99995 C4.22722111,12.33095 4.25523111,12.65605 4.29723111,12.97605 L2.18523111,14.62905 C1.99721111,14.78195 1.94222111,15.05195 2.06722111,15.26805 L4.06722111,18.73195 C4.19121111,18.94795 4.45323111,19.03605 4.67922111,18.94895 L7.16823111,17.94595 C7.68422111,18.34195 8.24922111,18.67695 8.85823111,18.92905 L9.23323111,21.57895 C9.27123111,21.81705 9.47722111,21.99995 9.72722111,21.99995 L13.7272311,21.99995 C13.9762311,21.99995 14.1832311,21.81705 14.2212311,21.57895 L14.5962311,18.92905 C15.2042311,18.67605 15.7692311,18.34195 16.2852311,17.94505 L18.7752311,18.94895 C19.0012311,19.03605 19.2632311,18.94795 19.3872311,18.73195 L21.3872311,15.26805 C21.5122311,15.05195 21.4572311,14.78195 21.2692311,14.62905 L19.1562311,12.97605 Z">
+            </path>
+        </svg>
+    </span>
+
+    <script type="text/javascript" charset="utf-8">
+
+        var menu_data = [
+            {
+                id: "dashboard", icon: "mdi mdi-view-dashboard", value: "Dashboards", data: [
+                    { id: "dashboard1", value: "Dashboard 1" },
+                    { id: "dashboard2", value: "Dashboard 2" }
+                ]
+            },
+            {
+                id: "layouts", icon: "mdi mdi-view-column", value: "Layouts", data: [
+                    { id: "accordions", value: "Accordions" },
+                    { id: "portlets", value: "Portlets" }
+                ]
+            },
+            {
+                id: "tables", icon: "mdi mdi-table", value: "Data Tables", data: [
+                    { id: "tables1", value: "Datatable" },
+                    { id: "tables2", value: "TreeTable" },
+                    { id: "tables3", value: "Pivot" }
+                ]
+            },
+            {
+                id: "uis", icon: "mdi mdi-puzzle", value: "UI Components", data: [
+                    { id: "dataview", value: "DataView" },
+                    { id: "list", value: "List" },
+                    { id: "menu", value: "Menu" },
+                    { id: "tree", value: "Tree" }
+                ]
+            },
+            {
+                id: "tools", icon: "mdi mdi-calendar", value: "Tools", data: [
+                    { id: "kanban", value: "Kanban Board" },
+                    { id: "pivot", value: "Pivot Chart" },
+                    { id: "scheduler", value: "Calendar" }
+                ]
+            },
+            {
+                id: "forms", icon: "mdi mdi-pencil", value: "Forms", data: [
+                    { id: "buttons", value: "Buttons" },
+                    { id: "selects", value: "Select boxes" },
+                    { id: "inputs", value: "Inputs" }
+                ]
+            },
+            { id: "demo", icon: "mdi mdi-book", value: "Documentation" }
+        ];
+
+        var position_options = [
+                { id: 1, value: "left" },
+                { id: 2, value: "right" },
+                { id: 3, value: "top" },
+                { id: 4, value: "bottom" }
+            ];
+            var color_options = [
+                { id: 1, value: "red" },
+                { id: 2, value: "blue" },
+                { id: 3, value: "green" },
+                { id: 4, value: "orange" },
+                { id: 5, value: "grey" },
+                { id: 6, value: "yellow" }
+            ];
+
+        var option_data = [
+            { id: "material", value: "Material" },
+            { id: "mini", value: "Mini" },
+            { id: "flat", value: "Flat" },
+            { id: "compact", value: "Compact" },
+            { id: "contrast", value: "Contrast" },
+            { id: "willow", value: "Willow" },
+            { id: "dark", value: "Dark" },
+        ]
+
+        var propertysheet_1 = {
+                view: "property", id: "sets", width: 300,
+                elements: [
+                    { label: "Layout", type: "label" },
+                    { label: "Width", type: "text", id: "width", value: 250 },
+                    { label: "Height", type: "text", id: "height" },
+                    { label: "Password", type: "password", id: "pass" },
+                    { label: "Data loading", type: "label" },
+                    { label: "Data url", type: "text", id: "url", value: "https://webix.com/data" },
+                    { label: "Type", type: "select", options: ["json", "xml", "csv"], id: "type" },
+                    { label: "Position", type: "select", options: position_options, id: "position" },
+                    { label: "Date", type: "date", id: "date", format: webix.i18n.dateFormatStr },
+                    { label: "Color", type: "combo", options: color_options, id: "color" },
+                    { label: "Use JSONP", type: "checkbox", id: "jsonp" }
+                ]
+            };
+
+        var v1 = {
+            view: "form", id: "forms",
+            autoheight: false, width: 300,
+            "rows": [
+                { "view": "text", "label": "User name", "name": "name" },
+                { "view": "text", "label": "Email", "name": "email" },
+                { "view": "button", "css": "webix_primary", "label": "Save" },
+
+                { view: "resizer", width: 1 },
+                { view: "text", name: "country", label: "Country", value: "Belarus" },
+                {
+                    view: "combo", width: 300,
+                    label: 'Fruit', name: "fruit",
+                    options: [
+                        { id: 1, value: "Banana" },
+                        { id: 2, value: "Papaya" },
+                        { id: 3, value: "Apple" }
+                    ]
+                },
+                propertysheet_1,
+                {
+                    view: "button", css: "webix_primary", value: "Submit data", click: function () {
+                        //fireevent();
+                    }
+                }
+            ]
+        };
+
+        var ui;
+
+        webix.ready(function () {
+            ui = webix.ui({
+                id: "layout1",
+                rows: [
+                    {
+                        view: "toolbar", padding: 3, elements: [
+                            {
+                                view: "icon", icon: "mdi mdi-menu", click: function () {
+                                    $$("myside").toggle();
+                                }
+                            },
+                            { view: "label", label: "Leads Ship" },
+                            {},
+                            {
+                                view: "combo",
+                                inputWidth: 200,
+                                id: "idSkin",
+                                align: "right",
+                                label: "Skin:",
+                                value: "material",
+                                options: {
+                                    filter: function (item, value) {
+                                        return item.value.toString().toLowerCase().indexOf(value.toLowerCase()) !== -1
+                                    },
+                                    data: option_data
+                                },
+                                on: {
+                                    onchange: function () {
+                                        changeSkin(this);
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        id: "mycols",
+                        cols: [
+                            {
+                                view: "sidebar",
+                                id: "myside",
+                                data: menu_data,
+                                on: {
+                                    onAfterSelect: function (id) {
+                                        //webix.message("Selected: " + this.getItem(id).value);
+                                        var pos = $$("mycols").index($$("myside"));
+                                        if ($$("forms") != null)
+                                            $$("forms").show();
+                                        else
+                                            $$("mycols").addView(v1, 1);
+                                    }
+                                }
+                            },
+                            { view: "resizer", width: 1 },
+                            {
+                                rows: [
+                                    { "view": "template", "template": "You can place any widget here..", "role": "placeholder", "borderless": false },
+                                    { "view": "template", "template": "You can place any widget here..", "role": "placeholder", "height": 88 }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            function changeSkin(obj) {
+
+                skinurl = 'https://cdn.webix.com/edge/skins/' + $$("idSkin").getValue() + '.min.css';
+
+                var style = document.getElementById("stylesheet");
+
+                webix.message("<pre>" + JSON.stringify($$("forms").getValues(), null, "\t") + "</pre>");
+
+                $$("forms").hide();
+
+                style.href = skinurl;
+            }
+
+
+            $$("myside").open("tools");
+            $$("myside").select("scheduler");
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>

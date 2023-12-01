@@ -7,8 +7,9 @@
 </head>
 
 <body>
-  <video height="100%" width="100%" src="" id="video" autoplay muted playsinline></video>
-  <p>(each video is just ~ 10 seconds)</p>
+  <video height="100%" width="100%" src="" id="video" autoplay="true" controls="true" playsinline></video>
+  <!-- <video height="100%" width="100%" src="" id="video" autoplay muted playsinline></video> -->
+  <!-- <p>(each video is just ~ 10 seconds)</p> -->
   <script>
     // var vidSources = [
     //   "http://www.w3schools.com/html/mov_bbb.mp4",
@@ -17,14 +18,21 @@
     // ];
     var vidSources = [
     ];
-    const loc = "https://www.eplat.co.kr/assets/img/online_study_room/v3/"
+    //const loc = "https://www.eplat.co.kr/assets/img/online_study_room/v3/"
+    var  loc = ""
     const searchParams = new URLSearchParams(location.search);
 
     for (const param of searchParams) {
-      console.log(param);
-      vidSources.push(loc+param[1])
+      //console.log(param);
+      if (param[0] == "m0" )
+        loc = "https://www.eplat.co.kr/assets/img/online_study_room/" + param[1] + "/";
+      else
+        vidSources.push(loc + param[1])
     }
     var vidElement = document.getElementById('video');
+    // vidElement.requestFullscreen().catch(err => {
+    //     console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+    //   });
 
     var activeVideo = Math.floor((Math.random() * vidSources.length));
     vidElement.src = vidSources[activeVideo];

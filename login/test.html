@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <title></title>
+</head>
+
+<body>
+
+    <form target="_blank" action='https://localhost:44319/PropWebService.asmx/GetSurvey' method="POST">
+
+        <table cellspacing="0" cellpadding="4" frame="box" bordercolor="#dcdcdc" rules="none"
+            style="border-collapse: collapse;">
+
+
+            <tr>
+                <td></td>
+                <td align="right"> <input type="submit" value="호출" class="button"></td>
+            </tr>
+        </table>
+        <input type="button" id="idPower" value="Power" />
+        <input type="button" id="idadd" value="Add" />
+
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var data = {
+                'nShipType': 1, 'nIN_NOB': 4, 'fIN_DIA': 0.46, 'fIN_EAR': 0.5
+                , 'fIN_Hub': 0.18, 'fIN_PITCH': 0
+            };
+
+            $.ajax({
+                method: "POST",
+                //                url: "http://localhost:7735/Web_Methods/WebMethods.aspx/CalGeometryTable",
+                url: "http://localhost:14081/Webmethods.aspx/CalGeometryTable",
+                data: JSON.stringify(data),
+                cache: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: handleHtml,
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                    if (textStatus == "error") {
+                        alert("An error has occurred: " + jqXHR.status + " "
+                            + jqXHR.statusText);
+                    }
+                }
+            });
+        });
+
+        function handleHtml(data, status) {
+            alert(data.d)
+            //for (var count in data.d) {
+            //    alert(data.d[count].Author);
+            //    alert(data.d[count].BookName);
+            //}
+        }
+
+        function ajaxFailed(xmlRequest) {
+            alert(xmlRequest.status + ' \n\r ' +
+                xmlRequest.statusText + '\n\r' +
+                xmlRequest.responseText);
+        }
+
+        $("#idPower").on('click', function () {
+
+            $.ajax({
+                method: "POST",
+                // url: "http://localhost:7735/Web_Methods/WebMethods.aspx/CalGeometryTable",
+                //url: "http://localhost:14081/Webmethods.aspx/runPowering",
+                url: "http://10.15.10.148:8009/Webmethods.aspx/runPowering",
+                //url: "https://localhost:44319/PropWebService.asmx/HelloWorld",
+                //data: JSON.stringify(data),
+                cache: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: handleHtml,
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                    if (textStatus == "error") {
+                        alert("An error has occurred: " + jqXHR.status + " "
+                            + jqXHR.statusText);
+                    }
+                }
+            });
+        })
+
+        $("#idadd").on('click', function () {
+            var data = { a: 1, b: 2 }
+            $.ajax({
+                method: "POST",
+                // url: "http://localhost:7735/Web_Methods/WebMethods.aspx/CalGeometryTable",
+                url: "https://localhost:44319/PropWebService.asmx/getMemberInfoJson",
+                data: JSON.stringify(data),
+                cache: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: handleHtml,
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                    if (textStatus == "error") {
+                        alert("An error has occurred: " + jqXHR.status + " "
+                            + jqXHR.statusText);
+                    }
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
