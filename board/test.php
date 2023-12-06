@@ -48,6 +48,8 @@
       }
     }
   }
+
+          //$('#table').bootstrapTable({ data: record })
 </script>
 </body>
 </html>

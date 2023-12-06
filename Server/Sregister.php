@@ -12,6 +12,9 @@ $name     = $_POST['name'];
 $password = $_POST['password'];
 $mobile   = $_POST['mobile'];
 $addr     = $_POST['addr'];
+$zipcode  = $_POST['zipcode'];
+$idrolebm = $_POST['idrolebm'];
+$idrolet  = $_POST['idrolet'];
 
 // $id       = 'jyjungs@gmail.com';
 // $name     = '정진영';

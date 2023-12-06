@@ -12,10 +12,25 @@
 <script>
     createPdf();
     async function createPdf() {
+        const { PDFDocument, rgb } = PDFLib
         const pdfDoc = await PDFLib.PDFDocument.create();
-        const page = pdfDoc.addPage([350, 400]);
+        //const page = pdfDoc.addPage([350, 400]);
+
+        const page = pdfDoc.addPage()
+
+        const { width, height } = page.getSize()
+
         page.moveTo(110, 200);
-        page.drawText('Hello World!');
+        // page.drawText('Hello World!');
+        page.drawText(width + " : " + height);
+
+        page.drawLine({
+            start: { x: 28, y: 28 },
+            end: { x: 500, y: 28 },
+            color: rgb(0, 0, 0), // 선 색상 설정 (RGB)
+            thickness: 3, // 선 두께 설정
+        });
+
         const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
         document.getElementById('pdf').src = pdfDataUri;
     }
