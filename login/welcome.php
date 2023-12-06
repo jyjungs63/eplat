@@ -634,7 +634,8 @@ if (isset($_SESSION['user'])) {
         function disableClass(b) {
             //alert(b);
             if (b.name == 'cb2' && b.checked) {
-                    $(".myctl").addClass("disabledbutton");
+                   $(".myctl").addClass("disabledbutton");
+                $('#flexCheckChecked').prop('checked', false);
             }                
             else
                 $(".myctl").removeClass("disabledbutton");
