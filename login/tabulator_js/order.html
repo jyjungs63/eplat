@@ -103,20 +103,20 @@
             rowHeight: 40, //set rows to 40px height
             selectable: true, //make rows selectable
             columns: [
-                { title: "", field: "check", width: 100, hozAlign: "center", editor: false, formatter: "tickCross" },
+                // { title: "", field: "check", width: 100, hozAlign: "center", editor: false, formatter: "tickCross" },
                 // {
                 //     formatter: "rowSelection", field: "check", width: 50, titleFormatter: "rowSelection", hozAlign: "left", headerSort: false, cellClick: function (e, cell) {
                 //         cell.getRow().toggleSelect();
                 //     }
                 // },
-                {
-                    formatter: "rownum", hozAlign: "center", width: 100
-                },
-                { title: "ID", field: "uid", width: 150, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+                // {
+                //     formatter: "rownum", hozAlign: "center", width: 100
+                // },
+                // { title: "ID", field: "uid", width: 150, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
                 { title: "Grade", field: "grade", width: 150, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
-                { title: "Title", field: "title", sorter: "number", width: 350, editor: false, bottomCalcParams: { precision: 0 } },
+                { title: "품명", field: "title", sorter: "number", width: 350, editor: false, bottomCalcParams: { precision: 0 } },
                 {
-                    title: "Price", field: "price", sorter: "number", width: 150, editor: false, hozAlign: "right",
+                    title: "단가", field: "price", sorter: "number", width: 150, editor: false, hozAlign: "right",
                     formatterParams: {
                         thousand: ",",
                         precision: 0,
@@ -169,19 +169,19 @@
             selectable: true, //make rows selectable
             columns: [
                 // { title: "", field: "check", width: 100, hozAlign: "center", editor: false, formatter: "tickCross" },
-                {
-                    formatter: "rowSelection", field: "check", width: 100, titleFormatter: "rowSelection", hozAlign: "center", headerSort: false, cellClick: function (e, cell) {
-                        cell.getRow().toggleSelect();
-                    }
-                },
-                {
-                    formatter: "rownum", hozAlign: "center", width: 100
-                },
-                { title: "ID", field: "uid", width: 150, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+                // {
+                //     formatter: "rowSelection", field: "check", width: 100, titleFormatter: "rowSelection", hozAlign: "center", headerSort: false, cellClick: function (e, cell) {
+                //         cell.getRow().toggleSelect();
+                //     }
+                // },
+                // {
+                //     formatter: "rownum", hozAlign: "center", width: 100
+                // },
+                // { title: "ID", field: "uid", width: 150, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
                 { title: "Grade", field: "grade", width: 150, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
-                { title: "Title", field: "title", sorter: "number", width: 350, editor: false, bottomCalcParams: { precision: 0 } },
+                { title: "품명", field: "title", sorter: "number", width: 350, editor: false, bottomCalcParams: { precision: 0 } },
                 {
-                    title: "Price", field: "price", sorter: "number", width: 150, editor: false, hozAlign: "right",
+                    title: "단가", field: "price", sorter: "number", width: 150, editor: false, hozAlign: "right",
                     formatterParams: {
                         thousand: ",",
                         precision: 0,
@@ -189,7 +189,7 @@
 
                 },
                 {
-                    title: "Count",
+                    title: "수량",
                     field: "count",
                     editor: "input",
                     width: 150,
@@ -207,7 +207,7 @@
                     bottomCalc: "sum"
                 },
                 {
-                    title: "Total",
+                    title: "합계",
                     field: "total",
                     editor: "input",
                     formatter: "money",

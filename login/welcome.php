@@ -169,8 +169,8 @@ if (isset($_SESSION['user'])) {
                                 </td>
                                 <td class="talign thh colr">
 
-                                    <label><input type="checkbox" id="flexCheckChecked" name="cb1" class="chb" onclick="javascript:disableClass(false)" /> 개별영상반복</label></br>
-                                    <label><input type="checkbox" id="flexCheckWeekChecked" name="cb2" class="chb" onclick="javascript:disableClass(true)" /> 주간영상반복</label>
+                                    <label><input type="checkbox" id="flexCheckChecked" name="cb1" class="chb" onclick="javascript:disableClass(this)" /> 개별영상반복</label></br>
+                                    <label><input type="checkbox" id="flexCheckWeekChecked" name="cb2" class="chb" onclick="javascript:disableClass(this)" /> 주간영상반복</label>
 
                                 </td>
                             </tr>
@@ -623,8 +623,8 @@ if (isset($_SESSION['user'])) {
         }
 
         $(".chb").change(function() {
-            $(".chb").prop('checked', false);
-            $(this).prop('checked', true);
+            //$(".chb").prop('checked', false);
+            //$(this).prop('checked', true);
         });
 
         function isKeyExists(key) {
@@ -633,8 +633,9 @@ if (isset($_SESSION['user'])) {
 
         function disableClass(b) {
             //alert(b);
-            if (b == true)
-                $(".myctl").addClass("disabledbutton");
+            if (b.name == 'cb2' && b.checked) {
+                    $(".myctl").addClass("disabledbutton");
+            }                
             else
                 $(".myctl").removeClass("disabledbutton");
         }
@@ -660,7 +661,8 @@ if (isset($_SESSION['user'])) {
             $('#select-field').val(stat['vol']).trigger('change');
             $('#flexCheckChecked').prop('checked', stat['ck1']); // 
             $('#flexCheckWeekChecked').prop('checked', stat['ck2']);
-            disableClass(stat['ck2']);
+            var status = {name : 'cb2', checked: stat['ck2']}
+            disableClass(status);
         }
 
         function assignHref(week) {
