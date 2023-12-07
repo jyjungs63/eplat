@@ -1,6 +1,6 @@
 <?php
 
-require_once '../server/dbinit.php';
+require_once '../Server/dbinit.php';
 
 session_start();
 
