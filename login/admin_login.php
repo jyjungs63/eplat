@@ -256,7 +256,7 @@
                 "zipcode": el['zipcode'],
                 "password": el['password'],
                 "rdate": el['rdate'],
-                "confirm": el['confirm'],
+                "confirm": el['confirm'] == "승인" ? 1 : 0,
             }
             items.push(jarr);
 
