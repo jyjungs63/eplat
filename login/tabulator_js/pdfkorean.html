@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PDF-Lib 한글 폰트 사용 예제</title>
+</head>
+
+<body>
+    <button onclick="generatePdf()">PDF 생성</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4/dist/fontkit.umd.min.js"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7"></script>
+    registerFontkit
+    <script>
+        async function generatePdf() {
+            const { PDFDocument, StandardFonts } = PDFLib;
+            //const { fontkit } = fontkit;
+
+            // 새 PDF 문서 생성
+            const pdfDoc = await PDFDocument.create();
+
+            // 사용할 한글 폰트 로드
+            pdfDoc.registerFontkit(fontkit)
+            const fontBytes = await fetch('NanumBarunGothic.ttf').then((res) => res.arrayBuffer());
+            const customFont = await pdfDoc.embedFont(fontBytes);
+
+            // 새 페이지 생성
+            const page = pdfDoc.addPage();
+
+            // 한글 폰트 설정
+            const fontSize = 30;
+            page.setFont(customFont);
+            page.setFontSize(fontSize);
+
+            // 한글 텍스트 추가
+            const text = '안녕하세요, PDF-Lib를 사용한 한글 폰트 텍스트입니다.';
+            page.drawText(text, {
+                x: 50,
+                y: 500,
+            });
+
+            // PDF Blob 생성
+            const pdfBytes = await pdfDoc.save();
+            const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            // 생성된 PDF 다운로드
+            const downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(pdfBlob);
+            downloadLink.download = 'output.pdf';
+            downloadLink.click();
+        }
+    </script>
+</body>
+
+</html>
