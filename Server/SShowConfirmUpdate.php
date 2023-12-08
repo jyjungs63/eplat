@@ -19,9 +19,8 @@ foreach ( $arr['item'] as $row) {
 	,addr = '".$row['addr']."' 
 	,zipcode = '".$row['zipcode']."' 
 	,confirm = ".$row['confirm']." 
-	WHERE id = ".$row['id']."";
-	$result = $mysqli->query($sql);
-	
+	WHERE id = '".$row['id']."'";
+	$result = $mysqli->query($sql);	
 }
 
 
