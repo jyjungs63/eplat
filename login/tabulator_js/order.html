@@ -114,12 +114,13 @@
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
     <!-- <link href="tabulator-master/dist/css/tabulator_midnight.css" rel="stylesheet"> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script>
     <script src="listprice2.js"></script>
 
     <script src="https://unpkg.com/pdf-lib@1.4.0"></script>
+    <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4/dist/fontkit.umd.min.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
 
     <script>
@@ -301,6 +302,7 @@
         var orderPrint = () => {
 
             drawSvgPaths();
+            //generatePdf();
         }
 
         document.getElementById("idGrade").addEventListener("change", function () {
@@ -343,11 +345,18 @@
         async function drawSvgPaths() {
 
             const pdfDoc = await PDFDocument.create()
+
+            // 사용할 한글 폰트 로드
+            // pdfDoc.registerFontkit(fontkit)
+            // const fontBytes = await fetch('NanumBarunGothic.ttf').then((res) => res.arrayBuffer());
+            // const customFont = await pdfDoc.embedFont(fontBytes);
+
             const page = pdfDoc.addPage()
             const { width, height } = page.getSize()
 
-            const fontSize = 12
-
+            const fontSize = 12;
+            //page.setFont(customFont);
+            page.setFontSize(fontSize);
 
             var lineStart = height - 4 * fontSize;
             var lineStep = fontSize * 1.7;
@@ -380,11 +389,11 @@
                 else
                     tick = 0.5;
                 drawLines(page, s, e, rgb(0, 0, 0), tick);
-                drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['grade']);
-                drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['title']);
-                drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['price']);
-                drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['count']);
-                drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['total']);
+                // drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['grade']);
+                // drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['title']);
+                // drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['price'].toString());
+                // drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['count'].toString());
+                // drawTexts(page, 50 + (xx * i), lineStart - (lineStep * i), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['total'].toString());
             }
             var header = ['Grade', 'Title', 'Price', 'Count', 'Total', ''];
 
@@ -403,13 +412,22 @@
             drawTexts(page, width / 2.5, height - 3 * fontSize, fontSize, rgb(0.0, 0.0, 0.0), "Purchase Order List")
 
             // Serialize the PDFDocument to bytes (a Uint8Array)
-            const pdfBytes = await pdfDoc.save()
+            //const pdfBytes = await pdfDoc.save()
 
             // Trigger the browser to download the PDF document
             //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
 
             const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
             document.getElementById('pdfDiv').src = pdfDataUri;
+            // PDF Blob 생성
+            // const pdfBytes = await pdfDoc.save();
+            // const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            // 생성된 PDF 다운로드
+            // const downloadLink = document.createElement('a');
+            // downloadLink.href = window.URL.createObjectURL(pdfBlob);
+            // downloadLink.download = 'output.pdf';
+            // downloadLink.click();
         }
 
         drawLines = (page, s, e, color, thick) => {
@@ -429,6 +447,48 @@
                 // font: timesRomanFont,
                 color: color,
             })
+        }
+        async function generatePdf() {
+            const { PDFDocument, StandardFonts } = PDFLib;
+            //const { fontkit } = fontkit;
+
+            // 새 PDF 문서 생성
+            const pdfDoc = await PDFDocument.create();
+
+            // 사용할 한글 폰트 로드
+            pdfDoc.registerFontkit(fontkit)
+            const fontBytes = await fetch('NanumBarunGothic.ttf').then((res) => res.arrayBuffer());
+            const customFont = await pdfDoc.embedFont(fontBytes);
+
+            // 새 페이지 생성
+            const page = pdfDoc.addPage();
+
+            // 한글 폰트 설정
+            const fontSize = 12;
+            page.setFont(customFont);
+            page.setFontSize(fontSize);
+
+            // 한글 텍스트 추가
+            //const text = '안녕하세요, PDF-Lib를 사용한 한글 폰트 텍스트입니다.';
+            const text = 'test pfg';
+            page.drawText(text, {
+                x: 50,
+                y: 500,
+                color: rgb(0,1,0),
+
+            });
+            const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+            document.getElementById('pdfDiv').src = pdfDataUri;
+
+            // PDF Blob 생성
+            const pdfBytes = await pdfDoc.save();
+            const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            // 생성된 PDF 다운로드
+            const downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(pdfBlob);
+            downloadLink.download = 'output.pdf';
+            downloadLink.click();
         }
 
     </script>
