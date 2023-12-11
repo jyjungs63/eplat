@@ -23,7 +23,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Branch Manage</h1>
+                        <h1>Kinder garden Manage</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -54,8 +54,9 @@
                                     &nbsp;&nbsp;
                                     <input class="form-control " id="idClassname" type="text"
                                         placeholder="Add Class Name"> &nbsp;&nbsp;
-                                    <input class="form-control " id="idNumstudent" type="text"
-                                        placeholder="Number of students">
+                                    <input class="form-control " id="idNick" type="text"
+                                        placeholder="Id Prefix (English)"> &nbsp;&nbsp;
+                                    <input class="form-control " id="idNumstudent" type="text" placeholder="학생수">
                                     &nbsp;&nbsp;
                                     <button class="btn btn-outline-primary" type="button" onclick="addChild()">Add
                                         Class</button>
@@ -196,6 +197,52 @@
         })
 
     };
+
+    addClassMember = () => { // 학생등록
+        var item = $("#idTable").getRows();
+        item.foreEach(el => {
+            var jarr = {
+                "id": el['id'],
+                "name": el['name'],
+                "passwd": el['passwd'],
+                "tid": "teacher1", //
+                "role": "2", //
+            }
+            items.push(jarr);
+
+        })
+        var data = {
+            "item": items
+        };
+        $.ajax({
+            url: "SinsertStudent.php",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function(e) {},
+            error: function(e) {
+
+            }
+        })
+    }
+
+    showClassMembers = () => {
+        var data = {
+            id: tid
+        };
+        $.ajax({
+            url: "ShowStudent.php",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function(e) {
+
+            },
+            error: function(e) {
+
+            }
+        })
+    }
 
     /* Chart.js Charts */
     // Sales chart
