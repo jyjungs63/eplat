@@ -1,3 +1,6 @@
+<? php
+        include '../header.php';
+?>
 <html lang="utf-8">
 
 <head>
@@ -39,8 +42,10 @@
                         <div class="card-header">
                             <h3 class="card-title">
                                 <div class="input-group mb-3">
-                                    <button class="btn btn-outline-secondary" type="button">Select Items</button>
-                                    <select class="form-select" id="idGrade" data-placeholder="Choose Items">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button">Select Items</button>
+                                    &nbsp;&nbsp;
+                                    <select class="form-select form-control-sm" id="idGrade" style="width: 100px;"
+                                        data-placeholder="Choose Items">
                                         <option val="va">전체</option>
                                         <option val="v4">4세</option>
                                         <option val="v5">5세</option>
@@ -68,14 +73,21 @@
                             <div id="idTable">
 
                             </div>
-                            <div class="d-flex align-items-end justify-content-end" style="margin-top: 70px;">
-                                <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-info" role="button"
-                                    aria-disabled="true"><i class="fa-solid fa-print"></i></a>
-                                <a id="anchorRead" href="javascript:selectAll()" class="btn btn-info" role="button"
-                                    aria-disabled="true"><i class="fa-solid fa-save"></i></a>
+                            <div class="d-flex align-items-end justify-content-end" style="margin-top: 10px;">
+                                <div align="center">
+                                    <a id="anchorRead" href="javascript:selectAll()" class="btn btn-info" role="button"
+                                        aria-disabled="true"><i class="fa-solid fa-save"></i></a>
+                                </div>
                             </div>
 
                             <div id="idTableConfirm" style="margin-top: 10px;">
+
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div align="center">
+                                <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-info" role="button"
+                                    aria-disabled="true"><i class="fa-solid fa-print"></i></a> &nbsp;&nbsp;
 
                             </div>
                         </div>
@@ -92,6 +104,43 @@
                 <div class="col-md-12">
                     <div class="card card-outline card-info">
                         <div class="card-header">
+                            <h3 class="card-title">
+                                <div class="input-group mb-3">
+                                    <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
+                                    &nbsp;&nbsp; -->
+                                    <select class="form-select form-control-sm" id="idDest"
+                                        data-placeholder="Choose Items">
+                                        <option val="va">전체</option>
+                                        <option val="v4">원리스트</option>
+                                        <option val="v5">주소지</option>
+                                    </select>
+                                    &nbsp;&nbsp;
+                                    <input class="form-control form-control-sm" id="idID" type="text" placeholder="ID">
+                                    &nbsp;&nbsp;
+                                    <input class="form-control form-control-sm" id="idName" type="text"
+                                        placeholder="Name">
+                                    &nbsp;&nbsp;
+                                    <input class="form-control form-control-sm" id="idPasswd" type="text"
+                                        placeholder="Password">
+                                    &nbsp;&nbsp;
+                                    <input class="form-control form-control-sm" id="idMobile" type="text"
+                                        placeholder="Mobile">
+                                    &nbsp;&nbsp;
+                                    <input class="form-control form-control-sm" id="idAddr" type="text"
+                                        placeholder="Address" style="width: 150px;">
+                                    &nbsp;&nbsp;
+                                    <input class="form-control form-control-sm" id="idZip" type="text"
+                                        placeholder="Zip Code" style="width: 10px;">
+                                    &nbsp;&nbsp;
+                                    <button class="btn btn-outline-primary btn-sm" type="button"
+                                        onclick="execDaumPostcode()">
+                                        주소찾기</button>
+                                    &nbsp;&nbsp;
+                                    <button class="btn btn-outline-success btn-sm" type="button"
+                                        onclick="AddBranch()">배송지추가
+                                    </button>
+                                </div>
+                            </h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
@@ -102,7 +151,10 @@
                             </div>
                         </div>
                         <div class="card-body ">
-                            <iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe>
+                            <!-- <iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe> -->
+                            <div id="idTableDest" style="margin-top: 10px;">
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,6 +177,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4/dist/fontkit.umd.min.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
+    <script src="kgardenlist.js"></script>
 
     <script>
         const { PDFDocument, rgb } = PDFLib;
@@ -266,7 +319,55 @@
             ],
         });
 
+        // var table2 = new Tabulator("#idTableDest", {
+        //     height: "490px",
+        //     data: kgardenlist, layout: "fitColumns",
+        //     rowHeight: 40, //set rows to 40px height
+        //     selectable: true, //make rows selectable
+        //     columns: [
+        //         // { title: "No", field: "No", width: 150, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+        //         { title: "kgarden", field: "kgarden", width: 250, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
+        //         { title: "owner", field: "owner", width: 250, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
+        //         { title: "address", field: "address", sorter: "number", width: 550, editor: false, bottomCalcParams: { precision: 0 } },
+        //         { title: "phone", field: "phone", sorter: "number", width: 150, editor: false, bottomCalcParams: { precision: 0 } },
+        //         // { title: "password", field: "password", sorter: "number", width: 250, editor: false, bottomCalcParams: { precision: 0 } },
+        //         { title: "rdate", field: "rdate", sorter: "number", width: 150, editor: false, bottomCalcParams: { precision: 0 } },
+        //     ],
+        //     rowSelectionChanged: function (data, rows) {
+        //         // Deselect previously selected rows if there are more than one selected row
+        //         if (rows.length > 1) {
+        //             rows.slice(1).forEach(function (row) {
+        //                 row.deselect();
+        //             });
+        //         }
+        //     },
+        // });
 
+        var tableData = [
+            { id: 1, name: "John", age: 30 },
+            { id: 2, name: "Alice", age: 25 },
+            // Add more data as needed
+        ];
+
+        // Create Tabulator instance
+        var table = new Tabulator("#idTableDest", {
+            data: tableData,
+            selectable: true, // Enable row selection
+            columns: [
+                { title: "ID", field: "id" },
+                { title: "Name", field: "name" },
+                { title: "Age", field: "age" },
+                // Define more columns as needed
+            ],
+            rowSelectionChanged: function (data, rows) {
+                // Deselect previously selected rows if there are more than one selected row
+                if (rows.length > 1) {
+                    rows.slice(1).forEach(function (row) {
+                        row.deselect();
+                    });
+                }
+            }
+        });
         function calsum(cell) {
             var row = cell.getRow();
             var rowData = row.getData();
@@ -304,7 +405,7 @@
 
         var orderPrint = () => {
 
-            drawSvgPaths();
+            makePurchasePDFList();
         }
 
         document.getElementById("idGrade").addEventListener("change", function () {
@@ -344,7 +445,7 @@
             console.log(items);
         });
 
-        async function drawSvgPaths() {
+        async function makePurchasePDFList() {
 
             const pdfDoc = await PDFDocument.create()
 
@@ -514,6 +615,13 @@
         function cvtCurrency(amount) {
             return amount.toLocaleString("ko-KR");
         }
+
+        // table2.addEventListener("rowSelected", function (e) {
+        //     // Deselect previously selected rows if there are more than one selected row
+        //     if (table2.getSelectedRows().length > 1) {
+        //         table2.deselectRow(e._row);
+        //     }
+        // });
     </script>
 
 </body>
