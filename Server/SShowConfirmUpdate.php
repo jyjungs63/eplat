@@ -10,6 +10,7 @@ $arr = json_decode($json, true);
 $id="";
 
 global $conn;
+$result = "";
 
 foreach ( $arr['item'] as $row) {
 	$sql = "UPDATE eplat_user SET id = '".$row['id']."'
@@ -20,19 +21,15 @@ foreach ( $arr['item'] as $row) {
 	,zipcode = '".$row['zipcode']."' 
 	,confirm = ".$row['confirm']." 
 	WHERE id = '".$row['id']."'";
-	$result = $mysqli->query($sql);	
+    if ($conn->query($sql) === TRUE) {
+        $result = true;
+    } else {
+        $result =  "Error updating record: " . $conn->error;
+    }
 }
 
+$conn->close();
 
-$sql = "SELECT * FROM items "; 
-
-
-$result = $mysqli->query($sql);
-
-
-$data = $result->fetch_assoc();
-
-
-echo json_encode($data);
+echo json_encode($result);
 
 ?>

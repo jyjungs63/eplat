@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <div class="main">
@@ -26,22 +28,22 @@
 
                     <div class="signin-form">
                         <h2 class="form-title">Find password</h2>
-                        <form method="POST" class="register-form" id="login-form" action="../Server/Sfindpassword.php">
+                        <form method="POST" class="register-form" id="login-form" action="../Server/SFindpassword.php">
                             <div class="form-group">
                                 <label for="id"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="id" id="id" placeholder="Your ID"/>
+                                <input type="text" name="id" id="id" placeholder="Your ID" />
                             </div>
-							<div class="form-group">
+                            <div class="form-group">
                                 <label for="mobile"><i class="zmdi zmdi-smartphone-iphone"></i></label>
-                                <input type="text" name="mobile" id="mobile" placeholder="Your Phone"/>
+                                <input type="text" name="mobile" id="mobile" placeholder="Your Phone" />
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="your_pass" id="your_pass" placeholder="Password"/>
+                                <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
                             </div>
 
                             <div class="form-group form-button">
-                                <input type="submit" name="signin" id="signin" class="form-submit" value="Find"/>
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Find" />
                             </div>
                         </form>
 
@@ -56,4 +58,5 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="js/main.js"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
 </html>

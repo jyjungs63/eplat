@@ -42,7 +42,7 @@ $Mobile = $_POST["mobile"];
 			}
 			mysqli_free_result ( $rs );
 		}
-		return $user;
+		return json_encode($user);
 	}
 	
 $conn->close();
