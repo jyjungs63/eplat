@@ -1,6 +1,6 @@
 <?php
 
-require_once 'dbinit.php';
+// require_once 'dbinit.php';
 
 session_start();
 
@@ -8,8 +8,7 @@ session_start();
 $rows = array();
 $pdfname="";
 $user="admin";
-if (  !empty($user) ) 
-{
+
 	foreach($_FILES as $index => $file)
 	{
 		// for easy access
@@ -42,35 +41,25 @@ if (  !empty($user) )
 	// $res = mysqli_query ( $conn,  $sqlstring);
 	
 	if ($res=== TRUE) {
-		$result = "http://localhost:3000/Server/uploads/".$pdfname;
+		$result = ['url' => 'http://localhost:3000/Server/uploads/'.$pdfname];
 	} else {
-		$result =  "Error: " . $sql . "<br>" . $conn->error;
+		$result =  ['url' => 'http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf'];
 	}
 
-	$conn->close();
+	// header('Content-Type: application/json');
+	// echo json_encode($result);
+	// $data = [
+	// 	'id' => 1,
+	// 	'name' => 'John Doe',
+	// 	'email' => 'johndoe@example.com'
+	// ];
+	
+	// Set the response content type to JSON
+	header('Content-Type: application/json');
+	
+	// Output the data as JSON
 	echo json_encode($result);
-}
-else 
-{
-	Header("Location: login.php");
-}
 
-function resize_image($file, $w, $h, $crop=FALSE) {
-	
-	$percent = 0.5;
-	
-	list($width, $height) = getimagesize($file);
-	$newwidth = $width * $percent;
-	$newheight = $height * $percent;
-	
-	$src = imagecreatefromjpeg($file);
-	$dst = imagecreatetruecolor($newwidth, $newheight);
-	imagecopyresized($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-	
-	imagejpeg($dst);
-	
-	return $dst;
-}
 
 function generateRandomString($length = 15) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -79,7 +68,6 @@ function generateRandomString($length = 15) {
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, strlen($characters) - 1)];
     }
-
     return $randomString;
 }
 ?>

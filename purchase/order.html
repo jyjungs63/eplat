@@ -614,13 +614,21 @@
             formData.append('pdfFile', new Blob([pdfBytes]), 'generated_pdf.pdf');
 
             fetch('../Server/SUploadBoardPDF.php', {
+            //fetch('./data.php', {
                 method: 'POST',
                 body: formData,
             })
                 .then(response => {
-                    alert(response)
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+
+                }).then(data => {
+                    // Process the fetched data
+                    ///alert(data);
                     //document.getElementById('pdfDiv').src = "http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf";
-                    document.getElementById('pdfDiv').src = response;
+                    document.getElementById('pdfDiv').src = data['url'];
                 })
                 .catch(error => {
                     alert('error');
