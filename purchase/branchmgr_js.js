@@ -1,9 +1,8 @@
-
 var deleteIcon = function(cell, formatterParams) { //plain text value
     return "<i class='fa fa-trash'></i>";
 };
 
-var tab = new Tabulator("#idTable", {
+table = new Tabulator("#idTable", {
     height: "300px",
     layout: "fitColumns",
     selectable: true,
@@ -22,7 +21,19 @@ var tab = new Tabulator("#idTable", {
         {
             title: "name",
             field: "name",
-            width: 250,
+            width: 200,
+            editor: "input",
+            editorParams: {
+                autocomplete: "true",
+                allowEmpty: true,
+                listOnEmpty: true,
+                valuesLookup: true
+            }
+        },
+        {
+            title: "owner",
+            field: "owner",
+            width: 200,
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -70,7 +81,7 @@ var tab = new Tabulator("#idTable", {
         {
             title: "zipcode",
             field: "zipcode",
-            width: 150,
+            width: 100,
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -82,7 +93,7 @@ var tab = new Tabulator("#idTable", {
         {
             title: "rdate",
             field: "rdate",
-            width: 150,
+            width: 100,
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -101,7 +112,8 @@ var tab = new Tabulator("#idTable", {
         },
     ],
 });
-   
+
+
    /* Chart.js Charts */
     // Sales chart
     var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d');

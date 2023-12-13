@@ -9,7 +9,7 @@ $id = $_POST['id'];
 
 global $conn;
 
-$sqlString = "SELECT * FROM eplat_user where role = 2 and id = '".$id."'"; 
+$sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '".$id."'"; 
     
 $rs = mysqli_query($conn,$sqlString);
 $rows = array();

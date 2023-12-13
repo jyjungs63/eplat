@@ -1,6 +1,4 @@
-<? php
-        include '../header.php';
-?>
+<!DOCTYPE html>
 <html lang="utf-8">
 
 <head>
@@ -43,7 +41,7 @@
                             <h3 class="card-title">
                                 <div class="input-group mb-3">
                                     <button class="btn btn-outline-secondary btn-sm" type="button">Select Items</button>
-                                    &nbsp;&nbsp;
+                                    &nbsp;
                                     <select class="form-select form-control-sm" id="idGrade" style="width: 100px;"
                                         data-placeholder="Choose Items">
                                         <option val="va">전체</option>
@@ -64,10 +62,20 @@
                                     <i class="fas fa-times"></i></button>
                             </div>
                         </div>
-                        <div class="card-body pad">
+                        <div class="card-body pad" id="cardMain">
                             <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
+                                <div align="center">
+                                    <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-warning"
+                                        role="button" data-toggle="tooltip" title="Order and PDF file"
+                                        aria-disabled="true"><i class="fa-solid fa-print"></i></a>
+                                    &nbsp;&nbsp;
+                                </div>
                                 <a id="anchorRead" href="javascript:orderBook()" class="btn btn-info" role="button"
-                                    aria-disabled="true"><i class="fa-solid fa-cart-shopping"></i></a>
+                                    data-toggle="tooltip" title="Add to Cart " aria-disabled="true"><i
+                                        class="fa-solid fa-cart-shopping"></i></a>&nbsp;&nbsp;
+                                <a id="anchorRead" href="javascript:selectAll()" class="btn btn-success" role="button"
+                                    data-toggle="tooltip" title="Select All" aria-disabled="true"><i
+                                        class="fa-solid fa-save"></i></a>
                             </div>
 
                             <div id="idTable">
@@ -75,8 +83,7 @@
                             </div>
                             <div class="d-flex align-items-end justify-content-end" style="margin-top: 10px;">
                                 <div align="center">
-                                    <a id="anchorRead" href="javascript:selectAll()" class="btn btn-info" role="button"
-                                        aria-disabled="true"><i class="fa-solid fa-save"></i></a>
+
                                 </div>
                             </div>
 
@@ -84,13 +91,9 @@
 
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <div align="center">
-                                <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-info" role="button"
-                                    aria-disabled="true"><i class="fa-solid fa-print"></i></a> &nbsp;&nbsp;
+                        <!-- <div class="card-footer">
 
-                            </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -102,7 +105,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-info">
+                    <div class="card card-outline card-primary">
                         <div class="card-header">
                             <h3 class="card-title">
                                 <div class="input-group mb-3">
@@ -114,28 +117,30 @@
                                         <option val="v4">원리스트</option>
                                         <option val="v5">주소지</option>
                                     </select>
-                                    &nbsp;&nbsp;
+                                    &nbsp;
                                     <input class="form-control form-control-sm" id="idID" type="text" placeholder="ID">
-                                    &nbsp;&nbsp;
+                                    &nbsp;
                                     <input class="form-control form-control-sm" id="idName" type="text"
                                         placeholder="Name">
-                                    &nbsp;&nbsp;
+                                    &nbsp;
+                                    <input class="form-control form-control-sm" id="idOwner" type="text"
+                                        placeholder="Owner">&nbsp;
                                     <input class="form-control form-control-sm" id="idPasswd" type="text"
                                         placeholder="Password">
-                                    &nbsp;&nbsp;
+                                    &nbsp;
                                     <input class="form-control form-control-sm" id="idMobile" type="text"
                                         placeholder="Mobile">
-                                    &nbsp;&nbsp;
+                                    &nbsp;
                                     <input class="form-control form-control-sm" id="idAddr" type="text"
                                         placeholder="Address" style="width: 150px;">
-                                    &nbsp;&nbsp;
+                                    &nbsp;
                                     <input class="form-control form-control-sm" id="idZip" type="text"
-                                        placeholder="Zip Code" style="width: 10px;">
-                                    &nbsp;&nbsp;
+                                        placeholder="Zip Code" style="width: -5px;">
+                                    &nbsp;
                                     <button class="btn btn-outline-primary btn-sm" type="button"
                                         onclick="execDaumPostcode()">
                                         주소찾기</button>
-                                    &nbsp;&nbsp;
+                                    &nbsp;
                                     <button class="btn btn-outline-success btn-sm" type="button"
                                         onclick="AddBranch()">배송지추가
                                     </button>
@@ -150,15 +155,38 @@
                                     <i class="fas fa-times"></i></button>
                             </div>
                         </div>
-                        <div class="card-body ">
-                            <!-- <iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe> -->
+                        <div class="card-body " id="cardDest">
+
                             <div id="idTableDest" style="margin-top: 10px;">
 
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            Purchase List
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
+                                data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
+                                data-toggle="tooltip" title="Remove">
+                                <i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body " id="cardPDF">
+                        <iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe>
+                    </div>
+
+                </div>
+            </div>
+
         </section>
     </div>
 
@@ -177,12 +205,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4/dist/fontkit.umd.min.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
-    <script src="kgardenlist.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="kgardenlist_2.js"></script>
 
     <script>
+
         const { PDFDocument, rgb } = PDFLib;
         // Create a new PDFDocument
 
+        $(document).ready(function (e) {
+            $("#cardDest").hide();
+            $("#cardPDF").hide();
+        });
 
         var deleteIcon = function (cell, formatterParams) { //plain text value
             return "<i class='fa fa-trash'></i>";
@@ -194,15 +228,7 @@
             rowHeight: 40, //set rows to 40px height
             selectable: true, //make rows selectable
             columns: [
-                // { title: "", field: "check", width: 100, hozAlign: "center", editor: false, formatter: "tickCross" },
-                // {
-                //     formatter: "rowSelection", field: "check", width: lhs, titleFormatter: "rowSelection", hozAlign: "left", headerSort: false, cellClick: function (e, cell) {
-                //         cell.getRow().toggleSelect();
-                //     }
-                // },
-                // {
-                //     formatter: "rownum", hozAlign: "center", width: 100
-                // },
+
                 // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
                 { title: "Grade", field: "grade", width: 150, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
                 { title: "품명", field: "title", sorter: "number", width: 350, editor: false, bottomCalcParams: { precision: 0 } },
@@ -259,15 +285,6 @@
             rowHeight: 40, //set rows to 40px height
             selectable: true, //make rows selectable
             columns: [
-                // { title: "", field: "check", width: 100, hozAlign: "center", editor: false, formatter: "tickCross" },
-                // {
-                //     formatter: "rowSelection", field: "check", width: 100, titleFormatter: "rowSelection", hozAlign: "center", headerSort: false, cellClick: function (e, cell) {
-                //         cell.getRow().toggleSelect();
-                //     }
-                // },
-                // {
-                //     formatter: "rownum", hozAlign: "center", width: 100
-                // },
                 // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
                 { title: "Grade", field: "grade", width: 150, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
                 { title: "품명", field: "title", sorter: "number", width: 350, editor: false, bottomCalcParams: { precision: 0 } },
@@ -319,54 +336,33 @@
             ],
         });
 
-        // var table2 = new Tabulator("#idTableDest", {
-        //     height: "490px",
-        //     data: kgardenlist, layout: "fitColumns",
-        //     rowHeight: 40, //set rows to 40px height
-        //     selectable: true, //make rows selectable
-        //     columns: [
-        //         // { title: "No", field: "No", width: 150, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-        //         { title: "kgarden", field: "kgarden", width: 250, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
-        //         { title: "owner", field: "owner", width: 250, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
-        //         { title: "address", field: "address", sorter: "number", width: 550, editor: false, bottomCalcParams: { precision: 0 } },
-        //         { title: "phone", field: "phone", sorter: "number", width: 150, editor: false, bottomCalcParams: { precision: 0 } },
-        //         // { title: "password", field: "password", sorter: "number", width: 250, editor: false, bottomCalcParams: { precision: 0 } },
-        //         { title: "rdate", field: "rdate", sorter: "number", width: 150, editor: false, bottomCalcParams: { precision: 0 } },
-        //     ],
-        //     rowSelectionChanged: function (data, rows) {
-        //         // Deselect previously selected rows if there are more than one selected row
-        //         if (rows.length > 1) {
-        //             rows.slice(1).forEach(function (row) {
-        //                 row.deselect();
-        //             });
-        //         }
-        //     },
-        // });
-
-        var tableData = [
-            { id: 1, name: "John", age: 30 },
-            { id: 2, name: "Alice", age: 25 },
-            // Add more data as needed
-        ];
-
-        // Create Tabulator instance
-        var table = new Tabulator("#idTableDest", {
-            data: tableData,
-            selectable: true, // Enable row selection
+        var table2 = new Tabulator("#idTableDest", {
+            height: "490px",
+            data: kgardenlist, layout: "fitColumns",
+            rowHeight: 40, //set rows to 40px height
+            selectable: true, //make rows selectable
             columns: [
-                { title: "ID", field: "id" },
-                { title: "Name", field: "name" },
-                { title: "Age", field: "age" },
-                // Define more columns as needed
+                { title: "No", field: "No", width: 150, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+                { title: "name", field: "name", width: 250, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
+                { title: "owner", field: "owner", width: 250, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
+                { title: "address", field: "addr", sorter: "number", width: 550, editor: false, bottomCalcParams: { precision: 0 } },
+                { title: "mobile", field: "mobile", sorter: "number", width: 150, editor: false, bottomCalcParams: { precision: 0 } },
+                // { title: "password", field: "password", sorter: "number", width: 250, editor: false, bottomCalcParams: { precision: 0 } },
+                { title: "rdate", field: "rdate", sorter: "number", width: 150, editor: false, bottomCalcParams: { precision: 0 } },
             ],
-            rowSelectionChanged: function (data, rows) {
-                // Deselect previously selected rows if there are more than one selected row
-                if (rows.length > 1) {
-                    rows.slice(1).forEach(function (row) {
-                        row.deselect();
-                    });
-                }
-            }
+        });
+
+        table2.on("rowClick", function (e, row) {
+            //e - the click event object
+            //table2.deselectRow();
+
+            $("#idName").val(row._row.data['name']);
+            $("#idOwner").val(row._row.data['owner']);
+            $("#idMobile").val(row._row.data['mobile']);
+            $("#idAddr").val(row._row.data['addr']);
+            //table2.selectRow(Number(row._row.position));
+            table2.selectRow(1);
+            //alert(Number(row._row.position));
         });
         function calsum(cell) {
             var row = cell.getRow();
@@ -400,15 +396,21 @@
                 }
             }
             )
+            var parent = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합");
             //table1.setData(item);
         }
 
         var orderPrint = () => {
 
             makePurchasePDFList();
+
+            $("#cardMain").toggle();
+            $("#cardDest").hide();
+            $("#cardPDF").show();
+
         }
 
-        document.getElementById("idGrade").addEventListener("change", function () {
+        document.getElementById("idDest").addEventListener("change", function () {
             // 선택된 옵션 가져오기
             var selectedOption = this.options[this.selectedIndex];
 
@@ -424,25 +426,47 @@
 
             var items = [];
             var sql;
-            if ("전체" == selectedText)
-                sql = 'select uid, grade,title,price from ?  order by uid '
-            else
-                sql = 'select uid, grade,title,price from ? where grade="' + selectedText + '" order by uid asc'
-            var res = alasql(sql, [listprice2])
+            if ("주소지" == selectedText) {
+                var items = [];
+                var data = {
+                    role: 2,
+                    id: "manager"
+                };
+                $.ajax({
+                    url: "../../Server/SShowMgr.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (resp) {
+                        var i = 1;
+                        resp.forEach(el => {
+                            var jarr = {
+                                "No": i,
+                                "name": el['name'],
+                                "mobile": el['mobile'],
+                                "addr": el['addr'],
+                                "zipcode": el['zipcode'],
+                                "password": el['password'],
+                                "rdate": el['rdate'],
+                            }
 
-            res.forEach(el => {
-                var jarr =
-                {
-                    "uid": el['uid'],
-                    "grade": el['grade'],
-                    "title": el['title'],
-                    "price": el['price']
-                }
-                items.push(jarr);
-            });
-            table.clearData()
-            table.setData(items);
-            console.log(items);
+                            items.push(jarr);
+                            i++;
+                        });
+                        table2.clearData();
+                        table2.setData(items);
+                    },
+                    error: function (e) {
+                        alert('falure');
+                        $("#err").html(e).fadeIn();
+                    }
+                });
+            }
+            else {
+                table2.clearData();
+                table2.setData(kgardenlist);
+            }
+
         });
 
         async function makePurchasePDFList() {
@@ -528,7 +552,7 @@
                     var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
                     var total = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
                     var rest = cvtCurrency(parseFloat(total));
-                    drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), name);
+                    drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), "총금액");
                     drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), "");
                     drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), "");
                     drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), cnt);
@@ -569,15 +593,52 @@
                 height: pngDims.height,
             })
 
+            // 베송지
+            drawTexts(page, 100, 250, 12, rgb(0., 0., 0.), "배송지:");
+            drawTexts(page, 150, 250, 12, rgb(0., 0., 0.), $("#idName").val());
+            drawTexts(page, 250, 250, 12, rgb(0., 0., 0.), $("#idMobile").val());
+            drawTexts(page, 300, 300, 12, rgb(0., 0., 0.), formatDate());
+            drawTexts(page, 100, 200, 12, rgb(0., 0., 0.), $("#idAddr").val());
+            drawTexts(page, 150, 200, 12, rgb(0., 0., 0.), $("#idZip").val());
+
+
             const pdfBytes = await pdfDoc.save()
 
+
             // Trigger the browser to download the PDF document
-            download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
+            //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
 
-            // const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-            // document.getElementById('pdfDiv').src = pdfDataUri;
+            // 예시: fetch를 사용한 파일 업로드
+
+            const formData = new FormData();
+            formData.append('pdfFile', new Blob([pdfBytes]), 'generated_pdf.pdf');
+
+            fetch('../Server/SUploadBoardPDF.php', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => {
+                    alert(response)
+                    //document.getElementById('pdfDiv').src = "http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf";
+                    document.getElementById('pdfDiv').src = response;
+                })
+                .catch(error => {
+                    alert('error');
+                    // 오류 처리
+                });
+
+
+            //const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+
         }
+        function formatDate() {
+            const date = new Date(); // Get current date
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
+            const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
 
+            return `${year}-${month}-${day}`;
+        }
         drawLines = (page, s, e, color, thick) => {
             page.drawLine({
                 start: { x: s.x, y: s.y },
@@ -597,8 +658,8 @@
             })
         }
         selectAll = () => {
-            var parent = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합");
-
+            //var parent = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").val("총합");
+            //var parent = $(".tabulator-calcs-bottom").find('div:first').html("<p>합계</p>");
             table1.selectRow();
 
             var rows = table1.getRows();
@@ -616,12 +677,32 @@
             return amount.toLocaleString("ko-KR");
         }
 
-        // table2.addEventListener("rowSelected", function (e) {
-        //     // Deselect previously selected rows if there are more than one selected row
-        //     if (table2.getSelectedRows().length > 1) {
-        //         table2.deselectRow(e._row);
-        //     }
-        // });
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    let addr = ''; // 주소 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') {
+                        // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else {
+                        // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+                    $("#idZip").val(data.zonecode);
+                    $("#idAddr").val(addr);
+                    $("#idAddr").focus();
+                }
+            }
+
+            ).open();
+        }
     </script>
 
 </body>

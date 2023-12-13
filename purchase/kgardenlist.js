@@ -1,3 +1,13 @@
+const kgmap = {
+  no:   "No",
+  name: "kgarden",
+  owner: "owner",
+  addr: "address",
+  phone: "phone",
+  password: "password",
+  rdate: "rdate"
+};
+
 const kgardenlist = [
     {
       "No": "1.",

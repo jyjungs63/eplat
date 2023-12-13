@@ -134,6 +134,7 @@
                 <div class="col-md-12">
                     <div class="card card-outline card-info" id="cardList">
                         <div class="card-header">
+                            <h3>List</h3>
                             <!-- tools box -->
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
@@ -172,7 +173,7 @@
                 <div class="col-md-12">
                     <div class="card card-outline card-info" id="cardUpload">
                         <div class="card-header">
-                            <!-- tools box -->
+                            <h3>File Upload</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
@@ -251,7 +252,7 @@
                 <div class="col-md-12">
                     <div class="card card-outline card-info" id="cardFileList">
                         <div class="card-header">
-                            <!-- tools box -->
+                            <h3>Files List</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
@@ -262,7 +263,7 @@
                             </div>
                             <!-- /. tools -->
                         </div>
-                        <!-- /.card-header -->
+
                         <div class="card-body pad">
                             <div class="mb-3 table-responsive">
                                 <form id="form" method="post" enctype="multipart/form-data">
@@ -416,7 +417,7 @@
         });
         //$('#table').bootstrapTable({ data: record })
         $.ajax({
-            url: "SShowBoardlist.php",
+            url: "../Server/SShowBoardlist.php",
             type: "POST",
             dataType: "json",
             data: data,
@@ -465,7 +466,7 @@
             var item = { num: num }
 
             $.ajax({
-                url: "../Server/SUploadBoard.php",
+                url: "../Server/SShowBoardlist.php",
                 type: "POST",
                 dataType: "json",
                 data: item,
@@ -528,7 +529,7 @@
                 form_data.append("idContent", $('#idContent').val());
 
                 $.ajax({
-                    url: "Srecord.php",
+                    url: "../Server/SUploadBoard.php",
                     type: "POST",
 
                     data: form_data,

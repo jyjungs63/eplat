@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AdminLTE Card Collapse Example</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AdminLTE CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Collapsible Card</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" id="collapseButton">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            This is the content of the card.
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+
+    <!-- Your custom JavaScript -->
+    <script>
+        // Get a reference to the collapse button
+        const collapseButton = document.getElementById('collapseButton');
+
+        // Programmatically collapse or expand the card
+        collapseButton.addEventListener('click', function () {
+            const cardBody = this.closest('.card').querySelector('.card-body');
+            const isCollapsed = cardBody.classList.contains('collapse');
+
+            if (isCollapsed) {
+                $(cardBody).collapse('show'); // Expanding the collapsed card
+            } else {
+                $(cardBody).collapse('hide'); // Collapsing the expanded card
+            }
+        });
+    </script>
+
+</body>
+
+</html>
