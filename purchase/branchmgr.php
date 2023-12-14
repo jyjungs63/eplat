@@ -153,6 +153,8 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
     <script src="branchmgr_js.js"></script>
+    <script src="common.js"></script>
+
 
     <script>
     var table;
@@ -178,14 +180,15 @@
         var zipcode = $("#idZip").val();
         var rdate = "";
 
-        function formatDate() {
-            const today = new Date(); // Get current date
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
-            const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
+        // function formatDate() {
+        //     const today = new Date(); // Get current date
+        //     const year = date.getFullYear();
+        //     const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
+        //     const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
 
-            return `${year}-${month}-${day}`;
-        }
+        //     return `${year}-${month}-${day}`;
+        // }
+
         if (id == undefined || id == "") id = faker.name.firstName();
         if (name == undefined || id == "") name = faker.name.firstName();
         if (owner == undefined || owner == "") owner = faker.name.lastName();

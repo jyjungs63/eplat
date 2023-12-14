@@ -1,14 +1,20 @@
 <?php
 
-// require_once 'dbinit.php';
+	require_once 'dbinit.php';
 
-session_start();
+	session_start();
 
-//global $conn;
-$rows = array();
-$pdfname="";
-$user="admin";
 
+	$id = $_POST['id'];
+	$porlist = $_POST['postlist'];
+	$porid = $_POST['porid'];
+
+	global $conn;
+	$rows = array();
+	$pdfname="";
+	$user="admin";
+	$res = "";
+	$res1= "";
 	foreach($_FILES as $index => $file)
 	{
 		// for easy access
@@ -29,30 +35,19 @@ $user="admin";
 			$res = move_uploaded_file($fileTempName, "uploads/" . $RandomName . $fileName);
 			//move_uploaded_file($fileTempName, "uploads/" . $fileName);
 			$tmp = $fileTempName;
-		}
-		// array_push($rows, array(
-		// 	'name'     => $fileName,
-		// 	'fakename' => $RandomName. $fileName,
-		// 	'size'     => $file['size'],
-		// ));		
+		}	
 	}
-	// $jsarr = json_encode ($rows);
-	// $sqlstring = "insert into repository ( title, id, contents, rdate ) values ( '$content', '$user',  '$jsarr',  NOW())";
-	// $res = mysqli_query ( $conn,  $sqlstring);
 	
-	if ($res=== TRUE) {
+    $sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW())";
+	$res1 = mysqli_query ( $conn,  $sqlstring);
+	
+	if ($res=== TRUE && $res1 == TRUE) {
 		$result = ['url' => 'http://localhost:3000/Server/uploads/'.$pdfname];
 	} else {
 		$result =  ['url' => 'http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf'];
 	}
 
-	// header('Content-Type: application/json');
-	// echo json_encode($result);
-	// $data = [
-	// 	'id' => 1,
-	// 	'name' => 'John Doe',
-	// 	'email' => 'johndoe@example.com'
-	// ];
+    $conn->close();
 	
 	// Set the response content type to JSON
 	header('Content-Type: application/json');

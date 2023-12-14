@@ -206,6 +206,8 @@
     <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4/dist/fontkit.umd.min.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.11/chance.min.js"></script>
     <script src="kgardenlist_2.js"></script>
 
     <script>
@@ -612,28 +614,59 @@
 
             const formData = new FormData();
             formData.append('pdfFile', new Blob([pdfBytes]), 'generated_pdf.pdf');
+            item = table1.getSelectedData();
+            var porList = []
+            item.forEach(el => {
+                var jarr =
+                {
+                    "uid": el['uid'],
+                    "grade": el['grade'],
+                    "title": el['title'],
+                    "price": el['price'],
+                    "count": el['count'],
+                    "total": el['total']
+                }
+                porList.push(jarr);
+            });
+            formData.append('id', 'manager');
+            formData.append('order', chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }));
+            formData.append('addr', chance.address());
+            formData.append('mobile', chance.address());
+            formData.append('postlist', JSON.stringify(porList));
+            formData.append('porid', 'P-' + formatDate() + "-" + chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }))
+            // fetch('../Server/SUploadBoardPDF.php', {
+            //     //fetch('./data.php', {
+            //     method: 'POST',
+            //     body: formData,
+            // })
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error('Network response was not ok');
+            //         }
+            //         return response.json();
 
-            fetch('../Server/SUploadBoardPDF.php', {
-            //fetch('./data.php', {
-                method: 'POST',
-                body: formData,
+            //     }).then(data => {
+            //         // Process the fetched data
+            //         ///alert(data);
+            //         document.getElementById('pdfDiv').src = data['url'];
+            //     })
+            //     .catch(error => {
+            //         alert('error');
+            //         // 오류 처리
+            //     });
+            $.ajax({
+                url: '../Server/SUploadBoardPDF.php',
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    document.getElementById('pdfDiv').src = response['url'];
+                },
+                error: function (e) {
+                    alert('falure');
+                }
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-
-                }).then(data => {
-                    // Process the fetched data
-                    ///alert(data);
-                    //document.getElementById('pdfDiv').src = "http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf";
-                    document.getElementById('pdfDiv').src = data['url'];
-                })
-                .catch(error => {
-                    alert('error');
-                    // 오류 처리
-                });
 
 
             //const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });

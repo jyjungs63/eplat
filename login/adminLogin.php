@@ -31,6 +31,67 @@
 </head>
 
 <body>
+    <div class="p-3">
+        <section class="content">
+            <div class="row">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <div class="input-group mb-3">
+                                <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
+                                    &nbsp;&nbsp; -->
+                                <select class="form-select form-control-sm" id="idDest" data-placeholder="Choose Items">
+                                    <option val="va">전체</option>
+                                    <option val="v4">원리스트</option>
+                                    <option val="v5">주소지</option>
+                                </select>
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idID" type="text" placeholder="ID">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idName" type="text" placeholder="Name">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idOwner" type="text"
+                                    placeholder="Owner">&nbsp;
+                                <input class="form-control form-control-sm" id="idPasswd" type="text"
+                                    placeholder="Password">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idMobile" type="text"
+                                    placeholder="Mobile">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idAddr" type="text"
+                                    placeholder="Address" style="width: 150px;">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idRdate" type="text" placeholder="구매일"
+                                    style="width: -5px;">
+                                &nbsp;
+                                <button class="btn btn-outline-primary btn-sm" type="button"
+                                    onclick="execDaumPostcode()">
+                                    주소찾기</button>
+                                &nbsp;
+                                <button class="btn btn-outline-success btn-sm" type="button" onclick="AddBranch()">배송지추가
+                                </button>
+                            </div>
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
+                                data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
+                                data-toggle="tooltip" title="Remove">
+                                <i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body " id="cardDest">
+
+                        <div id="porTableDiv"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+
     <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
@@ -79,6 +140,10 @@
                                         <div id="idTableConfirm" style="margin-top: 20px;">
 
                                         </div>
+
+                                        <div id="idOrderConfirm" style="margin-top: 20px;">
+
+                                        </div>
                                     </div>
 
                                 </div>
@@ -96,8 +161,12 @@
     </div>
     <script src="../login/tabulator_js/kgardenlist.js"></script>
     <script>
-    var table;
+    var table, table1, porTable;
     var items = [];
+    var deleteIcon = function(cell, formatterParams) { //plain text value
+        return "<i class='fa fa-trash'></i>";
+    };
+
     document.addEventListener("DOMContentLoaded", function() {
         // Get the modal element by its ID
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
@@ -177,11 +246,213 @@
 
             ],
         });
+        table1 = new Tabulator("#idOrderConfirm", {
+            height: "300px",
+            layout: "fitColumns",
+            rowHeight: 40, //set rows to 40px height
+            selectable: true, //make rows selectable
+            columns: [{
+                    title: "POR ID",
+                    field: "por_id",
+                    sorter: "number",
+                    width: 350,
+                    editor: false,
+                    bottomCalcParams: {
+                        precision: 0
+                    }
+                },
+                {
+                    title: "구매자",
+                    field: "order",
+                    sorter: "number",
+                    width: 150,
+                    editor: false,
+                    hozAlign: "right",
+                    formatterParams: {
+                        thousand: ",",
+                        precision: 0,
+                    },
+                },
+                {
+                    title: "주소",
+                    field: "addr",
+                    editor: "input",
+                    width: 150,
+                    hozAlign: "right",
+                },
+                {
+                    title: "Mobile",
+                    field: "mobile",
+                    editor: "input",
+                    formatter: "money",
+                    hozAlign: "right",
+                    editor: false,
+
+                },
+                {
+                    title: "rdate",
+                    field: "rdate",
+                    editor: "input",
+                    hozAlign: "right",
+                    editor: false,
+
+                },
+                {
+                    title: "확인",
+                    field: "confirm",
+                    editor: "input",
+                    hozAlign: "right",
+                    editor: false,
+
+                },
+                {
+                    formatter: deleteIcon,
+                    width: 40,
+                    hozAlign: "center",
+                    cellClick: function(e, cell) {
+                        deleteRow(cell.getRow())
+                    }
+                },
+            ],
+        });
+        porTable = new Tabulator("#porTableDiv", {
+            height: "490px",
+            layout: "fitColumns",
+            rowHeight: 40, //set rows to 40px height
+            selectable: true, //make rows selectable
+            columns: [
+
+                // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+                {
+                    title: "Grade",
+                    field: "grade",
+                    width: 150,
+                    editor: "list",
+                    editor: false,
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+                {
+                    title: "품명",
+                    field: "title",
+                    sorter: "number",
+                    width: 350,
+                    editor: false,
+                    bottomCalcParams: {
+                        precision: 0
+                    }
+                },
+                {
+                    title: "단가",
+                    field: "price",
+                    sorter: "number",
+                    width: 150,
+                    editor: false,
+                    hozAlign: "right",
+                    formatterParams: {
+                        thousand: ",",
+                        precision: 0,
+                    },
+                },
+                {
+                    title: "Count",
+                    field: "count",
+                    editor: "input",
+                    width: 150,
+                    hozAlign: "right",
+                    validator: "min:0",
+                    editorParams: {
+                        min: 0,
+                        max: 1000, // Adjust min and max values as needed
+                        step: 2,
+                        elementAttributes: {
+                            type: "number"
+                        }
+                    },
+                    cellEdited: function(cell) {
+                        calsum(cell);
+                    },
+                    bottomCalc: "sum"
+                },
+                {
+                    title: "Total",
+                    field: "total",
+                    editor: "input",
+                    formatter: "money",
+                    hozAlign: "right",
+                    editor: false,
+                    formatterParams: {
+                        thousand: ",",
+                        precision: 0,
+                    },
+                    editorParams: {
+                        elementAttributes: {
+                            type: "number"
+                        }
+                    },
+                    bottomCalc: "sum",
+                    bottomCalcFormatterParams: {
+                        formatter: "money",
+                        precision: 0,
+                        thousand: ","
+                    }
+                },
+                {
+                    title: "rdate",
+                    field: "rdate",
+                    editor: "input",
+                    hozAlign: "right",
+                    editor: false,
+
+                },
+                {
+                    formatter: deleteIcon,
+                    width: 40,
+                    hozAlign: "center",
+                    cellClick: function(e, cell) {
+                        deleteRow(cell.getRow())
+                    }
+                },
+            ],
+        });
 
         confirmList(null);
+        orderList(null);
         // Show the modal
         myModal.show();
+
+        table1.on("rowClick", function(e, row) {
+            listPor(row._row.data['por_id'])
+            $("#exampleModal").modal('hide');
+        });
     });
+
+    listPor = (por_id) => {
+        $.ajax({
+            url: "../Server/SPorDetailList.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: por_id
+            },
+            success: function(res) {
+                var js = res[0]['json']
+                porTable.setData(JSON.parse(js));
+                $("#idName").val(res[0]['order']);
+                $("#idAddr").val(res[0]['addr']);
+                $("#idRdate").val(res[0]['rdate']);
+            },
+            error: function(jqXFR, textStatus, errorThrown) {
+                if (textStatus == "error") {
+                    alert(loc + ' ' + textStatus);
+                }
+            }
+        });
+    }
 
     document.getElementById("idGrade").addEventListener("change", function() {
         // 선택된 옵션 가져오기
@@ -231,6 +502,43 @@
                 });
                 table.clearData()
                 table.setData(items);
+            },
+            error: function(e) {
+                alert('falure');
+                $("#err").html(e).fadeIn();
+            }
+        });
+
+        var deleteIcon = function(cell, formatterParams) { //plain text value
+            return "<i class='fa fa-trash'></i>";
+        };
+    }
+
+    orderList = () => {
+        var data = {
+            id: "manager"
+        };
+
+        $.ajax({
+            url: "../Server/SShowOrderList.php",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function(resp) {
+                resp.forEach(el => {
+                    var jarr = {
+                        "id": el['id'],
+                        "por_id": el['por_id'],
+                        "order": el['order'],
+                        "addr": el['addr'],
+                        "mobile": el['mobile'],
+                        "rdate": el['rdate'],
+                        "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+                    }
+                    items.push(jarr);
+                });
+                table1.clearData()
+                table1.setData(items);
             },
             error: function(e) {
                 alert('falure');
