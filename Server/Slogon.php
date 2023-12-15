@@ -16,9 +16,11 @@ $Password = $_POST["Password"];
 			session_start();
 			$_SESSION["authenticated"] = 'true';
 			$_SESSION["user"] = $res['id'];
+			$_SESSION["name"] = $res['name'];
+			$_SESSION["role"] = $res['role'];
 
 			//echo json_encode($res['id']);
-			header('location: ../login/welcome.php?id='.$_SESSION["user"]);  
+			header('location: ../index_admin.php?id='.$_SESSION["user"]);  
 		}
 		else {
 			//hearder("Location: login.php");

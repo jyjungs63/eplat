@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,56 +20,56 @@
 
 
     <style>
-        .table-image {
+    .table-image {
 
-            td,
-            th {
-                dmadkr vertical-align: middle;
-            }
+        td,
+        th {
+            dmadkr vertical-align: middle;
         }
+    }
 
-        hr {
-            height: 2px;
-            background-color: #17324d;
-            < !-- background-color: #5e48af;
-            -->border: none;
-        }
+    hr {
+        height: 2px;
+        background-color: #17324d;
+        < !-- background-color: #5e48af;
+        -->border: none;
+    }
     </style>
 
     <style>
-        .firstcharacter {
-            float: left;
-            font-family: Georgia;
-            font-size: 50px;
-            line-height: 36px;
-            padding-top: 1px;
-            padding-right: 1px;
-            padding-left: 1px;
+    .firstcharacter {
+        float: left;
+        font-family: Georgia;
+        font-size: 50px;
+        line-height: 36px;
+        padding-top: 1px;
+        padding-right: 1px;
+        padding-left: 1px;
     </style>
 
     <style>
-        strong {
-            font-weight: bold;
-        }
+    strong {
+        font-weight: bold;
+    }
 
-        .btn-close {
-            position: absolute;
-            right: 0;
-            padding: 1em;
-        }
+    .btn-close {
+        position: absolute;
+        right: 0;
+        padding: 1em;
+    }
     </style>
 
 
     <style>
-        subtitle1-tt {
-            float: left;
-            padding: 10px;
-            width: 100%;
-            background-color: #5f6ca7;
-            height: 50px;
-            text-align: center;
-            color: white;
-        }
+    subtitle1-tt {
+        float: left;
+        padding: 10px;
+        width: 100%;
+        background-color: #5f6ca7;
+        height: 50px;
+        text-align: center;
+        color: white;
+    }
     </style>
 
 
@@ -102,14 +103,14 @@
     </div> -->
 
     <div class="navbar" ;>
-        
+
         <div class="container">
             <a href="#" class="brand">
                 <img src="assets/img/logo.png" width="80" height="30" alt="Eplat" />
             </a>
             <div class="d-flex">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded" href="board/list.php">게시판</a>
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">지사마당</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="board/list.php">게시판</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">지사마당</a>
             </div>
         </div>
     </div>
@@ -125,7 +126,8 @@
         <div class="container">
 
             <h1>
-                <div> <!-- style="font-family:MD이솝체;"> -->
+                <div>
+                    <!-- style="font-family:MD이솝체;"> -->
                     <p> <strong>이플렛</strong></p>
                 </div>
             </h1>
@@ -144,7 +146,8 @@
             <!-- <img class="img-fluid w-100" src="assets/img/welcome.jpg" alt="..." /> -->
 
             <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
-                <a href="login/login.php"> <img class="img-fluid w-100" src="assets/img/environments.jpg" alt="Login Eplat Study Home" /></a>
+                <a href="login/login.php"> <img class="img-fluid w-100" src="assets/img/environments.jpg"
+                        alt="Login Eplat Study Home" /></a>
             </div>
 
         </div>
@@ -152,10 +155,12 @@
     </div>
 
     <!-- "회사소개" Modal 8 눌렀을때 나오는 내용-->
-    <div class="company-modal modal fade" id="portfolioModal8" tabindex="-1" aria-labelledby="portfolioModal8" aria-hidden="true">
+    <div class="company-modal modal fade" id="portfolioModal8" tabindex="-1" aria-labelledby="portfolioModal8"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
                 <div class="modal-body text-center pb-5">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -186,7 +191,8 @@
                                         <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교재개발</strong>
                                         </p>
 
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_1.jpg" alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_1.jpg"
+                                            alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교재개발</strong></p> -->
                                         <p><span class="firstcharacter">E</span>
@@ -198,7 +204,8 @@
 
                                         <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교구개발</strong>
                                         </p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_2.jpg" alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_2.jpg"
+                                            alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교구개발</strong></p> -->
                                         <p><span class="firstcharacter">E</span>
@@ -210,7 +217,8 @@
 
                                         <p align="Center" style="font-size: 26px;color: #4169E1"><strong>온라인개발</strong>
                                         </p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_3.jpg" alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_3.jpg"
+                                            alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>온라인개발</strong></p> -->
                                         <p><span class="firstcharacter">E</span>
@@ -221,7 +229,8 @@
 
                                         <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교육개발 및
                                                 강사교육</strong></p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_4.jpg" alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_4.jpg"
+                                            alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교육개발 및 강사교육</strong></p> -->
                                         <p><span class="firstcharacter">E</span>
@@ -241,7 +250,8 @@
                                             <div class="divider-custom-line"></div>
                                         </div>
 
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/office-location.jpg" alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/office-location.jpg"
+                                            alt="..." />
                                         <p> </p>
                                         <br> </br>
                                         <hr style="border: solid 1px gray;">
@@ -257,7 +267,8 @@
                                             <div class="divider-custom-line"></div>
                                         </div>
 
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_life.jpg" alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_life.jpg"
+                                            alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>회사연혁</strong></p> -->
                                         <!-- <p><span class="firstcharacter">E</span>  -->
@@ -410,7 +421,8 @@
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
+                        alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -437,15 +449,22 @@
 
                                 <!-- <img class="img-fluid d-block mx-auto" src="assets/img/title1.png" alt="..." /> -->
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_1.jpg" alt="..." />
-                                <a href="https://youtu.be/wEaPF9q-T6c"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
-                                <a href="https://youtu.be/h5RhXdWx8WE"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
-                                <a href="https://youtu.be/ZkSzlUwLygU"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_1.jpg"
+                                    alt="..." />
+                                <a href="https://youtu.be/wEaPF9q-T6c"><img src="assets/img/vmovie_icon.png"
+                                        class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
+                                <a href="https://youtu.be/h5RhXdWx8WE"><img src="assets/img/vmovie_icon.png"
+                                        class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
+                                <a href="https://youtu.be/ZkSzlUwLygU"><img src="assets/img/vmovie_icon.png"
+                                        class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
                                 <p class="item-intro text-muted">① 로그5 ② 로그6 ③ 로그7 </p>
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_2.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_3.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_4.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_2.jpg"
+                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_3.jpg"
+                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_4.jpg"
+                                    alt="..." />
 
                                 <hr style="border: solid 1px gray;">
                                 <br>
@@ -461,13 +480,16 @@
                                 <!-- <h5>(로그영어2.0)</h5> -->
                                 <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어2.0)</strong></p> -->
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_1.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_1.jpg"
+                                    alt="..." />
                                 <!-- <p  align="Center" style="font-size: 20px;color: #4169E1" ><strong>파닉스 송</strong></p> -->
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_2.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_2.jpg"
+                                    alt="..." />
                                 <!-- <p  align="Center" style="font-size: 20px;color: #4169E1" ><strong>놀이활동</strong></p> -->
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_3.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_3.jpg"
+                                    alt="..." />
                                 <!-- <p  align="Center" style="font-size: 20px;color: #4169E1" ><strong>블록활동</strong></p> -->
                                 <hr style="border: solid 1px gray;">
                                 <br>
@@ -482,12 +504,16 @@
                                 </subtitle1-tt>
                                 <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어2.0)</strong></p> -->
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_1.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_1.jpg"
+                                    alt="..." />
 
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_2.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_3.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_3.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_2.jpg"
+                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_3.jpg"
+                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_3.jpg"
+                                    alt="..." />
                                 <hr style="border: solid 1px gray;">
                                 <br>
 
@@ -500,12 +526,15 @@
                                 </subtitle1-tt>
                                 <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어1.0)</strong></p> -->
                                 <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_1.jpg" alt="..." /> -->
-                                <p><a href="https://youtu.be/PZ04CAhCsX4"><img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_1.jpg" alt="..." /></a></p>
+                                <p><a href="https://youtu.be/PZ04CAhCsX4"><img class="img-fluid d-block mx-auto"
+                                            src="assets/img/eng_textbook_phonics30_1.jpg" alt="..." /></a></p>
                                 <!-- <a href="https://youtu.be/PZ04CAhCsX4" ><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a> -->
                                 <!-- <p class="item-intro text-muted">① 파닉스북 </p>		 -->
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_2.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_3.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_2.jpg"
+                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_3.jpg"
+                                    alt="..." />
                                 <hr style="border: solid 1px gray;">
                                 <br>
 
@@ -518,15 +547,19 @@
                                 </subtitle1-tt>
                                 <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어1.0)</strong></p> -->
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_1.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_2.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_3.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_1.jpg"
+                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_2.jpg"
+                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_3.jpg"
+                                    alt="..." />
 
 
                                 <hr style="border: solid 1px gray;">
                                 <br>
 
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
+                                    type="button">
                                     <i class="fas fa-xmark me-1"></i>
                                     Close Project
                                 </button>
@@ -543,7 +576,8 @@
     <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
+                        alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -578,7 +612,8 @@
                                     <h3>파닉스카드</h3>
                                 </subtitle1-tt>
                                 <p align="Center" style="font-size: 20px;color: #7D7676"><strong>(120단어)</strong></p>
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_card_1.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_card_1.jpg"
+                                    alt="..." />
 
                                 <!-- 로그맵-->
                                 <!-- <h4 style="background-color:#FAAC58;">로그맵 30종</h4> -->
@@ -590,22 +625,29 @@
 
                                 <!--7세-->
                                 <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_5.jpg" alt="..." /> -->
-                                <p><a href="https://youtu.be/aYJ_ZCPS9xY"><img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_5.jpg" alt="..." /></a>
+                                <p><a href="https://youtu.be/aYJ_ZCPS9xY"><img class="img-fluid d-block mx-auto"
+                                            src="assets/img/eng_diocese_rogmap_5.jpg" alt="..." /></a>
                                 <p>
 
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_6.jpg" alt="..." />
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_6.jpg"
+                                        alt="..." />
                                     <!--5세-->
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_1.jpg" alt="..." />
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_2.jpg" alt="..." />
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_1.jpg"
+                                        alt="..." />
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_2.jpg"
+                                        alt="..." />
                                     <!--6세-->
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_3.jpg" alt="..." />
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_4.jpg" alt="..." />
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_3.jpg"
+                                        alt="..." />
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_4.jpg"
+                                        alt="..." />
 
 
 
                                     <br>
 
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
+                                        type="button">
                                         <i class="fas fa-xmark me-1"></i>
                                         Close Project
                                     </button>
@@ -622,7 +664,8 @@
     <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
+                        alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -636,12 +679,18 @@
                                 <!-- <h4 style="background-color:#FAAC58;">이플렛요약</h4> -->
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_play_1.jpg" alt="..." />
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_edu_process.jpg" alt="...">
-                                <a href="https://instagram.com/stories/blocks_english/2971698557168297149?utm_source=ig_story_item_share&igshid=MDJmNzVkMjY="><img src="assets/img/instagram_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."></a>
-                                <a href="https://instagram.com/littlebeeenglish?igshid=YmMyMTA2M2Y="><img src="assets/img/instagram_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."></a>
+                                <a
+                                    href="https://instagram.com/stories/blocks_english/2971698557168297149?utm_source=ig_story_item_share&igshid=MDJmNzVkMjY="><img
+                                        src="assets/img/instagram_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."></a>
+                                <a href="https://instagram.com/littlebeeenglish?igshid=YmMyMTA2M2Y="><img
+                                        src="assets/img/instagram_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."></a>
                                 <p class="item-intro text-muted">①부산센타 ②포항센타</p>
 
                                 <br> </br>
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
+                                    type="button">
                                     <i class="fas fa-xmark me-1"></i>
                                     Close Project
                                 </button>
@@ -658,7 +707,8 @@
     <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
+                        alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -670,19 +720,25 @@
                                 <hr style="border: solid 1px gray;">
 
                                 <!-- <h4 style="background-color:#FAAC58;">이플렛요약</h4> -->
-                                <p><a href="assets/img/Block_activity.mp4"><img src="assets/img/Block_activity.jpg " width="100%" height="100%" /></a></p>
-                                <p><a href="assets/img/ActiviBlock_cleanup.mp4"><img src="assets/img/ActiviBlock_cleanup.jpg " width="100%" height="100%" /></a>
+                                <p><a href="assets/img/Block_activity.mp4"><img src="assets/img/Block_activity.jpg "
+                                            width="100%" height="100%" /></a></p>
+                                <p><a href="assets/img/ActiviBlock_cleanup.mp4"><img
+                                            src="assets/img/ActiviBlock_cleanup.jpg " width="100%" height="100%" /></a>
                                 </p>
-                                <p><a href="assets/img/block_play.mp4"><img src="assets/img/block_play.jpg " width="100%" height="100%" /></a></p>
-                                <p><a href="assets/img/teacher_sene.mp4"><img src="assets/img/teacher_sene.jpg " width="100%" height="100%" /></a></p>
+                                <p><a href="assets/img/block_play.mp4"><img src="assets/img/block_play.jpg "
+                                            width="100%" height="100%" /></a></p>
+                                <p><a href="assets/img/teacher_sene.mp4"><img src="assets/img/teacher_sene.jpg "
+                                            width="100%" height="100%" /></a></p>
 
                                 <hr style="border: solid 1px gray;">
-                                <p><a href="assets/img/newhomepage_eplat.pdf"><img src="assets/img/newhomepage_eplat.jpg " width="100%" height="100%" /></a>
+                                <p><a href="assets/img/newhomepage_eplat.pdf"><img
+                                            src="assets/img/newhomepage_eplat.jpg " width="100%" height="100%" /></a>
                                 </p>
 
 
                                 <br> </br>
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
+                                    type="button">
                                     <i class="fas fa-xmark me-1"></i>
                                     Close Project
                                 </button>
@@ -698,44 +754,52 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item text-center">
-                            <a class="nav-link active btl" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Login</a>
+                            <a class="nav-link active btl" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home"
+                                role="tab" aria-controls="pills-home" aria-selected="true">Login</a>
                         </li>
                         <li class="nav-item text-center">
-                            <a class="nav-link btr" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Signup</a>
+                            <a class="nav-link btr" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile"
+                                role="tab" aria-controls="pills-profile" aria-selected="false">Signup</a>
                         </li>
 
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
 
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                            aria-labelledby="pills-home-tab">
 
                             <div class="form-area bg-primary">
                                 <h1 class="text-center">Login Form</h1>
                                 <form>
                                     <div class="mb-3 mt-4">
                                         <label for="exampleInputEmail1" class="form-label">Your Email</label>
-                                        <input id="Email" name="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        <input id="Email" name="Email" type="email" class="form-control"
+                                            id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Your Password</label>
-                                        <input id="Password" type="password" class="form-control" id="exampleInputPassword1">
+                                        <input id="Password" type="password" class="form-control"
+                                            id="exampleInputPassword1">
                                     </div>
                                     <button id="idlogin" type="submit" class="btn btn-light mt-3">LOGIN</button>
                                     <p>New Here?    <a href="#">Signup</a></p>
                                 </form>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                            aria-labelledby="pills-profile-tab">
 
                             <div class="form-area bg-primary">
                                 <h1 class="text-center">Register Form</h1>
                                 <form>
                                     <div class="mb-3 mt-4">
                                         <label for="exampleInputEmail1" class="form-label">Your Name</label>
-                                        <input id="name" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Name">
+                                        <input id="name" type="email" class="form-control" aria-describedby="emailHelp"
+                                            placeholder="Name">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Your Email</label>
@@ -747,7 +811,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Your Password</label>
-                                        <input id="password" type="password" class="form-control" placeholder="Password">
+                                        <input id="password" type="password" class="form-control"
+                                            placeholder="Password">
                                     </div>
                                     <button id="idregister" type="submit" class="btn btn-light mt-3">Signup</button>
                                 </form>
@@ -777,9 +842,11 @@
             <div class="row align-items-center">
                 <div style="color: white;" class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2022</div>
                 <div class="col-lg-4 my-3 my-lg-0">
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i
+                            class="fab fa-twitter"></i></a>
                     <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i
+                            class="fab fa-linkedin-in"></i></a>
                 </div>
                 <div class="col-lg-4 text-lg-end">
                     <!-- <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a> -->
@@ -790,68 +857,68 @@
     </footer>
 
     <script>
-        $("#idlogin").on('click', function() {
-            e.preventDefault();
+    $("#idlogin").on('click', function() {
+        e.preventDefault();
 
-            var data = {
-                Email: $('#Email').val(),
-                Password: $('#Password').val()
-            }
+        var data = {
+            Email: $('#Email').val(),
+            Password: $('#Password').val()
+        }
 
-            e.preventDefault();
+        e.preventDefault();
 
-            $.ajax({
-                url: "Server/Slogon.php",
-                type: "POST",
-                dataType: "json",
-                data: data,
-                beforeSend: function() {
-                    $("#err").fadeOut();
-                },
-                success: function(resp) {
-                    if (resp != 'falure') {
-                        $('#loger').html(resp);
-                        $('#signin').css('display', 'none');
-                        $('#signout').css('display', 'block');
-                        $('#adminmenu').css('display', 'block');
-                    } else {
-                        alert('login 실패!');
-                    }
-                },
-                error: function(e) {
+        $.ajax({
+            url: "Server/Slogon.php",
+            type: "POST",
+            dataType: "json",
+            data: data,
+            beforeSend: function() {
+                $("#err").fadeOut();
+            },
+            success: function(resp) {
+                if (resp != 'falure') {
+                    $('#loger').html(resp);
+                    $('#signin').css('display', 'none');
+                    $('#signout').css('display', 'block');
+                    $('#adminmenu').css('display', 'block');
+                } else {
                     alert('login 실패!');
                 }
-            });
-        })
-
-        $("#idregister").click(function() {
-            mydata = {
-                id: $("#email").val(),
-                name: $("#name").val(),
-                password: $("#password").val(),
-                role: '9'
+            },
+            error: function(e) {
+                alert('login 실패!');
             }
-            //alert( $("#inputID").val() + " " + $("#inputName").val() + " " + $("#inputPassword").val() + " " + $("#inputPasswordConfirm").val() )
-            // if (  $("#inputPassword").val() === $("#inputPasswordConfirm").val()) {
-            $.ajax({
-                url: "Server/Sregister.php",
-                type: "POST",
-                dataType: "json",
-                data: mydata,
-
-                success: function(response) {
-                    alert('success');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    if (textStatus == "error") {
-                        alert(loc + ' ' + textStatus);
-                    }
-                }
-            });
-            // }
-            // else
-            // 	alert('password mismatched !!');
         });
+    })
+
+    $("#idregister").click(function() {
+        mydata = {
+            id: $("#email").val(),
+            name: $("#name").val(),
+            password: $("#password").val(),
+            role: '9'
+        }
+        //alert( $("#inputID").val() + " " + $("#inputName").val() + " " + $("#inputPassword").val() + " " + $("#inputPasswordConfirm").val() )
+        // if (  $("#inputPassword").val() === $("#inputPasswordConfirm").val()) {
+        $.ajax({
+            url: "Server/Sregister.php",
+            type: "POST",
+            dataType: "json",
+            data: mydata,
+
+            success: function(response) {
+                alert('success');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                if (textStatus == "error") {
+                    alert(loc + ' ' + textStatus);
+                }
+            }
+        });
+        // }
+        // else
+        // 	alert('password mismatched !!');
+    });
     </script>
 
 
