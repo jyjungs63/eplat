@@ -3,9 +3,9 @@
 session_start();
 if (isset($_SESSION['user'])) {
     echo "<h5 id='hiddenid' align='center' style='visibility:hidden' >" . $_SESSION["user"] . "</h5>";
-} else {
-    header('location:login.php');
-}
+} 
+
+
 
 // 세션 변수 설정
 //$_SESSION["authenticated"] 
@@ -132,6 +132,8 @@ if (isset($_SESSION['user'])) {
                     href="purchase/branchmgr.php">지사마당</a>
                 <a id="idm3" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
                     href="purchase/order.php">구매</a>
+                <a id="idm4" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
+                    href="login/adminLogin.php">admin</a>
                 <!-- <a class="nav-link py-3 px-0 px-lg-3 rounded" href="javascript:toggleVisibility()">Login</a> -->
                 <a class="nav-link py-3 px-0 px-lg-3 rounded" href="login/login.php">Login</a>
             </div>
@@ -146,6 +148,10 @@ if (isset($_SESSION['user'])) {
             $('#idm1').toggle();
 
             $('#idm2').toggle();
+
+            $('#idm3').toggle();
+
+            $('#idm4').toggle();
 
             $('#idClass').toggle();
 
@@ -178,7 +184,7 @@ if (isset($_SESSION['user'])) {
     <!-- 유치원 소개를 요약하여 홍보하기 위한 유치원 교육 환경을 소개하기 위한 장르 ------------------------------->
     <div class="container" style="margin-top: 20px">
 
-        <div id="idClass" class="row" style="display: none">
+        <div id="idClass" class="row" style="display: visible">
             <!-- <img class="img-fluid w-100" src="assets/img/welcome.jpg" alt="..." /> -->
 
             <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
