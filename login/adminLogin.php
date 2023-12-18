@@ -129,9 +129,10 @@
                                     <div class="card-body pad">
                                         <div class="d-flex align-items-end justify-content-end"
                                             style="margin-bottom: 10px;">
-                                            <a id="anchorRead" href="javascript:orderBook()" class="btn btn-info"
-                                                role="button" aria-disabled="true"><i
-                                                    class="fa-solid fa-cart-shopping"></i></a>
+                                            <a id="anchorRead" href="javascript:updateItem()" class="btn btn-primary"
+                                                role="button" aria-disabled="true" data-toggle="tooltip"
+                                                title="Update Branch Manager status"><i
+                                                    class="fa-solid fa-database"></i></a>
                                         </div>
 
                                         <div id="idTable">
@@ -152,9 +153,10 @@
                     </section>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        onclick="updateItem()">Update</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-toggle="tooltip"
+                        title="Update Branch Manager status" onclick="updateItem()">Update</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-toggle="tooltip"
+                        title="Exit ">Close</button>
                 </div>
             </div>
         </div>
@@ -432,6 +434,7 @@
     });
 
     listPor = (por_id) => {
+
         $.ajax({
             url: "../Server/SPorDetailList.php",
             type: "POST",
@@ -468,15 +471,17 @@
     });
 
     confirmList = (value) => {
+        var item = [];
         var sel = 0;
         if (value != null) {
             if (value == "승인")
                 sel = 1;
-            else
+            else if (value == "미승인")
                 sel = 2;
+            else
+                sel = 3;
         }
 
-        var items = [];
         var data = {
             num: sel
         };
@@ -498,10 +503,10 @@
                         "rdate": el['rdate'],
                         "confirm": el['confirm'] == 1 ? "승인" : "미승인",
                     }
-                    items.push(jarr);
+                    item.push(jarr);
                 });
                 table.clearData()
-                table.setData(items);
+                table.setData(item);
             },
             error: function(e) {
                 alert('falure');
@@ -515,6 +520,7 @@
     }
 
     orderList = () => {
+        items = [];
         var data = {
             id: "manager"
         };
@@ -550,8 +556,9 @@
             return "<i class='fa fa-trash'></i>";
         };
     }
-    updateItem = () => {
 
+    updateItem = () => {
+        items = [];
         var item = table.getSelectedData();
 
         item.forEach(el => {
@@ -579,7 +586,9 @@
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
-            success: function(resp) {},
+            success: function(resp) {
+                confirmList("전체");
+            },
             error: function(e) {
                 alert('falure');
                 $("#err").html(e).fadeIn();

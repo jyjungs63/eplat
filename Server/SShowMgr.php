@@ -5,32 +5,39 @@ require_once 'dbinit.php';
 session_start();
 
 $role = $_POST['role'];
-$id = $_POST['id'];
+$id   = $_POST['id'];
 
-global $conn;
+try {
+	global $conn;
 
-$sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '".$id."'"; 
-    
-$rs = mysqli_query($conn,$sqlString);
-$rows = array();
+	$sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '".$id."'"; 
+		
+	$rs = mysqli_query($conn,$sqlString);
+	$rows = array();
 
-$i = 0;
+	$i = 0;
 
-while($row = mysqli_fetch_array($rs)){
-	array_push($rows,
-			array(  'id'        => $row['id'],
-					'name'      => $row['name'] ,
-					'password'  => $row['password'],								
-					'mobile'    => $row['mobile'],								
-					'addr'      => $row['addr'],								
-					'zipcode'   => $row['zipcode'],								
-					'confirm'   => $row['confirm'],								
-					'rdate'     => $row['rdate'],								
-			));
+	while($row = mysqli_fetch_array($rs)){
+		array_push($rows,
+				array(  'id'        => $row['id'],
+						'name'      => $row['name'] ,
+						'password'  => $row['password'],								
+						'mobile'    => $row['mobile'],								
+						'addr'      => $row['addr'],								
+						'zipcode'   => $row['zipcode'],								
+						'confirm'   => $row['confirm'],								
+						'rdate'     => $row['rdate'],								
+				));
+	}
+	$conn->close();
+	$result["rows"] = $rows;
+
+	header('Content-Type: application/json');
+	echo json_encode($rows);
 }
-
-$result["rows"] = $rows;
-
-echo json_encode($rows);
-
+catch (Exception $e)
+{
+	header('Content-Type: application/json');
+	echo json_encode( array( "Error: " => $e->getMessage() ) );
+}
 ?>

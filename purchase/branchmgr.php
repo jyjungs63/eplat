@@ -153,7 +153,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
     <script src="branchmgr_js.js"></script>
-    <script src="common.js"></script>
+    <script src="../common.js"></script>
 
 
     <script>

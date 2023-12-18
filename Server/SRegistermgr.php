@@ -22,23 +22,29 @@ $zipcode  = $row['zipcode'];
 $idrolebm = $row['idrolebm'];
 $mid      = $row['mid'];
 $role     = 2;
+$error="";
 
-global $conn;
+try {
+	global $conn;
 
-$sqlstring = "insert into eplat_user (id, name, password, mobile, addr, zipcode, role, mid) 
-              values ( '{$id}', '{$name}','{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role, '{$mid}' )";
+	$sqlstring = "insert into eplat_user (id, name, password, mobile, addr, zipcode, role, mid) 
+				values ( '{$id}', '{$name}','{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role, '{$mid}' )";
 
-$res = mysqli_query ( $conn, $sqlstring);
+	$res = mysqli_query ( $conn, $sqlstring);
 
-$conn->close();
+	$conn->close();
+}
+catch (Exception $e) 
+{
+	$error = $e->getMessage();
+}
 
 header('Content-Type: application/json');
 if ($res=== TRUE) {
 	$result = true;
 	//header('location: ../login/login.php');
 } else {
-	$result = json_encode(  array( "Error: " => $conn->error ) );
-
+	$result = json_encode(  array( "Error: " => $error ) );
 }
 echo $result;
 

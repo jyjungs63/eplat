@@ -18,6 +18,7 @@ $Password = $_POST["Password"];
 			$_SESSION["user"] = $res['id'];
 			$_SESSION["name"] = $res['name'];
 			$_SESSION["role"] = $res['role'];
+			$_SESSION["confirm"] = $res['confirm'];
 
 			//echo json_encode($res['id']);
 			header('location: ../index_admin.php?id='.$_SESSION["user"]);  

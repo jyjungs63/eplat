@@ -8,12 +8,12 @@ $num = $_POST['num'];
 
 global $conn;
 
-$sqlString = "SELECT *  FROM eplat_user"; 
+$sqlString = "SELECT *  FROM eplat_user where role = 1"; 
 
 if ( $num == "2")
-    $sqlString = "SELECT *  FROM eplat_user where confirm = 0"; 
+    $sqlString = "SELECT *  FROM eplat_user where role = 1 and confirm = 0"; 
 else if ( $num == "1")
-    $sqlString = "SELECT *  FROM eplat_user where confirm = 1"; 
+    $sqlString = "SELECT *  FROM eplat_user where role = 1 and confirm = 1"; 
 
     
 $rs = mysqli_query($conn,$sqlString);

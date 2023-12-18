@@ -2,18 +2,15 @@
 // 세션을 시작합니다.
 session_start();
 if (isset($_SESSION['user'])) {
-    echo "<h5 id='hiddenid' align='center' style='visibility:hidden' >" . $_SESSION["user"] . "</h5>";
+    echo "<div class='d-flex' style='margin-top: 10px'>";
+    echo "<span id='hiddenid'  style='visibility:hidden;margin-top: -10px' >" . $_SESSION["user"] . "</span>";
+    echo "<span id='hiddenname'  style='visibility:hidden' >" . $_SESSION["name"] . "</span>";
+    echo "<span id='hiddenrole'  style='visibility:hidden' >" . $_SESSION["role"] . "</span>";
+    echo "<span id='hiddenconfirm'  style='visibility:hidden' >" . $_SESSION["confirm"] . "</span>";
+    echo "</div>";
 } 
-
-
-
-// 세션 변수 설정
-//$_SESSION["authenticated"] 
-//$_SESSION["user"]
-//$_SESSION["name"]
-//$_SESSION["role"]
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,11 +27,10 @@ if (isset($_SESSION['user'])) {
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap) -->
+    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
     <style>
@@ -49,6 +45,7 @@ if (isset($_SESSION['user'])) {
     hr {
         height: 2px;
         background-color: #17324d;
+        border: none;
     }
     </style>
 
@@ -61,18 +58,11 @@ if (isset($_SESSION['user'])) {
         padding-top: 1px;
         padding-right: 1px;
         padding-left: 1px;
-    }
     </style>
 
     <style>
     strong {
         font-weight: bold;
-    }
-
-    .btn-close {
-        position: absolute;
-        right: 0;
-        padding: 1em;
     }
     </style>
 
@@ -88,9 +78,6 @@ if (isset($_SESSION['user'])) {
         color: white;
     }
     </style>
-
-
-
 </head>
 
 <!-- 여기에서는 맨 밑의 Body background Color를 정의하는 곳으로써 맨 마지막 footer의 칼라만 아래의 칼라로 적용되며,
@@ -101,29 +88,15 @@ if (isset($_SESSION['user'])) {
     <!-- 화면 맨위 좌측상단의 유치원 Logo를 표시하기 위한 위치------------------------------------------->
     <!-- styles.css 파일내에서 아래 class로 정의 함-폰트크기.스타일.Line height.margin-bottom등-->
     <!-- 유치원 이름의 바탕색을(#000000-검은색)을 표시-->
-    <!-- <div class="navbar" ;>
-        <div class="navbar-inner">
-            <div class="container">
-                <a href="#" class="brand">
-
-                    <img src="assets/img/logo.png" width="80" height="30" alt="Eplat" />
-
-                </a>
-
-                <div class="d-flex">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a></li>
-            </div>
-
-            </div>
-        </div>
-    </div> -->
-
     <div class="navbar" ;>
-
+        <!-- <div class="navbar-inner"> -->
         <div class="container">
+
             <a href="#" class="brand">
+                <!-- <div  style="background:#000000" >Eplat</div> -->
+                <!-- <p> <strong>매트로 유치원</strong></p> -->
                 <img src="assets/img/logo.png" width="80" height="30" alt="Eplat" />
+                <!-- This is website logo -->
             </a>
             <div class="d-flex">
                 <a id="idm1" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
@@ -133,32 +106,59 @@ if (isset($_SESSION['user'])) {
                 <a id="idm3" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
                     href="purchase/order.php">구매</a>
                 <a id="idm4" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
+                    href="purchase/kgardenmgr.php">유치원관리</a>
+                <a id="idm5" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
                     href="login/adminLogin.php">admin</a>
-                <!-- <a class="nav-link py-3 px-0 px-lg-3 rounded" href="javascript:toggleVisibility()">Login</a> -->
-                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="login/login.php">Login</a>
+                <a id="idlogin" class="nav-link py-3 px-0 px-lg-3 rounded" href="login/login.php">Login</a>
             </div>
+
         </div>
+        <!-- </div> -->
     </div>
 
     <script>
-    toggleVisibility();
+    $(document).ready(function() {
+        // Hide the element initially using visibility: hidden
+        toggleVisibility();
+    })
+
+
 
     function toggleVisibility() {
-        if ($("#hiddenid").html() == "admin") {
-            $('#idm1').toggle();
 
-            $('#idm2').toggle();
+        if ($("#hiddenid").html() == "admin" && $("#hiddenrole").html() == "9") { // admin menu
 
-            $('#idm3').toggle();
+            $('#idm1').toggle(); // 게시판
+            $('#idm2').toggle(); // 지사마당 메뉴
+            $('#idm3').toggle(); // 구매
+            $('#idm4').toggle(); // 유치원관리
+            $('#idm5').toggle(); // admin menu
+            $('#idClass').css('visibility', 'visible');
+            $('#idlogin').attr('href', "login/logout.php")
+            $('#idlogin').text("Logout")
 
-            $('#idm4').toggle();
-
-            $('#idClass').toggle();
-
+        } else if ($("#hiddenrole").html() == "1") { // Brabch manager control
+            if ($("#hiddenconfirm").html() == "1") {
+                $('#idm1').toggle(); // 게시판
+                $('#idm2').toggle(); // 지사마당 메뉴
+                $('#idm3').toggle(); // 구매
+                $('#idClass').css('visibility', 'visible'); //학습관 바로가기
+                $('#idlogin').attr('href', "login/logout.php")
+                $('#idlogin').text("Logout")
+            } else {
+                alert($("#hiddenname").html() + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
+            }
+        } else if ($("#hiddenrole").html() == "2") { // 유치원 선생님 메뉴
+            $('#idm1').toggle(); // 게시판
+            $('#idm4').toggle(); // 유치원관리
+            $('#idClass').css('visibility', 'visible');
+            $('#idlogin').attr('href', "login/logout.php")
+            $('#idlogin').text("Logout")
+        } else {
+            $('#idClass').css('visibility', 'hidden');
         }
     }
     </script>
-
     <!-- 초기 Welcome 화면---------------------------------------------------------------------------->
     <!-- styles.css 파일내에서 아래 class로 정의 함-폰트크기.스타일.Line height.margin-bottom등-->
     <!-- Welcome화면의 Image는 styles.css file의 11409 line의 header.mastead class 밑의--
@@ -182,156 +182,18 @@ if (isset($_SESSION['user'])) {
 
 
     <!-- 유치원 소개를 요약하여 홍보하기 위한 유치원 교육 환경을 소개하기 위한 장르 ------------------------------->
-    <div class="container" style="margin-top: 20px">
+    <div id="idClass" class="container" style="margin-top: 20px;visibility: visible">
 
-        <div id="idClass" class="row" style="display: visible">
+        <div class="row">
             <!-- <img class="img-fluid w-100" src="assets/img/welcome.jpg" alt="..." /> -->
 
             <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
-                <a id="idWelcome" href="#"> <img class="img-fluid w-100" src="assets/img/environments.jpg"
-                        alt="Login Eplat Study Home" /></a>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- "회사소개" Modal 8 눌렀을때 나오는 내용-->
-    <div class="company-modal modal fade" id="portfolioModal8" tabindex="-1" aria-labelledby="portfolioModal8"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
-                        aria-label="Close"></button></div>
-                <div class="modal-body text-center pb-5">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-
-                                <!-- 회사소개 Title---------------------------------------------------------->
-                                <h2 class="company-modal-title text-secondary text-uppercase mb-0">Company Introduction
-                                </h2>
-                                <p>
-                                <h4>이플렛 : English Platform<h4>
-                                        </p>
-
-
-                                        <!-- <p  align="Center" style="font-size: 26px;color: #FF0000" ><strong>E</strong></p> -->
-                                        <!-- <p  align="Center" style="font-size: 26px;color: #000000" ><strong>nglish</strong></p> -->
-
-
-
-
-                                        <!--Star Symbol-->
-                                        <div class="divider-custom">
-                                            <div class="divider-custom-line"></div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                            <div class="divider-custom-line"></div>
-                                            <hr style="border: solid 1px gray;">
-                                        </div>
-
-                                        <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교재개발</strong>
-                                        </p>
-
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_1.jpg"
-                                            alt="..." />
-                                        <p> </p>
-                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교재개발</strong></p> -->
-                                        <p><span class="firstcharacter">E</span>
-                                        <h6>-plat은 오랜 기간 현장에서의 지도경험을 통해 창의적이고 융합적인 놀이식 학습방법을 개발하여 보급하고 있습니다. 또한 국내외 여러
-                                            나라와 지역에서 다양한 현장경험이 있는 선생님들의 차별화 된 교육방법을 제품화 하여 함께 비전을 공유할 수 있는 공간을 제공하고
-                                            있습니다.</h6>
-                                        </p>
-                                        <hr style="border: solid 1px gray;">
-
-                                        <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교구개발</strong>
-                                        </p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_2.jpg"
-                                            alt="..." />
-                                        <p> </p>
-                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교구개발</strong></p> -->
-                                        <p><span class="firstcharacter">E</span>
-                                        <h6>-plat은 영어를 처음 시작하는 아이들에게는 결과에 중점을 두는 것이 아니라 아이들이 좋아하는 놀이중심으로 과정에 충실해야한다고
-                                            생각합니다. 따라서 E-plat 은 교재와 함께 활용할 수 있는 다양한 교구도 함께 개발하고 있습니다.</h6>
-                                        </p>
-                                        <hr style="border: solid 1px gray;">
-
-
-                                        <p align="Center" style="font-size: 26px;color: #4169E1"><strong>온라인개발</strong>
-                                        </p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_3.jpg"
-                                            alt="..." />
-                                        <p> </p>
-                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>온라인개발</strong></p> -->
-                                        <p><span class="firstcharacter">E</span>
-                                        <h6>-plat 의 온라인 개발팀은 원어민과 프로그램전공자 그리고 오랜 기간 외국어학원의 운영경험을 기반으로 여러 영어교육회사의 학습시스템을
-                                            개발하여 제공하고 있습니다.</h6>
-                                        </p>
-                                        <hr style="border: solid 1px gray;">
-
-                                        <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교육개발 및
-                                                강사교육</strong></p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_4.jpg"
-                                            alt="..." />
-                                        <p> </p>
-                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교육개발 및 강사교육</strong></p> -->
-                                        <p><span class="firstcharacter">E</span>
-                                        <h6>-plat 의 교육은 유치부 교육과 초등부 교육으로 이원화 되어 있으며 다양한 놀이식 학습시스템과 교구의 활용방법을 보급하고 있습니다.
-                                        </h6>
-                                        </p>
-                                        <br> </br>
-                                        <hr style="border: solid 1px gray;">
-
-                                        <!--  교육센타 주소---------------------------------------------------------->
-                                        <h2 class="company-modal-title text-secondary text-uppercase mb-0">교육센타</h2>
-
-                                        <!--Star Symbol-->
-                                        <div class="divider-custom">
-                                            <div class="divider-custom-line"></div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                            <div class="divider-custom-line"></div>
-                                        </div>
-
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/office-location.jpg"
-                                            alt="..." />
-                                        <p> </p>
-                                        <br> </br>
-                                        <hr style="border: solid 1px gray;">
-
-
-                                        <!--  회사연혁 Title---------------------------------------------------------->
-                                        <h2 class="company-modal-title text-secondary text-uppercase mb-0">회사연혁</h2>
-
-                                        <!--Star Symbol-->
-                                        <div class="divider-custom">
-                                            <div class="divider-custom-line"></div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                            <div class="divider-custom-line"></div>
-                                        </div>
-
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_life.jpg"
-                                            alt="..." />
-                                        <p> </p>
-                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>회사연혁</strong></p> -->
-                                        <!-- <p><span class="firstcharacter">E</span>  -->
-
-
-                                        <hr style="border: solid 1px gray;">
-
-
-
-
-
-                                        <button class="btn btn-primary" data-bs-dismiss="modal">
-                                            <i class="fas fa-xmark fa-fw"></i>
-                                            Close Window
-                                        </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--<img class="img-fluid w-100" src="assets/img/environments.jpg" alt="..." />-->
+                <a href="login/welcome.php"> <img class="img-fluid w-100" src="assets/img/environments.jpg"
+                        alt="Login Eplat Study Home"></a>
             </div>
         </div>
+
     </div>
 
 
@@ -361,8 +223,8 @@ if (isset($_SESSION['user'])) {
 						 *lg=큰 기기의 데스크 탑--,xl=매우작은 기기의 모바일 폰, sm=작은기기 테블릿, md=중간기기의 데스크 탑 -->
 
 
-                <!-- Portfolio item 1 #portfolioModal1 [영어교재개발] -------------------------------------------------->
-                <!-- 영어 메뉴를 누르면 링크된 portfolioModal1으로 가라는 말-->
+                <!-- Portfolio item 1 #portfolioModal1 [영어교재] -------------------------------------------------->
+                <!-- 영어교재개발을 누르면 링크된 portfolioModal1으로 가라는 말-->
                 <div class="col-lg-4 col-sm-6 mb-4">
 
 
@@ -380,14 +242,14 @@ if (isset($_SESSION['user'])) {
 
                         <!-- 메뉴 아래 설명문 글자를 '영어교재개발'으로 하겠다는 말-->
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">영어교재개발</div>
+                            <div class="portfolio-caption-heading">영어교재</div>
                         </div>
                     </div>
                 </div>
 
 
-                <!-- Portfolio item 2 #portfolioModal2 [영어교구개발] --------------------------------------------->
-                <!-- 영어 메뉴를 누르면 링크된 portfolioModal2으로 가라는 말-->
+                <!-- Portfolio item 2 #portfolioModal2 [영어교구] --------------------------------------------->
+                <!-- 영어교구개발를 누르면 링크된 portfolioModal2으로 가라는 말-->
                 <div class="col-lg-4 col-sm-6 mb-4">
 
 
@@ -397,41 +259,41 @@ if (isset($_SESSION['user'])) {
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <!-- <img class="img-fluid" src="assets/img/eng_diocese_dev.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/eng_play_education-r1.jpg" alt="..." />
+                            <img class="img-fluid" src="assets/img/eng_diocese_dev.jpg" alt="..." />
                         </a>
 
                         <!-- 메뉴 아래 설명문 글자를 '영어교구개발'으로 하겠다는 말-->
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">영어교구개발</div>
+                            <div class="portfolio-caption-heading">영어교구</div>
                         </div>
 
                     </div>
                 </div>
 
                 <!-- Portfolio item 3 #portfolioModal3 [놀이영어교육] ------------------------------------------->
-                <!-- 온라인학습관 메뉴를 누르면 링크된 portfolioModal3로 가라는 말-->
-                <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- 놀이영어교육 메뉴를 누르면 링크된 portfolioModal3로 가라는 말-->
+                <!-- <div class="col-lg-4 col-sm-6 mb-4"> -->
 
 
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <!-- <img class="img-fluid" src="assets/img/eng_play_education.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/eng_play_education-r1.jpg" alt="..." />
-                        </a>
+                <!-- <div class="portfolio-item"> -->
+                <!-- <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3"> -->
+                <!-- <div class="portfolio-hover"> -->
+                <!-- <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div> -->
+                <!-- </div> -->
 
-                        <!-- 메뉴 아래 설명문 글자를 '놀이영어교육'으로 하겠다는 말-->
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">놀이영어교육</div>
-                        </div>
+                <!-- <img class="img-fluid" src="assets/img/eng_play_education-r1.jpg" alt="..." /> -->
+                <!-- </a> -->
 
-                    </div>
-                </div>
+                <!-- 메뉴 아래 설명문 글자를 '놀이영어교육'으로 하겠다는 말 -->
+                <!-- <div class="portfolio-caption"> -->
+                <!-- <div class="portfolio-caption-heading">놀이영어교육</div> -->
+                <!-- </div> -->
+
+                <!-- </div> -->
+                <!-- </div> -->
 
                 <!-- Portfolio item 4 #portfolioModal4 [EPlat] ------------------------------------------->
-                <!-- 온라인학습관 메뉴를 누르면 링크된 portfolioModal4로 가라는 말-->
+                <!-- 회사소개 메뉴를 누르면 링크된 portfolioModal4로 가라는 말-->
                 <div class="col-lg-4 col-sm-6 mb-4">
 
 
@@ -441,16 +303,61 @@ if (isset($_SESSION['user'])) {
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <!-- <img class="img-fluid" src="assets/img/eng_play_education.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/eplat.jpg" alt="..." />
+                            <img class="img-fluid" src="assets/img/company_intro_1.jpg" alt="..." />
                         </a>
 
-                        <!-- 메뉴 아래 설명문 글자를 'EPLAT'으로 하겠다는 말-->
+                        <!-- 메뉴 아래 설명문 글자를 '회사소개'로 하겠다는 말-->
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">EPLAT</div>
+                            <div class="portfolio-caption-heading">회사소개</div>
                         </div>
 
                     </div>
                 </div>
+
+                <!-- Portfolio item 5 #portfolioModal5 [EPlat] ------------------------------------------->
+                <!-- 수업장면 메뉴를 누르면 링크된 portfolioModal4로 가라는 말-->
+                <div class="col-lg-4 col-sm-6 mb-4">
+
+
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <!-- <img class="img-fluid" src="assets/img/eng_play_education.jpg" alt="..." /> -->
+                            <img class="img-fluid" src="assets/img/education_movie.jpg" alt="..." />
+                        </a>
+
+                        <!-- 메뉴 아래 설명문 글자를 '수업장면'으로 하겠다는 말-->
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">수업장면</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Portfolio item 6 #portfolioModal6 [EPlat] ------------------------------------------->
+                <!-- 강사모집 메뉴를 누르면 링크된 portfolioModal6로 가라는 말-->
+                <div class="col-lg-4 col-sm-6 mb-4">
+
+
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+
+                            <img class="img-fluid" src="assets/img/come_with_us.jpg" alt="..." />
+                        </a>
+
+                        <!-- 메뉴 아래 설명문 글자를 '강사모집'으로 하겠다는 말-->
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">교사교육</div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -458,7 +365,7 @@ if (isset($_SESSION['user'])) {
     </section>
 
 
-    <!-- Portfolio Modals [영어교재개발]------------------------------------------------------------------------------------------------------------------------------------->
+    <!-- Portfolio Modals [영어교재]------------------------------------------------------------------------------------------------------------------------------------->
     <!-- Portfolio item 1 modal popup-->
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -477,124 +384,65 @@ if (isset($_SESSION['user'])) {
                                 <!-- <p class="item-intro text-muted">놀이중심 영어교육</p> -->
                                 <hr style="border: solid 3px gray;">
 
-                                <!-- 스토리북48종-->
-                                <!-- <h4 style="background-color:17324d;">스토리북 48종(로그영어 2.0)</h4> -->
 
-                                <p align="Left" style="font-size: 20px;color: #7D7676"><strong>*로그영어2.0</strong></p>
-                                <subtitle1-tt>
-                                    <h3>스토리북48종</h3>
-                                </subtitle1-tt>
-                                <!-- <h5>(로그영어2.0)</h5> -->
-                                <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어2.0)</strong></p> -->
+                                <p align="Left" style="font-size: 20px;color: #7D7676"><strong>*E-Plat</strong></p>
 
 
+                                <!--Main_cover -->
+                                <img class="img-fluid d-block mx-auto"
+                                    src="assets/img/eplat_eng_book/eplat_eng_book1.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/main_introduction_of_brochure.mp4"><img
+                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."> </a>
 
-                                <!-- <img class="img-fluid d-block mx-auto" src="assets/img/title1.png" alt="..." /> -->
+                                <!--스토리_파닉스_브로셔소개 -->
+                                <img class="img-fluid d-block mx-auto"
+                                    src="assets/img/eplat_eng_book/eplat_eng_book2.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/story_brochure.mp4"><img
+                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."> </a>
+                                <a href="http://www.eplat.co.kr/assets/img/phonics_brochure.mp4"><img
+                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."> </a>
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_1.jpg"
-                                    alt="..." />
-                                <a href="https://youtu.be/wEaPF9q-T6c"><img src="assets/img/vmovie_icon.png"
-                                        class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
-                                <a href="https://youtu.be/h5RhXdWx8WE"><img src="assets/img/vmovie_icon.png"
-                                        class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
-                                <a href="https://youtu.be/ZkSzlUwLygU"><img src="assets/img/vmovie_icon.png"
-                                        class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
-                                <p class="item-intro text-muted">① 로그5 ② 로그6 ③ 로그7 </p>
+                                <!--스토리문장_파닉스문장_브로셔소개 -->
+                                <img class="img-fluid d-block mx-auto"
+                                    src="assets/img/eplat_eng_book/eplat_eng_book3.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/story_sentencs_brochure.mp4"><img
+                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."> </a>
+                                <a href="http://www.eplat.co.kr/assets/img/phonics_sentencs_brochure.mp4"><img
+                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."> </a>
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_2.jpg"
-                                    alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_3.jpg"
-                                    alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_story48_4.jpg"
-                                    alt="..." />
-
-                                <hr style="border: solid 1px gray;">
-                                <br>
-
-                                <!-- 파닉스48종-->
-
-                                <!-- <h4 style="background-color:#FAAC58;">파닉스북 48종(로그영어 2.0)</h4> -->
-                                <p align="Left" style="font-size: 20px;color: #7D7676"><strong>*로그영어2.0</strong></p>
-
-                                <subtitle1-tt>
-                                    <h3>파닉스북48종</h3>
-                                </subtitle1-tt>
-                                <!-- <h5>(로그영어2.0)</h5> -->
-                                <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어2.0)</strong></p> -->
-
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_1.jpg"
-                                    alt="..." />
-                                <!-- <p  align="Center" style="font-size: 20px;color: #4169E1" ><strong>파닉스 송</strong></p> -->
-
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_2.jpg"
-                                    alt="..." />
-                                <!-- <p  align="Center" style="font-size: 20px;color: #4169E1" ><strong>놀이활동</strong></p> -->
-
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics48_3.jpg"
-                                    alt="..." />
-                                <!-- <p  align="Center" style="font-size: 20px;color: #4169E1" ><strong>블록활동</strong></p> -->
-                                <hr style="border: solid 1px gray;">
-                                <br>
+                                <!--Funny_브로셔소개 -->
+                                <img class="img-fluid d-block mx-auto"
+                                    src="assets/img/eplat_eng_book/eplat_eng_book4.jpg" alt="..." />
+                                <!--<a href="https://youtu.be/wEaPF9q-T6c" ><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>  -->
 
 
-                                <!-- 액티비티48종-->
-                                <!-- <h4 style="background-color:#FAAC58;">액티비티48종(로그영어 2.0)</h4> -->
+                                <!--혼자서도 잘해요_브로셔소개 -->
+                                <img class="img-fluid d-block mx-auto"
+                                    src="assets/img/eplat_eng_book/eplat_eng_book5.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/myself_study_brochure.mp4"><img
+                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."> </a>
 
-                                <p align="Left" style="font-size: 20px;color: #7D7676"><strong>*로그영어2.0</strong></p>
-                                <subtitle1-tt>
-                                    <h3>액티비티48종</h3>
-                                </subtitle1-tt>
-                                <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어2.0)</strong></p> -->
+                                <!--Content_브로셔소개 -->
+                                <img class="img-fluid d-block mx-auto"
+                                    src="assets/img/eplat_eng_book/eplat_eng_book6.jpg" alt="..." />
+                                <!--<a href="https://youtu.be/wEaPF9q-T6c" ><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a> -->
 
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_1.jpg"
-                                    alt="..." />
+                                <!--영어문장 어순감각확립_브로셔소개 -->
+                                <img class="img-fluid d-block mx-auto"
+                                    src="assets/img/eplat_eng_book/eplat_eng_book7.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/english_sentencs_brochure.mp4"><img
+                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
+                                        style="max-width: 50px;" alt="..."> </a>
 
-
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_2.jpg"
-                                    alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_3.jpg"
-                                    alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_activity48_3.jpg"
-                                    alt="..." />
-                                <hr style="border: solid 1px gray;">
-                                <br>
-
-
-                                <!-- 액티비티30종-->
-                                <!-- <h4 style="background-color:#FAAC58;">파닉스북 30종(로그영어 1.0)</h4> -->
-                                <p align="Left" style="font-size: 20px;color: #7D7676"><strong>*로그영어1.0</strong></p>
-                                <subtitle1-tt>
-                                    <h3>파닉스북30종</h3>
-                                </subtitle1-tt>
-                                <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어1.0)</strong></p> -->
-                                <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_1.jpg" alt="..." /> -->
-                                <p><a href="https://youtu.be/PZ04CAhCsX4"><img class="img-fluid d-block mx-auto"
-                                            src="assets/img/eng_textbook_phonics30_1.jpg" alt="..." /></a></p>
-                                <!-- <a href="https://youtu.be/PZ04CAhCsX4" ><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a> -->
-                                <!-- <p class="item-intro text-muted">① 파닉스북 </p>		 -->
-
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_2.jpg"
-                                    alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_phonics30_3.jpg"
-                                    alt="..." />
-                                <hr style="border: solid 1px gray;">
-                                <br>
-
-                                <!-- 센텐스북30종-->
-                                <!-- <h4 style="background-color:#FAAC58;">센텐스북 30종(로그영어 1.0)</h4> -->
-
-                                <p align="Left" style="font-size: 20px;color: #7D7676"><strong>*로그영어1.0</strong></p>
-                                <subtitle1-tt>
-                                    <h3>센텐스북30종</h3>
-                                </subtitle1-tt>
-                                <!-- <p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그영어1.0)</strong></p> -->
-
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_1.jpg"
-                                    alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_2.jpg"
-                                    alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_textbook_sentence30_3.jpg"
-                                    alt="..." />
+                                <!--맨 뒤_cover -->
+                                <img class="img-fluid d-block mx-auto"
+                                    src="assets/img/eplat_eng_book/eplat_eng_book8.jpg" alt="..." />
 
 
                                 <hr style="border: solid 1px gray;">
@@ -640,8 +488,8 @@ if (isset($_SESSION['user'])) {
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_1.jpg" alt="..." />
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_2.jpg" alt="..." />
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_3.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_4.jpg" alt="..." />
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_5.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_4.jpg" alt="..." />
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_6.jpg" alt="..." />
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_7.jpg" alt="..." />
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_8.jpg" alt="..." />
@@ -659,40 +507,33 @@ if (isset($_SESSION['user'])) {
 
                                 <!-- 로그맵-->
                                 <!-- <h4 style="background-color:#FAAC58;">로그맵 30종</h4> -->
-                                <subtitle1-tt>
+                                <!-- <subtitle1-tt>
                                     <h3>교구영어코딩</h3>
-                                </subtitle1-tt>
-                                <p align="Center" style="font-size: 20px;color: #7D7676"><strong>(로그맵 30종)</strong></p>
+                                    </subtitle1-tt>
+									<p  align="Center" style="font-size: 20px;color: #7D7676" ><strong>(로그맵 30종)</strong></p>
 
-
-                                <!--7세-->
+									
+									<!--7세-->
                                 <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_5.jpg" alt="..." /> -->
-                                <p><a href="https://youtu.be/aYJ_ZCPS9xY"><img class="img-fluid d-block mx-auto"
-                                            src="assets/img/eng_diocese_rogmap_5.jpg" alt="..." /></a>
-                                <p>
+                                <!-- <p><a href="https://youtu.be/aYJ_ZCPS9xY" ><img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_5.jpg" alt="..." /></a><p> -->
 
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_6.jpg"
-                                        alt="..." />
-                                    <!--5세-->
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_1.jpg"
-                                        alt="..." />
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_2.jpg"
-                                        alt="..." />
-                                    <!--6세-->
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_3.jpg"
-                                        alt="..." />
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_4.jpg"
-                                        alt="..." />
+                                <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_6.jpg" alt="..." /> -->
+                                <!--5세-->
+                                <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_1.jpg" alt="..." /> -->
+                                <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_2.jpg" alt="..." /> -->
+                                <!--6세-->
+                                <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_3.jpg" alt="..." /> -->
+                                <!-- <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_rogmap_4.jpg" alt="..." /> -->
 
 
 
-                                    <br>
+                                <br>
 
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                        type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
+                                    type="button">
+                                    <i class="fas fa-xmark me-1"></i>
+                                    Close Project
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -744,7 +585,7 @@ if (isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <!-- Portfolio Modals [EPLAT]------------------------------------------------------------------------------------------------------------------------------------->
+    <!-- Portfolio Modals [회사소개]------------------------------------------------------------------------------------------------------------------------------------->
     <!-- Portfolio item 4 modal popup-->
     <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -757,8 +598,122 @@ if (isset($_SESSION['user'])) {
                             <div class="modal-body">
 
                                 <!-- Project details-->
+                                <h2 class="company-modal-title text-secondary text-uppercase mb-0">Company</h2>
+                                <p>
+                                <h4>이플렛 : Introduction<h4>
+                                        </p>
 
-                                <h2 class="text-uppercase">EPLAT</h2>
+
+                                        <!--Star Symbol-->
+                                        <div class="divider-custom">
+                                            <div class="divider-custom-line"></div>
+                                            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                            <div class="divider-custom-line"></div>
+                                            <hr style="border: solid 1px gray;">
+                                        </div>
+                                        <!--#4169E1-->
+                                        <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교재개발</strong>
+                                        </p>
+
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_textbook_dev.jpg"
+                                            alt="..." />
+                                        <p> </p>
+                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교재개발</strong></p> -->
+                                        <p><span class="firstcharacter">E</span>
+                                        <h6>-plat은 오랜 기간 현장에서의 지도경험을 통해 창의적이고 융합적인 놀이식 학습방법을 개발하여 보급하고 있습니다. 또한 국내외 여러
+                                            나라와 지역에서 다양한 현장경험이 있는 선생님들의 차별화 된 교육방법을 제품화 하여 함께 비전을 공유할 수 있는 공간을 제공하고
+                                            있습니다.</h6>
+                                        </p>
+                                        <hr style="border: solid 1px gray;">
+
+                                        <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교구개발</strong>
+                                        </p>
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_2.jpg"
+                                            alt="..." />
+                                        <p> </p>
+                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교구개발</strong></p> -->
+                                        <p><span class="firstcharacter">E</span>
+                                        <h6>-plat은 영어를 처음 시작하는 아이들에게는 결과에 중점을 두는 것이 아니라 아이들이 좋아하는 놀이중심으로 과정에 충실해야한다고
+                                            생각합니다. 따라서 E-plat 은 교재와 함께 활용할 수 있는 다양한 교구도 함께 개발하고 있습니다.</h6>
+                                        </p>
+                                        <hr style="border: solid 1px gray;">
+
+
+                                        <p align="Center" style="font-size: 26px;color: #4169E1"><strong>온라인개발</strong>
+                                        </p>
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_3.jpg"
+                                            alt="..." />
+                                        <p> </p>
+                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>온라인개발</strong></p> -->
+                                        <p><span class="firstcharacter">E</span>
+                                        <h6>-plat 의 온라인 개발팀은 원어민과 프로그램전공자 그리고 오랜 기간 외국어학원의 운영경험을 기반으로 여러 영어교육회사의 학습시스템을
+                                            개발하여 제공하고 있습니다.</h6>
+                                        </p>
+                                        <hr style="border: solid 1px gray;">
+
+                                        <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교육개발 및
+                                                강사교육</strong></p>
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_4.jpg"
+                                            alt="..." />
+                                        <p> </p>
+                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교육개발 및 강사교육</strong></p> -->
+                                        <p><span class="firstcharacter">E</span>
+                                        <h6>-plat 의 교육은 유치부 교육과 초등부 교육으로 이원화 되어 있으며 다양한 놀이식 학습시스템과 교구의 활용방법을 보급하고 있습니다.
+                                        </h6>
+                                        </p>
+                                        <br> </br>
+                                        <hr style="border: solid 1px gray;">
+
+
+                                        <!--  회사연혁 Title---------------------------------------------------------->
+                                        <h2 class="company-modal-title text-secondary text-uppercase mb-0">회사연혁</h2>
+
+                                        <!--Star Symbol-->
+                                        <div class="divider-custom">
+                                            <div class="divider-custom-line"></div>
+                                            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                            <div class="divider-custom-line"></div>
+                                        </div>
+
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_life.jpg"
+                                            alt="..." />
+                                        <p> </p>
+                                        <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>회사연혁</strong></p> -->
+                                        <!-- <p><span class="firstcharacter">E</span>  -->
+
+
+                                        <hr style="border: solid 1px gray;">
+
+
+
+
+
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio item 5 modal popup-->
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
+                        alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+
+                                <!-- Project details-->
+
+                                <h2 class="text-uppercase">수업장면</h2>
                                 <hr style="border: solid 1px gray;">
 
                                 <!-- <h4 style="background-color:#FAAC58;">이플렛요약</h4> -->
@@ -773,6 +728,8 @@ if (isset($_SESSION['user'])) {
                                             width="100%" height="100%" /></a></p>
 
                                 <hr style="border: solid 1px gray;">
+                                <p align="Left" style="font-size: 20px;color: #7D7676"><strong>*New Homepage_reference
+                                        spec</strong></p>
                                 <p><a href="assets/img/newhomepage_eplat.pdf"><img
                                             src="assets/img/newhomepage_eplat.jpg " width="100%" height="100%" /></a>
                                 </p>
@@ -792,72 +749,32 @@ if (isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <div class="modal fade" id="ModalForm" tabindex="-1" aria-labelledby="ModalFormLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <!-- Portfolio item 6 modal popup-->
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item text-center">
-                            <a class="nav-link active btl" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home"
-                                role="tab" aria-controls="pills-home" aria-selected="true">Login</a>
-                        </li>
-                        <li class="nav-item text-center">
-                            <a class="nav-link btr" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile"
-                                role="tab" aria-controls="pills-profile" aria-selected="false">Signup</a>
-                        </li>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
+                        alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
 
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
+                                <!--Project details-->
+                                <!--<h2 class="text-uppercase">강사구함</h2>-->
+                                <hr style="border: solid 1px gray;">
 
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                            aria-labelledby="pills-home-tab">
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_edu_process.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_edu_process-add.jpg"
+                                    alt="..." />
 
-                            <div class="form-area bg-primary">
-                                <h1 class="text-center">Login Form</h1>
-                                <form>
-                                    <div class="mb-3 mt-4">
-                                        <label for="exampleInputEmail1" class="form-label">Your Email</label>
-                                        <input id="Email" name="Email" type="email" class="form-control"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Your Password</label>
-                                        <input id="Password" type="password" class="form-control"
-                                            id="exampleInputPassword1">
-                                    </div>
-                                    <button id="idlogin" type="submit" class="btn btn-light mt-3">LOGIN</button>
-                                    <p>New Here?    <a href="#">Signup</a></p>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                            aria-labelledby="pills-profile-tab">
 
-                            <div class="form-area bg-primary">
-                                <h1 class="text-center">Register Form</h1>
-                                <form>
-                                    <div class="mb-3 mt-4">
-                                        <label for="exampleInputEmail1" class="form-label">Your Name</label>
-                                        <input id="name" type="email" class="form-control" aria-describedby="emailHelp"
-                                            placeholder="Name">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Your Email</label>
-                                        <input id="email" type="email" class="form-control" placeholder="Email">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Your Phone</label>
-                                        <input id="phone" type="phone" class="form-control" placeholder="Phone">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Your Password</label>
-                                        <input id="password" type="password" class="form-control"
-                                            placeholder="Password">
-                                    </div>
-                                    <button id="idregister" type="submit" class="btn btn-light mt-3">Signup</button>
-                                </form>
+                                <br> </br>
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
+                                    type="button">
+                                    <i class="fas fa-xmark me-1"></i>
+                                    Close Project
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -867,6 +784,7 @@ if (isset($_SESSION['user'])) {
     </div>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
@@ -880,7 +798,7 @@ if (isset($_SESSION['user'])) {
     <footer class="footer py-4">
         <div class="container">
             <div class="row align-items-center">
-                <div style="color: white;" class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2022</div>
+                <div style="color: white;" class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
                 <div class="col-lg-4 my-3 my-lg-0">
                     <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i
                             class="fab fa-twitter"></i></a>
@@ -896,70 +814,9 @@ if (isset($_SESSION['user'])) {
         </div>
     </footer>
 
-    <script>
-    $("#idlogin").on('click', function() {
-        e.preventDefault();
 
-        var data = {
-            Email: $('#Email').val(),
-            Password: $('#Password').val()
-        }
 
-        e.preventDefault();
 
-        $.ajax({
-            url: "Server/Slogon.php",
-            type: "POST",
-            dataType: "json",
-            data: data,
-            beforeSend: function() {
-                $("#err").fadeOut();
-            },
-            success: function(resp) {
-                if (resp != 'falure') {
-                    $('#loger').html(resp);
-                    $('#signin').css('display', 'none');
-                    $('#signout').css('display', 'block');
-                    $('#adminmenu').css('display', 'block');
-                } else {
-                    alert('login 실패!');
-                }
-            },
-            error: function(e) {
-                alert('login 실패!');
-            }
-        });
-    })
-
-    $("#idregister").click(function() {
-        mydata = {
-            id: $("#email").val(),
-            name: $("#name").val(),
-            password: $("#password").val(),
-            role: '9'
-        }
-        //alert( $("#inputID").val() + " " + $("#inputName").val() + " " + $("#inputPassword").val() + " " + $("#inputPasswordConfirm").val() )
-        // if (  $("#inputPassword").val() === $("#inputPasswordConfirm").val()) {
-        $.ajax({
-            url: "Server/Sregister.php",
-            type: "POST",
-            dataType: "json",
-            data: mydata,
-
-            success: function(response) {
-                alert('success');
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                if (textStatus == "error") {
-                    alert(loc + ' ' + textStatus);
-                }
-            }
-        });
-        // }
-        // else
-        // 	alert('password mismatched !!');
-    });
-    </script>
 
 
 

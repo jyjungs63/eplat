@@ -8,28 +8,32 @@ $json = file_get_contents('php://input');
 
 $arr = json_decode($json, true);
 $id="";
-
 global $conn;
 $result = "";
 
-foreach ( $arr['item'] as $row) {
-	$sql = "UPDATE eplat_user SET id = '".$row['id']."'
-	,name = '".$row['name']."' 
-	,password = '".$row['password']."' 
-	,mobile = '".$row['mobile']."' 
-	,addr = '".$row['addr']."' 
-	,zipcode = '".$row['zipcode']."' 
-	,confirm = ".$row['confirm']." 
-	WHERE id = '".$row['id']."'";
-    if ($conn->query($sql) === TRUE) {
-        $result = true;
-    } else {
-        $result =  "Error updating record: " . $conn->error;
-    }
+try {
+	foreach ( $arr['item'] as $row) {
+		$sql = "UPDATE eplat_user SET id = '".$row['id']."'
+		,name = '".$row['name']."' 
+		,password = '".$row['password']."' 
+		,mobile = '".$row['mobile']."' 
+		,addr = '".$row['addr']."' 
+		,zipcode = '".$row['zipcode']."' 
+		,confirm = ".$row['confirm']." 
+		WHERE id = '".$row['id']."'";
+		if ($conn->query($sql) === TRUE) {
+			$result = true;
+		} 
+	}
+
+	$conn->close();
+}
+catch (Exception $e) {
+	$result = $e.getMessage();
 }
 
-$conn->close();
+header('Content-Type: application/json');
 
-echo json_encode($result);
+echo json_encode(  array( "result: " => $result ) );
 
 ?>
