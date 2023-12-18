@@ -1,8 +1,19 @@
 <?php
 
+$fullURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+//echo "Full URL: " . $fullURL;
 
-$conn = mysqli_connect('localhost','root','manager','eplat');  // local test
-mysqli_select_db($conn,'eplat');
+if ( strpos ( $fullURL, "localhost") !== false)
+{
+    $conn = mysqli_connect('localhost','root','manager','eplat');             // local test
+    mysqli_select_db($conn,'eplat');
+
+}
+else{
+    $conn = mysqli_connect('localhost','happyzip','skl32935028@','happyzip');  // local test
+    mysqli_select_db($conn,'happyzip');
+}
+
 
 // $conn = mysqli_connect('localhost','happyzip','skl32935028@','happyzip');  // local test
 // mysqli_select_db($conn,'happyzip');

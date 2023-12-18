@@ -182,7 +182,7 @@
             columns: [{
                     formatter: "rowSelection",
                     field: "check",
-                    width: 50,
+                    width: 10,
                     titleFormatter: "rowSelection",
                     hozAlign: "left",
                     headerSort: false,
@@ -207,7 +207,7 @@
                 {
                     title: "Mobile",
                     field: "mobile",
-                    width: 150,
+                    width: 120,
                     editor: "list",
                     editor: false,
                 },
@@ -221,26 +221,26 @@
                 {
                     title: "우편번호",
                     field: "zipcode",
-                    width: 150,
+                    width: 80,
                     editor: true,
                 },
                 {
                     title: "비밀번호",
                     field: "password",
-                    width: 150,
+                    width: 100,
                     editor: false,
                 },
                 {
                     title: "등록일",
                     field: "rdate",
-                    width: 150,
+                    width: 100,
                     editor: false,
                 },
                 {
                     title: "승인",
                     field: "confirm",
                     editor: "select",
-                    width: 150,
+                    width: 120,
                     editorParams: { // 에디터 파라미터 설정
                         values: ["승인", "미승인"], // 콤보박스에 표시될 값들
                     },

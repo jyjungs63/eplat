@@ -211,414 +211,329 @@
     <script src="kgardenlist_2.js"></script>
 
     <script>
+    const {
+        PDFDocument,
+        rgb
+    } = PDFLib;
+    // Create a new PDFDocument
 
-        const { PDFDocument, rgb } = PDFLib;
-        // Create a new PDFDocument
+    $(document).ready(function(e) {
+        $("#cardDest").hide();
+        $("#cardPDF").hide();
+    });
 
-        $(document).ready(function (e) {
-            $("#cardDest").hide();
-            $("#cardPDF").hide();
-        });
+    var deleteIcon = function(cell, formatterParams) { //plain text value
+        return "<i class='fa fa-trash'></i>";
+    };
 
-        var deleteIcon = function (cell, formatterParams) { //plain text value
-            return "<i class='fa fa-trash'></i>";
-        };
+    var table = new Tabulator("#idTable", {
+        height: "490px",
+        data: listprice2,
+        layout: "fitColumns",
+        rowHeight: 40, //set rows to 40px height
+        selectable: true, //make rows selectable
+        columns: [
 
-        var table = new Tabulator("#idTable", {
-            height: "490px",
-            data: listprice2, layout: "fitColumns",
-            rowHeight: 40, //set rows to 40px height
-            selectable: true, //make rows selectable
-            columns: [
-
-                // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-                { title: "Grade", field: "grade", width: 150, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
-                { title: "품명", field: "title", sorter: "number", width: 350, editor: false, bottomCalcParams: { precision: 0 } },
-                {
-                    title: "단가", field: "price", sorter: "number", width: 150, editor: false, hozAlign: "right",
-                    formatterParams: {
-                        thousand: ",",
-                        precision: 0,
-                    },
+            // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+            {
+                title: "Grade",
+                field: "grade",
+                width: 150,
+                editor: "list",
+                editor: false,
+                editorParams: {
+                    autocomplete: "true",
+                    allowEmpty: true,
+                    listOnEmpty: true,
+                    valuesLookup: true
+                }
+            },
+            {
+                title: "품명",
+                field: "title",
+                sorter: "number",
+                width: 350,
+                editor: false,
+                bottomCalcParams: {
+                    precision: 0
+                }
+            },
+            {
+                title: "단가",
+                field: "price",
+                sorter: "number",
+                width: 150,
+                editor: false,
+                hozAlign: "right",
+                formatterParams: {
+                    thousand: ",",
+                    precision: 0,
                 },
-                {
-                    title: "Count",
-                    field: "count",
-                    editor: "input",
-                    width: 150,
-                    hozAlign: "right",
-                    validator: "min:0",
-                    editorParams: {
-                        min: 0,
-                        max: 1000, // Adjust min and max values as needed
-                        step: 2,
-                        elementAttributes: {
-                            type: "number"
-                        }
-                    },
-                    cellEdited: function (cell) { calsum(cell); },
-                    bottomCalc: "sum"
+            },
+            {
+                title: "Count",
+                field: "count",
+                editor: "input",
+                width: 150,
+                hozAlign: "right",
+                validator: "min:0",
+                editorParams: {
+                    min: 0,
+                    max: 1000, // Adjust min and max values as needed
+                    step: 2,
+                    elementAttributes: {
+                        type: "number"
+                    }
                 },
-                {
-                    title: "Total",
-                    field: "total",
-                    editor: "input",
+                cellEdited: function(cell) {
+                    calsum(cell);
+                },
+                bottomCalc: "sum"
+            },
+            {
+                title: "Total",
+                field: "total",
+                editor: "input",
+                formatter: "money",
+                hozAlign: "right",
+                editor: false,
+                formatterParams: {
+                    thousand: ",",
+                    precision: 0,
+                },
+                editorParams: {
+                    elementAttributes: {
+                        type: "number"
+                    }
+                },
+                bottomCalc: "sum",
+                bottomCalcFormatterParams: {
                     formatter: "money",
-                    hozAlign: "right",
-                    editor: false,
-                    formatterParams: {
-                        thousand: ",",
-                        precision: 0,
-                    },
-                    editorParams: {
-                        elementAttributes: {
-                            type: "number"
-                        }
-                    },
-                    bottomCalc: "sum", bottomCalcFormatterParams: { formatter: "money", precision: 0, thousand: "," }
-                },
-                { formatter: deleteIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) { deleteRow(cell.getRow()) } },
-            ],
-        });
+                    precision: 0,
+                    thousand: ","
+                }
+            },
+            {
+                formatter: deleteIcon,
+                width: 40,
+                hozAlign: "center",
+                cellClick: function(e, cell) {
+                    deleteRow(cell.getRow())
+                }
+            },
+        ],
+    });
 
-        var table1 = new Tabulator("#idTableConfirm", {
-            height: "300px",
-            layout: "fitColumns",
-            rowHeight: 40, //set rows to 40px height
-            selectable: true, //make rows selectable
-            columns: [
-                // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-                { title: "Grade", field: "grade", width: 150, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
-                { title: "품명", field: "title", sorter: "number", width: 350, editor: false, bottomCalcParams: { precision: 0 } },
-                {
-                    title: "단가", field: "price", sorter: "number", width: 150, editor: false, hozAlign: "right",
-                    formatterParams: {
-                        thousand: ",",
-                        precision: 0,
-                    },
+    var table1 = new Tabulator("#idTableConfirm", {
+        height: "300px",
+        layout: "fitColumns",
+        rowHeight: 40, //set rows to 40px height
+        selectable: true, //make rows selectable
+        columns: [
+            // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+            {
+                title: "Grade",
+                field: "grade",
+                width: 150,
+                editor: "list",
+                editor: false,
+                editorParams: {
+                    autocomplete: "true",
+                    allowEmpty: true,
+                    listOnEmpty: true,
+                    valuesLookup: true
+                }
+            },
+            {
+                title: "품명",
+                field: "title",
+                sorter: "number",
+                width: 350,
+                editor: false,
+                bottomCalcParams: {
+                    precision: 0
+                }
+            },
+            {
+                title: "단가",
+                field: "price",
+                sorter: "number",
+                width: 150,
+                editor: false,
+                hozAlign: "right",
+                formatterParams: {
+                    thousand: ",",
+                    precision: 0,
+                },
 
+            },
+            {
+                title: "수량",
+                field: "count",
+                editor: "input",
+                width: 150,
+                hozAlign: "right",
+                validator: "min:0",
+                editorParams: {
+                    min: 0,
+                    max: 150, // Adjust min and max values as needed
+                    step: 2,
+                    elementAttributes: {
+                        type: "number"
+                    }
                 },
-                {
-                    title: "수량",
-                    field: "count",
-                    editor: "input",
-                    width: 150,
-                    hozAlign: "right",
-                    validator: "min:0",
-                    editorParams: {
-                        min: 0,
-                        max: 150, // Adjust min and max values as needed
-                        step: 2,
-                        elementAttributes: {
-                            type: "number"
-                        }
-                    },
-                    cellEdited: function (cell) { calsum(cell); },
-                    bottomCalc: "sum"
+                cellEdited: function(cell) {
+                    calsum(cell);
                 },
-                {
-                    title: "합계",
-                    field: "total",
-                    editor: "input",
+                bottomCalc: "sum"
+            },
+            {
+                title: "합계",
+                field: "total",
+                editor: "input",
+                formatter: "money",
+                hozAlign: "right",
+                editor: false,
+                formatterParams: {
+                    thousand: ",",
+                    precision: 0,
+                },
+                editorParams: {
+                    elementAttributes: {
+                        type: "number"
+                    }
+                },
+                bottomCalc: "sum",
+                bottomCalcFormatterParams: {
                     formatter: "money",
-                    hozAlign: "right",
-                    editor: false,
-                    formatterParams: {
-                        thousand: ",",
-                        precision: 0,
-                    },
-                    editorParams: {
-                        elementAttributes: {
-                            type: "number"
-                        }
-                    },
-                    bottomCalc: "sum", bottomCalcFormatterParams: { formatter: "money", precision: 0, thousand: "," }
+                    precision: 0,
+                    thousand: ","
+                }
+            },
+            {
+                formatter: deleteIcon,
+                width: 40,
+                hozAlign: "center",
+                cellClick: function(e, cell) {
+                    deleteRow(cell.getRow())
+                }
+            },
+        ],
+    });
+
+    var table2 = new Tabulator("#idTableDest", {
+        height: "490px",
+        data: kgardenlist,
+        layout: "fitColumns",
+        rowHeight: 40, //set rows to 40px height
+        selectable: true, //make rows selectable
+        columns: [{
+                title: "No",
+                field: "No",
+                width: 150,
+                editor: "input",
+                editor: false,
+                cellEdited: function(cell) {
+                    recal(cell);
                 },
-                { formatter: deleteIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) { deleteRow(cell.getRow()) } },
-            ],
+            },
+            {
+                title: "name",
+                field: "name",
+                width: 250,
+                editor: "list",
+                editor: false,
+                editorParams: {
+                    autocomplete: "true",
+                    allowEmpty: true,
+                    listOnEmpty: true,
+                    valuesLookup: true
+                }
+            },
+            {
+                title: "owner",
+                field: "owner",
+                width: 250,
+                editor: "list",
+                editor: false,
+                editorParams: {
+                    autocomplete: "true",
+                    allowEmpty: true,
+                    listOnEmpty: true,
+                    valuesLookup: true
+                }
+            },
+            {
+                title: "address",
+                field: "addr",
+                sorter: "number",
+                width: 550,
+                editor: false,
+                bottomCalcParams: {
+                    precision: 0
+                }
+            },
+            {
+                title: "mobile",
+                field: "mobile",
+                sorter: "number",
+                width: 150,
+                editor: false,
+                bottomCalcParams: {
+                    precision: 0
+                }
+            },
+            // { title: "password", field: "password", sorter: "number", width: 250, editor: false, bottomCalcParams: { precision: 0 } },
+            {
+                title: "rdate",
+                field: "rdate",
+                sorter: "number",
+                width: 150,
+                editor: false,
+                bottomCalcParams: {
+                    precision: 0
+                }
+            },
+        ],
+    });
+
+    table2.on("rowClick", function(e, row) {
+        //e - the click event object
+        //table2.deselectRow();
+
+        $("#idName").val(row._row.data['name']);
+        $("#idOwner").val(row._row.data['owner']);
+        $("#idMobile").val(row._row.data['mobile']);
+        $("#idAddr").val(row._row.data['addr']);
+        //table2.selectRow(Number(row._row.position));
+        table2.selectRow(1);
+        //alert(Number(row._row.position));
+    });
+
+    function calsum(cell) {
+        var row = cell.getRow();
+        var rowData = row.getData();
+        var sum = Number(rowData.count) * Number(rowData.price);
+        row.update({
+            total: sum,
+            check: true
         });
+        if (Number(rowData.count) > 0)
+            row.select();
+        // else
+        //     row.unselect();
+        var parent = $(".tabulator-calcs-bottom").find('div:first').html("<p>합계</p>");
+    }
 
-        var table2 = new Tabulator("#idTableDest", {
-            height: "490px",
-            data: kgardenlist, layout: "fitColumns",
-            rowHeight: 40, //set rows to 40px height
-            selectable: true, //make rows selectable
-            columns: [
-                { title: "No", field: "No", width: 150, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-                { title: "name", field: "name", width: 250, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
-                { title: "owner", field: "owner", width: 250, editor: "list", editor: false, editorParams: { autocomplete: "true", allowEmpty: true, listOnEmpty: true, valuesLookup: true } },
-                { title: "address", field: "addr", sorter: "number", width: 550, editor: false, bottomCalcParams: { precision: 0 } },
-                { title: "mobile", field: "mobile", sorter: "number", width: 150, editor: false, bottomCalcParams: { precision: 0 } },
-                // { title: "password", field: "password", sorter: "number", width: 250, editor: false, bottomCalcParams: { precision: 0 } },
-                { title: "rdate", field: "rdate", sorter: "number", width: 150, editor: false, bottomCalcParams: { precision: 0 } },
-            ],
-        });
+    function deleteRow(row) {
+        row.delete();
+    }
 
-        table2.on("rowClick", function (e, row) {
-            //e - the click event object
-            //table2.deselectRow();
-
-            $("#idName").val(row._row.data['name']);
-            $("#idOwner").val(row._row.data['owner']);
-            $("#idMobile").val(row._row.data['mobile']);
-            $("#idAddr").val(row._row.data['addr']);
-            //table2.selectRow(Number(row._row.position));
-            table2.selectRow(1);
-            //alert(Number(row._row.position));
-        });
-        function calsum(cell) {
-            var row = cell.getRow();
-            var rowData = row.getData();
-            var sum = Number(rowData.count) * Number(rowData.price);
-            row.update({ total: sum, check: true });
-            if (Number(rowData.count) > 0)
-                row.select();
-            // else
-            //     row.unselect();
-            var parent = $(".tabulator-calcs-bottom").find('div:first').html("<p>합계</p>");
-        }
-        function deleteRow(row) {
-            row.delete();
-        }
-
-        orderBook = () => {
-            var item = table.getSelectedData();
-            item.forEach(el => {
-                if (Number(el['count']) > 0) {
-                    var jarr =
-                    {
-                        "uid": el['uid'],
-                        "grade": el['grade'],
-                        "title": el['title'],
-                        "price": el['price'],
-                        "count": el['count'],
-                        "total": el['total']
-                    }
-                    table1.addRow(jarr);
-                }
-            }
-            )
-            var parent = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합");
-            //table1.setData(item);
-        }
-
-        var orderPrint = () => {
-
-            makePurchasePDFList();
-
-            $("#cardMain").toggle();
-            $("#cardDest").hide();
-            $("#cardPDF").show();
-
-        }
-
-        document.getElementById("idDest").addEventListener("change", function () {
-            // 선택된 옵션 가져오기
-            var selectedOption = this.options[this.selectedIndex];
-
-            // 선택된 옵션의 값(value) 가져오기
-            var selectedValue = selectedOption.value;
-
-            // 선택된 옵션의 텍스트 가져오기
-            var selectedText = selectedOption.text;
-
-            // 결과 출력
-            console.log("Selected Value:", selectedValue);
-            console.log("Selected Text:", selectedText);
-
-            var items = [];
-            var sql;
-            if ("주소지" == selectedText) {
-                var items = [];
-                var data = {
-                    role: 2,
-                    id: "manager"
-                };
-                $.ajax({
-                    url: "../../Server/SShowMgr.php",
-                    type: "POST",
-                    dataType: "json",
-                    data: data,
-                    success: function (resp) {
-                        var i = 1;
-                        resp.forEach(el => {
-                            var jarr = {
-                                "No": i,
-                                "name": el['name'],
-                                "mobile": el['mobile'],
-                                "addr": el['addr'],
-                                "zipcode": el['zipcode'],
-                                "password": el['password'],
-                                "rdate": el['rdate'],
-                            }
-
-                            items.push(jarr);
-                            i++;
-                        });
-                        table2.clearData();
-                        table2.setData(items);
-                    },
-                    error: function (e) {
-                        alert('falure');
-                        $("#err").html(e).fadeIn();
-                    }
-                });
-            }
-            else {
-                table2.clearData();
-                table2.setData(kgardenlist);
-            }
-
-        });
-
-        async function makePurchasePDFList() {
-
-            const pdfDoc = await PDFDocument.create()
-
-            pdfDoc.registerFontkit(fontkit)
-            const fontBytes = await fetch('NanumBarunGothic.ttf').then((res) => res.arrayBuffer());
-            const customFont = await pdfDoc.embedFont(fontBytes);
-
-            const page = pdfDoc.addPage()
-            const { width, height } = page.getSize()
-            const fontSize = 12
-
-            page.setFont(customFont);
-            page.setFontSize(fontSize);
-
-            //
-            var buyArr = [];
-            var item = table1.getSelectedData();
-            item.forEach(el => {
-                if (Number(el['count']) > 0) {
-                    var jarr =
-                    {
-                        "uid": el['uid'],
-                        "grade": el['grade'],
-                        "title": el['title'],
-                        "price": el['price'].toString(),
-                        "count": el['count'].toString(),
-                        "total": el['total'].toString()
-                    }
-                    buyArr.push(jarr)
-                }
-            }
-            )
-            //
-            var xx = (510 / 5);
-            var lineStart = height - 4 * fontSize;            //  y axis start point of drawing
-            var textStart = height - 4 * fontSize + 5;        //  y axis start point of drawing
-            var lineStep = fontSize * 1.7;
-            var lhs = 50, lhe = 560, mn = 10;
-
-
-            var s = { x: lhs, y: lineStart };
-            var e = { x: lhe, y: lineStart };
-
-            tick = 1.;
-            drawLines(page, s, e, rgb(0, 0, 0), tick);
-
-            var header = ['Grade', 'Title', 'Price', 'Count', 'Total', ''];
-
-            for (var i = 0; i < 6; i++) {    // vertical line 
-
-                var s = { x: lhs + (xx * i), y: lineStart - (lineStep * 0) };
-                var e = { x: lhs + (xx * i), y: lineStart - (lineStep * (buyArr.length + 1)) };
-
-                if (i == 0 || i == 5)
-                    tick = 1.;
-                else
-                    tick = 0.5;
-
-                drawLines(page, s, e, rgb(0, 0, 0), tick);
-
-                drawTexts(page, lhs + (xx * i) + mn, textStart - (lineStep * 1), fontSize, rgb(0.0, 0.0, 0.0), header[i]);
-            }
-
-            drawTexts(page, width / 2.5, height - 3 * fontSize, fontSize, rgb(0.0, 0.0, 0.0), "Purchase Order List")
-
-            for (var i = 0; i <= buyArr.length + 1; i++) {     // x horizontal line 
-
-                s = { x: lhs, y: lineStart - (lineStep * i) };
-                e = { x: lhe, y: lineStart - (lineStep * i) };
-
-                if (i == buyArr.length) {
-                    tick = 0.5;
-                    drawLines(page, s, e, rgb(0, 0, 0), tick);
-                }
-                else if (i == buyArr.length + 1) {
-                    tick = 1.0;
-                    drawLines(page, s, e, rgb(0, 0, 0), tick);
-
-                    var name = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html();
-                    var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
-                    var total = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
-                    var rest = cvtCurrency(parseFloat(total));
-                    drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), "총금액");
-                    drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), "");
-                    drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), "");
-                    drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), cnt);
-                    drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0), rest)
-                    s = { x: lhs, y: lineStart - (lineStep * (i + 2)) };
-                    e = { x: lhe, y: lineStart - (lineStep * (i + 2)) };
-                    drawLines(page, s, e, rgb(0, 0, 0), tick);
-                }
-                else {
-                    tick = 0.5;
-                    if (i == 1)
-                        tick = 1.0;
-                    drawLines(page, s, e, rgb(0, 0, 0), tick);
-
-                    drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['grade']);
-                    drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['title']);
-                    drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0), cvtCurrency(parseFloat(buyArr[i]['price'])));
-                    drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0), buyArr[i]['count']);
-                    drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0), cvtCurrency(parseFloat(buyArr[i]['total'])));
-                }
-            }
-
-
-            // Serialize the PDFDocument to bytes (a Uint8Array)
-
-            const pngUrl = 'http://www.eplat.co.kr/assets/img/logo.png'
-
-            const pngImageBytes = await fetch(pngUrl).then((res) => res.arrayBuffer())
-
-            const pngImage = await pdfDoc.embedPng(pngImageBytes)
-
-            const pngDims = pngImage.scale(0.07)
-
-            page.drawImage(pngImage, {
-                x: pngDims.width - 10,
-                y: page.getHeight() - 30,
-                width: pngDims.width,
-                height: pngDims.height,
-            })
-
-            // 베송지
-            drawTexts(page, 100, 250, 12, rgb(0., 0., 0.), "배송지:");
-            drawTexts(page, 150, 250, 12, rgb(0., 0., 0.), $("#idName").val());
-            drawTexts(page, 250, 250, 12, rgb(0., 0., 0.), $("#idMobile").val());
-            drawTexts(page, 300, 300, 12, rgb(0., 0., 0.), formatDate());
-            drawTexts(page, 100, 200, 12, rgb(0., 0., 0.), $("#idAddr").val());
-            drawTexts(page, 150, 200, 12, rgb(0., 0., 0.), $("#idZip").val());
-
-
-            const pdfBytes = await pdfDoc.save()
-
-
-            // Trigger the browser to download the PDF document
-            //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
-
-            // 예시: fetch를 사용한 파일 업로드
-
-            const formData = new FormData();
-            formData.append('pdfFile', new Blob([pdfBytes]), 'generated_pdf.pdf');
-            item = table1.getSelectedData();
-            var porList = []
-            item.forEach(el => {
-                var jarr =
-                {
+    orderBook = () => {
+        var item = table.getSelectedData();
+        item.forEach(el => {
+            if (Number(el['count']) > 0) {
+                var jarr = {
                     "uid": el['uid'],
                     "grade": el['grade'],
                     "title": el['title'],
@@ -626,101 +541,428 @@
                     "count": el['count'],
                     "total": el['total']
                 }
-                porList.push(jarr);
-            });
-            formData.append('id', 'manager');
-            formData.append('order', chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }));
-            formData.append('addr', chance.address());
-            formData.append('mobile', chance.address());
-            formData.append('postlist', JSON.stringify(porList));
-            formData.append('porid', 'P-' + formatDate() + "-" + chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }))
-            // fetch('../Server/SUploadBoardPDF.php', {
-            //     //fetch('./data.php', {
-            //     method: 'POST',
-            //     body: formData,
-            // })
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error('Network response was not ok');
-            //         }
-            //         return response.json();
+                table1.addRow(jarr);
+            }
+        })
+        var parent = $(
+                "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)")
+            .html("총합");
+        //table1.setData(item);
+    }
 
-            //     }).then(data => {
-            //         // Process the fetched data
-            //         ///alert(data);
-            //         document.getElementById('pdfDiv').src = data['url'];
-            //     })
-            //     .catch(error => {
-            //         alert('error');
-            //         // 오류 처리
-            //     });
+    var orderPrint = () => {
+
+        makePurchasePDFList();
+
+        $("#cardMain").toggle();
+        $("#cardDest").hide();
+        $("#cardPDF").show();
+
+    }
+
+    document.getElementById("idDest").addEventListener("change", function() {
+        // 선택된 옵션 가져오기
+        var selectedOption = this.options[this.selectedIndex];
+
+        // 선택된 옵션의 값(value) 가져오기
+        var selectedValue = selectedOption.value;
+
+        // 선택된 옵션의 텍스트 가져오기
+        var selectedText = selectedOption.text;
+
+        // 결과 출력
+        console.log("Selected Value:", selectedValue);
+        console.log("Selected Text:", selectedText);
+
+        var items = [];
+        var sql;
+        if ("주소지" == selectedText) {
+            var items = [];
+            var data = {
+                role: 2,
+                id: "manager"
+            };
             $.ajax({
-                url: '../Server/SUploadBoardPDF.php',
+                url: "../../Server/SShowMgr.php",
                 type: "POST",
-                processData: false,
-                contentType: false,
-                data: formData,
-                success: function (response) {
-                    document.getElementById('pdfDiv').src = response['url'];
+                dataType: "json",
+                data: data,
+                success: function(resp) {
+                    var i = 1;
+                    resp.forEach(el => {
+                        var jarr = {
+                            "No": i,
+                            "name": el['name'],
+                            "mobile": el['mobile'],
+                            "addr": el['addr'],
+                            "zipcode": el['zipcode'],
+                            "password": el['password'],
+                            "rdate": el['rdate'],
+                        }
+
+                        items.push(jarr);
+                        i++;
+                    });
+                    table2.clearData();
+                    table2.setData(items);
                 },
-                error: function (e) {
+                error: function(e) {
                     alert('falure');
-                }
-            })
-
-
-            //const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-
-        }
-        function formatDate() {
-            const date = new Date(); // Get current date
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
-            const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
-
-            return `${year}-${month}-${day}`;
-        }
-        drawLines = (page, s, e, color, thick) => {
-            page.drawLine({
-                start: { x: s.x, y: s.y },
-                end: { x: e.x, y: e.y },
-                color: color, // 선 색상 설정 (RGB)
-                thickness: thick, // 선 두께 설정
-            });
-        }
-
-        drawTexts = (page, x, y, fontSize, color, text) => {
-            page.drawText(text, {
-                x: x,
-                y: y,
-                size: fontSize,
-                // font: timesRomanFont,
-                color: color,
-            })
-        }
-        selectAll = () => {
-            //var parent = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").val("총합");
-            //var parent = $(".tabulator-calcs-bottom").find('div:first').html("<p>합계</p>");
-            table1.selectRow();
-
-            var rows = table1.getRows();
-
-            rows.forEach(function (row) {
-                if (row.getData().name === "Summary") {
-                    // 요약 행 발견
-                    var summaryRow = row;
-                    // 여기에서 요약 행에 대한 처리 수행
-                    console.log("Summary Row:", summaryRow.getData());
+                    $("#err").html(e).fadeIn();
                 }
             });
-        }
-        function cvtCurrency(amount) {
-            return amount.toLocaleString("ko-KR");
+        } else {
+            table2.clearData();
+            table2.setData(kgardenlist);
         }
 
-        function execDaumPostcode() {
-            new daum.Postcode({
-                oncomplete: function (data) {
+    });
+
+    document.getElementById("idGrade").addEventListener("change", function() {
+        // 선택된 옵션 가져오기
+        var selectedOption = this.options[this.selectedIndex];
+
+        // 선택된 옵션의 값(value) 가져오기
+        var selectedValue = selectedOption.value;
+
+        // 선택된 옵션의 텍스트 가져오기
+        var selectedText = selectedOption.text;
+
+        // 결과 출력
+        console.log("Selected Value:", selectedValue);
+        console.log("Selected Text:", selectedText);
+
+        var items = [];
+        var sql;
+        if ("전체" == selectedText)
+            sql = 'select uid, grade,title,price from ?  order by uid '
+        else
+            sql = 'select uid, grade,title,price from ? where grade="' + selectedText + '" order by uid asc'
+        var res = alasql(sql, [listprice2])
+
+        res.forEach(el => {
+            var jarr = {
+                "uid": el['uid'],
+                "grade": el['grade'],
+                "title": el['title'],
+                "price": el['price']
+            }
+            items.push(jarr);
+        });
+        table.clearData()
+        table.setData(items);
+        console.log(items);
+    });
+
+    async function makePurchasePDFList() {
+
+        const pdfDoc = await PDFDocument.create()
+
+        pdfDoc.registerFontkit(fontkit)
+        const fontBytes = await fetch('NanumBarunGothic.ttf').then((res) => res.arrayBuffer());
+        const customFont = await pdfDoc.embedFont(fontBytes);
+
+        const page = pdfDoc.addPage()
+        const {
+            width,
+            height
+        } = page.getSize()
+        const fontSize = 12
+
+        page.setFont(customFont);
+        page.setFontSize(fontSize);
+
+        //
+        var buyArr = [];
+        var item = table1.getSelectedData();
+        item.forEach(el => {
+            if (Number(el['count']) > 0) {
+                var jarr = {
+                    "uid": el['uid'],
+                    "grade": el['grade'],
+                    "title": el['title'],
+                    "price": el['price'].toString(),
+                    "count": el['count'].toString(),
+                    "total": el['total'].toString()
+                }
+                buyArr.push(jarr)
+            }
+        })
+        //
+        var xx = (510 / 5);
+        var lineStart = height - 4 * fontSize; //  y axis start point of drawing
+        var textStart = height - 4 * fontSize + 5; //  y axis start point of drawing
+        var lineStep = fontSize * 1.7;
+        var lhs = 50,
+            lhe = 560,
+            mn = 10;
+
+
+        var s = {
+            x: lhs,
+            y: lineStart
+        };
+        var e = {
+            x: lhe,
+            y: lineStart
+        };
+
+        tick = 1.;
+        drawLines(page, s, e, rgb(0, 0, 0), tick);
+
+        var header = ['Grade', 'Title', 'Price', 'Count', 'Total', ''];
+
+        for (var i = 0; i < 6; i++) { // vertical line 
+
+            var s = {
+                x: lhs + (xx * i),
+                y: lineStart - (lineStep * 0)
+            };
+            var e = {
+                x: lhs + (xx * i),
+                y: lineStart - (lineStep * (buyArr.length + 1))
+            };
+
+            if (i == 0 || i == 5)
+                tick = 1.;
+            else
+                tick = 0.5;
+
+            drawLines(page, s, e, rgb(0, 0, 0), tick);
+
+            drawTexts(page, lhs + (xx * i) + mn, textStart - (lineStep * 1), fontSize, rgb(0.0, 0.0, 0.0), header[
+                i]);
+        }
+
+        drawTexts(page, width / 2.5, height - 3 * fontSize, fontSize, rgb(0.0, 0.0, 0.0), "Purchase Order List")
+
+        for (var i = 0; i <= buyArr.length + 1; i++) { // x horizontal line 
+
+            s = {
+                x: lhs,
+                y: lineStart - (lineStep * i)
+            };
+            e = {
+                x: lhe,
+                y: lineStart - (lineStep * i)
+            };
+
+            if (i == buyArr.length) {
+                tick = 0.5;
+                drawLines(page, s, e, rgb(0, 0, 0), tick);
+            } else if (i == buyArr.length + 1) {
+                tick = 1.0;
+                drawLines(page, s, e, rgb(0, 0, 0), tick);
+
+                var name = $(
+                    "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)"
+                ).html();
+                var cnt = $(
+                    "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)"
+                ).html()
+                var total = $(
+                    "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)"
+                ).html()
+                var rest = cvtCurrency(parseFloat(total));
+                drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                    "총금액");
+                drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                    "");
+                drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                    "");
+                drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                    cnt);
+                drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                    rest)
+                s = {
+                    x: lhs,
+                    y: lineStart - (lineStep * (i + 2))
+                };
+                e = {
+                    x: lhe,
+                    y: lineStart - (lineStep * (i + 2))
+                };
+                drawLines(page, s, e, rgb(0, 0, 0), tick);
+            } else {
+                tick = 0.5;
+                if (i == 1)
+                    tick = 1.0;
+                drawLines(page, s, e, rgb(0, 0, 0), tick);
+
+                drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                    buyArr[i]['grade']);
+                drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                    buyArr[i]['title']);
+                drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                    cvtCurrency(parseFloat(buyArr[i]['price'])));
+                drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                    buyArr[i]['count']);
+                drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                    cvtCurrency(parseFloat(buyArr[i]['total'])));
+            }
+        }
+
+
+        // Serialize the PDFDocument to bytes (a Uint8Array)
+
+        const pngUrl = 'http://www.eplat.co.kr/assets/img/logo.png'
+
+        const pngImageBytes = await fetch(pngUrl).then((res) => res.arrayBuffer())
+
+        const pngImage = await pdfDoc.embedPng(pngImageBytes)
+
+        const pngDims = pngImage.scale(0.07)
+
+        page.drawImage(pngImage, {
+            x: pngDims.width - 10,
+            y: page.getHeight() - 30,
+            width: pngDims.width,
+            height: pngDims.height,
+        })
+
+        // 베송지
+        drawTexts(page, 100, 250, 12, rgb(0., 0., 0.), "배송지:");
+        drawTexts(page, 150, 250, 12, rgb(0., 0., 0.), $("#idName").val());
+        drawTexts(page, 250, 250, 12, rgb(0., 0., 0.), $("#idMobile").val());
+        drawTexts(page, 300, 300, 12, rgb(0., 0., 0.), formatDate());
+        drawTexts(page, 100, 200, 12, rgb(0., 0., 0.), $("#idAddr").val());
+        drawTexts(page, 150, 200, 12, rgb(0., 0., 0.), $("#idZip").val());
+
+
+        const pdfBytes = await pdfDoc.save()
+
+
+        // Trigger the browser to download the PDF document
+        //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
+
+        // 예시: fetch를 사용한 파일 업로드
+
+        const formData = new FormData();
+        formData.append('pdfFile', new Blob([pdfBytes]), 'generated_pdf.pdf');
+        item = table1.getSelectedData();
+        var porList = []
+        item.forEach(el => {
+            var jarr = {
+                "uid": el['uid'],
+                "grade": el['grade'],
+                "title": el['title'],
+                "price": el['price'],
+                "count": el['count'],
+                "total": el['total']
+            }
+            porList.push(jarr);
+        });
+        formData.append('id', 'manager');
+        formData.append('order', chance.string({
+            length: 8,
+            casing: 'upper',
+            alpha: true,
+            numeric: true
+        }));
+        formData.append('addr', chance.address());
+        formData.append('mobile', chance.address());
+        formData.append('postlist', JSON.stringify(porList));
+        formData.append('porid', 'P-' + formatDate() + "-" + chance.string({
+            length: 8,
+            casing: 'upper',
+            alpha: true,
+            numeric: true
+        }))
+        // fetch('../Server/SUploadBoardPDF.php', {
+        //     //fetch('./data.php', {
+        //     method: 'POST',
+        //     body: formData,
+        // })
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json();
+
+        //     }).then(data => {
+        //         // Process the fetched data
+        //         ///alert(data);
+        //         document.getElementById('pdfDiv').src = data['url'];
+        //     })
+        //     .catch(error => {
+        //         alert('error');
+        //         // 오류 처리
+        //     });
+        $.ajax({
+            url: '../Server/SUploadBoardPDF.php',
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(response) {
+                document.getElementById('pdfDiv').src = response['url'];
+            },
+            error: function(e) {
+                alert('falure');
+            }
+        })
+
+
+        //const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+
+    }
+
+    function formatDate() {
+        const date = new Date(); // Get current date
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
+        const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
+
+        return `${year}-${month}-${day}`;
+    }
+    drawLines = (page, s, e, color, thick) => {
+        page.drawLine({
+            start: {
+                x: s.x,
+                y: s.y
+            },
+            end: {
+                x: e.x,
+                y: e.y
+            },
+            color: color, // 선 색상 설정 (RGB)
+            thickness: thick, // 선 두께 설정
+        });
+    }
+
+    drawTexts = (page, x, y, fontSize, color, text) => {
+        page.drawText(text, {
+            x: x,
+            y: y,
+            size: fontSize,
+            // font: timesRomanFont,
+            color: color,
+        })
+    }
+    selectAll = () => {
+        //var parent = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").val("총합");
+        //var parent = $(".tabulator-calcs-bottom").find('div:first').html("<p>합계</p>");
+        table1.selectRow();
+
+        var rows = table1.getRows();
+
+        rows.forEach(function(row) {
+            if (row.getData().name === "Summary") {
+                // 요약 행 발견
+                var summaryRow = row;
+                // 여기에서 요약 행에 대한 처리 수행
+                console.log("Summary Row:", summaryRow.getData());
+            }
+        });
+    }
+
+    function cvtCurrency(amount) {
+        return amount.toLocaleString("ko-KR");
+    }
+
+    function execDaumPostcode() {
+        new daum.Postcode({
+                oncomplete: function(data) {
                     // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
 
                     // 각 주소의 노출 규칙에 따라 주소를 조합한다.
@@ -742,8 +984,8 @@
                 }
             }
 
-            ).open();
-        }
+        ).open();
+    }
     </script>
 
 </body>

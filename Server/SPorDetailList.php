@@ -21,11 +21,13 @@ while ( $row = mysqli_fetch_array($rs))
 {
     array_push ($rows, 
     array (
-        'id'   => $pid,
+        'id'   => $row['id'],
         'json' => $row['por_list'],
         'order' => $row['order'],
         'rdate' => $row['rdate'],
-        'addr'  => $row['addr']
+        'addr'  => $row['addr'],
+        'mobile'  => $row['mobile'],
+        'confirm'  => $row['confirm']
     ));
 }
 
