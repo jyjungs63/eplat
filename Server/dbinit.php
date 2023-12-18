@@ -5,8 +5,8 @@ $fullURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "
 
 if ( strpos ( $fullURL, "localhost") !== false)
 {
-    $conn = mysqli_connect('localhost','root','manager','eplat');             // local test
-    mysqli_select_db($conn,'eplat');
+    $conn = mysqli_connect('localhost','root','leadship!','happyzip');             // local test  
+    mysqli_select_db($conn,'happyzip');
 
 }
 else{
