@@ -7,19 +7,25 @@ session_start();
 $id  = $_POST["id"];
 
 global $conn;
-$result="";
+$res="";
 
-$sql = "DELETE FROM eplat_user WHERE id = '".$id."'";
+try {
 
-if ($conn->query($sql) === TRUE) {
-	$res = true;
-} else {
-	$res =  json_encode(  array("Error deleting record: " . $conn->error) );
+	$sql = "DELETE FROM eplat_user WHERE id = '".$id."'";
+	
+	if ($conn->query($sql) === TRUE) {
+		$res = true;
+	} else {
+		$res =  json_encode(  array("Error deleting record: " . $conn->error) );
+	}
+	
+	$conn->close();
+}
+catch (Exception $e) {
+	echo json_encode( $e->getMessage());
 }
 
-$conn->close();
 
-
-echo $res;
+echo json_encode($res);
 
 ?>

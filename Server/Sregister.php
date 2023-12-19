@@ -25,16 +25,22 @@ if ( $idrolebm != null && $idrolebm == "on")
 // $role     = '0';
 
 global $conn;
-$id= mysqli_escape_string ( $conn, $id);
-//$passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
 
+try {
 
-$sqlstring = "insert into eplat_user (id, name, password, mobile, addr, zipcode, role) 
-              values ( '{$id}', '{$name}','{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role )";
-
-$res = mysqli_query ( $conn, $sqlstring);
-
-$conn->close();
+	$id= mysqli_escape_string ( $conn, $id);
+	//$passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
+	
+	$sqlstring = "insert into eplat_user (id, name, password, mobile, addr, zipcode, role) 
+	values ( '{$id}', '{$name}','{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role )";
+	
+	$res = mysqli_query ( $conn, $sqlstring);
+	
+	$conn->close();
+}
+catch (Exception $e) {
+	echo json_encode( $e->getMessage() );
+}
 
 header('Content-Type: application/json');
 if ($res=== TRUE) {

@@ -2,37 +2,44 @@
 
 require_once 'dbinit.php';
 
+global $location;
+
 session_start();
 
 $json = file_get_contents('php://input');
 
 $arr = json_decode($json, true);
 $id="";
+$result="";
 
 global $conn;
 
-foreach ( $arr['item'] as $row) {
-	$sql = "UPDATE eplat_student SET id = '".$row['id']."'
-	,name = '".$row['name']."' 
-	,password = '".$row['password']."' 
-	,mobile = '".$row['mobile']."' 
-	,addr = '".$row['addr']."' 
-	,zipcode = '".$row['zipcode']."' 
-	,confirm = ".$row['confirm']." 
-	WHERE id = '".$row['id']."'";
-	$result = $mysqli->query($sql);	
+try {
+
+	foreach ( $arr['item'] as $row) {
+		
+		$id = $row['id'];
+		$name = $row['name'];
+		$password = $row['passwd'];
+		$pid = $row['tid'];
+		$classnm = $row['classnm'];
+
+		$sql = "insert into eplat_user (id, name, password, role, pid, classnm, rdate) 
+		        values ('{$id}', '{$name}','{$password}', 0 , '{$pid}', '{$classnm}', now())";
+
+		if ($conn->query($sql) === TRUE) {
+			$result =  "New record created successfully";
+		} else {
+			$result =  "Error: " . $sql . "<br>" . $conn->error;
+		}
+	}
+	
+	$conn->close();
+}
+catch (Exception $e) {
+	echo json_encode($e->getMessage());
 }
 
-
-$sql = "SELECT * FROM items "; 
-
-
-$result = $mysqli->query($sql);
-
-
-$data = $result->fetch_assoc();
-
-
-echo json_encode($data);
+echo json_encode($result);
 
 ?>

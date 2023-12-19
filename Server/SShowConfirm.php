@@ -21,21 +21,29 @@ $rows = array();
 
 $i = 0;
 
-while($row = mysqli_fetch_array($rs)){
-	array_push($rows,
-			array(  'id'        => $row['id'],
-					'name'      => $row['name'] ,
-					'password'  => $row['password'],								
-					'mobile'    => $row['mobile'],								
-					'addr'      => $row['addr'],								
-					'zipcode'   => $row['zipcode'],								
-					'confirm'   => $row['confirm'],								
-					'rdate'     => $row['rdate'],								
-			));
+try {
+
+	while($row = mysqli_fetch_array($rs)){
+		array_push($rows,
+		array(  'id'        => $row['id'],
+		'name'      => $row['name'] ,
+		'password'  => $row['password'],								
+		'mobile'    => $row['mobile'],								
+		'addr'      => $row['addr'],								
+		'zipcode'   => $row['zipcode'],								
+		'confirm'   => $row['confirm'],								
+		'rdate'     => $row['rdate'],								
+	));
+}
+$conn->close();
+}
+catch (Exception $e) {
+	json_encode( $e->getMessage() );
 }
 
-$result["rows"] = $rows;
+//$result["rows"] = $rows;
 
+header('Content-Type: application/json');
 echo json_encode($rows);
 
 ?>

@@ -4,17 +4,23 @@
 
 	session_start();
 
-
 	$id = $_POST['id'];
 	$porlist = $_POST['postlist'];
 	$porid = $_POST['porid'];
 
 	global $conn;
+	global $location;
+	
 	$rows = array();
 	$pdfname="";
 	$user="admin";
 	$res = "";
 	$res1= "";
+	$url="http://localhost:3000/Server/uploads/";
+
+	if ( $location == "eplat")
+		$url = "https://eplat.co.kr/Server/uploads/";
+
 	foreach($_FILES as $index => $file)
 	{
 		// for easy access
@@ -38,20 +44,26 @@
 		}	
 	}
 	
-    $sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW())";
-	$res1 = mysqli_query ( $conn,  $sqlstring);
-	
-	if ($res=== TRUE && $res1 == TRUE) {
-		$result = ['url' => 'http://localhost:3000/Server/uploads/'.$pdfname];
-	} else {
-		$result =  ['url' => 'http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf'];
-	}
+	try {
 
-    $conn->close();
+		$sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW())";
+		$res1 = mysqli_query ( $conn,  $sqlstring);
+		
+		if ($res=== TRUE && $res1 == TRUE) {
+			$result = ['url' => $url.$pdfname];
+		} else {
+			$result =  ['url' => 'http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf'];
+		}
+		
+		$conn->close();
+	}
+	catch (Exception $e)
+	{
+		echo json_encode( array ("Error:" => $e->getMessage() ));
+	}
 	
 	// Set the response content type to JSON
 	header('Content-Type: application/json');
-	
 	// Output the data as JSON
 	echo json_encode($result);
 

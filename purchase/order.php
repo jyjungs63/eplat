@@ -3,7 +3,7 @@
 
 <head>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
@@ -20,12 +20,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Purchase</h1>
+                        <h5>Purchase</h5>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="#">Purchase List</a></li>
+                            <li class="breadcrumb-item active"><a href="#custom-tabs-one-profile">Purchase
+                                    List</a></li>
                         </ol>
                     </div>
                 </div>
@@ -36,23 +37,23 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-info">
+                    <div class="card card-outline card-info card-tabs">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <div class="input-group mb-3">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button">Select Items</button>
-                                    &nbsp;
-                                    <select class="form-select form-control-sm" id="idGrade" style="width: 100px;"
-                                        data-placeholder="Choose Items">
-                                        <option val="va">전체</option>
-                                        <option val="v4">4세</option>
-                                        <option val="v5">5세</option>
-                                        <option val="v6">6세</option>
-                                        <option val="v7">7세</option>
-                                        <option val="ve">교구</option>
-                                    </select>
-                                </div>
+
                             </h3>
+                            <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
+                                        href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
+                                        aria-selected="true">Order</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill"
+                                        href="#custom-tabs-one-profile" role="tab"
+                                        aria-controls="custom-tabs-one-profile" aria-selected="false">Purchase List</a>
+                                </li>
+                            </ul>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
@@ -63,38 +64,100 @@
                             </div>
                         </div>
                         <div class="card-body pad" id="cardMain">
-                            <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
-                                <div align="center">
-                                    <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-warning"
-                                        role="button" data-toggle="tooltip" title="Order and PDF file"
-                                        aria-disabled="true"><i class="fa-solid fa-print"></i></a>
-                                    &nbsp;&nbsp;
+                            <div class="tab-content" id="custom-tabs-one-tabContent">
+                                <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
+                                    aria-labelledby="custom-tabs-one-home-tab">
+
+                                    <div class="d-flex align-items-end justify-content-end"
+                                        style="margin-bottom: 10px;">
+                                        <div class="input-group mb-3">
+                                            <button class="btn btn-outline-secondary btn-sm" type="button">Select
+                                                Items</button>
+                                            &nbsp;
+                                            <select class="form-select form-control-sm" id="idGrade"
+                                                style="width: 100px;" data-placeholder="Choose Items">
+                                                <option val="va">전체</option>
+                                                <option val="v4">4세</option>
+                                                <option val="v5">5세</option>
+                                                <option val="v6">6세</option>
+                                                <option val="v7">7세</option>
+                                                <option val="ve">교구</option>
+                                            </select>
+                                        </div>
+                                        <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-warning"
+                                            role="button" data-toggle="tooltip" title="Order and PDF file"
+                                            aria-disabled="true"><i class="fa-solid fa-print"></i></a>
+                                        &nbsp;&nbsp;
+
+                                        <a id="anchorRead" href="javascript:orderBook()" class="btn btn-info"
+                                            role="button" data-toggle="tooltip" title="Add to Cart "
+                                            aria-disabled="true"><i
+                                                class="fa-solid fa-cart-shopping"></i></a>&nbsp;&nbsp;
+                                        <a id="anchorRead" href="javascript:selectAll()" class="btn btn-success"
+                                            role="button" data-toggle="tooltip" title="Select All"
+                                            aria-disabled="true"><i class="fa-solid fa-save"></i></a>
+                                    </div>
+
+                                    <div id="idTable">
+
+                                    </div>
+                                    <div class="d-flex align-items-end justify-content-end" style="margin-top: 10px;">
+                                        <div align="center">
+
+                                        </div>
+                                    </div>
+
+                                    <div id="idTableConfirm" style="margin-top: 10px;">
+
+                                    </div>
                                 </div>
-                                <a id="anchorRead" href="javascript:orderBook()" class="btn btn-info" role="button"
-                                    data-toggle="tooltip" title="Add to Cart " aria-disabled="true"><i
-                                        class="fa-solid fa-cart-shopping"></i></a>&nbsp;&nbsp;
-                                <a id="anchorRead" href="javascript:selectAll()" class="btn btn-success" role="button"
-                                    data-toggle="tooltip" title="Select All" aria-disabled="true"><i
-                                        class="fa-solid fa-save"></i></a>
-                            </div>
-
-                            <div id="idTable">
-
-                            </div>
-                            <div class="d-flex align-items-end justify-content-end" style="margin-top: 10px;">
-                                <div align="center">
-
+                                <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
+                                    aria-labelledby="custom-tabs-one-profile-tab">
+                                    <div class="input-group mb-3">
+                                        <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
+                                    &nbsp;&nbsp; -->
+                                        <select class="form-select form-control-sm" id="idPorList"
+                                            data-placeholder="Choose Items" style="width: 120px">
+                                        </select>
+                                        &nbsp;
+                                        <input class="form-control form-control-sm" id="idID2" type="text"
+                                            placeholder="ID">
+                                        &nbsp;
+                                        <input class="form-control form-control-sm" id="idName2" type="text"
+                                            placeholder="Name">
+                                        &nbsp;
+                                        <input class="form-control form-control-sm" id="idOwner2" type="text"
+                                            placeholder="Owner">&nbsp;
+                                        <input class="form-control form-control-sm" id="idPasswd2" type="text"
+                                            placeholder="Password">
+                                        &nbsp;
+                                        <input class="form-control form-control-sm" id="idMobile2" type="text"
+                                            placeholder="Mobile">
+                                        &nbsp;
+                                        <input class="form-control form-control-sm" id="idAddr2" type="text"
+                                            placeholder="Address" style="width: 150px;">
+                                        &nbsp;
+                                        <input class="form-control form-control-sm" id="idFinish2" type="text"
+                                            placeholder="구매완료" style="width: 100px;">
+                                        &nbsp;
+                                        <input class="form-control form-control-sm" id="idRdate2" type="text"
+                                            placeholder="구매일" style="width: -5px;">
+                                        &nbsp;
+                                        <button class="btn btn-outline-primary btn-sm" type="button"
+                                            onclick="execDaumPostcode()">
+                                            주소찾기</button>
+                                        &nbsp;
+                                        <button class="btn btn-outline-success btn-sm" type="button"
+                                            onclick="AddBranch()">배송지추가
+                                        </button>
+                                    </div>
+                                    <div id="porTableDiv"></div>
                                 </div>
-                            </div>
-
-                            <div id="idTableConfirm" style="margin-top: 10px;">
-
                             </div>
                         </div>
                         <!-- <div class="card-footer">
 
                         </div> -->
-
                     </div>
                 </div>
             </div>
@@ -191,7 +254,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
@@ -225,6 +288,190 @@
     var deleteIcon = function(cell, formatterParams) { //plain text value
         return "<i class='fa fa-trash'></i>";
     };
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the modal element by its ID
+        porTable = new Tabulator("#porTableDiv", {
+            height: "490px",
+            layout: "fitColumns",
+            rowHeight: 40, //set rows to 40px height
+            selectable: true, //make rows selectable
+            columns: [
+
+                // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+                {
+                    title: "Grade",
+                    field: "grade",
+                    width: 150,
+                    editor: "list",
+                    editor: false,
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+                {
+                    title: "품명",
+                    field: "title",
+                    sorter: "number",
+                    width: 350,
+                    editor: false,
+                    bottomCalcParams: {
+                        precision: 0
+                    }
+                },
+                {
+                    title: "단가",
+                    field: "price",
+                    sorter: "number",
+                    width: 150,
+                    editor: false,
+                    hozAlign: "right",
+                    formatterParams: {
+                        thousand: ",",
+                        precision: 0,
+                    },
+                },
+                {
+                    title: "Count",
+                    field: "count",
+                    editor: "input",
+                    width: 150,
+                    editor: false,
+                    hozAlign: "right",
+                    validator: "min:0",
+                    editorParams: {
+                        min: 0,
+                        max: 1000, // Adjust min and max values as needed
+                        step: 2,
+                        elementAttributes: {
+                            type: "number"
+                        }
+                    },
+                    cellEdited: function(cell) {
+                        calsum(cell);
+                    },
+                    bottomCalc: "sum"
+                },
+                {
+                    title: "Total",
+                    field: "total",
+                    editor: "input",
+                    formatter: "money",
+                    hozAlign: "right",
+                    editor: false,
+                    formatterParams: {
+                        thousand: ",",
+                        precision: 0,
+                    },
+                    editorParams: {
+                        elementAttributes: {
+                            type: "number"
+                        }
+                    },
+                    bottomCalc: "sum",
+                    bottomCalcFormatterParams: {
+                        formatter: "money",
+                        precision: 0,
+                        thousand: ","
+                    }
+                },
+            ],
+        });
+
+        orderList(null);
+
+    });
+    orderList = () => {
+        items = [];
+        var data = {
+            id: "manager"
+        };
+
+        $.ajax({
+            url: "../Server/SShowOrderList.php",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function(resp) {
+                let select = document.getElementById('idPorList');
+                let option = document.createElement('option');
+                option.text = ""; // Set the text of the new option
+                option.value = ""; // Set the value attribute (if needed)
+                select.add(option);
+                resp.forEach(el => {
+                    var jarr = {
+                        "id": el['id'],
+                        "por_id": el['por_id'],
+                        "order": el['order'],
+                        "addr": el['addr'],
+                        "mobile": el['mobile'],
+                        "rdate": el['rdate'],
+                        "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+                    }
+                    items.push(jarr);
+                    // Create a new option element
+                    let option = document.createElement('option');
+                    option.text = el['por_id']; // Set the text of the new option
+                    option.value = el['por_id']; // Set the value attribute (if needed)
+
+                    // Append the new option to the select element
+                    select.add(option);
+                });
+            },
+            error: function(e) {
+                alert('falure');
+                $("#err").html(e).fadeIn();
+            }
+        });
+
+        var deleteIcon = function(cell, formatterParams) { //plain text value
+            return "<i class='fa fa-trash'></i>";
+        };
+    }
+
+    listPor = (por_id) => {
+
+        $.ajax({
+            url: "../Server/SPorDetailList.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: por_id
+            },
+            success: function(res) {
+                var js = res[0]['json']
+                porTable.setData(JSON.parse(js));
+
+                $("#idID2").val(res[0]['id']);
+                $("#idName2").val(res[0]['order']);
+                $("#idAddr2").val(res[0]['addr']);
+                $("#idRdate2").val(res[0]['rdate']);
+                $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
+
+            },
+            error: function(jqXFR, textStatus, errorThrown) {
+                if (textStatus == "error") {
+                    alert(loc + ' ' + textStatus);
+                }
+            }
+        });
+    }
+
+    document.getElementById("idPorList").addEventListener("change", function() {
+        // 선택된 옵션 가져오기
+        var selectedOption = this.options[this.selectedIndex];
+
+        // 선택된 옵션의 값(value) 가져오기
+        var selectedValue = selectedOption.value;
+
+        // 선택된 옵션의 텍스트 가져오기
+        var selectedText = selectedOption.text;
+
+        listPor(selectedText);
+    });
 
     var table = new Tabulator("#idTable", {
         height: "490px",

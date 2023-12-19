@@ -4,11 +4,11 @@ require_once 'dbinit.php';
 
 session_start();
 
-//$num = $_POST['id'];
+$pid = $_POST['id'];
 
 global $conn;
 
-$sqlString = "SELECT *  FROM eplat_porlist where confirm = 0"; 
+$sqlString = "select unique(classnm) classnm from eplat_user where pid = '{$pid}'"; 
 
 $rows = array();
 
@@ -20,14 +20,8 @@ try {
 	
 	while($row = mysqli_fetch_array($rs)){
 		array_push($rows,
-		array(  'id'        => $row['id'],
-		'por_id'      => $row['por_id'] ,
-		'order'  => $row['order'],								
-		'addr'    => $row['addr'],								
-		'mobile'      => $row['mobile'],								
-		'rdate'   => $row['rdate'],								
-		'confirm'   => $row['confirm'],															
-	));
+		    array(  'classnm'      => $row['classnm'],													
+	    ));
 	}
 	$conn->close();
 }

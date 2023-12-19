@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
 
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
 
     <title>Branch Manage</title>
@@ -23,7 +26,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Kinder garden Manage</h1>
+                        <h5>Kinder garden Manage</h5>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -43,13 +46,8 @@
                                 <div class="input-group mb-3">
                                     <button class="btn btn-outline-secondary" type="button">Select Items</button>
                                     &nbsp;&nbsp;
-                                    <select class="form-select" id="idGrade" data-placeholder="Choose Items">
-                                        <option val="va">전체</option>
-                                        <option val="v4">4세</option>
-                                        <option val="v5">5세</option>
-                                        <option val="v6">6세</option>
-                                        <option val="v7">7세</option>
-                                        <option val="ve">교구</option>
+                                    <select class="form-select" id="idStudent" data-placeholder="Choose Items">
+
                                     </select>
                                     &nbsp;&nbsp;
                                     <input class="form-control " id="idClassname" type="text"
@@ -74,7 +72,8 @@
                         <div class="card-body pad">
                             <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
                                 <a id="anchorRead" href="javascript:addClassMember()" class="btn btn-info" role="button"
-                                    aria-disabled="true"><i class="fa-solid fa-cart-shopping"></i></a>
+                                    data-toggle="tooltip" title="Add Student" aria-disabled="true"><i
+                                        class="fa-solid fa-user"></i></a>
                             </div>
 
                             <div id="idTable">
@@ -139,48 +138,104 @@
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script>
-    var tab = new Tabulator("#idTable", {
-        height: "300px",
-        layout: "fitColumns",
-        columns: [{
-                title: "Id",
-                field: "Id",
-                width: 150,
-                editor: "input",
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-            {
-                title: "Passwd",
-                field: "Passwd",
-                width: 150,
-                editor: "input",
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-            {
-                title: "Name",
-                field: "Name",
-                width: 150,
-                editor: "input",
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-        ],
+    var tab;
+    document.addEventListener("DOMContentLoaded", function() {
+
+        tab = new Tabulator("#idTable", {
+            height: "300px",
+            layout: "fitColumns",
+            columns: [{
+                    title: "Id",
+                    field: "Id",
+                    width: 150,
+                    editor: "input",
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+                {
+                    title: "Passwd",
+                    field: "Passwd",
+                    width: 150,
+                    editor: "input",
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+                {
+                    title: "Name",
+                    field: "Name",
+                    width: 150,
+                    editor: "input",
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+            ],
+        });
+        //showClassMembers("teacher1");
+        showClass("teacher1");
     });
+
+    document.getElementById("idStudent").addEventListener("change", function() {
+        // 선택된 옵션 가져오기
+        var selectedOption = this.options[this.selectedIndex];
+
+        // 선택된 옵션의 값(value) 가져오기
+        var selectedValue = selectedOption.value;
+
+        // 선택된 옵션의 텍스트 가져오기
+        var selectedText = selectedOption.text;
+
+        listStudent(selectedText);
+    });
+
+    listStudent = (classnm) => {
+
+        $.ajax({
+            url: "../Server/SShowStudentList.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: "teacher1",
+                classnm: classnm
+            },
+            success: function(res) {
+                var js = res['json'];
+                tab.setData(js);
+                //tab.setData(JSON.parse(js));
+                toastr.info('This is an info message with options', 'Info', {
+                    positionClass: 'toast-top-right',
+                    timeout: 3000,
+                    closeButton: true,
+                    progressBar: true
+                });
+                //toastr.success('Select Success!!!', 'Success');
+                // toastr.error('I do not think that word means what you think it means.',
+                //     'Inconceivable!');
+                // toastr.warning('Warning message', 'Warning');
+                // toastr.info('Information message', 'Info');
+            },
+            error: function(jqXFR, textStatus, errorThrown) {
+                if (textStatus == "error") {
+                    alert(loc + ' ' + textStatus);
+                }
+            }
+        });
+    }
 
     addChild = () => {
         var classname = $("#idClassname").val();
@@ -195,18 +250,19 @@
             }
             tab.addRow(data);
         })
-
     };
 
     addClassMember = () => { // 학생등록
-        var item = $("#idTable").getRows();
-        item.foreEach(el => {
+        var items = [];
+        var item = tab.getRows();
+        item.forEach(el => {
             var jarr = {
-                "id": el['id'],
-                "name": el['name'],
-                "passwd": el['passwd'],
+                "id": el._row.data['Id'],
+                "name": el._row.data['Name'],
+                "passwd": el._row.data['Passwd'],
                 "tid": "teacher1", //
-                "role": "2", //
+                "role": "0", //
+                "classnm": "장미"
             }
             items.push(jarr);
 
@@ -215,23 +271,57 @@
             "item": items
         };
         $.ajax({
-            url: "SinsertStudent.php",
+            url: "../Server/SinsertStudent.php",
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
             success: function(e) {},
-            error: function(e) {
-
-            }
+            error: function(e) {}
         })
     }
 
-    showClassMembers = () => {
+    showClass = (tid) => {
         var data = {
             id: tid
         };
         $.ajax({
-            url: "ShowStudent.php",
+            url: "../Server/SShowClassList.php",
+            type: "POST",
+            dataType: "json",
+            data: data,
+            success: function(resp) {
+
+                let select = document.getElementById('idStudent');
+                let option = document.createElement('option');
+                option.text = ""; // Set the text of the new option
+                option.value = ""; // Set the value attribute (if needed)
+                select.add(option);
+                resp.forEach(el => {
+                    var jarr = {
+                        "classnm": el['classnm'],
+                    }
+                    //items.push(jarr);
+                    // Create a new option element
+                    let option = document.createElement('option');
+                    option.text = el['classnm']; // Set the text of the new option
+                    option.value = el['classnm']; // Set the value attribute (if needed)
+
+                    // Append the new option to the select element
+                    select.add(option);
+                })
+            },
+            error: function(e) {
+
+            }
+        });
+    };
+
+    showClassMembers = (tid) => {
+        var data = {
+            id: tid
+        };
+        $.ajax({
+            url: "../Server/SShowStudentList.php",
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),

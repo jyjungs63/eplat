@@ -38,17 +38,25 @@ if (  !empty($user) )
 		));		
 	}
 	$jsarr = json_encode ($rows);
-	$sqlstring = "insert into repository ( title, id, contents, rdate ) values ( '$content', '$user',  '$jsarr',  NOW())";
-	$res = mysqli_query ( $conn,  $sqlstring);
-	
-	if ($res=== TRUE) {
-		$result = true;
-	} else {
-		$result =  "Error: " . $sql . "<br>" . $conn->error;
+	try {
+
+		$sqlstring = "insert into repository ( title, id, contents, rdate ) values ( '$content', '$user',  '$jsarr',  NOW())";
+		$res = mysqli_query ( $conn,  $sqlstring);
+		
+		if ($res=== TRUE) {
+			$result = true;
+		} else {
+			$result =  "Error: " . $sql . "<br>" . $conn->error;
+		}
+		
+		$conn->close();
+	}
+	catch ( Exception $e)
+	{
+		echo json_encode( array ("error:" => $e->getMessage() ));
 	}
 
-	$conn->close();
-	echo json_encode($result);
+	echo json_encode( array ("result:" => $result )) ;
 }
 else 
 {

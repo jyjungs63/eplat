@@ -20,25 +20,31 @@ if ($conn->connect_error) {
 
 $stmt = "select * from eplat_porlist where por_id='{$pid}' ";
 
-$rs = mysqli_query($conn, $stmt);
+try {
 
-while ( $row = mysqli_fetch_array($rs))
-{
-    array_push ($rows, 
-    array (
-        'id'   => $row['id'],
-        'json' => $row['por_list'],
-        'order' => $row['order'],
-        'rdate' => $row['rdate'],
-        'addr'  => $row['addr'],
-        'mobile'  => $row['mobile'],
-        'confirm'  => $row['confirm']
-    ));
+    $rs = mysqli_query($conn, $stmt);
+    
+    while ( $row = mysqli_fetch_array($rs))
+    {
+        array_push ($rows, 
+        array (
+            'id'   => $row['id'],
+            'json' => $row['por_list'],
+            'order' => $row['order'],
+            'rdate' => $row['rdate'],
+            'addr'  => $row['addr'],
+            'mobile'  => $row['mobile'],
+            'confirm'  => $row['confirm']
+        ));
+    }
+    
+    $conn->close();
+}
+catch (Exception $e) {
+    echo json_encode ( $e->getMessage());
 }
 
-$conn->close();
 header('Content-Type: application/json');
-
 echo json_encode($rows);
 
 
