@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up</title>
+    <title>사용자 등록</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -24,7 +25,7 @@
             <div class="container">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <h2 class="form-title">Sign up</h2>
+                        <h3 class="form-title">사용자 등록</h3>
                         <form method="POST" class="register-form" id="register-form" action="../Server/Sregister.php">
                             <div class="form-group">
                                 <label for="id"><i class="zmdi zmdi-email"></i></label>
@@ -32,47 +33,47 @@
                             </div>
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name" />
+                                <input type="text" name="name" id="name" placeholder="이름" />
                             </div>
                             <div class="form-group">
                                 <label for="mobile"><i class="zmdi zmdi-smartphone-iphone"></i></label>
-                                <input type="text" name="mobile" id="mobile" placeholder="Your mobile" />
+                                <input type="text" name="mobile" id="mobile" placeholder="휴대폰" />
                             </div>
                             <div class="form-group" style="margin-top: -15px">
                                 <div class="row d-flex">
                                     <div style="margin-top: -5px">
-                                        <button type="button" class="btn btn-sm btn-primary"
-                                            onclick="execDaumPostcode()">우편번호</button>
+                                        <button type="button" class="btn btn-sm btn-primary" style="border-radius: 30%;"
+                                            onclick="execDaumPostcode()">우편번호찾기</button>
                                     </div>
                                     <div class="d-inline" style="margin-top: -5px;">
-                                        <input type="text" name="zipcode" id="zipcode" placeholder="zip code" />
+                                        <input type="text" name="zipcode" id="zipcode" placeholder="우편번호" />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="addr"><i class="zmdi zmdi-home" onclick="execDaumPostcode()"></i></label>
-                                <input type="text" name="addr" id="addr" placeholder="Your address" />
+                                <input type="text" name="addr" id="addr" placeholder="주소" />
                             </div>
                             <div class="form-group">
                                 <label for="password"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password" id="password" placeholder="Password" />
+                                <input type="password" name="password" id="password" placeholder="비밀번호" />
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
+                                <input type="password" name="re_pass" id="re_pass" placeholder="비밀번호확인" />
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="idrolebm" id="idrolebm" class="agree-term" />
-                                <label for="idrolebm" class="label-agree-term"><span><span></span></span>Branch Manager
+                                <label for="idrolebm" class="label-agree-term"><span><span></span></span>지사장
                                 </label> &nbsp;&nbsp;&nbsp;
                                 <input type="checkbox" name="idrolet" id="idrolet" class="agree-term" />
-                                <label for="idrolet" class="label-agree-term"><span><span></span></span>Teacher </label>
+                                <label for="idrolet" class="label-agree-term"><span><span></span></span>선생님 </label>
                             </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <!-- <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" checked />
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all
                                     statements in <a href="#" class="term-service">Terms of service</a></label>
-                            </div>
+                            </div> -->
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
                             </div>
@@ -80,7 +81,7 @@
                     </div>
                     <div class="signup-image">
                         <figure><img src="images/signup-image.jpg" alt="sing up image"></figure>
-                        <a href="login.php" class="signup-image-link">I am already member</a>
+                        <a href="login.php" class="signup-image-link">등록된 사용자 입장하기</a>
                     </div>
                 </div>
             </div>
