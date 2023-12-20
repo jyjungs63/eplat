@@ -21,84 +21,84 @@
     <script src="record.js"></script>
     <title>Eplat 자료실</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-        input[type=text],
-        select,
-        textarea {
+    input[type=text],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+        padding: 10px;
+    }
+
+    button[type=submit] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    .container {
+        margin-top: 20px;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    .col-25 {
+        float: left;
+        width: 20%;
+        margin-top: 6px;
+    }
+
+    .col-75 {
+        float: left;
+        width: 80%;
+        padding-right: 20px;
+        margin-top: 6px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+
+        .col-25,
+        .col-75,
+        input[type=submit] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
+            margin-top: 0;
         }
+    }
 
-        label {
-            padding: 12px 12px 12px 0;
-            display: inline-block;
-            padding: 10px;
-        }
-
-        button[type=submit] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
-            margin-right: 20px;
-            margin-top: 10px;
-        }
-
-        input[type=submit]:hover {
-            background-color: #45a049;
-        }
-
-        .container {
-            margin-top: 20px;
-            border-radius: 5px;
-            background-color: #f2f2f2;
-            padding: 20px;
-        }
-
-        .col-25 {
-            float: left;
-            width: 20%;
-            margin-top: 6px;
-        }
-
-        .col-75 {
-            float: left;
-            width: 80%;
-            padding-right: 20px;
-            margin-top: 6px;
-        }
-
-        /* Clear floats after the columns */
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-        @media screen and (max-width: 600px) {
-
-            .col-25,
-            .col-75,
-            input[type=submit] {
-                width: 100%;
-                margin-top: 0;
-            }
-        }
-
-        .inset-border {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(255, 255, 255, 0.15) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+    .inset-border {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(255, 255, 255, 0.15) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
     </style>
 </head>
 
@@ -357,211 +357,216 @@
 
 </body>
 <script>
-    var gid;
-    $(document).ready(function (e) {
+var gid;
+$(document).ready(function(e) {
+    $("#cardUpload").hide();
+    $("#cardFileList").hide();
+
+    var data = {
+        num: -1
+    }
+
+    function rowStyle(row, index) {
+        var classes = [
+            'bg-blue',
+            'bg-green',
+            'bg-orange',
+            'bg-yellow',
+            'bg-red'
+        ]
+
+        if (index % 2 === 0 && index / 2 < classes.length) {
+            return {
+                classes: classes[index / 2]
+            }
+        }
+        return {
+            css: {
+                color: 'blue'
+            }
+        }
+    }
+
+    $("#files-upload").change(function() {
+        if (typeof(FileReader) != "undefined") {
+            var dvPreview = $("#dvPreview");
+            dvPreview.html("");
+
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.PNG)$/;
+            $('#dvPreview').empty();
+
+            $($(this)[0].files).each(function() {
+                var file = $(this);
+                if (regex.test(file[0].name.toLowerCase())) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var img = $("<img />");
+                        img.attr("style", "height:50px;width: 50px;margin-left:5px");
+                        img.attr("src", e.target.result);
+                        dvPreview.append(img);
+                    }
+                    reader.readAsDataURL(file[0]);
+                } else {
+                    dvPreview.html(file[0].name);
+                    //return false;
+                }
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+    //$('#table').bootstrapTable({ data: record })
+    $.ajax({
+        url: "../Server/SShowBoardlist.php",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        success: function(resp) {
+            var $table = $('#table').bootstrapTable({
+                data: resp,
+                columns: [{}, {}, {}, {}]
+            });
+        },
+        error: function(e) {
+            alert('falure');
+            $("#err").html(e).fadeIn();
+        }
+    });
+
+    activeUpload = () => {
+        //alert ('called');
+        $("#cardList").hide();
+        $("#cardUpload").toggle();
+    }
+
+    closeUpload = () => {
+        $("#cardList").show();
         $("#cardUpload").hide();
         $("#cardFileList").hide();
+    }
 
-        var data = {
-            num: -1
+    closeDownload = () => {
+        $("#cardList").show();
+        $("#cardUpload").hide();
+        $("#cardFileList").hide();
+    }
+
+    $('#table').on('click-row.bs.table', function(e, row, $element) {
+
+        var divElement = document.getElementById('idFiles');
+        while (divElement.firstChild) {
+            divElement.removeChild(divElement.firstChild);
         }
 
-        function rowStyle(row, index) {
-            var classes = [
-                'bg-blue',
-                'bg-green',
-                'bg-orange',
-                'bg-yellow',
-                'bg-red'
-            ]
+        $("#cardList").hide();
+        $("#cardUpload").hide();
+        $("#cardFileList").toggle();
 
-            if (index % 2 === 0 && index / 2 < classes.length) {
-                return {
-                    classes: classes[index / 2]
-                }
-            }
-            return {
-                css: {
-                    color: 'blue'
-                }
-            }
+        const num = row['num']; // Get the ID from the clicked row
+        var item = {
+            num: num
         }
 
-        $("#files-upload").change(function () {
-            if (typeof (FileReader) != "undefined") {
-                var dvPreview = $("#dvPreview");
-                dvPreview.html("");
-
-                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.PNG)$/;
-                $('#dvPreview').empty();
-
-                $($(this)[0].files).each(function () {
-                    var file = $(this);
-                    if (regex.test(file[0].name.toLowerCase())) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            var img = $("<img />");
-                            img.attr("style", "height:50px;width: 50px;margin-left:5px");
-                            img.attr("src", e.target.result);
-                            dvPreview.append(img);
-                        }
-                        reader.readAsDataURL(file[0]);
-                    } else {
-                        dvPreview.html(file[0].name);
-                        //return false;
-                    }
-                });
-            } else {
-                alert("This browser does not support HTML5 FileReader.");
-            }
-        });
-        //$('#table').bootstrapTable({ data: record })
         $.ajax({
             url: "../Server/SShowBoardlist.php",
             type: "POST",
             dataType: "json",
-            data: data,
-            success: function (resp) {
-                var $table = $('#table').bootstrapTable({
-                    data: resp,
-                    columns: [{}, {}, {}, {}]
+            data: item,
+            success: function(resp) {
+                var jsn = JSON.parse(resp[0]['contents'])
+                var jsarr = [];
+
+                $("#idNum").val(resp[0]['num']);
+                $("#idTitle").val(resp[0]['title']);
+                $("#idID").val(resp[0]['id']);
+                $("#idDate").val(resp[0]['rdate']);
+
+                for (var i = 0; i < jsn.length; i++) {
+                    var object = {
+                        text: "   " + i + " : " + jsn[i]['name'] + '   size: (' +
+                            parseFloat(Number(jsn[i]['size']) / 1024 / 1024).toFixed(
+                            2) + ") MB",
+                        href: 'http://localhost:3000/eplat/board/uploads/' + jsn[i][
+                            'fakename'
+                        ]
+                    }
+                    jsarr.push(object);
+                }
+                $.each(jsarr, function(index, link) {
+                    var anchor = $('<a>', {
+                        text: link.text,
+                        href: link.href,
+                        target: '_blank' // Optional - Opens links in a new tab
+                    });
+
+                    var iconSpan = $('<span>', {
+                        class: 'icon-span'
+                    }).prepend($('<i>', {
+                        class: 'far fa-file'
+                    }));
+                    anchor.prepend(iconSpan);
+
+                    // Append each anchor element to the div with id="myDiv"
+                    $('#idFiles').append(anchor);
+
+                    // Append a line break for separation (optional)
+                    $('#idFiles').append('<br>');
                 });
+
             },
-            error: function (e) {
+            error: function(e) {
                 alert('falure');
                 $("#err").html(e).fadeIn();
             }
         });
 
-        activeUpload = () => {
-            //alert ('called');
-            $("#cardList").hide();
-            $("#cardUpload").toggle();
-        }
+    });
 
-        closeUpload = () => {
-            $("#cardList").show();
-            $("#cardUpload").hide();
-            $("#cardFileList").hide();
-        }
+    $(document).on('submit', (function(e) {
+        var property = document.getElementById('files-upload').files[0];
+        if (property != "undefined") {
+            var image_name = property.name;
 
-        closeDownload = () => {
-            $("#cardList").show();
-            $("#cardUpload").hide();
-            $("#cardFileList").hide();
-        }
+            var form_data = new FormData();
 
-        $('#table').on('click-row.bs.table', function (e, row, $element) {
-
-            var divElement = document.getElementById('idFiles');
-            while (divElement.firstChild) {
-                divElement.removeChild(divElement.firstChild);
+            for (var i = 0, len = document.getElementById('files-upload').files.length; i <
+                len; i++) {
+                form_data.append("file" + i, document.getElementById('files-upload').files[i]);
             }
 
-            $("#cardList").hide();
-            $("#cardUpload").hide();
-            $("#cardFileList").toggle();
-
-            const num = row['num']; // Get the ID from the clicked row
-            var item = { num: num }
+            form_data.append("idContent", $('#idContent').val());
 
             $.ajax({
-                url: "../Server/SShowBoardlist.php",
+                url: "../Server/SUploadBoard.php",
                 type: "POST",
-                dataType: "json",
-                data: item,
-                success: function (resp) {
-                    var jsn = JSON.parse(resp[0]['contents'])
-                    var jsarr = [];
 
-                    $("#idNum").val(resp[0]['num']);
-                    $("#idTitle").val(resp[0]['title']);
-                    $("#idID").val(resp[0]['id']);
-                    $("#idDate").val(resp[0]['rdate']);
-
-                    for (var i = 0; i < jsn.length; i++) {
-                        var object = {
-                            text: "   " + i + " : " + jsn[i]['name'] + '   size: (' + parseFloat(Number(jsn[i]['size']) / 1024 / 1024).toFixed(2) + ") MB", href: 'http://localhost:3000/eplat/board/uploads/' + jsn[i]['fakename']
-                        }
-                        jsarr.push(object);
-                    }
-                    $.each(jsarr, function (index, link) {
-                        var anchor = $('<a>', {
-                            text: link.text,
-                            href: link.href,
-                            target: '_blank' // Optional - Opens links in a new tab
-                        });
-
-                        var iconSpan = $('<span>', {
-                            class: 'icon-span'
-                        }).prepend($('<i>', {
-                            class: 'far fa-file'
-                        }));
-                        anchor.prepend(iconSpan);
-
-                        // Append each anchor element to the div with id="myDiv"
-                        $('#idFiles').append(anchor);
-
-                        // Append a line break for separation (optional)
-                        $('#idFiles').append('<br>');
-                    });
-
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#msg').html('Saving ......');
                 },
-                error: function (e) {
+                success: function(data) {
+                    alert(data);
+                    if (data == 'invalid file') {
+                        $("#err").html("Invalid File !").fadeIn();
+                    } else {
+                        $("#msg").html(data).fadeIn();
+                        $("#form")[0].reset();
+                        alert(data);
+                    }
+                },
+                error: function(e) {
                     alert('falure');
                     $("#err").html(e).fadeIn();
                 }
             });
-
-        });
-
-        $(document).on('submit', (function (e) {
-            var property = document.getElementById('files-upload').files[0];
-            if (property != "undefined") {
-                var image_name = property.name;
-
-                var form_data = new FormData();
-
-                for (var i = 0, len = document.getElementById('files-upload').files.length; i < len; i++) {
-                    form_data.append("file" + i, document.getElementById('files-upload').files[i]);
-                }
-
-                form_data.append("idContent", $('#idContent').val());
-
-                $.ajax({
-                    url: "../Server/SUploadBoard.php",
-                    type: "POST",
-
-                    data: form_data,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    beforeSend: function () {
-                        $('#msg').html('Saving ......');
-                    },
-                    success: function (data) {
-                        alert(data);
-                        if (data == 'invalid file') {
-                            $("#err").html("Invalid File !").fadeIn();
-                        } else {
-                            $("#msg").html(data).fadeIn();
-                            $("#form")[0].reset();
-                            alert(data);
-                        }
-                    },
-                    error: function (e) {
-                        alert('falure');
-                        $("#err").html(e).fadeIn();
-                    }
-                });
-            }
-            else {
-                alert('file must upload !!');
-            }
-        }));
-    });
-
-
+        } else {
+            alert('file must upload !!');
+        }
+    }));
+});
 </script>
 
 </html>

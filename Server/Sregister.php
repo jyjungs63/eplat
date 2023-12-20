@@ -51,8 +51,4 @@ if ($res=== TRUE) {
 	echo $result;
 }
 
-
-
-
-
 ?>

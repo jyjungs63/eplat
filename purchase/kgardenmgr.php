@@ -131,15 +131,16 @@
     </section>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <?php
+        include '../includescr.php';
+    ?>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-
-    <!-- Toastr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
 
     <script>
     var tab;
@@ -205,36 +206,26 @@
 
     listStudent = (classnm) => {
 
-        $.ajax({
-            url: "../Server/SShowStudentList.php",
-            type: "POST",
-            dataType: "json",
-            data: {
+        dispList = (res) => {
+            var js = res['json'];
+            tab.setData(js);
+            //tab.setData(JSON.parse(js));
+            CallToast('Student list successfully!!', "success")
+        }
+        dispErr = (xhr) => {
+            CallToast('Student list Error!!', "error")
+        }
+
+        var options = {
+            functionName: 'SShowStudentList',
+            otherData: {
                 id: "teacher1",
                 classnm: classnm
-            },
-            success: function(res) {
-                var js = res['json'];
-                tab.setData(js);
-                //tab.setData(JSON.parse(js));
-                toastr.info('This is an info message with options', 'Info', {
-                    positionClass: 'toast-top-right',
-                    timeout: 3000,
-                    closeButton: true,
-                    progressBar: true
-                });
-                //toastr.success('Select Success!!!', 'Success');
-                // toastr.error('I do not think that word means what you think it means.',
-                //     'Inconceivable!');
-                // toastr.warning('Warning message', 'Warning');
-                // toastr.info('Information message', 'Info');
-            },
-            error: function(jqXFR, textStatus, errorThrown) {
-                if (textStatus == "error") {
-                    alert(loc + ' ' + textStatus);
-                }
             }
-        });
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+
     }
 
     addChild = () => {
@@ -270,68 +261,139 @@
         var data = {
             "item": items
         };
-        $.ajax({
-            url: "../Server/SinsertStudent.php",
-            type: "POST",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function(e) {},
-            error: function(e) {}
-        })
+        // $.ajax({
+        //     url: "../Server/SinsertStudent.php",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: JSON.stringify(data),
+        //     success: function(e) {},
+        //     error: function(e) {}
+        // })
+
+        dispList = (resp) => {
+            CallToast('New Student added successfully!!', "success")
+        }
+        dispErr = (xhr) => {
+            CallToast('New Student  added falure !!', "error")
+        }
+
+        var options = {
+            functionName: 'SinsertStudent',
+            otherData: {
+                items
+            }
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
     }
 
     showClass = (tid) => {
         var data = {
             id: tid
         };
-        $.ajax({
-            url: "../Server/SShowClassList.php",
-            type: "POST",
-            dataType: "json",
-            data: data,
-            success: function(resp) {
+        // $.ajax({
+        //     url: "../Server/SShowClassList.php",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: data,
+        //     success: function(resp) {
 
-                let select = document.getElementById('idStudent');
+        //         let select = document.getElementById('idStudent');
+        //         let option = document.createElement('option');
+        //         option.text = ""; // Set the text of the new option
+        //         option.value = ""; // Set the value attribute (if needed)
+        //         select.add(option);
+        //         resp.forEach(el => {
+        //             var jarr = {
+        //                 "classnm": el['classnm'],
+        //             }
+        //             //items.push(jarr);
+        //             // Create a new option element
+        //             let option = document.createElement('option');
+        //             option.text = el['classnm']; // Set the text of the new option
+        //             option.value = el['classnm']; // Set the value attribute (if needed)
+
+        //             // Append the new option to the select element
+        //             select.add(option);
+        //         })
+        //     },
+        //     error: function(e) {
+
+        //     }
+        // });
+
+        dispList = (resp) => {
+            let select = document.getElementById('idStudent');
+            let option = document.createElement('option');
+            option.text = ""; // Set the text of the new option
+            option.value = ""; // Set the value attribute (if needed)
+            select.add(option);
+            resp.forEach(el => {
+                var jarr = {
+                    "classnm": el['classnm'],
+                }
+                //items.push(jarr);
+                // Create a new option element
                 let option = document.createElement('option');
-                option.text = ""; // Set the text of the new option
-                option.value = ""; // Set the value attribute (if needed)
+                option.text = el['classnm']; // Set the text of the new option
+                option.value = el['classnm']; // Set the value attribute (if needed)
+
+                // Append the new option to the select element
                 select.add(option);
-                resp.forEach(el => {
-                    var jarr = {
-                        "classnm": el['classnm'],
-                    }
-                    //items.push(jarr);
-                    // Create a new option element
-                    let option = document.createElement('option');
-                    option.text = el['classnm']; // Set the text of the new option
-                    option.value = el['classnm']; // Set the value attribute (if needed)
+            })
+            CallToast('New Branch Manager added successfully!!', "success")
+        }
 
-                    // Append the new option to the select element
-                    select.add(option);
-                })
-            },
-            error: function(e) {
+        dispErr = (xhr) => {
+            CallToast('New Branch Manager added successfully!!', "error")
+        }
 
+        var options = {
+            functionName: 'SShowClassList',
+            otherData: {
+                id: tid
             }
-        });
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+
     };
 
     showClassMembers = (tid) => {
         var data = {
             id: tid
         };
-        $.ajax({
-            url: "../Server/SShowStudentList.php",
-            type: "POST",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function(e) {
+        // $.ajax({
+        //     url: "../Server/SShowStudentList.php",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: JSON.stringify(data),
+        //     success: function(e) {
 
-            },
-            error: function(e) {
+        //     },
+        //     error: function(e) {
 
+        //     }
+        // })
+
+        dispList = (res) => {
+            // var js = res['json'];
+            // tab.setData(js);
+            //tab.setData(JSON.parse(js));
+            CallToast('Student list successfully!!', "success")
+        }
+        dispErr = (xhr) => {
+            CallToast('Student list Error!!', "error")
+        }
+
+        var options = {
+            functionName: 'SShowStudentList',
+            otherData: {
+                id: "teacher1",
+                classnm: classnm
             }
-        })
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
     }
 
     /* Chart.js Charts */

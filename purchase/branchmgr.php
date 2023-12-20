@@ -5,15 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" />
+    <?php
+        include '../include.php';
+    ?>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
-    <script src="../../common.js"></script>
+    <script src="../../common.js"></script> -->
+
     <title>Branch Manage</title>
     <style>
     .form-control-xsm {
@@ -86,7 +89,7 @@
                                         placeholder="Zip Code" style="width: 2px;">&nbsp;
 
                                     <button class="btn btn-outline-primary btn-sm" type="button"
-                                        onclick="execDaumPostcode()">주소찾기</button>&nbsp;
+                                        onclick="execDaumPostcode('idAddr','idZip')">주소찾기</button>&nbsp;
                                     &nbsp;
                                     <button class="btn btn-outline-success btn-sm" type="button"
                                         onclick="AddBranch()">Add Branch</button>
@@ -101,7 +104,8 @@
                         <div class="card-body pad">
                             <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;"><a
                                     id="anchorRead" href="javascript:UpdateBranch()" class="btn btn-info" role="button"
-                                    aria-disabled="true"><i class="fa-solid fa-user"></i></a></div>
+                                    aria-disabled="true" data-toggle="tooltip" title="Update Branch Manager"><i
+                                        class="fa-solid fa-user"></i></a></div>
                             <div id="idTable"></div>
                         </div>
                     </div>
@@ -144,7 +148,11 @@
     </div>
     </section>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+    <?php
+        include '../includescr.php';
+    ?>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
@@ -152,9 +160,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="branchmgr_js.js"></script>
-    <script src="../common.js"></script>
-
+    <script src="../common.js"></script> -->
 
     <script>
     var table;
@@ -170,6 +178,7 @@
 
         return password;
     }
+
     AddBranch = () => {
         var id = $("#idID").val();
         var name = $("#idName").val();
@@ -179,15 +188,6 @@
         var addr = $("#idAddr").val();
         var zipcode = $("#idZip").val();
         var rdate = "";
-
-        // function formatDate() {
-        //     const today = new Date(); // Get current date
-        //     const year = date.getFullYear();
-        //     const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
-        //     const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
-
-        //     return `${year}-${month}-${day}`;
-        // }
 
         if (id == undefined || id == "") id = faker.name.firstName();
         if (name == undefined || id == "") name = faker.name.firstName();
@@ -216,23 +216,39 @@
         var data = {
             "item": items
         }
-        $.ajax({
-            url: "../../Server/SRegistermgr.php",
-            type: "POST",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function(resp) {
-                alert("success!")
-            },
-            error: function(e) {
-                alert('falure');
-                $("#err").html(e).fadeIn();
+        // $.ajax({
+        //     url: "../Server/SRegistermgr.php",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: JSON.stringify(data),
+        //     success: function(resp) {
+        //         alert("success!")
+        //     },
+        //     error: function(xhr, status, error) {
+        //         alert('SRegistermgr ' + error);
+        //         $("#err").html(e).fadeIn();
+        //     }
+        // });
+
+        dispList = (resp) => {
+            CallToast('New Branch Manager added successfully!!', "success")
+
+        }
+        dispErr = (xhr) => {
+            CallToast('New Branch Manager added falure!', "error")
+        }
+        jsdata = JSON.stringify(items);
+        var options = {
+            functionName: 'SRegistermgr',
+            otherData: {
+                items
             }
-        });
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
     };
 
     UpdateBranch = () => {
-        var item = tab.getSelectedData();
+        var item = table.getSelectedData();
         var items = [];
 
         item.forEach(el => {
@@ -250,111 +266,94 @@
         var data = {
             "item": items
         }
-        $.ajax({
+        // $.ajax({
 
-            url: "../../Server/SShowConfirmUpdate.php",
-            type: "POST",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function(resp) {},
-            error: function(e) {
-                alert('falure');
-                $("#err").html(e).fadeIn();
+        //     url: "../Server/SShowConfirmUpdate.php",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: JSON.stringify(data),
+        //     success: function(resp) {},
+        //     error: function(e) {
+        //         alert('SShowConfirmUpdate!' + e);
+        //     }
+        // });
+
+        dispList = (resp) => {
+            CallToast('New Branch Manager Updated successfully!!', "success")
+        }
+        dispErr = (xhr) => {
+            CallToast('New Branch Manager Update falure!', "error")
+        }
+
+        var options = {
+            functionName: 'SShowConfirmUpdate',
+            otherData: {
+                items
             }
-        });
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
     }
 
     BranchList = () => {
         var items = [];
 
-        var data = {
-            role: 2,
-            id: "manager"
+        dispList = (resp) => {
+            resp.forEach(el => {
+                var jarr = {
+                    "id": el['id'],
+                    "name": el['name'],
+                    "owner": el['owner'],
+                    "mobile": el['mobile'],
+                    "addr": el['addr'],
+                    "zipcode": el['zipcode'],
+                    "password": el['password'],
+                    "rdate": el['rdate'],
+                }
+                items.push(jarr);
+            });
+            table.clearData();
+            table.setData(items);
+        }
+        dispErr = (e) => {
+            alert("SShowMgr Error!" + e);
+        }
+
+        var options = {
+            functionName: 'SShowMgr',
+            otherData: {
+                role: 2,
+                id: "manager"
+            }
         };
 
-        $.ajax({
-            url: "../../Server/SShowMgr.php",
-            type: "POST",
-            dataType: "json",
-            data: data,
-            success: function(resp) {
-                resp.forEach(el => {
-                    var jarr = {
-                        "id": el['id'],
-                        "name": el['name'],
-                        "owner": el['owner'],
-                        "mobile": el['mobile'],
-                        "addr": el['addr'],
-                        "zipcode": el['zipcode'],
-                        "password": el['password'],
-                        "rdate": el['rdate'],
-                        // "confirm": el['confirm'] == 1 ? "승인" : "미승인",
-                    }
-                    items.push(jarr);
-                });
-                table.clearData();
-                table.setData(items);
-            },
-            error: function(e) {
-                alert('falure');
-                $("#err").html(e).fadeIn();
-            }
-        });
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
     }
 
     BranchDelete = (cell) => {
         var result = confirm("Are you sure to delete ??");
         var id = cell._row.data['id'];
-        var data = {
-            id: id
+
+        dispList = (resp) => {
+            cell.delete();
+        }
+        dispErr = (xhr) => {
+            alert("SDeleteMgr Error" + xhr.statusText);
+        }
+
+        var options = {
+            functionName: 'SDeleteMgr',
+            otherData: {
+                id: id
+            }
         };
 
         if (result) {
-            $.ajax({
-
-                url: "../../Server/SDeleteMgr.php",
-                type: "POST",
-                dataType: "json",
-                data: data,
-                success: function(resp) {
-                    cell.delete();
-                },
-                error: function(e) {
-                    alert('falure');
-                    $("#err").html(e).fadeIn();
-                }
-            });
-        } else {
+            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+        } else
             console.log("delete row cancel branchmgr BranchDelete r.260!!");
-        }
     }
 
-    function execDaumPostcode() {
-        new daum.Postcode({
-                oncomplete: function(data) {
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-
-                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                    let addr = ''; // 주소 변수
-
-                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                    if (data.userSelectedType === 'R') {
-                        // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                    } else {
-                        // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                    }
-
-                    $("#idZip").val(data.zonecode);
-                    $("#idAddr").val(addr);
-                    $("#idAddr").focus();
-                }
-            }
-
-        ).open();
-    }
     document.getElementById("idGrade").addEventListener("change", function() {
         // 선택된 옵션 가져오기
         var selectedOption = this.options[this.selectedIndex];

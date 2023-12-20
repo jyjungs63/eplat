@@ -144,7 +144,7 @@
                                             placeholder="구매일" style="width: -5px;">
                                         &nbsp;
                                         <button class="btn btn-outline-primary btn-sm" type="button"
-                                            onclick="execDaumPostcode()">
+                                            onclick="execDaumPostcode('idZip','idAddr2' )">
                                             주소찾기</button>
                                         &nbsp;
                                         <button class="btn btn-outline-success btn-sm" type="button"
@@ -201,7 +201,7 @@
                                         placeholder="Zip Code" style="width: -5px;">
                                     &nbsp;
                                     <button class="btn btn-outline-primary btn-sm" type="button"
-                                        onclick="execDaumPostcode()">
+                                        onclick="execDaumPostcode( 'idAddr','idZip')">
                                         주소찾기</button>
                                     &nbsp;
                                     <button class="btn btn-outline-success btn-sm" type="button"
@@ -272,6 +272,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.11/chance.min.js"></script>
     <script src="kgardenlist_2.js"></script>
+    <script src="../common.js"></script>
 
     <script>
     const {
@@ -386,46 +387,46 @@
     });
     orderList = () => {
         items = [];
-        var data = {
-            id: "manager"
+
+        dispList = (resp) => {
+            let select = document.getElementById('idPorList');
+            let option = document.createElement('option');
+            option.text = ""; // Set the text of the new option
+            option.value = ""; // Set the value attribute (if needed)
+            select.add(option);
+            resp.forEach(el => {
+                var jarr = {
+                    "id": el['id'],
+                    "por_id": el['por_id'],
+                    "order": el['order'],
+                    "addr": el['addr'],
+                    "mobile": el['mobile'],
+                    "rdate": el['rdate'],
+                    "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+                }
+                items.push(jarr);
+                // Create a new option element
+                let option = document.createElement('option');
+                option.text = el['por_id']; // Set the text of the new option
+                option.value = el['por_id']; // Set the value attribute (if needed)
+
+                // Append the new option to the select element
+                select.add(option);
+            })
+        }
+
+        dispErr = (error) => {
+            alert(error);
+        }
+
+        var options = {
+            functionName: 'SShowOrderList',
+            otherData: {
+                id: "manager"
+            }
         };
 
-        $.ajax({
-            url: "../Server/SShowOrderList.php",
-            type: "POST",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function(resp) {
-                let select = document.getElementById('idPorList');
-                let option = document.createElement('option');
-                option.text = ""; // Set the text of the new option
-                option.value = ""; // Set the value attribute (if needed)
-                select.add(option);
-                resp.forEach(el => {
-                    var jarr = {
-                        "id": el['id'],
-                        "por_id": el['por_id'],
-                        "order": el['order'],
-                        "addr": el['addr'],
-                        "mobile": el['mobile'],
-                        "rdate": el['rdate'],
-                        "confirm": el['confirm'] == 1 ? "승인" : "미승인",
-                    }
-                    items.push(jarr);
-                    // Create a new option element
-                    let option = document.createElement('option');
-                    option.text = el['por_id']; // Set the text of the new option
-                    option.value = el['por_id']; // Set the value attribute (if needed)
-
-                    // Append the new option to the select element
-                    select.add(option);
-                });
-            },
-            error: function(e) {
-                alert('falure');
-                $("#err").html(e).fadeIn();
-            }
-        });
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
         var deleteIcon = function(cell, formatterParams) { //plain text value
             return "<i class='fa fa-trash'></i>";
@@ -434,30 +435,28 @@
 
     listPor = (por_id) => {
 
-        $.ajax({
-            url: "../Server/SPorDetailList.php",
-            type: "POST",
-            dataType: "json",
-            data: {
+        var options = {
+            functionName: 'SPorDetailList',
+            otherData: {
                 id: por_id
-            },
-            success: function(res) {
-                var js = res[0]['json']
-                porTable.setData(JSON.parse(js));
-
-                $("#idID2").val(res[0]['id']);
-                $("#idName2").val(res[0]['order']);
-                $("#idAddr2").val(res[0]['addr']);
-                $("#idRdate2").val(res[0]['rdate']);
-                $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
-
-            },
-            error: function(jqXFR, textStatus, errorThrown) {
-                if (textStatus == "error") {
-                    alert(loc + ' ' + textStatus);
-                }
             }
-        });
+        };
+        dispList = (res) => {
+            var js = res[0]['json']
+            porTable.setData(JSON.parse(js));
+
+            $("#idID2").val(res[0]['id']);
+            $("#idName2").val(res[0]['order']);
+            $("#idAddr2").val(res[0]['addr']);
+            $("#idRdate2").val(res[0]['rdate']);
+            $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
+        }
+        dispErr = (error) => {
+            alert(error);
+        }
+
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
     }
 
     document.getElementById("idPorList").addEventListener("change", function() {
@@ -792,7 +791,8 @@
             }
         })
         var parent = $(
-                "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)")
+                "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)"
+            )
             .html("총합");
         //table1.setData(item);
     }
@@ -821,7 +821,7 @@
         console.log("Selected Value:", selectedValue);
         console.log("Selected Text:", selectedText);
 
-        var items = [];
+
         var sql;
         if ("주소지" == selectedText) {
             var items = [];
@@ -829,35 +829,40 @@
                 role: 2,
                 id: "manager"
             };
-            $.ajax({
-                url: "../../Server/SShowMgr.php",
-                type: "POST",
-                dataType: "json",
-                data: data,
-                success: function(resp) {
-                    var i = 1;
-                    resp.forEach(el => {
-                        var jarr = {
-                            "No": i,
-                            "name": el['name'],
-                            "mobile": el['mobile'],
-                            "addr": el['addr'],
-                            "zipcode": el['zipcode'],
-                            "password": el['password'],
-                            "rdate": el['rdate'],
-                        }
 
-                        items.push(jarr);
-                        i++;
-                    });
-                    table2.clearData();
-                    table2.setData(items);
-                },
-                error: function(e) {
-                    alert('falure');
-                    $("#err").html(e).fadeIn();
+            dispList = (resp) => {
+                var i = 1;
+                var items = [];
+                resp.forEach(el => {
+                    var jarr = {
+                        "No": i,
+                        "name": el['name'],
+                        "mobile": el['mobile'],
+                        "addr": el['addr'],
+                        "zipcode": el['zipcode'],
+                        "password": el['password'],
+                        "rdate": el['rdate'],
+                    }
+                    items.push(jarr);
+                    i++;
+                });
+                table2.clearData();
+                table2.setData(items);
+            }
+            dispErr = () => {
+                alert(error);
+            }
+
+            var options = {
+                functionName: 'SShowMgr',
+                otherData: {
+                    role: 2,
+                    id: "manager"
                 }
-            });
+            };
+
+            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
         } else {
             table2.clearData();
             table2.setData(kgardenlist);
@@ -884,7 +889,8 @@
         if ("전체" == selectedText)
             sql = 'select uid, grade,title,price from ?  order by uid '
         else
-            sql = 'select uid, grade,title,price from ? where grade="' + selectedText + '" order by uid asc'
+            sql = 'select uid, grade,title,price from ? where grade="' + selectedText +
+            '" order by uid asc'
         var res = alasql(sql, [listprice2])
 
         res.forEach(el => {
@@ -977,11 +983,13 @@
 
             drawLines(page, s, e, rgb(0, 0, 0), tick);
 
-            drawTexts(page, lhs + (xx * i) + mn, textStart - (lineStep * 1), fontSize, rgb(0.0, 0.0, 0.0), header[
+            drawTexts(page, lhs + (xx * i) + mn, textStart - (lineStep * 1), fontSize, rgb(0.0, 0.0,
+                0.0), header[
                 i]);
         }
 
-        drawTexts(page, width / 2.5, height - 3 * fontSize, fontSize, rgb(0.0, 0.0, 0.0), "Purchase Order List")
+        drawTexts(page, width / 2.5, height - 3 * fontSize, fontSize, rgb(0.0, 0.0, 0.0),
+            "Purchase Order List")
 
         for (var i = 0; i <= buyArr.length + 1; i++) { // x horizontal line 
 
@@ -1011,15 +1019,20 @@
                     "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)"
                 ).html()
                 var rest = cvtCurrency(parseFloat(total));
-                drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 1.0),
                     "총금액");
-                drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 1.0),
                     "");
-                drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 1.0),
                     "");
-                drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 1.0),
                     cnt);
-                drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 1.0),
+                drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 1.0),
                     rest)
                 s = {
                     x: lhs,
@@ -1036,15 +1049,20 @@
                     tick = 1.0;
                 drawLines(page, s, e, rgb(0, 0, 0), tick);
 
-                drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 0.0),
                     buyArr[i]['grade']);
-                drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 0.0),
                     buyArr[i]['title']);
-                drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 0.0),
                     cvtCurrency(parseFloat(buyArr[i]['price'])));
-                drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 0.0),
                     buyArr[i]['count']);
-                drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize, rgb(0.0, 0.0, 0.0),
+                drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize,
+                    rgb(0.0, 0.0, 0.0),
                     cvtCurrency(parseFloat(buyArr[i]['total'])));
             }
         }
@@ -1149,9 +1167,6 @@
             }
         })
 
-
-        //const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-
     }
 
     function formatDate() {
@@ -1162,6 +1177,7 @@
 
         return `${year}-${month}-${day}`;
     }
+
     drawLines = (page, s, e, color, thick) => {
         page.drawLine({
             start: {
@@ -1203,36 +1219,36 @@
         });
     }
 
-    function cvtCurrency(amount) {
-        return amount.toLocaleString("ko-KR");
-    }
+    // function cvtCurrency(amount) {
+    //     return amount.toLocaleString("ko-KR");
+    // }
 
-    function execDaumPostcode() {
-        new daum.Postcode({
-                oncomplete: function(data) {
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+    // function execDaumPostcode() {
+    //     new daum.Postcode({
+    //             oncomplete: function(data) {
+    //                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
 
-                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                    let addr = ''; // 주소 변수
+    //                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+    //                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+    //                 let addr = ''; // 주소 변수
 
-                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                    if (data.userSelectedType === 'R') {
-                        // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                    } else {
-                        // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                    }
+    //                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+    //                 if (data.userSelectedType === 'R') {
+    //                     // 사용자가 도로명 주소를 선택했을 경우
+    //                     addr = data.roadAddress;
+    //                 } else {
+    //                     // 사용자가 지번 주소를 선택했을 경우(J)
+    //                     addr = data.jibunAddress;
+    //                 }
 
-                    $("#idZip").val(data.zonecode);
-                    $("#idAddr").val(addr);
-                    $("#idAddr").focus();
-                }
-            }
+    //                 $("#idZip").val(data.zonecode);
+    //                 $("#idAddr").val(addr);
+    //                 $("#idAddr").focus();
+    //             }
+    //         }
 
-        ).open();
-    }
+    //     ).open();
+    // }
     </script>
 
 </body>
