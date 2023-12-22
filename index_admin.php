@@ -21,7 +21,7 @@ if (isset($_SESSION['user'])) {
     <meta name="author" content="" />
     <title>이플렛</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -58,16 +58,14 @@ if (isset($_SESSION['user'])) {
         padding-top: 1px;
         padding-right: 1px;
         padding-left: 1px;
+    }
     </style>
 
     <style>
     strong {
         font-weight: bold;
     }
-    </style>
 
-
-    <style>
     subtitle1-tt {
         float: left;
         padding: 10px;
