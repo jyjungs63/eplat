@@ -154,9 +154,10 @@
                                     <thead>
                                         <tr style="background-color: cornflowerblue;">
                                             <th data-field="num" data-width="50">순서</th>
-                                            <th data-field="title" data-width="400">제목</th>
+                                            <th data-field="title" data-width="300">제목</th>
                                             <th data-field="id" data-width="150">작성자</th>
                                             <th data-field="rdate" data-width="150">date</th>
+                                            <th data-field="file" data-width="150">File</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -416,6 +417,17 @@ $(document).ready(function(e) {
         }
     });
     //$('#table').bootstrapTable({ data: record })
+    function multipleLinksFormatter(value, row) {
+        // Assuming 'value' is an array of objects containing link information
+        let links = '';
+
+        // Loop through the array of links and create anchor tags
+        value.forEach(link => {
+            links += `<a href="${link.url}" target="_blank">${link.text}</a>&nbsp;`;
+        });
+
+        return links;
+    }
     $.ajax({
         url: "../Server/SShowBoardlist.php",
         type: "POST",
@@ -424,7 +436,11 @@ $(document).ready(function(e) {
         success: function(resp) {
             var $table = $('#table').bootstrapTable({
                 data: resp,
-                columns: [{}, {}, {}, {}]
+                columns: [{}, {}, {}, {}, {
+                    field: 'linksColumn',
+                    title: 'Links',
+                    formatter: multipleLinksFormatter
+                }]
             });
         },
         error: function(e) {
@@ -485,7 +501,7 @@ $(document).ready(function(e) {
                     var object = {
                         text: "   " + i + " : " + jsn[i]['name'] + '   size: (' +
                             parseFloat(Number(jsn[i]['size']) / 1024 / 1024).toFixed(
-                            2) + ") MB",
+                                2) + ") MB",
                         href: 'http://localhost:3000/eplat/board/uploads/' + jsn[i][
                             'fakename'
                         ]
