@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script> <!-- json util like sql -->
+    <link href="../common.css" rel="stylesheet">
     <style>
 
     </style>
@@ -258,7 +259,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
-    <!-- <link href="tabulator-master/dist/css/tabulator_midnight.css" rel="stylesheet"> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script>
@@ -416,7 +417,7 @@
         }
 
         dispErr = (error) => {
-            alert(error);
+            CallToast('SShowOrderList !', "error")
         }
 
         var options = {
@@ -452,7 +453,7 @@
             $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
         }
         dispErr = (error) => {
-            alert(error);
+            CallToast('SPorDetailList falure!', "error")
         }
 
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
@@ -848,9 +849,11 @@
                 });
                 table2.clearData();
                 table2.setData(items);
+                CallToast("SShowMgr success!!", "success");
             }
             dispErr = () => {
-                alert(error);
+                //alert(error);
+                CallToast("SShowMgr Error", "error");
             }
 
             var options = {
@@ -1163,20 +1166,20 @@
                 document.getElementById('pdfDiv').src = response['url'];
             },
             error: function(e) {
-                alert('falure');
+                CallToast('SUploadBoardPDF!', "error")
             }
         })
 
     }
 
-    function formatDate() {
-        const date = new Date(); // Get current date
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
-        const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
+    // function formatDate() {
+    //     const date = new Date(); // Get current date
+    //     const year = date.getFullYear();
+    //     const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
+    //     const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
 
-        return `${year}-${month}-${day}`;
-    }
+    //     return `${year}-${month}-${day}`;
+    // }
 
     drawLines = (page, s, e, color, thick) => {
         page.drawLine({
@@ -1218,37 +1221,6 @@
             }
         });
     }
-
-    // function cvtCurrency(amount) {
-    //     return amount.toLocaleString("ko-KR");
-    // }
-
-    // function execDaumPostcode() {
-    //     new daum.Postcode({
-    //             oncomplete: function(data) {
-    //                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-
-    //                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-    //                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-    //                 let addr = ''; // 주소 변수
-
-    //                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-    //                 if (data.userSelectedType === 'R') {
-    //                     // 사용자가 도로명 주소를 선택했을 경우
-    //                     addr = data.roadAddress;
-    //                 } else {
-    //                     // 사용자가 지번 주소를 선택했을 경우(J)
-    //                     addr = data.jibunAddress;
-    //                 }
-
-    //                 $("#idZip").val(data.zonecode);
-    //                 $("#idAddr").val(addr);
-    //                 $("#idAddr").focus();
-    //             }
-    //         }
-
-    //     ).open();
-    // }
     </script>
 
 </body>

@@ -345,7 +345,7 @@
         }
 
         dispErr = (xhr) => {
-            CallToast('New Branch Manager added successfully!!', "error")
+            CallToast('New Branch Manager added falure !!', "error")
         }
 
         var options = {

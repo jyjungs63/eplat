@@ -1,0 +1,16 @@
+:root {
+    --primary-color: #3498db;
+    --background-color: #2ecc71;
+    --text-color: #ffcff;
+}
+
+/* Tabulator.js background color Change this to your preferred color */
+
+.tabulator .tabulator-header .tabulator-col {
+    background-color: var(--primary-color);
+}
+
+.tabulator .tabulator-header {
+    background-color: var(--primary-color);
+
+}

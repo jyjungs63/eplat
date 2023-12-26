@@ -102,11 +102,13 @@ function SPorDetailList ($data) {
 function SShowMgr ($data) {
     session_start();
 
+    global $conn;
+
     $role = $data['role'];
     $id   = $data['id'];
 
     try {
-        global $conn;
+
 
         $sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '".$id."'"; 
             

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <?php
         include '../include.php';
     ?>
@@ -106,6 +106,12 @@
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(255, 255, 255, 0.15) 100%);
         border: 1px solid rgba(255, 255, 255, 0.2);
     }
+
+    @media (max-width: 767px) {
+        .mobile-hide {
+            display: none;
+        }
+    }
     </style>
 </head>
 
@@ -160,10 +166,12 @@
                                     data-striped="true" data-row-style="rowStyle">
                                     <thead>
                                         <tr style="background-color: cornflowerblue;">
-                                            <th data-field="num" data-width="50">순서</th>
+                                            <th data-field="num" data-width="50" class="mobile-hide"
+                                                class="mobile-hide">순서</th>
                                             <th data-field="title" data-width="300">제목</th>
-                                            <th data-field="id" data-width="150">작성자</th>
-                                            <th data-field="rdate" data-width="150">date</th>
+                                            <th data-field="id" data-width="150" class="mobile-hide">작성자</th>
+                                            <th data-field="rdate" data-width="150" class="mobile-hide"
+                                                class="mobile-hide">날짜</th>
                                             <th data-field="file" data-width="150">File</th>
                                         </tr>
                                     </thead>
@@ -368,7 +376,7 @@
 <?php
     include '../includescr.php';
     ?>
-    <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
 
 <script>
 var gid;
@@ -435,8 +443,26 @@ $(document).ready(function(e) {
         let links = '';
 
         // Loop through the array of links and create anchor tags
-        value.forEach(link => {
-            links += `<a href="${link.url}" target="_blank">${link.text}</a>&nbsp;`;
+        var js = JSON.parse(row['contents']);
+        js.forEach(link => {
+            var icon = '<i class = "fa-regular fa-file" > </i>';
+            var file = link.name.split('.')[1].toLowerCase();
+            if (file == "pdf")
+                icon = '<i class="fa-solid fa-file-pdf"></i>';
+            if (file == "png")
+                icon = '<i class="fas fa-file-image"></i>';
+            if (file == "xlsx")
+                icon = '<i class="fas fa-file-excel"></i>';
+            if (file == "pptx")
+                icon = '<i class="fas fa-file-powerpoint"></i>';
+            if (file == "html")
+                icon = '<i class="fa-brands fa-html5"></i>';
+            if (file == "exe")
+                icon = '<i class="fas fa-running"></i>';
+            if (file == "mp4" || file == "avi" || file == "mov" || file == "wmv")
+                icon = '< i class = "fas fa-file-video" > < /i>';
+            links +=
+                `<a href="http://localhost:3000/board/uploads/${link.fakename}" target="_blank">${icon}</a>&nbsp;&nbsp;`;
         });
 
         return links;
@@ -451,7 +477,7 @@ $(document).ready(function(e) {
                 data: resp,
                 columns: [{}, {}, {}, {}, {
                     field: 'linksColumn',
-                    title: 'Links',
+                    title: '첨부파일',
                     formatter: multipleLinksFormatter
                 }]
             });

@@ -112,10 +112,11 @@
 function multipleLinksFormatter(value, row) {
     // Assuming 'value' is an array of objects containing link information
     let links = '';
-
+    icon = '<i class="fas fa-times"></i>';
     // Loop through the array of links and create anchor tags
     value.forEach(link => {
-        links += `<a href="${link.url}" target="_blank">${link.text}</a>&nbsp;`;
+        links +=
+            `<a href="${link.url}" target="_blank">${link.text} ${icon} </a>&nbsp;`;
     });
 
     return links;
