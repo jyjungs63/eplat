@@ -1,3 +1,7 @@
+<?php
+    include "../header.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,21 +14,6 @@
     ?>
 
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css">
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script> -->
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css">
-    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"> -->
     <script src="record.js"></script>
     <title>Eplat 자료실</title>
     <style>
@@ -375,11 +364,13 @@
 
 <?php
     include '../includescr.php';
-    ?>
+?>
 <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
 
 <script>
 var gid;
+const metaDescription = document.querySelector('meta[name="location"]').getAttribute('content');
+alert(metaDescription);
 $(document).ready(function(e) {
     $("#cardUpload").hide();
     $("#cardFileList").hide();
@@ -441,7 +432,9 @@ $(document).ready(function(e) {
     function multipleLinksFormatter(value, row) {
         // Assuming 'value' is an array of objects containing link information
         let links = '';
-
+        let host = "https://www.eplat.co.kr/board/uploads/";
+        if (metaDescription == "localhost")
+            host = "http://localhost:3000/board/uploads/";
         // Loop through the array of links and create anchor tags
         var js = JSON.parse(row['contents']);
         js.forEach(link => {
@@ -462,7 +455,7 @@ $(document).ready(function(e) {
             if (file == "mp4" || file == "avi" || file == "mov" || file == "wmv")
                 icon = '< i class = "fas fa-file-video" > < /i>';
             links +=
-                `<a href="http://localhost:3000/board/uploads/${link.fakename}" target="_blank">${icon}</a>&nbsp;&nbsp;`;
+                `<a href= ${host}${link.fakename} target="_blank">${icon}</a>&nbsp;&nbsp;`;
         });
 
         return links;
@@ -590,34 +583,44 @@ $(document).ready(function(e) {
 
             form_data.append("idContent", $('#idContent').val());
 
-            $.ajax({
-                url: "../Server/SUploadBoard.php",
-                type: "POST",
+            // $.ajax({
+            //     url: "../Server/SUploadBoard.php",
+            //     type: "POST",
+            //     data: form_data,
+            //     contentType: false,
+            //     cache: false,
+            //     processData: false,
+            //     beforeSend: function() {
+            //         $('#msg').html('Saving ......');
+            //     },
+            //     success: function(data) {
+            //         alert(data);
+            //         if (data == 'invalid file') {
+            //             $("#err").html("Invalid File !").fadeIn();
+            //         } else {
+            //             $("#msg").html(data).fadeIn();
+            //             $("#form")[0].reset();
+            //             alert(data);
+            //         }
+            //     },
+            //     error: function(e) {
+            //         alert('falure');
+            //         $("#err").html(e).fadeIn();
+            //     }
+            // });
 
-                data: form_data,
-                contentType: false,
-                cache: false,
-                processData: false,
-                beforeSend: function() {
-                    $('#msg').html('Saving ......');
-                },
-                success: function(data) {
-                    alert(data);
-                    if (data == 'invalid file') {
-                        $("#err").html("Invalid File !").fadeIn();
-                    } else {
-                        $("#msg").html(data).fadeIn();
-                        $("#form")[0].reset();
-                        alert(data);
-                    }
-                },
-                error: function(e) {
-                    alert('falure');
-                    $("#err").html(e).fadeIn();
-                }
-            });
+            dispList = (resp) => {
+                CallToast('자료실에 등록이 성공적으로 수행했습니다. !', "success")
+                document.getElementById('pdfDiv').src = resp['url'];
+            }
+            dispErr = (xhr) => {
+                CallToast('SUploadBoard Upload Error!', "error")
+            }
+            form_data.append('functionName', 'SUploadBoard');
+            CallAjax1("SMethods.php", "POST", form_data, dispList, dispErr);
+
         } else {
-            alert('file must upload !!');
+            CallToast('SUploadBoard Upload Error!', "error")
         }
     }));
 });

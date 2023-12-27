@@ -2,12 +2,14 @@
 <html lang="utf-8">
 
 <head>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css" />
+    <?php
+        include '../include.php';
+    ?>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script> <!-- json util like sql -->
+    <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script> -->
     <link href="../common.css" rel="stylesheet">
     <style>
 
@@ -253,8 +255,10 @@
 
         </section>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <?php
+        include '../includescr.php';
+    ?>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
@@ -262,7 +266,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script> -->
     <script src="listprice2.js"></script>
 
     <!-- <script src="https://unpkg.com/pdf-lib@1.4.0"></script> -->
@@ -1105,7 +1109,7 @@
 
         // 예시: fetch를 사용한 파일 업로드
 
-        const formData = new FormData();
+        var formData = new FormData();
         formData.append('pdfFile', new Blob([pdfBytes]), 'generated_pdf.pdf');
         item = table1.getSelectedData();
         var porList = []
@@ -1156,19 +1160,30 @@
         //         alert('error');
         //         // 오류 처리
         //     });
-        $.ajax({
-            url: '../Server/SUploadBoardPDF.php',
-            type: "POST",
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function(response) {
-                document.getElementById('pdfDiv').src = response['url'];
-            },
-            error: function(e) {
-                CallToast('SUploadBoardPDF!', "error")
-            }
-        })
+        // $.ajax({
+        //     url: '../Server/SUploadBoardPDF.php',
+        //     type: "POST",
+        //     processData: false,
+        //     contentType: false,
+        //     data: formData,
+        //     success: function(response) {
+        //         document.getElementById('pdfDiv').src = response['url'];
+        //     },
+        //     error: function(e) {
+        //         CallToast('SUploadBoardPDF!', "error")
+        //     }
+        // })
+
+        dispList = (resp) => {
+            CallToast('Upload Pdf successfully!!', "success")
+            document.getElementById('pdfDiv').src = resp['url'];
+        }
+        dispErr = (xhr) => {
+            CallToast('Upload Pdf falure!', "error")
+        }
+
+        formData.append('functionName', 'SUploadBoardPDF');
+        CallAjax1("SMethods.php", "POST", formData, dispList, dispErr);
 
     }
 

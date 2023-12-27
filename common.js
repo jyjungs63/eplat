@@ -59,6 +59,24 @@ CallAjax = ( fucName, fntype="POST", options, retFn, errFn) => {
     });
 }
 
+CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
+    var status = true;
+    $.ajax({
+        url: "http://localhost:3000/Server/" + fucName, //
+        type: fntype,
+        dataType: "json",
+        data: options,
+        processData: false,
+        contentType: false,
+        success: function(resp) {
+            retFn(resp);
+        },
+        error: function(xhr, status, error) {
+            errFn ( xhr )
+        }
+    });
+}
+
 CallToast = (stat, message) => {
     if (stat == "success") {
         toastr.success(message, 'Info', {

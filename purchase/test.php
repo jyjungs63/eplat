@@ -1,3 +1,7 @@
+<?php 
+include "../header.php";
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -21,7 +25,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
     <script>
+    const metaDescription = document.querySelector('meta[name="location"]').getAttribute('content');
+    alert(location)
     var tableData = [{
+
             id: 1,
             name: "John",
             age: 30

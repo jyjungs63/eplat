@@ -6,7 +6,7 @@ $Password = $_POST["Password"];
 
 // $Email    = 'jyjungs@gmail.com';
 // $Password = 'william63';
-
+global $location;
 
 	if ( !empty($Email) && !empty($Password) ) {
 		
@@ -19,7 +19,7 @@ $Password = $_POST["Password"];
 			$_SESSION["name"] = $res['name'];
 			$_SESSION["role"] = $res['role'];
 			$_SESSION["confirm"] = $res['confirm'];
-
+			$_SESSION["location"] = $location;
 			//echo json_encode($res['id']);
 			header('location: ../index_admin.php?id='.$_SESSION["user"]);  
 		}

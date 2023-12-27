@@ -161,7 +161,8 @@
             </div>
         </div>
     </div>
-    <script src="../login/tabulator_js/kgardenlist.js"></script>
+    <script src="../purchase/kgardenlist.js"></script>
+    <script src="../common.js"></script>
     <script>
     var table, table1, porTable;
     var items = [];
@@ -435,27 +436,50 @@
 
     listPor = (por_id) => {
 
-        $.ajax({
-            url: "../Server/SPorDetailList.php",
-            type: "POST",
-            dataType: "json",
-            data: {
+        // $.ajax({
+        //     url: "../Server/SPorDetailList.php",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: {
+        //         id: por_id
+        //     },
+        //     success: function(res) {
+        //         var js = res[0]['json']
+        //         porTable.setData(JSON.parse(js));
+        //         $("#idName").val(res[0]['order']);
+        //         $("#idAddr").val(res[0]['addr']);
+        //         $("#idRdate").val(res[0]['rdate']);
+        //     },
+        //     error: function(jqXFR, textStatus, errorThrown) {
+        //         if (textStatus == "error") {
+        //             alert(' SPorDetailList ' + textStatus);
+        //         }
+        //     }
+        // });
+
+        dispList = (res) => {
+            var js = res[0]['json']
+            porTable.setData(JSON.parse(js));
+            $("#idName").val(res[0]['order']);
+            $("#idAddr").val(res[0]['addr']);
+            $("#idRdate").val(res[0]['rdate']);
+            CallToast('New Branch Manager Updated successfully!!', "success")
+        }
+        dispErr = (xhr) => {
+            CallToast('SPorDetailList falure!', "error")
+        }
+        var data = {
+            id: por_id
+        };
+        var options = {
+            functionName: 'SPorDetailList',
+            otherData: {
                 id: por_id
-            },
-            success: function(res) {
-                var js = res[0]['json']
-                porTable.setData(JSON.parse(js));
-                $("#idName").val(res[0]['order']);
-                $("#idAddr").val(res[0]['addr']);
-                $("#idRdate").val(res[0]['rdate']);
-            },
-            error: function(jqXFR, textStatus, errorThrown) {
-                if (textStatus == "error") {
-                    alert(loc + ' ' + textStatus);
-                }
             }
-        });
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
     }
+
 
     document.getElementById("idGrade").addEventListener("change", function() {
         // 선택된 옵션 가져오기
@@ -509,10 +533,40 @@
                 table.setData(item);
             },
             error: function(e) {
-                alert('falure');
+                CallToast('SShowConfirm falure!', "error")
                 $("#err").html(e).fadeIn();
             }
         });
+
+        // dispList = (resp) => {
+        //     resp.forEach(el => {
+        //         var jarr = {
+        //             "id": el['id'],
+        //             "name": el['name'],
+        //             "mobile": el['mobile'],
+        //             "addr": el['addr'],
+        //             "zipcode": el['zipcode'],
+        //             "password": el['password'],
+        //             "rdate": el['rdate'],
+        //             "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+        //         }
+        //         item.push(jarr);
+        //     });
+        //     table.clearData()
+        //     table.setData(item);
+        //     CallToast('SShowConfirm successfully!!', "success")
+        // }
+        // dispErr = (xhr) => {
+        //     CallToast('SShowConfirm falure!', "error")
+        // }
+
+        // var options = {
+        //     functionName: 'SShowConfirm',
+        //     otherData: {
+        //         data
+        //     }
+        // };
+        // CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
         var deleteIcon = function(cell, formatterParams) { //plain text value
             return "<i class='fa fa-trash'></i>";
@@ -525,32 +579,60 @@
             id: "manager"
         };
 
-        $.ajax({
-            url: "../Server/SShowOrderList.php",
-            type: "POST",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function(resp) {
-                resp.forEach(el => {
-                    var jarr = {
-                        "id": el['id'],
-                        "por_id": el['por_id'],
-                        "order": el['order'],
-                        "addr": el['addr'],
-                        "mobile": el['mobile'],
-                        "rdate": el['rdate'],
-                        "confirm": el['confirm'] == 1 ? "승인" : "미승인",
-                    }
-                    items.push(jarr);
-                });
-                table1.clearData()
-                table1.setData(items);
-            },
-            error: function(e) {
-                alert('falure');
-                $("#err").html(e).fadeIn();
+        // $.ajax({
+        //     url: "../Server/SShowOrderList.php",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: JSON.stringify(data),
+        //     success: function(resp) {
+        //         resp.forEach(el => {
+        //             var jarr = {
+        //                 "id": el['id'],
+        //                 "por_id": el['por_id'],
+        //                 "order": el['order'],
+        //                 "addr": el['addr'],
+        //                 "mobile": el['mobile'],
+        //                 "rdate": el['rdate'],
+        //                 "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+        //             }
+        //             items.push(jarr);
+        //         });
+        //         table1.clearData()
+        //         table1.setData(items);
+        //     },
+        //     error: function(e) {
+        //         CallToast('SShowOrderList falure!', "error")
+        //         $("#err").html(e).fadeIn();
+        //     }
+        // });
+        dispList = (resp) => {
+            CallToast('New Branch Manager Updated successfully!!', "success")
+            resp.forEach(el => {
+                var jarr = {
+                    "id": el['id'],
+                    "por_id": el['por_id'],
+                    "order": el['order'],
+                    "addr": el['addr'],
+                    "mobile": el['mobile'],
+                    "rdate": el['rdate'],
+                    "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+                }
+                items.push(jarr);
+            });
+            table1.clearData()
+            table1.setData(items);
+        }
+        dispErr = (xhr) => {
+            CallToast('New Branch Manager Update falure!', "error")
+        }
+
+        var options = {
+            functionName: 'SShowOrderList',
+            otherData: {
+                data
             }
-        });
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
         var deleteIcon = function(cell, formatterParams) { //plain text value
             return "<i class='fa fa-trash'></i>";
@@ -581,19 +663,36 @@
             "item": items
         }
 
-        $.ajax({
-            url: "../Server/SShowConfirmUpdate.php",
-            type: "POST",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function(resp) {
-                confirmList("전체");
-            },
-            error: function(e) {
-                alert('falure');
-                $("#err").html(e).fadeIn();
+        // $.ajax({
+        //     url: "../Server/SShowConfirmUpdate.php",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: JSON.stringify(data),
+        //     success: function(resp) {
+        //         confirmList("전체");
+        //     },
+        //     error: function(e) {
+        //         alert('falure');
+        //         $("#err").html(e).fadeIn();
+        //     }
+        // });
+
+        dispList = (resp) => {
+            CallToast('New Branch Manager Updated successfully!!', "success")
+            confirmList("전체");
+        }
+        dispErr = (xhr) => {
+            CallToast('New Branch Manager Update falure!', "error")
+        }
+
+        var options = {
+            functionName: 'SShowConfirmUpdate',
+            otherData: {
+                items
             }
-        });
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
     }
     </script>
 </body>

@@ -10,6 +10,6 @@ echo '
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="branchmgr_js.js"></script>
-    <script src="../common.js"></script>
+    <script src="common.js"></script>
     ';
 ?>

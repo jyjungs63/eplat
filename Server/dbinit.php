@@ -7,7 +7,6 @@ $location = "localhost";
 try {
     if ( strpos ( $fullURL, "localhost") !== false) {
         $conn = mysqli_connect('localhost','root','manager','happyzip');             // local test
-        $location = "localhost";
     }
     else {
         $conn = mysqli_connect('localhost','happyzip','skl32935028@','happyzip');  // local test
