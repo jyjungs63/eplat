@@ -370,7 +370,10 @@
 <script>
 var gid;
 const metaDescription = document.querySelector('meta[name="location"]').getAttribute('content');
-alert(metaDescription);
+//alert(metaDescription);
+let host = "https://www.eplat.co.kr/board/uploads/";
+if (metaDescription == "localhost")
+    host = "http://localhost:3000/board/uploads/";
 $(document).ready(function(e) {
     $("#cardUpload").hide();
     $("#cardFileList").hide();
@@ -432,9 +435,7 @@ $(document).ready(function(e) {
     function multipleLinksFormatter(value, row) {
         // Assuming 'value' is an array of objects containing link information
         let links = '';
-        let host = "https://www.eplat.co.kr/board/uploads/";
-        if (metaDescription == "localhost")
-            host = "http://localhost:3000/board/uploads/";
+
         // Loop through the array of links and create anchor tags
         var js = JSON.parse(row['contents']);
         js.forEach(link => {
@@ -533,7 +534,7 @@ $(document).ready(function(e) {
                         text: "   " + i + " : " + jsn[i]['name'] + '   size: (' +
                             parseFloat(Number(jsn[i]['size']) / 1024 / 1024).toFixed(
                                 2) + ") MB",
-                        href: 'http://localhost:3000/eplat/board/uploads/' + jsn[i][
+                        href: host + jsn[i][
                             'fakename'
                         ]
                     }
