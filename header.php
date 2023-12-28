@@ -9,7 +9,9 @@ if (isset($_SESSION['user'])) {
     echo "<meta name='role' content=" .$_SESSION["role"]. ">";
     echo "<meta name='confirm' content=" .$_SESSION["confirm"]. ">";
     echo "<meta name='location' content=" .$_SESSION["location"]. ">";
-} else {
-    header('location:../login/login.php');
-}
+} 
+// else
+// {
+//     header('location:../login/login.php');
+// }
 ?>

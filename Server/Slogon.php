@@ -21,7 +21,12 @@ global $location;
 			$_SESSION["confirm"] = $res['confirm'];
 			$_SESSION["location"] = $location;
 			//echo json_encode($res['id']);
-			header('location: ../index_admin.php?id='.$_SESSION["user"]);  
+			if (isset($_GET['dest'])) {
+				$urlFromGET = $_GET['dest'];
+				header('location: welcome.php?dest='.$urlFromGET );  
+			}
+			else
+				header('location: ../index_admin.php?id='.$_SESSION["user"]);  
 		}
 		else {
 			//hearder("Location: login.php");

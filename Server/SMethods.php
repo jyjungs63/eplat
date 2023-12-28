@@ -2,25 +2,32 @@
 
 require_once 'dbinit.php';
 
+$urlFromGET = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['functionName'] )) {
         $functionName = $_POST['functionName'];
 
+        if (isset($_GET['dest'])) {
+            $urlFromGET = $_GET['dest']; 
+        }
+
         if (is_callable($functionName)) {
             if ( "SUploadBoardPDF" == $functionName || "SUploadBoard" == $functionName)
                 $functionName($_POST);
+            if ("Slogon" == $functionName)
+                $functionName($_POST,$urlFromGET);
             else
                 $functionName($_POST['otherData']);
         }          
     }
 }
 
-function Slogon($data)
+function Slogon($data, $dest)
 {
-$Email    = $data["Email"];
-$Password = $data["Password"];
-global $location;
+    $Email    = $data["Email"];
+    $Password = $data["Password"];
+    global $location;
 
 	if ( !empty($Email) && !empty($Password) ) {
 		
@@ -35,8 +42,11 @@ global $location;
 			$_SESSION["confirm"] = $res['confirm'];
             $_SESSION["location"] = $location;
 
-			//echo json_encode($res['id']);
-			header('location: ../index_admin.php?id='.$_SESSION["user"]);  
+			if ($dest == "classroom") {
+				header('location: welcome.php?dest='.'classroom' );  
+			}
+			else
+				header('location: ../index_admin.php?id='.$_SESSION["user"]);  
 		}
 		else {
 			//hearder("Location: login.php");

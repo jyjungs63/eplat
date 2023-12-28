@@ -106,8 +106,8 @@
 
 <body>
     <!-- <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highlight"><a href="../index.php" style="text-decoration-line: none;margin-top:10px"> <i class="fa fa-home fa-2x" style="color: blue;margin:10px 10px"></i></a></div>
-        <div class="p-2 bd-highlight"><a href="./insert.php" style="text-decoration-line: none;margin-top:10px"> <i class="fa fa-home fa-2x" style="color: blue;margin:10px 10px"></i></a></div>
+        <div class="me-auto p-2 bd-highlight"><a href="../index.php" style="text-decoration-line: none;margin-top:10px"> fa fa-home fa-2x" style="color: blue;margin:10px 10px"></i></a></div>
+        <div class="p-2 bd-highlight"><a href="./insert.php" style="text-decoration-line: none;margin-top:10px"> fa fa-home fa-2x" style="color: blue;margin:10px 10px"></i></a></div>
     </div> -->
 
 
@@ -141,10 +141,10 @@
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i></button>
+                                    fas fa-minus"></i></button>
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                     data-toggle="tooltip" title="Remove">
-                                    <i class="fas fa-times"></i></button>
+                                    fas fa-times"></i></button>
                             </div>
                             <!-- /. tools -->
                         </div>
@@ -261,10 +261,10 @@
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i></button>
+                                    fas fa-minus"></i></button>
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                     data-toggle="tooltip" title="Remove">
-                                    <i class="fas fa-times"></i></button>
+                                    fas fa-times"></i></button>
                             </div>
                             <!-- /. tools -->
                         </div>
@@ -546,11 +546,28 @@ $(document).ready(function(e) {
                         href: link.href,
                         target: '_blank' // Optional - Opens links in a new tab
                     });
-
+                    var icon = 'fa-regular fa-file';
+                    var file = link.text.split('.')[1].toLowerCase();
+                    if (file.includes("pdf"))
+                        icon = 'fa-solid fa-file-pdf';
+                    if (file.includes("png"))
+                        icon = 'fas fa-file-image';
+                    if (file.includes("xlsx"))
+                        icon = 'fas fa-file-excel';
+                    if (file.includes("pptx"))
+                        icon = 'fas fa-file-powerpoint';
+                    if (file.includes("html"))
+                        icon = 'fa-brands fa-html5';
+                    if (file.includes("exe"))
+                        icon = 'fas fa-running';
+                    if (file.includes("mp4") || file.includes("avi") || file
+                        .includes("mov") || file.includes(
+                            "wmv"))
+                        icon = 'fas fa-file-video';
                     var iconSpan = $('<span>', {
                         class: 'icon-span'
                     }).prepend($('<i>', {
-                        class: 'far fa-file'
+                        class: icon
                     }));
                     anchor.prepend(iconSpan);
 

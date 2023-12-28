@@ -44,7 +44,7 @@ function execDaumPostcode(zip="idZip", addrs = "idAddr") {
 CallAjax = ( fucName, fntype="POST", options, retFn, errFn) => {
     var status = true;
     $.ajax({
-        url: "http://localhost:3000/Server/" + fucName, //
+        url: "https://eplat.co.kr/Server/" + fucName, //
         type: fntype,
         dataType: "json",
         data: options,
@@ -62,7 +62,7 @@ CallAjax = ( fucName, fntype="POST", options, retFn, errFn) => {
 CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
     var status = true;
     $.ajax({
-        url: "http://localhost:3000/Server/" + fucName, //
+        url: "https://localhost:3000/Server/" + fucName, //
         type: fntype,
         dataType: "json",
         data: options,

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <div class="main">
@@ -25,7 +27,7 @@
                     <div class="signin-image">
                         <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>
                         <a href="register.php" class="signup-image-link">사용자 등록 바로가기</a></br>
-						<a href="findpasswd.php" class="signup-image-link">비밀번호 찾기</a>
+                        <a href="findpasswd.php" class="signup-image-link">비밀번호 찾기</a>
                     </div>
 
                     <div class="signin-form">
@@ -43,7 +45,8 @@
                                 //header('location:login.php');  
                             }
                         ?>
-                        <form method="POST" class="register-form" id="login-form" action="../Server/Slogon.php">
+                        <form method="POST" class="register-form" id="login-form">
+                            <!-- <form method="POST" class="register-form" id="login-form" action="../Server/Slogon.php"> -->
                             <div class="form-group">
                                 <label for="Email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <?php
@@ -56,8 +59,8 @@
                             </div>
 
                             <div class="form-group">
-                            <label for="Password"><i class="zmdi zmdi-lock"></i></label>
-                            <?php 
+                                <label for="Password"><i class="zmdi zmdi-lock"></i></label>
+                                <?php 
 
                                 if( !isset($_SESSION['password'])) { 
                                     echo '<input type="password" name="Password" id="your_pass" placeholder="Password"/>';
@@ -70,10 +73,11 @@
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
                                 <label for="remember-me" class="label-agree-term"><span><span></span></span>암호저장</label>
-                                </div> 
+                            </div>
 
                             <div class="form-group form-button">
-                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                                <!-- <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" /> -->
+                                <input type="button" name="signin" id="signin" class="form-submit" value="Log in" />
                             </div>
                         </form>
                         <div class="social-login">
@@ -92,7 +96,26 @@
     </div>
 
     <!-- JS -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="../common.js"> </script>
+    <script>
+    $("#signin").click(function() {
+        const logform = document.getElementById("login-form");
+        const formData = new FormData(logform);
+
+        dispList = (resp) => {
+            CallToast('Upload Pdf successfully!!', "success")
+            document.getElementById('pdfDiv').src = resp['url'];
+        }
+        dispErr = (xhr) => {
+            CallToast('Upload Pdf falure!', "error")
+        }
+
+        formData.append('functionName', 'Slogon');
+        CallAjax1("SMethods.php?desc=classroom", "POST", formData, dispList, dispErr);
+
+    })
+    </script>
+</body>
+
 </html>

@@ -1,14 +1,5 @@
 <?php
-// 세션을 시작합니다.
-session_start();
-if (isset($_SESSION['user'])) {
-    echo "<div class='d-flex' style='margin-top: 10px'>";
-    echo "<span id='hiddenid'  style='visibility:hidden;margin-top: -10px' >" . $_SESSION["user"] . "</span>";
-    echo "<span id='hiddenname'  style='visibility:hidden' >" . $_SESSION["name"] . "</span>";
-    echo "<span id='hiddenrole'  style='visibility:hidden' >" . $_SESSION["role"] . "</span>";
-    echo "<span id='hiddenconfirm'  style='visibility:hidden' >" . $_SESSION["confirm"] . "</span>";
-    echo "</div>";
-} 
+    include "header.php";
 ?>
 
 <!DOCTYPE html>
@@ -123,8 +114,11 @@ if (isset($_SESSION['user'])) {
 
 
     function toggleVisibility() {
-
-        if ($("#hiddenid").html() == "admin" && $("#hiddenrole").html() == "9") { // admin menu
+        const user = document.querySelector('meta[name="user"]').getAttribute('content');
+        const role = document.querySelector('meta[name="role"]').getAttribute('content');
+        const confirm = document.querySelector('meta[name="confirm"]').getAttribute('content');
+        const name = document.querySelector('meta[name="name"]').getAttribute('content');
+        if (user == "admin" && role == "9") { // admin menu
 
             $('#idm1').toggle(); // 게시판
             $('#idm2').toggle(); // 지사마당 메뉴
@@ -135,8 +129,8 @@ if (isset($_SESSION['user'])) {
             $('#idlogin').attr('href', "login/logout.php")
             $('#idlogin').text("Logout")
 
-        } else if ($("#hiddenrole").html() == "1") { // Brabch manager control
-            if ($("#hiddenconfirm").html() == "1") {
+        } else if (role == "1") { // Brabch manager control
+            if (confirm == "1") {
                 $('#idm1').toggle(); // 게시판
                 $('#idm2').toggle(); // 지사마당 메뉴
                 $('#idm3').toggle(); // 구매
@@ -144,17 +138,18 @@ if (isset($_SESSION['user'])) {
                 $('#idlogin').attr('href', "login/logout.php")
                 $('#idlogin').text("Logout")
             } else {
-                alert($("#hiddenname").html() + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
+                alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
             }
-        } else if ($("#hiddenrole").html() == "2") { // 유치원 선생님 메뉴
+        } else if (role == "2") { // 유치원 선생님 메뉴
             $('#idm1').toggle(); // 게시판
             $('#idm4').toggle(); // 유치원관리
             $('#idClass').css('visibility', 'visible');
             $('#idlogin').attr('href', "login/logout.php")
             $('#idlogin').text("Logout")
-        } else {
-            $('#idClass').css('visibility', 'hidden');
         }
+        // else {
+        //     $('#idClass').css('visibility', 'hidden');
+        // }
     }
     </script>
     <!-- 초기 Welcome 화면---------------------------------------------------------------------------->
@@ -187,8 +182,8 @@ if (isset($_SESSION['user'])) {
 
             <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
                 <!--<img class="img-fluid w-100" src="assets/img/environments.jpg" alt="..." />-->
-                <a href="login/welcome.php"> <img class="img-fluid w-100" src="assets/img/environments.jpg"
-                        alt="Login Eplat Study Home"></a>
+                <a href="login/welcome.php?dest=classroom"> <img class="img-fluid w-100"
+                        src="assets/img/environments.jpg" alt="Login Eplat Study Home"></a>
             </div>
         </div>
 
