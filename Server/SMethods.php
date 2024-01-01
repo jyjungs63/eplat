@@ -13,14 +13,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (is_callable($functionName)) {
-            if ( "SUploadBoardPDF" == $functionName || "SUploadBoard" == $functionName)
+            if ( "SUploadBoardPDF" == $functionName 
+                || "SUploadBoard" == $functionName 
+                || "Sfindpassword"== $functionName  )
                 $functionName($_POST);
-            if ("Slogon" == $functionName)
+            else if ("Slogon" == $functionName)
                 $functionName($_POST,$urlFromGET);
             else
                 $functionName($_POST['otherData']);
         }          
     }
+}
+function Sfindpassword($data)
+{
+    $Id     = $data["id"];
+    $Mobile = $data["mobile"];
+    
+        if ( !empty($Id) && !empty($Mobile) ) {
+            
+            $res = CheckPasswd( $Id, $Mobile);
+            
+            if( $res ) {
+                //echo json_encode($res['id']);
+                session_start();
+                $_SESSION["id"]       = $Id ;			
+                $_SESSION["password"] = $res['password'];
+                echo json_encode( array ("success" => $res['password']) );
+                //header('location: ../login/login.php?id='.$_SESSION["password"]);  
+            }
+            else {
+                //hearder("Location: login.php");
+                echo json_encode(array ("error" => "사용자 아이디 와 휴대폰 번호가 일치하지 않아요"));
+            }
+        }
+        else {
+            //header("Location: login.php");
+            echo json_encode(array ("error" => "사용자 아이디 와 휴대폰을 입력하세요"));
+        }
+    
+}
+function CheckPasswd($login, $password) {
+    global $conn;
+    $user = "";
+    $login = mysqli_escape_string ( $conn, $login );
+    $rs = mysqli_query ( $conn, "select * from eplat_user where id='{$login}' and mobile = '{$password}' " );
+    
+    if ($rs) {
+        $user = mysqli_fetch_assoc ( $rs );
+        $passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
+        //if ($user &&  password_verify ( $password, $user ['password'] ) != true) {
+        mysqli_free_result ( $rs );
+    }
+    $conn->close();
+    return $user;
 }
 
 function Slogon($data, $dest)
@@ -43,7 +88,7 @@ function Slogon($data, $dest)
             $_SESSION["location"] = $location;
 
 			if ($dest == "classroom") {
-				header('location: welcome.php?dest='.'classroom' );  
+				header('location: ../welcome.php?dest='.'classroom' );  
 			}
 			else
 				header('location: ../index_admin.php?id='.$_SESSION["user"]);  
@@ -57,7 +102,6 @@ function Slogon($data, $dest)
 		//header("Location: login.php");
 		echo json_encode("falure");
 	}
-    $conn->close();
 }
 
 function SRegister ($data) {
@@ -103,7 +147,7 @@ function SRegister ($data) {
 
 function CheckUser($login, $password) {
     global $conn;
-    $user = null;
+    $user = "";
     $login = mysqli_escape_string ( $conn, $login );
     $rs = mysqli_query ( $conn, "select * from eplat_user where id='{$login}'" );
     
@@ -112,10 +156,11 @@ function CheckUser($login, $password) {
         $passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
         //if ($user &&  password_verify ( $password, $user ['password'] ) != true) {
         if ($user &&  strcmp( $password, $user ['password'] ) != 0) {
-            $user = null;
+            $user = "";
         }
         mysqli_free_result ( $rs );
     }
+    $conn->close();
     return $user;
 }
 
@@ -396,7 +441,7 @@ function SShowConfirmUpdate ($data) {
         $conn->close();
     }
     catch (Exception $e) {
-        $result = $e.getMessage();
+        $result = $e->getMessage();
     }
 
     header('Content-Type: application/json');
@@ -591,7 +636,7 @@ function SUploadBoard ($data) {
     $content   = $data['idContent'];
     $user =  'admin';
     
-    //global $conn;
+    global $conn;
     $rows = array();
     
     if (  !empty($user) ) 
@@ -631,7 +676,7 @@ function SUploadBoard ($data) {
             if ($res=== TRUE) {
                 $result = true;
             } else {
-                $result =  "Error: " . $sql . "<br>" . $conn->error;
+                $result =  "Error: " . $sqlstring . "<br>" . $conn->error;
             }
             
             $conn->close();

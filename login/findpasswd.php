@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
-
+    <title>EPLAT HOME</title>
+    <?php
+    include '../include.php';
+    ?>
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
 
@@ -27,8 +29,8 @@
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title">Find password</h2>
-                        <form method="POST" class="register-form" id="login-form" action="../Server/SFindpassword.php">
+                        <h2 class="form-title">비밀번호 찾기</h2>
+                        <form method="POST" class="register-form" id="login-form" >
                             <div class="form-group">
                                 <label for="id"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="id" id="id" placeholder="Your ID" />
@@ -39,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
+                                <input type="text" name="your_pass" id="your_pass" placeholder="Password" />
                             </div>
 
                             <div class="form-group form-button">
@@ -55,8 +57,41 @@
     </div>
 
     <!-- JS -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+    <?php
+    include '../includescr.php';
+    ?>
+    <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
+    <script src="../common.js"></script>
+    <script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
 
+      // Create FormData object and append form data to it
+      var formData = new FormData(this);
+      dispList = (resp) => {
+            var element = document.getElementById('your_pass');
+            if (resp['success'])
+            {
+                element.style.color = 'blue';
+                element.value = resp['success'];
+                CallToast('find password success!!', "success")
+            }
+            else {
+                element.style.color = 'red';
+                element.value = resp['error'];
+                CallToast('find password  falure!', "error")
+            }
+
+        }
+        dispErr = (xhr) => {
+            document.getElementById('your_pass').value = "사용자 또는 휴대폰 번호가 일치 하지 않습니다.";
+            CallToast('find password  falure!', "error")
+        }
+
+        formData.append('functionName', 'Sfindpassword');
+        CallAjax1("SMethods.php", "POST", formData, dispList, dispErr);
+    });
+
+    </script>
+</body>
 </html>

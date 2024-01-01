@@ -14,7 +14,8 @@ $Mobile = $_POST["mobile"];
             session_start();
 			$_SESSION["id"]       = $Id ;			
 			$_SESSION["password"] = $res['password'];
-			header('location: ../login/login.php?id='.$_SESSION["password"]);  
+			echo json_encode($res['password']);
+			//header('location: ../login/login.php?id='.$_SESSION["password"]);  
 		}
 		else {
 			//hearder("Location: login.php");
@@ -28,7 +29,7 @@ $Mobile = $_POST["mobile"];
 
 	function CheckUser($Id, $Mobile) {
 		global $conn;
-		$user = null;
+		$user = "";
 		$Mobile = mysqli_escape_string ( $conn, $Mobile );
 
 		$rs = mysqli_query ( $conn, "select * from eplat_user where id='{$Id}'" );
@@ -38,12 +39,12 @@ $Mobile = $_POST["mobile"];
 
 			//if ($user &&  password_verify ( $password, $user ['password'] ) != true) {
 			if ($user &&  strcmp( $Mobile, $user ['mobile'] ) != 0) {
-				$user = null;
+				$user = "";
 			}
 			mysqli_free_result ( $rs );
 		}
 		return json_encode($user);
 	}
 	
-$conn->close();
+	$conn->close();
 ?>

@@ -1,0 +1,36 @@
+<head>
+  <style>
+    video {
+      background-color: black
+    }
+  </style>
+</head>
+
+<body>
+  <video height="100%" width="100%" src="" id="video" autoplay muted playsinline></video>
+  <p>(each video is just ~ 10 seconds)</p>
+  <script>
+    var vidSources = [
+      "http://127.0.0.1:5503/login/1.mp4"
+    ];
+
+    //const loc = "https://www.eplat.co.kr/assets/img/online_study_room/v3/"
+
+    var vidElement = document.getElementById('video');
+
+    var activeVideo = Math.floor((Math.random() * vidSources.length));
+    vidElement.src = vidSources[activeVideo];
+    vidElement.addEventListener('ended', function (e) {
+      // update the active video index
+      vidElement.pause();
+      activeVideo = (++activeVideo) % vidSources.length;
+      if (activeVideo === vidSources.length) {
+        activeVideo = 0;
+      }
+
+      // update the video source and play
+      vidElement.src = vidSources[0];
+      //vidElement.play();
+    });
+  </script>
+</body>

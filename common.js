@@ -42,9 +42,13 @@ function execDaumPostcode(zip="idZip", addrs = "idAddr") {
 }
 
 CallAjax = ( fucName, fntype="POST", options, retFn, errFn) => {
+    var host = window.location.host;
+    var url = "http://localhost:3000/Server/"
+    if ( host.includes('eplat'))
+        url = "https://eplat.co.kr/Server/";
     var status = true;
     $.ajax({
-        url: "https://eplat.co.kr/Server/" + fucName, //
+        url: url + fucName, //
         type: fntype,
         dataType: "json",
         data: options,
@@ -61,8 +65,12 @@ CallAjax = ( fucName, fntype="POST", options, retFn, errFn) => {
 
 CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
     var status = true;
+    var host = window.location.host;
+    var url = "http://localhost:3000/Server/"
+    if ( host.includes('eplat'))
+        url = "https://eplat.co.kr/Server/";
     $.ajax({
-        url: "https://localhost:3000/Server/" + fucName, //
+        url: url + fucName, //
         type: fntype,
         dataType: "json",
         data: options,
@@ -77,9 +85,9 @@ CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
     });
 }
 
-CallToast = (stat, message) => {
+CallToast = (message, stat ) => {
     if (stat == "success") {
-        toastr.success(message, 'Info', {
+        toastr.success(message, 'Success', {
             positionClass: 'toast-top-right',
             timeout: 3000,
             closeButton: true,
@@ -88,7 +96,7 @@ CallToast = (stat, message) => {
     }
     else if ( stat == "error")
     {
-        toastr.error(message, 'Info', {
+        toastr.error(message, 'Error', {
             positionClass: 'toast-top-right',
             timeout: 3000,
             closeButton: true,

@@ -2,7 +2,6 @@
 
 session_start();
 if (isset($_SESSION['user'])) {
-    echo "<h5 id='hiddenid' align='center' style='visibility:hidden' >" . $_SESSION["user"] . "</h5>";
     echo "<meta name='user' content =" . $_SESSION['user'] . ">";
     echo "<meta name='authenticated' content=" .$_SESSION["authenticated"]. ">";
     echo "<meta name='name' content=" .$_SESSION["name"]. ">";

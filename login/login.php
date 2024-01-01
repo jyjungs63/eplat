@@ -26,12 +26,12 @@
                 <div class="signin-content">
                     <div class="signin-image">
                         <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>
-                        <a href="register.php" class="signup-image-link">사용자 등록 바로가기</a></br>
+                        <a href="register.php" class="signup-image-link">회원가입</a></br>
                         <a href="findpasswd.php" class="signup-image-link">비밀번호 찾기</a>
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title">Login</h2>
+                        <h2 class="form-title">로그인</h2>
                         <?php 
                             session_start();
                             if( isset($_SESSION['user']))
@@ -72,7 +72,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>암호저장</label>
+                                <label for="remember-me" class="label-agree-term"><span><span></span></span>아이디 기억하기</label>
                             </div>
 
                             <div class="form-group form-button">
@@ -95,6 +95,9 @@
 
     </div>
 
+    <?php
+    include '../includescr.php';
+    ?>
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="../common.js"> </script>
@@ -112,7 +115,8 @@
         }
 
         formData.append('functionName', 'Slogon');
-        CallAjax1("SMethods.php?desc=classroom", "POST", formData, dispList, dispErr);
+        //CallAjax1("SMethods.php?dest=classroom", "POST", formData, dispList, dispErr);
+        CallAjax1("SMethods.php?dest=index.php", "POST", formData, dispList, dispErr);
 
     })
     </script>

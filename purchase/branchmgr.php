@@ -155,6 +155,8 @@
     <?php
         include '../includescr.php';
     ?>
+    <script src="branchmgr_js.js"></script>
+    <script src="../common.js"></script>
 
     <script>
     var table;

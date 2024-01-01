@@ -366,11 +366,12 @@
     include '../includescr.php';
 ?>
 <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
-
+<script src="../common.js"></script>
 <script>
 var gid;
-const metaDescription = document.querySelector('meta[name="location"]').getAttribute('content');
+//const metaDescription = document.querySelector('meta[name="location"]').getAttribute('content');
 //alert(metaDescription);
+var metaDescription = "localhost";
 let host = "https://www.eplat.co.kr/board/uploads/";
 if (metaDescription == "localhost")
     host = "http://localhost:3000/board/uploads/";
@@ -404,9 +405,10 @@ $(document).ready(function(e) {
     }
 
     $("#files-upload").change(function() {
+        var filenames="";
         if (typeof(FileReader) != "undefined") {
             var dvPreview = $("#dvPreview");
-            dvPreview.html("");
+            dvPreview.html("AAA");
 
             var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.PNG)$/;
             $('#dvPreview').empty();
@@ -423,10 +425,12 @@ $(document).ready(function(e) {
                     }
                     reader.readAsDataURL(file[0]);
                 } else {
-                    dvPreview.html(file[0].name);
+                    filenames += file[0].name + '</br>'
                     //return false;
+                    //dvPreview.html(file[0].name);
                 }
             });
+            dvPreview.html(filenames);
         } else {
             alert("This browser does not support HTML5 FileReader.");
         }
@@ -563,7 +567,7 @@ $(document).ready(function(e) {
                     if (file.includes("mp4") || file.includes("avi") || file
                         .includes("mov") || file.includes(
                             "wmv"))
-                        icon = 'fas fa-file-video';
+                        icon = 'fa-solid fa-file-video';
                     var iconSpan = $('<span>', {
                         class: 'icon-span'
                     }).prepend($('<i>', {
