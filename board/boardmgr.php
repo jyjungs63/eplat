@@ -141,10 +141,10 @@
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
-                                    fas fa-minus"></i></button>
+                                    <i class="fas fa-minus"></i></button>
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                     data-toggle="tooltip" title="Remove">
-                                    fas fa-times"></i></button>
+                                    <i class="fas fa-times"></i></button>
                             </div>
                             <!-- /. tools -->
                         </div>
@@ -178,7 +178,7 @@
                 <div class="col-md-12">
                     <div class="card card-outline card-info" id="cardUpload">
                         <div class="card-header">
-                            <h3>File Upload</h3>
+                            <h5>자료등록</h5>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
@@ -203,9 +203,17 @@
                                             </div>
                                         </div>
                                         <div class="row">
+                                            <div class="col-25">
+                                                <label for="Record" class="control-label">내용</label>
+                                            </div>
+                                            <div class="col-75">
+                                                <input type="text" class="form-control" id="idDesc">
+                                            </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="box">
                                                 <div class="col-25">
-                                                    <label for="files-upload" class="control-label">Photo</label>
+                                                    <label for="files-upload" class="control-label">자료</label>
                                                 </div>
                                                 <div class="col-75">
                                                     <div style="position:relative;">
@@ -261,10 +269,10 @@
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
-                                    fas fa-minus"></i></button>
+                                    <i class="fas fa-minus"></i></button>
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                     data-toggle="tooltip" title="Remove">
-                                    fas fa-times"></i></button>
+                                    <i class="fas fa-times"></i></button>
                             </div>
                             <!-- /. tools -->
                         </div>
@@ -287,6 +295,14 @@
                                             </div>
                                             <div class="col-75">
                                                 <input type="text" class="form-control" id="idTitle">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-25">
+                                                <label for="Record" class="control-label">내용</label>
+                                            </div>
+                                            <div class="col-75">
+                                                <input type="text" class="form-control" id="idDesc2">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -405,7 +421,7 @@ $(document).ready(function(e) {
     }
 
     $("#files-upload").change(function() {
-        var filenames="";
+        var filenames = "";
         if (typeof(FileReader) != "undefined") {
             var dvPreview = $("#dvPreview");
             dvPreview.html("AAA");
@@ -435,12 +451,11 @@ $(document).ready(function(e) {
             alert("This browser does not support HTML5 FileReader.");
         }
     });
+
     //$('#table').bootstrapTable({ data: record })
     function multipleLinksFormatter(value, row) {
-        // Assuming 'value' is an array of objects containing link information
         let links = '';
 
-        // Loop through the array of links and create anchor tags
         var js = JSON.parse(row['contents']);
         js.forEach(link => {
             var icon = '<i class = "fa-regular fa-file" > </i>';
@@ -465,25 +480,50 @@ $(document).ready(function(e) {
 
         return links;
     }
-    $.ajax({
-        url: "../Server/SShowBoardlist.php",
-        type: "POST",
-        dataType: "json",
-        data: data,
-        success: function(resp) {
-            var $table = $('#table').bootstrapTable({
-                data: resp,
-                columns: [{}, {}, {}, {}, {
-                    field: 'linksColumn',
-                    title: '첨부파일',
-                    formatter: multipleLinksFormatter
-                }]
-            });
-        },
-        error: function(xhr, status, error) {
-            alert('SShowBoardlist ajax error' + error);
+
+    // $.ajax({
+    //     url: "../Server/SShowBoardlist.php",
+    //     type: "POST",
+    //     dataType: "json",
+    //     data: data,
+    //     success: function(resp) {
+    //         var $table = $('#table').bootstrapTable({
+    //             data: resp,
+    //             columns: [{}, {}, {}, {}, {
+    //                 field: 'linksColumn',
+    //                 title: '첨부파일',
+    //                 formatter: multipleLinksFormatter
+    //             }]
+    //         });
+    //     },
+    //     error: function(xhr, status, error) {
+    //         alert('SShowBoardlist ajax error' + error);
+    //     }
+    // });
+
+    dispList2 = (resp) => {
+        var $table = $('#table').bootstrapTable({
+            data: resp,
+            columns: [{}, {}, {}, {}, {
+                field: 'linksColumn',
+                title: '첨부파일',
+                formatter: multipleLinksFormatter
+            }]
+        });
+    }
+
+    dispErr2 = (error) => {
+        CallToast('게시판 보기  !', "error")
+    }
+
+    var options = {
+        functionName: 'SShowBoardlist',
+        otherData: {
+            num: -1
         }
-    });
+    };
+
+    CallAjax("SMethods.php", "POST", options, dispList2, dispErr2);
 
     activeUpload = () => {
         //alert ('called');
@@ -519,76 +559,78 @@ $(document).ready(function(e) {
             num: num
         }
 
-        $.ajax({
-            url: "../Server/SShowBoardlist.php",
-            type: "POST",
-            dataType: "json",
-            data: item,
-            success: function(resp) {
-                var jsn = JSON.parse(resp[0]['contents'])
-                var jsarr = [];
+        dispList1 = (resp) => {
+            var jsn = JSON.parse(resp[0]['contents'])
+            var jsarr = [];
 
-                $("#idNum").val(resp[0]['num']);
-                $("#idTitle").val(resp[0]['title']);
-                $("#idID").val(resp[0]['id']);
-                $("#idDate").val(resp[0]['rdate']);
+            $("#idNum").val(resp[0]['num']);
+            $("#idTitle").val(resp[0]['title']);
+            $("#idID").val(resp[0]['id']);
+            $("#idDesc2").val(resp[0]['desc']);
+            $("#idDate").val(resp[0]['rdate']);
 
-                for (var i = 0; i < jsn.length; i++) {
-                    var object = {
-                        text: "   " + i + " : " + jsn[i]['name'] + '   size: (' +
-                            parseFloat(Number(jsn[i]['size']) / 1024 / 1024).toFixed(
-                                2) + ") MB",
-                        href: host + jsn[i][
-                            'fakename'
-                        ]
-                    }
-                    jsarr.push(object);
+            for (var i = 0; i < jsn.length; i++) {
+                var object = {
+                    text: "   " + i + " : " + jsn[i]['name'] + '   size: (' +
+                        parseFloat(Number(jsn[i]['size']) / 1024 / 1024).toFixed(
+                            2) + ") MB",
+                    href: host + jsn[i][
+                        'fakename'
+                    ]
                 }
-                $.each(jsarr, function(index, link) {
-                    var anchor = $('<a>', {
-                        text: link.text,
-                        href: link.href,
-                        target: '_blank' // Optional - Opens links in a new tab
-                    });
-                    var icon = 'fa-regular fa-file';
-                    var file = link.text.split('.')[1].toLowerCase();
-                    if (file.includes("pdf"))
-                        icon = 'fa-solid fa-file-pdf';
-                    if (file.includes("png"))
-                        icon = 'fas fa-file-image';
-                    if (file.includes("xlsx"))
-                        icon = 'fas fa-file-excel';
-                    if (file.includes("pptx"))
-                        icon = 'fas fa-file-powerpoint';
-                    if (file.includes("html"))
-                        icon = 'fa-brands fa-html5';
-                    if (file.includes("exe"))
-                        icon = 'fas fa-running';
-                    if (file.includes("mp4") || file.includes("avi") || file
-                        .includes("mov") || file.includes(
-                            "wmv"))
-                        icon = 'fa-solid fa-file-video';
-                    var iconSpan = $('<span>', {
-                        class: 'icon-span'
-                    }).prepend($('<i>', {
-                        class: icon
-                    }));
-                    anchor.prepend(iconSpan);
-
-                    // Append each anchor element to the div with id="myDiv"
-                    $('#idFiles').append(anchor);
-
-                    // Append a line break for separation (optional)
-                    $('#idFiles').append('<br>');
-                });
-
-            },
-            error: function(e) {
-                alert('falure');
-                $("#err").html(e).fadeIn();
+                jsarr.push(object);
             }
-        });
+            $.each(jsarr, function(index, link) {
+                var anchor = $('<a>', {
+                    text: link.text,
+                    href: link.href,
+                    target: '_blank' // Optional - Opens links in a new tab
+                });
+                var icon = 'fa-regular fa-file';
+                var file = link.text.split('.')[1].toLowerCase();
+                if (file.includes("pdf"))
+                    icon = 'fa-solid fa-file-pdf';
+                if (file.includes("png"))
+                    icon = 'fas fa-file-image';
+                if (file.includes("xlsx"))
+                    icon = 'fas fa-file-excel';
+                if (file.includes("pptx"))
+                    icon = 'fas fa-file-powerpoint';
+                if (file.includes("html"))
+                    icon = 'fa-brands fa-html5';
+                if (file.includes("exe"))
+                    icon = 'fas fa-running';
+                if (file.includes("mp4") || file.includes("avi") || file
+                    .includes("mov") || file.includes(
+                        "wmv"))
+                    icon = 'fa-solid fa-file-video';
+                var iconSpan = $('<span>', {
+                    class: 'icon-span'
+                }).prepend($('<i>', {
+                    class: icon
+                }));
+                anchor.prepend(iconSpan);
 
+                $('#idFiles').append(anchor);
+
+                $('#idFiles').append('<br>');
+
+            });
+            CallToast('게시판 상세보기 조회 !', "success")
+        }
+
+        dispErr1 = (error) => {
+            CallToast('게시판 상세보기  !', "error")
+        }
+
+        var options = {
+            functionName: 'SShowBoardlist',
+            otherData: {
+                num: num
+            }
+        };
+
+        CallAjax("SMethods.php", "POST", options, dispList1, dispErr1);
     });
 
     $(document).on('submit', (function(e) {
@@ -604,32 +646,7 @@ $(document).ready(function(e) {
             }
 
             form_data.append("idContent", $('#idContent').val());
-
-            // $.ajax({
-            //     url: "../Server/SUploadBoard.php",
-            //     type: "POST",
-            //     data: form_data,
-            //     contentType: false,
-            //     cache: false,
-            //     processData: false,
-            //     beforeSend: function() {
-            //         $('#msg').html('Saving ......');
-            //     },
-            //     success: function(data) {
-            //         alert(data);
-            //         if (data == 'invalid file') {
-            //             $("#err").html("Invalid File !").fadeIn();
-            //         } else {
-            //             $("#msg").html(data).fadeIn();
-            //             $("#form")[0].reset();
-            //             alert(data);
-            //         }
-            //     },
-            //     error: function(e) {
-            //         alert('falure');
-            //         $("#err").html(e).fadeIn();
-            //     }
-            // });
+            form_data.append("idDesc", $('#idDesc').val());
 
             dispList = (resp) => {
                 CallToast('자료실에 등록이 성공적으로 수행했습니다. !', "success")

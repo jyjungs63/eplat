@@ -86,12 +86,15 @@ function Slogon($data, $dest)
 			$_SESSION["role"] = $res['role'];
 			$_SESSION["confirm"] = $res['confirm'];
             $_SESSION["location"] = $location;
-
+            $_SESSION["dest"] = $dest;
+            
 			if ($dest == "classroom") {
-				header('location: ../welcome.php?dest='.'classroom' );  
+				echo json_encode('../welcome.php?dest='.'classroom' );  
 			}
 			else
-				header('location: ../index_admin.php?id='.$_SESSION["user"]);  
+            {               
+				echo json_encode('../index_admin.php?id='.$_SESSION["user"]);  
+            }        
 		}
 		else {
 			//hearder("Location: login.php");
@@ -634,6 +637,8 @@ function SUploadBoardPDF($data) {
 function SUploadBoard ($data) {
     session_start();
     $content   = $data['idContent'];
+    $desc   = $data['idDesc'];
+    
     $user =  'admin';
     
     global $conn;
@@ -670,7 +675,7 @@ function SUploadBoard ($data) {
         $jsarr = json_encode ($rows);
         try {
     
-            $sqlstring = "insert into repository ( title, id, contents, rdate ) values ( '$content', '$user',  '$jsarr',  NOW())";
+            $sqlstring = "insert into repository ( title, id, contents, desc, rdate ) values ( '$content', '$user',  '$jsarr', '$desc',  NOW())";
             $res = mysqli_query ( $conn,  $sqlstring);
             
             if ($res=== TRUE) {
@@ -692,6 +697,47 @@ function SUploadBoard ($data) {
     {
         Header("Location: login.php");
     }
+}
+
+function SShowBoardList($data) {
+    session_start();
+
+    $num = $data['num'];
+
+    global $conn;
+
+    try {
+        if ( $num == -1) {
+            $sqlString = "SELECT num, title, id, contents, `desc`, rdate  FROM repository order by num desc"; 
+        }
+        else
+            $sqlString = "SELECT num, title, id, contents, `desc`, rdate  FROM repository where num =". $num ." order by num desc"; 
+
+        $rs = mysqli_query($conn,$sqlString);
+        $rows = array();
+
+        $i = 0;
+
+        while($row = mysqli_fetch_array($rs)){
+            array_push($rows,
+                    array(  'num'      => $row['num'],
+                            'title'    => $row['title'] ,
+                            'id'       => $row['id'],								
+                            'contents' => $row['contents'],								
+                            'desc'     => $row['desc'],								
+                            'rdate'    => $row['rdate'],								
+                    ));
+        }
+    }
+    catch (Exception $e)
+    {
+        return json_encode( $e->getMessage() );
+    }
+
+    $result["rows"] = $rows;
+    header('Content-Type: application/json');
+    echo json_encode($rows);
+
 }
 
 function generateRandomString($length = 15) {

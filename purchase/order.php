@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="../common.css" rel="stylesheet">
     <style>
 
@@ -271,9 +272,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4/dist/fontkit.umd.min.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.11/chance.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="kgardenlist_2.js"></script>
     <script src="../common.js"></script>
 
@@ -388,6 +390,7 @@
         orderList(null);
 
     });
+
     orderList = () => {
         items = [];
 
@@ -1075,7 +1078,7 @@
 
         // Serialize the PDFDocument to bytes (a Uint8Array)
 
-        const pngUrl = 'http://www.eplat.co.kr/assets/img/logo.png'
+        const pngUrl = 'https://www.eplat.co.kr/assets/img/logo.png'
 
         const pngImageBytes = await fetch(pngUrl).then((res) => res.arrayBuffer())
 

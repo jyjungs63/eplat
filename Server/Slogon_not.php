@@ -27,6 +27,7 @@ global $location;
 			}
 			else
 				header('location: ../index_admin.php?id='.$_SESSION["user"]);  
+			echo json_encode("success");
 		}
 		else {
 			//hearder("Location: login.php");

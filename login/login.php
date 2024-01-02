@@ -8,7 +8,9 @@
     <title>Eplat User Login</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-
+    <?php
+    include '../include.php';
+    ?>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -72,7 +74,8 @@
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>아이디 기억하기</label>
+                                <label for="remember-me" class="label-agree-term"><span><span></span></span>아이디
+                                    기억하기</label>
                             </div>
 
                             <div class="form-group form-button">
@@ -107,11 +110,11 @@
         const formData = new FormData(logform);
 
         dispList = (resp) => {
-            CallToast('Upload Pdf successfully!!', "success")
-            document.getElementById('pdfDiv').src = resp['url'];
+            CallToast('Login successfully!!', "success")
+            window.location.href = resp;
         }
         dispErr = (xhr) => {
-            CallToast('Upload Pdf falure!', "error")
+            CallToast('Login falure!!', "error")
         }
 
         formData.append('functionName', 'Slogon');
