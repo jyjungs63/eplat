@@ -41,7 +41,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Branch Manage</h1>
+                        <h3>지사/원관리 리스트</h3>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -61,41 +61,39 @@
                                 <div class="input-group mb-3">
 
                                     <select class="form-select form-control-sm" id="idGrade"
-                                        data-placeholder="Choose Items">
+                                        data-placeholder="Choose Items" style="width: 120px;">
                                         <option val="va">전체</option>
-                                        <option val="v4">4세</option>
-                                        <option val="v5">5세</option>
-                                        <option val="v6">6세</option>
-                                        <option val="v7">7세</option>
-                                        <option val="ve">교구</option>
+                                        <option val="v4">지사관리</option>
+                                        <option val="v5">원관리</option>
                                     </select>&nbsp;
                                     &nbsp;
-                                    <input class="form-control form-control-sm" id="idID" type="text" placeholder="ID"
-                                        style="width: 10px;">&nbsp;
-
-                                    <input class="form-control form-control-sm" id="idName" type="text"
-                                        placeholder="Name">&nbsp;
 
                                     <input class="form-control form-control-sm" id="idOwner" type="text"
-                                        placeholder="Owner">&nbsp;
+                                        placeholder="지사/유치원명" style="width: 150px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idPasswd" type="text"
-                                        placeholder="Password">&nbsp;
+                                    <input class="form-control form-control-sm" id="idName" type="text"
+                                        placeholder="이름" style="width: 150px;">&nbsp;
 
                                     <input class="form-control form-control-sm" id="idMobile" type="text"
-                                        placeholder="Mobile">&nbsp;
+                                        placeholder="전화번호" style="width: 120px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idAddr" type="text"
-                                        placeholder="Address" style="width: 100px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디"
+                                        style="width: 100px;">&nbsp;
+
+                                    <input class="form-control form-control-sm" id="idPasswd" type="text"
+                                        placeholder="비밀번호" style="width: 100px;">&nbsp;
 
                                     <input class="form-control form-control-sm" id="idZip" type="text"
-                                        placeholder="Zip Code" style="width: 2px;">&nbsp;
+                                        placeholder="우편번호" style="width: 70px;">&nbsp;
+
+                                    <input class="form-control form-control-sm" id="idAddr" type="text"
+                                        placeholder="주소" style="width: 250px;">&nbsp;
 
                                     <button class="btn btn-outline-primary btn-sm" type="button"
-                                        onclick="execDaumPostcode('idAddr','idZip')">주소찾기</button>&nbsp;
+                                        onclick="execDaumPostcode('idAddr','idZip')">주소검색</button>&nbsp;
                                     &nbsp;
                                     <button class="btn btn-outline-success btn-sm" type="button"
-                                        onclick="AddBranch()">Add Branch</button>
+                                        onclick="AddBranch()">등록</button>
                                 </div>
                             </h3>
                             <div class="card-tools"><button type="button" class="btn btn-tool btn-sm m-3"
@@ -107,7 +105,7 @@
                         <div class="card-body pad">
                             <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;"><a
                                     id="anchorRead" href="javascript:UpdateBranch()" class="btn btn-info" role="button"
-                                    aria-disabled="true" data-toggle="tooltip" title="Update Branch Manager"><i
+                                    aria-disabled="true" data-toggle="tooltip" title="갱신하기"><i
                                         class="fa-solid fa-user"></i></a></div>
                             <div id="idTable"></div>
                         </div>

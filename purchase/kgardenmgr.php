@@ -26,7 +26,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h5>Kinder garden Manage</h5>
+                        <h5>학생등록 관리리스트</h5>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -44,20 +44,25 @@
                         <div class="card-header">
                             <h3 class="card-title">
                                 <div class="input-group mb-3">
-                                    <button class="btn btn-outline-secondary" type="button">Select Items</button>
+                                    <button class="btn btn-outline-secondary" type="button">Step 선택</button>
                                     &nbsp;&nbsp;
-                                    <select class="form-select" id="idStudent" data-placeholder="Choose Items">
-
-                                    </select>
+                                    <select class="form-select form-control-sm" id="idStudent"
+                                        data-placeholder="Choose Items" style="width: 70px;">
+                                        <option val="va">전체</option>
+                                        <option val="vb">4세-Basic</option>
+                                        <option val="vs1">5세-Step1</option>
+                                        <option val="vs2">6세-Step2</option>
+                                        <option val="vs3">7세-Step3</option>
+                                    </select>&nbsp;
                                     &nbsp;&nbsp;
                                     <input class="form-control " id="idClassname" type="text"
-                                        placeholder="Add Class Name"> &nbsp;&nbsp;
+                                        placeholder="반이름"> &nbsp;&nbsp;
                                     <input class="form-control " id="idNick" type="text"
-                                        placeholder="Id Prefix (English)"> &nbsp;&nbsp;
-                                    <input class="form-control " id="idNumstudent" type="text" placeholder="학생수">
+                                        placeholder="시작아이디(영어)"> &nbsp;&nbsp;
+                                    <input class="form-control " id="idNumstudent" type="text" placeholder="원아수">
                                     &nbsp;&nbsp;
-                                    <button class="btn btn-outline-primary" type="button" onclick="addChild()">Add
-                                        Class</button>
+                                    <button class="btn btn-outline-primary" type="button" onclick="addChild()">추가
+                                        </button>
                                 </div>
                             </h3>
                             <div class="card-tools">
@@ -141,16 +146,44 @@
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
-
+    <script src="../common.js"></script>
     <script>
     var tab;
+    var deleteIcon = function(cell, formatterParams) { //plain text value
+    return "<i class='fa fa-trash'></i>";
+    };
     document.addEventListener("DOMContentLoaded", function() {
 
         tab = new Tabulator("#idTable", {
             height: "300px",
             layout: "fitColumns",
-            columns: [{
-                    title: "Id",
+            columns: [
+                {
+                    title: "반이름",
+                    field: "IdClassName",
+                    width: 150,
+                    editor: "input",
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+                {
+                    title: "원아명",
+                    field: "IdName",
+                    width: 150,
+                    editor: "input",
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+                {
+                    title: "아이디",
                     field: "Id",
                     width: 150,
                     editor: "input",
@@ -162,7 +195,7 @@
                     }
                 },
                 {
-                    title: "Passwd",
+                    title: "비밀번호",
                     field: "Passwd",
                     width: 150,
                     editor: "input",
@@ -174,22 +207,42 @@
                     }
                 },
                 {
-                    title: "Name",
-                    field: "Name",
-                    width: 150,
-                    editor: "input",
-                    editorParams: {
-                        autocomplete: "true",
-                        allowEmpty: true,
-                        listOnEmpty: true,
-                        valuesLookup: true
-                    }
-                },
+                formatter: deleteIcon,
+                width: 50,
+                hozAlign: "center",
+                cellClick: function(e, cell) {
+                    ChildDelete(cell.getRow())
+                }
+            },
             ],
         });
         //showClassMembers("teacher1");
         showClass("teacher1");
     });
+
+    ChildDelete = (cell) => {
+        var result = confirm("Are you sure to delete ??");
+        var id = cell._row.data['id'];
+
+        dispList = (resp) => {
+            cell.delete();
+        }
+        dispErr = (xhr) => {
+            alert("SDeleteMgr Error" + xhr.statusText);
+        }
+
+        var options = {
+            functionName: 'SDeleteMgr',
+            otherData: {
+                id: id
+            }
+        };
+
+        if (result) {
+            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+        } else
+            console.log("delete row cancel branchmgr BranchDelete r.260!!");
+    }
 
     document.getElementById("idStudent").addEventListener("change", function() {
         // 선택된 옵션 가져오기

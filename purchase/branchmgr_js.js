@@ -3,13 +3,51 @@ var deleteIcon = function(cell, formatterParams) { //plain text value
 };
 
 table = new Tabulator("#idTable", {
-    height: "300px",
+    height: "500px",
     layout: "fitColumns",
+    //autoColumns: true,
     selectable: true,
-    columns: [{
-            title: "id",
+    columns: [
+        {
+            title: "지사/유치원명",
+            field: "owner",
+            width: "15%",
+            editor: "input",
+            editorParams: {
+                autocomplete: "true",
+                allowEmpty: true,
+                listOnEmpty: true,
+                valuesLookup: true
+            }
+        },
+        {
+            title: "이름",
+            field: "name",
+            width: "15%",
+            editor: "input",
+            editorParams: {
+                autocomplete: "true",
+                allowEmpty: true,
+                listOnEmpty: true,
+                valuesLookup: true
+            }
+        },
+        {
+            title: "전화번호",
+            field: "mobile",
+            width: "10%",
+            editor: "input",
+            editorParams: {
+                autocomplete: "true",
+                allowEmpty: true,
+                listOnEmpty: true,
+                valuesLookup: true
+            }
+        },
+        {
+            title: "아이디",
             field: "id",
-            width: 150,
+            width: "10%",
             editor: "false",
             editorParams: {
                 autocomplete: "true",
@@ -19,33 +57,9 @@ table = new Tabulator("#idTable", {
             }
         },
         {
-            title: "name",
-            field: "name",
-            width: 200,
-            editor: "input",
-            editorParams: {
-                autocomplete: "true",
-                allowEmpty: true,
-                listOnEmpty: true,
-                valuesLookup: true
-            }
-        },
-        {
-            title: "owner",
-            field: "owner",
-            width: 200,
-            editor: "input",
-            editorParams: {
-                autocomplete: "true",
-                allowEmpty: true,
-                listOnEmpty: true,
-                valuesLookup: true
-            }
-        },
-        {
-            title: "password",
+            title: "비밀번호",
             field: "password",
-            width: 150,
+            width: "10%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -55,33 +69,9 @@ table = new Tabulator("#idTable", {
             }
         },
         {
-            title: "mobile",
-            field: "mobile",
-            width: 150,
-            editor: "input",
-            editorParams: {
-                autocomplete: "true",
-                allowEmpty: true,
-                listOnEmpty: true,
-                valuesLookup: true
-            }
-        },
-        {
-            title: "addr",
-            field: "addr",
-            width: 400,
-            editor: "input",
-            editorParams: {
-                autocomplete: "true",
-                allowEmpty: true,
-                listOnEmpty: true,
-                valuesLookup: true
-            }
-        },
-        {
-            title: "zipcode",
+            title: "우편번호",
             field: "zipcode",
-            width: 100,
+            width: "10%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -91,9 +81,22 @@ table = new Tabulator("#idTable", {
             }
         },
         {
-            title: "rdate",
+            title: "주소",
+            field: "addr",
+            width: "20%",
+            editor: "input",
+            editorParams: {
+                autocomplete: "true",
+                allowEmpty: true,
+                listOnEmpty: true,
+                valuesLookup: true
+            }
+        },
+
+        {
+            title: "등록일",
             field: "rdate",
-            width: 100,
+            width: "5%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -104,7 +107,7 @@ table = new Tabulator("#idTable", {
         },
         {
             formatter: deleteIcon,
-            width: 40,
+            width: "5%",
             hozAlign: "center",
             cellClick: function(e, cell) {
                 BranchDelete(cell.getRow())

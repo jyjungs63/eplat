@@ -207,7 +207,7 @@
                                                 <label for="Record" class="control-label">내용</label>
                                             </div>
                                             <div class="col-75">
-                                                <input type="text" class="form-control" id="idDesc">
+                                                <textarea type="text"  rows="4" cols="50" id="idDesc"></textarea>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -265,7 +265,7 @@
                 <div class="col-md-12">
                     <div class="card card-outline card-info" id="cardFileList">
                         <div class="card-header">
-                            <h3>Files List</h3>
+                            <h5>Files Description</h5>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                                     data-toggle="tooltip" title="Collapse">
