@@ -16,6 +16,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
+    <link href="../common.css" rel="stylesheet">
 
     <title>Branch Manage</title>
 </head>
@@ -30,8 +31,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrum-item"><a href="#">Home</a></li>
-                            <li class="breadcrum-item"><a hred="#">Prev</a></li>
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="#">Prev</a></li>
                         </ol>
                     </div>
                 </div>
@@ -49,20 +50,20 @@
                                     <select class="form-select form-control-sm" id="idStudent"
                                         data-placeholder="Choose Items" style="width: 70px;">
                                         <option val="va">전체</option>
-                                        <option val="vb">4세-Basic</option>
-                                        <option val="vs1">5세-Step1</option>
-                                        <option val="vs2">6세-Step2</option>
-                                        <option val="vs3">7세-Step3</option>
+                                        <option val="sb">4세-Basic</option>
+                                        <option val="s1">5세-Step1</option>
+                                        <option val="s2">6세-Step2</option>
+                                        <option val="s3">7세-Step3</option>
                                     </select>&nbsp;
                                     &nbsp;&nbsp;
-                                    <input class="form-control " id="idClassname" type="text"
-                                        placeholder="반이름"> &nbsp;&nbsp;
-                                    <input class="form-control " id="idNick" type="text"
-                                        placeholder="시작아이디(영어)"> &nbsp;&nbsp;
+                                    <input class="form-control " id="idClassname" type="text" placeholder="반이름">
+                                    &nbsp;&nbsp;
+                                    <input class="form-control " id="idNick" type="text" placeholder="시작아이디(영어)">
+                                    &nbsp;&nbsp;
                                     <input class="form-control " id="idNumstudent" type="text" placeholder="원아수">
                                     &nbsp;&nbsp;
                                     <button class="btn btn-outline-primary" type="button" onclick="addChild()">추가
-                                        </button>
+                                    </button>
                                 </div>
                             </h3>
                             <div class="card-tools">
@@ -76,9 +77,12 @@
                         </div>
                         <div class="card-body pad">
                             <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
-                                <a id="anchorRead" href="javascript:addClassMember()" class="btn btn-info" role="button"
+                                <!-- <a id="anchorRead" href="javascript:addClassMember()" class="btn btn-info" role="button"
                                     data-toggle="tooltip" title="Add Student" aria-disabled="true"><i
-                                        class="fa-solid fa-user"></i></a>
+                                        class="fa-solid fa-user"></i></a> -->
+                                <button class="btn btn-outline-primary" type="button" data-toggle="tooltip"
+                                    title="원아 추가 하기" onclick="addClassMember()"><i class="fa-solid fa-user"></i>추가
+                                </button>
                             </div>
 
                             <div id="idTable">
@@ -95,7 +99,7 @@
                         <div class="card-header">
                             <h3 class="card-title">
                                 <i class="fas fa-chart-pie mr-1"></i>
-                                Sales
+                                학습현황
                             </h3>
                             <div class="card-tools d-flex">
                                 <ul class="nav nav-pills">
@@ -149,19 +153,24 @@
     <script src="../common.js"></script>
     <script>
     var tab;
-    var deleteIcon = function(cell, formatterParams) { //plain text value
-    return "<i class='fa fa-trash'></i>";
-    };
-    document.addEventListener("DOMContentLoaded", function() {
+
+    window.addEventListener('resize', function() {
+        drawTable();
+    })
+
+    function drawTable() {
+        var deleteIcon = function(cell, formatterParams) { //plain text value
+            return "<i class='fa fa-trash'></i>";
+        };
 
         tab = new Tabulator("#idTable", {
             height: "300px",
             layout: "fitColumns",
-            columns: [
-                {
+            columns: [{
                     title: "반이름",
                     field: "IdClassName",
-                    width: 150,
+                    width: "25%",
+                    headerHozAlign: "center",
                     editor: "input",
                     editorParams: {
                         autocomplete: "true",
@@ -173,7 +182,8 @@
                 {
                     title: "원아명",
                     field: "IdName",
-                    width: 150,
+                    width: "25%",
+                    headerHozAlign: "center",
                     editor: "input",
                     editorParams: {
                         autocomplete: "true",
@@ -185,8 +195,9 @@
                 {
                     title: "아이디",
                     field: "Id",
-                    width: 150,
+                    width: "20%",
                     editor: "input",
+                    headerHozAlign: "center",
                     editorParams: {
                         autocomplete: "true",
                         allowEmpty: true,
@@ -197,8 +208,9 @@
                 {
                     title: "비밀번호",
                     field: "Passwd",
-                    width: 150,
+                    width: "10%",
                     editor: "input",
+                    headerHozAlign: "center",
                     editorParams: {
                         autocomplete: "true",
                         allowEmpty: true,
@@ -207,15 +219,34 @@
                     }
                 },
                 {
-                formatter: deleteIcon,
-                width: 50,
-                hozAlign: "center",
-                cellClick: function(e, cell) {
-                    ChildDelete(cell.getRow())
-                }
-            },
+                    title: "스텝",
+                    field: "Step",
+                    width: "10%",
+                    editor: "input",
+                    headerHozAlign: "center",
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+                {
+                    title: "삭제",
+                    formatter: deleteIcon,
+                    width: "10%",
+                    headerHozAlign: "center",
+                    hozAlign: "center",
+                    cellClick: function(e, cell) {
+                        ChildDelete(cell.getRow())
+                    }
+                },
             ],
         });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        drawTable();
         //showClassMembers("teacher1");
         showClass("teacher1");
     });
@@ -223,25 +254,26 @@
     ChildDelete = (cell) => {
         var result = confirm("Are you sure to delete ??");
         var id = cell._row.data['id'];
+        cell.delete();
 
-        dispList = (resp) => {
-            cell.delete();
-        }
-        dispErr = (xhr) => {
-            alert("SDeleteMgr Error" + xhr.statusText);
-        }
+        // dispList = (resp) => {
+        //     cell.delete();
+        // }
+        // dispErr = (xhr) => {
+        //     alert("SDeleteMgr Error" + xhr.statusText);
+        // }
 
-        var options = {
-            functionName: 'SDeleteMgr',
-            otherData: {
-                id: id
-            }
-        };
+        // var options = {
+        //     functionName: 'SDeleteMgr',
+        //     otherData: {
+        //         id: id
+        //     }
+        // };
 
-        if (result) {
-            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-        } else
-            console.log("delete row cancel branchmgr BranchDelete r.260!!");
+        // if (result) {
+        //     CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+        // } else
+        //     console.log("delete row cancel branchmgr BranchDelete r.260!!");
     }
 
     document.getElementById("idStudent").addEventListener("change", function() {
@@ -282,15 +314,20 @@
     }
 
     addChild = () => {
+        var selectElement = document.getElementById("idStudent");
+        var selectedValue = selectElement.value;
+
         var classname = $("#idClassname").val();
+        var nickname = $("#idNick").val();
         var num = $("#idNumstudent").val();
         var arr = [...Array(Number(num)).keys()];
         arr.forEach(el => {
 
             var data = {
-                Id: classname + el + "id",
-                Passwd: classname + el + "passwd",
-                Name: classname + el
+                IdClassName: classname,
+                Id: nickname + el + "id",
+                Passwd: nickname + el + "passwd",
+                Step: selectedValue
             }
             tab.addRow(data);
         })

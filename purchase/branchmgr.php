@@ -19,7 +19,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
     <script src="../../common.js"></script> -->
-
+    <link href="../common.css" rel="stylesheet">
     <title>Branch Manage</title>
     <style>
     .form-control-xsm {
@@ -71,8 +71,8 @@
                                     <input class="form-control form-control-sm" id="idOwner" type="text"
                                         placeholder="지사/유치원명" style="width: 150px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idName" type="text"
-                                        placeholder="이름" style="width: 150px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idName" type="text" placeholder="이름"
+                                        style="width: 150px;">&nbsp;
 
                                     <input class="form-control form-control-sm" id="idMobile" type="text"
                                         placeholder="전화번호" style="width: 120px;">&nbsp;
@@ -86,8 +86,8 @@
                                     <input class="form-control form-control-sm" id="idZip" type="text"
                                         placeholder="우편번호" style="width: 70px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idAddr" type="text"
-                                        placeholder="주소" style="width: 250px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idAddr" type="text" placeholder="주소"
+                                        style="width: 250px;">&nbsp;
 
                                     <button class="btn btn-outline-primary btn-sm" type="button"
                                         onclick="execDaumPostcode('idAddr','idZip')">주소검색</button>&nbsp;
@@ -103,10 +103,17 @@
                                     title="Remove"><i class="fas fa-times"></i></button></div>
                         </div>
                         <div class="card-body pad">
-                            <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;"><a
+                            <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
+                                <!-- <a
                                     id="anchorRead" href="javascript:UpdateBranch()" class="btn btn-info" role="button"
                                     aria-disabled="true" data-toggle="tooltip" title="갱신하기"><i
-                                        class="fa-solid fa-user"></i></a></div>
+                                        class="fa-solid fa-user"></i>
+                                </a> -->
+                                <button class="btn btn-outline-primary" type="button" data-toggle="tooltip"
+                                    title="지사 추가 하기" onclick="UpdateBranch()"><i class="fa-solid fa-user"></i>추가
+                                </button>
+                            </div>
+
                             <div id="idTable"></div>
                         </div>
                     </div>
