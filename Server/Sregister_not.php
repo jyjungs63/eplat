@@ -13,10 +13,15 @@ $password = $_POST['password'];
 $mobile   = $_POST['mobile'];
 $addr     = $_POST['addr'];
 $zipcode  = $_POST['zipcode'];
-$idrolebm = $_POST['idrolebm'];
+
+    
 $role = 0;
-if ( $idrolebm != null && $idrolebm == "on") 
+if ( isset($_POST['idrolebm']) )   // 지사장
 	$role = 1;
+if ( isset($_POST['idrolet']) )     // 원장, 선생님
+	$role = 2;
+if ( isset($_POST['idroleother']) )     // 일반 유료 회원
+	$role = 3;
 	
 
 // $id       = 'jyjungs@gmail.com';

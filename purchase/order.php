@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="utf-8">
-
+<?php
+include "../header.php";
+?>
 <head>
     <!-- <?php
         include '../include.php';
-    ?> -->
+    ?>  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
@@ -24,7 +26,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h5>Purchase</h5>
+                        <h5 id="idOrdertext">Purchase</h5>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -262,7 +264,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<!-- <?php
+ include "../includescr.php";
+ ?> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script>
@@ -275,11 +280,23 @@
     <!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.11/chance.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="kgardenlist_2.js"></script>
     <script src="../common.js"></script>
 
     <script>
+        const loc = document.querySelector('meta[name="location"]').getAttribute('content');
+        const user = document.querySelector('meta[name="user"]').getAttribute('content');
+        const role = document.querySelector('meta[name="role"]').getAttribute('content');
+        const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
+        const name = document.querySelector('meta[name="name"]').getAttribute('content');
+
+        if ( role != '1')
+        {
+            CallToast ("지사 관리 권한으로 로긴 하세요", "error");
+            window.location.href = "../login/login.php";
+        }
+        document.getElementById("idOrdertext").innerHTML = (name + "지사장/구매");
     const {
         PDFDocument,
         rgb

@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
         columns: [{
                 formatter: "rowSelection",
                 field: "check",
-                width: 10,
+                width: "5%",
                 titleFormatter: "rowSelection",
                 hozAlign: "left",
                 headerSort: false,
@@ -28,21 +28,30 @@ document.addEventListener("DOMContentLoaded", function() {
             {
                 title: "ID",
                 field: "id",
-                width: 100,
+                width: "10%",
                 editor: "input",
                 editor: false,
             },
             {
                 title: "NAME",
                 field: "name",
-                width: 100,
+                width: "15%",
                 editor: "input",
                 editor: false,
             },
             {
+                title: "구분",
+                field: "role",
+                editor: "select",
+                width: "5%",
+                editorParams: { // 에디터 파라미터 설정
+                    values: ["지사장", "선생님"], // 콤보박스에 표시될 값들
+                },
+            },
+            {
                 title: "Mobile",
                 field: "mobile",
-                width: 120,
+                width: "10%",
                 editor: "list",
                 editor: false,
             },
@@ -50,32 +59,32 @@ document.addEventListener("DOMContentLoaded", function() {
                 title: "주소",
                 field: "addr",
                 sorter: "input",
-                width: 300,
+                width: "20%",
                 editor: true,
             },
             {
                 title: "우편번호",
                 field: "zipcode",
-                width: 80,
+                width: "10%",
                 editor: true,
             },
             {
                 title: "비밀번호",
                 field: "password",
-                width: 100,
+                width: "10%",
                 editor: false,
             },
             {
                 title: "등록일",
                 field: "rdate",
-                width: 100,
+                width: "10%",
                 editor: false,
             },
             {
                 title: "승인",
                 field: "confirm",
                 editor: "select",
-                width: 120,
+                width: "5%",
                 editorParams: { // 에디터 파라미터 설정
                     values: ["승인", "미승인"], // 콤보박스에 표시될 값들
                 },

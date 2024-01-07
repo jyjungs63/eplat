@@ -118,7 +118,7 @@
     function toggleVisibility() {
         const user = document.querySelector('meta[name="user"]').getAttribute('content');
         const role = document.querySelector('meta[name="role"]').getAttribute('content');
-        const confirm = document.querySelector('meta[name="confirm"]').getAttribute('content');
+        const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
         const name = document.querySelector('meta[name="name"]').getAttribute('content');
         if (user == "admin" && role == "9") { // admin menu
 
@@ -131,8 +131,8 @@
             $('#idlogin').attr('href', "login/logout.php")
             $('#idlogin').text("Logout")
 
-        } else if (role == "1") { // Brabch manager control
-            if (confirm == "1") {
+        } else if (role == "1" ) { // Brabch manager control
+            if (conf == "1") {
                 $('#idm1').toggle(); // 게시판
                 $('#idm2').toggle(); // 지사마당 메뉴
                 $('#idm3').toggle(); // 구매
@@ -143,11 +143,16 @@
                 alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
             }
         } else if (role == "2") { // 유치원 선생님 메뉴
-            $('#idm1').toggle(); // 게시판
-            $('#idm4').toggle(); // 유치원관리
-            $('#idClass').css('visibility', 'visible');
-            $('#idlogin').attr('href', "login/logout.php")
-            $('#idlogin').text("Logout")
+            if (conf == "1") {
+                $('#idm1').toggle(); // 게시판
+                $('#idm4').toggle(); // 유치원관리
+                $('#idClass').css('visibility', 'visible');
+                $('#idlogin').attr('href', "login/logout.php")
+                $('#idlogin').text("Logout")
+            }
+             else {
+                alert( name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
+            }
         }
         // else {
         //     $('#idClass').css('visibility', 'hidden');

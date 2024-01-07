@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 || "SUploadBoard" == $functionName 
                 || "Sfindpassword"== $functionName  )
                 $functionName($_POST);
-            else if ("Slogon" == $functionName)
+            else if ("Slogon" == $functionName || "SRegister" == $functionName)
                 $functionName($_POST,$urlFromGET);
             else
                 $functionName($_POST['otherData']);
@@ -89,25 +89,44 @@ function Slogon($data, $dest)
             $_SESSION["dest"] = $dest;
             
 			if ($dest == "classroom") {
-				echo json_encode('../welcome.php?dest='.'classroom' );  
+				echo json_encode(array('success' => '../welcome.php?dest='.'classroom' ));  
 			}
 			else
             {               
-				echo json_encode('../index_admin.php?id='.$_SESSION["user"]);  
+				echo json_encode(array('success' => '../index_admin.php?id='.$_SESSION["user"]));  
             }        
 		}
 		else {
 			//hearder("Location: login.php");
-			echo json_encode("falure");
+			echo json_encode(array('falure' => 'password mismatch'));
 		}
 	}
 	else {
 		//header("Location: login.php");
-		echo json_encode("falure");
+		echo json_encode(array('falure' => 'id or password empty!'));
 	}
 }
 
-function SRegister ($data) {
+function CheckUser($login, $password) {
+    global $conn;
+    $user = "";
+    $login = mysqli_escape_string ( $conn, $login );
+    $rs = mysqli_query ( $conn, "select * from eplat_user where id='{$login}'" );
+    
+    if ($rs) {
+        $user = mysqli_fetch_assoc ( $rs );
+        $passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
+        //if ($user &&  password_verify ( $password, $user ['password'] ) != true) {
+        if ($user &&  strcmp( $password, $user ['password'] ) != 0) {
+            $user = "";
+        }
+        mysqli_free_result ( $rs );
+    }
+    $conn->close();
+    return $user;
+}
+
+function SRegister ($data, $dest) {
 
     $id       = $data['id'];
     $name     = $data['name'];
@@ -115,10 +134,14 @@ function SRegister ($data) {
     $mobile   = $data['mobile'];
     $addr     = $data['addr'];
     $zipcode  = $data['zipcode'];
-    $idrolebm = $data['idrolebm'];
+
     $role = 0;
-    if ( $idrolebm != null && $idrolebm == "on") 
+    if ( isset($_POST['idrolebm']) )   // 지사장
         $role = 1;
+    if ( isset($_POST['idrolet']) )     // 원장, 선생님
+        $role = 2;
+    if ( isset($_POST['idroleother']) )     // 일반 유료 회원
+        $role = 3;
            
     global $conn;
     
@@ -141,31 +164,16 @@ function SRegister ($data) {
     header('Content-Type: application/json');
     if ($res=== TRUE) {
         $result = true;
-        header('location: ../login/login.php');
-    } else {
-        $result = json_encode(  array( "Error: " => $conn->error ) );
+        //header('location: ../login/login.php');
+        echo json_encode(array('success' => '../login/login.php' )); 
+    }
+     else {
+        $result = json_encode(  array( "falure: " => $conn->error ) );
         echo $result;
     }
 }
 
-function CheckUser($login, $password) {
-    global $conn;
-    $user = "";
-    $login = mysqli_escape_string ( $conn, $login );
-    $rs = mysqli_query ( $conn, "select * from eplat_user where id='{$login}'" );
-    
-    if ($rs) {
-        $user = mysqli_fetch_assoc ( $rs );
-        $passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
-        //if ($user &&  password_verify ( $password, $user ['password'] ) != true) {
-        if ($user &&  strcmp( $password, $user ['password'] ) != 0) {
-            $user = "";
-        }
-        mysqli_free_result ( $rs );
-    }
-    $conn->close();
-    return $user;
-}
+
 
 function SShowOrderList( $data ) {
 
@@ -295,6 +303,34 @@ function SShowMgr ($data) {
     }
 }
 
+function SDeleteChild ($data) {
+    session_start();
+
+    $id  = $data["id"];
+
+    global $conn;
+    $res="";
+
+    try {
+
+        $sql = "DELETE FROM eplat_user WHERE id = '".$id."'";
+        
+        if ($conn->query($sql) === TRUE) {
+            $res = true;
+        } else {
+            $res =  json_encode(  array("Error deleting record: " . $conn->error) );
+        }
+        
+        $conn->close();
+    }
+    catch (Exception $e) {
+        echo json_encode( $e->getMessage());
+    }
+
+
+    echo json_encode($res);
+}
+
 function SDeleteMgr ($data) {
     session_start();
 
@@ -375,12 +411,12 @@ function SShowConfirm($data) {
 
     global $conn;
 
-    $sqlString = "SELECT *  FROM eplat_user where role = 1"; 
+    $sqlString = "SELECT *  FROM eplat_user where role = 1 or role  = 2"; 
 
     if ( $num == "2")
-        $sqlString = "SELECT *  FROM eplat_user where role = 1 and confirm = 0"; 
+        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2) and confirm = 0"; 
     else if ( $num == "1")
-        $sqlString = "SELECT *  FROM eplat_user where role = 1 and confirm = 1"; 
+        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2)  and confirm = 1"; 
 
         
     $rs = mysqli_query($conn,$sqlString);
@@ -399,7 +435,8 @@ function SShowConfirm($data) {
             'addr'      => $row['addr'],								
             'zipcode'   => $row['zipcode'],								
             'confirm'   => $row['confirm'],								
-            'rdate'     => $row['rdate'],								
+            'rdate'     => $row['rdate'],
+            'role'	    => $row['role'],							
         ));
     }
     $conn->close();
@@ -456,11 +493,16 @@ function SShowStudentList ($data) {
     session_start();
     
     global $conn;
-    $pid = $data['id'];
-    $classnm = $data['classnm'];
+    $tid = $data['id'];
+    $step = $data['step'];
 
-    $sqlString = "SELECT *  FROM eplat_user where pid = '{$pid}' and classnm = '{$classnm}'"; 
+    if ($step == '전체')
+        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' "; 
+    else
+        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'"; 
+
     $rows = array();
+
     $i = 0;
         
     try {
@@ -469,13 +511,13 @@ function SShowStudentList ($data) {
         
         while($row = mysqli_fetch_array($rs)){
             array_push($rows,
-            array(  'Id'      => $row['id'],
-                    'Name'  => $row['name'] ,
-                    'Passwd'   => $row['password'],								
-                    // 'addr'    => $row['addr'],								
+            array(  'id'      => $row['id'],
+                    'name'  => $row['name'] ,
+                    'passwd'   => $row['password'],								
+                    'step'    => $row['step'],								
                     // 'mobile'  => $row['mobile'],								
                     'rdate'   => $row['rdate'],								
-                    // 'confirm' => $row['confirm'],															
+                    'classnm' => $row['classnm'],																												
             ));
         }
         $conn->close();
@@ -492,11 +534,11 @@ function SShowStudentList ($data) {
 function SShowClassList ($data) {
     session_start();
 
-    $pid = $data['id'];
+    $tid = $data['id'];
 
     global $conn;
 
-    $sqlString = "select unique(classnm) classnm from eplat_user where pid = '{$pid}'"; 
+    $sqlString = "select unique(classnm) classnm from eplat_user where tid = '{$tid}'"; 
 
     $rows = array();
 
@@ -508,7 +550,7 @@ function SShowClassList ($data) {
         
         while($row = mysqli_fetch_array($rs)){
             array_push($rows,
-                array(  'classnm'      => $row['classnm'],													
+                array(  'classnm'    => $row['classnm'],													
             ));
         }
         $conn->close();
@@ -543,11 +585,13 @@ function SinsertStudent($data) {
             $id = $row['id'];
             $name = $row['name'];
             $password = $row['passwd'];
-            $pid = $row['tid'];
+            $tid = $row['tid'];
             $classnm = $row['classnm'];
-    
-            $sql = "insert into eplat_user (id, name, password, role, pid, classnm, rdate) 
-                    values ('{$id}', '{$name}','{$password}', 0 , '{$pid}', '{$classnm}', now())";
+            $step = $row['step'];
+            $role = 0;
+            $confirm = 1;
+            $sql = "insert into eplat_user (id, name, password, role, tid, classnm, rdate, step, confirm) 
+                    values ('{$id}', '{$name}','{$password}', {$role} , '{$tid}', '{$classnm}', now(), '{$step}' , {$confirm} )";
     
             if ($conn->query($sql) === TRUE) {
                 $result =  "New record created successfully";

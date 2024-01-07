@@ -38,9 +38,9 @@
                             session_start();
                             if( isset($_SESSION['user']))
                             {
-                                echo "<h5 align='center'>Welcome eplat study home</h5>";
-                                echo "<h5 align='center'>".$_SESSION["user"]."</h5>";  
-                                echo "<p align='center'><a href='logout.php'>Logout</a></p>";  
+                                // echo "<h5 align='center'>Welcome eplat study home</h5>";
+                                // echo "<h5 align='center'>".$_SESSION["user"]."</h5>";  
+                                // echo "<p align='center'><a href='logout.php'>Logout</a></p>";  
                             }
                             else
                             {
@@ -105,13 +105,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="../common.js"> </script>
     <script>
+        var param="";
+    $(document).ready( function() {
+        const searchParams = new URLSearchParams(location.search);
+        param = searchParams.get('dest');
+    });
     $("#signin").click(function() {
         const logform = document.getElementById("login-form");
         const formData = new FormData(logform);
 
         dispList = (resp) => {
-            CallToast('Login successfully!!', "success")
-            window.location.href = resp;
+            if ('success' in resp) {
+                CallToast('Login successfully!!', "success")
+                window.location.href = resp['success'];
+            }
+            else if ('falure' in resp) {
+                CallToast('Password emplty or mismatch !!', "error")
+            }
         }
         dispErr = (xhr) => {
             CallToast('Login falure!!', "error")
@@ -119,7 +129,7 @@
 
         formData.append('functionName', 'Slogon');
         //CallAjax1("SMethods.php?dest=classroom", "POST", formData, dispList, dispErr);
-        CallAjax1("SMethods.php?dest=index.php", "POST", formData, dispList, dispErr);
+        CallAjax1("SMethods.php?dest="+ param, "POST", formData, dispList, dispErr);
 
     })
     </script>

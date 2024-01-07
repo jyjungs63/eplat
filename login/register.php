@@ -27,14 +27,15 @@
                     <div class="signup-form">
                         <p><span style="color: blue">1)지사아이디     2)유치원아이디  3)유료  일반학생  아이디는 </span> 여기에서  회원  가입을  하며, 관리자  승인후에  사용이  가능합니다</p></br>
                         <h4 class="form-title">회원가입</h4>
-                        <form method="POST" class="register-form" id="register-form" action="../Server/Sregister.php">
+                        <form method="POST" class="register-form" id="register-form" >
+                        <!-- <form method="POST" class="register-form" id="register-form" action="../Server/Sregister.php"> -->
                             <div class="form-group">
                                 <input type="checkbox" name="idrolebm" id="idrolebm" class="agree-term" />
                                 <label for="idrolebm" class="label-agree-term"><span><span></span></span>지사회원</label> &nbsp;&nbsp;&nbsp;
                                 <input type="checkbox" name="idrolet" id="idrolet" class="agree-term" />
                                 <label for="idrolet" class="label-agree-term"><span><span></span></span>원장 및 선생님 </label>&nbsp;&nbsp;
-                                <input type="checkbox" name="idrolet" id="idroleother" class="agree-term" checked/>
-                                <label for="idrolet" class="label-agree-term"><span><span></span></span>일반학생회원 </label>
+                                <input type="checkbox" name="idroleother" id="idroleother" class="agree-term" />
+                                <label for="idroleother" class="label-agree-term"><span><span></span></span>일반학생회원 </label>
                             </div>
                             <div class="form-group">
                                 <label for="id"><i class="zmdi zmdi-email"></i></label>
@@ -52,7 +53,7 @@
                                 <div class="row d-flex">
                                     <div style="margin-top: -5px">
                                         <button type="button" class="btn btn-sm btn-primary" style="border-radius: 30%;"
-                                            onclick="execDaumPostcode()" data-bs-toggle="tooltip" data-bs-placement="top" title="우편번호 찾기">검색</button>
+                                            onclick="execDaumPostcode('zipcode','addr')" data-bs-toggle="tooltip" data-bs-placement="top" title="우편번호 찾기">검색</button>
                                     </div>
                                     <div class="d-inline" style="margin-top: -5px;">
                                         <input type="text" name="zipcode" id="zipcode" placeholder="우편번호" />
@@ -60,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="addr"><i class="zmdi zmdi-home" onclick="execDaumPostcode()"></i></label>
+                                <label for="addr"><i class="zmdi zmdi-home" ></i></label>
                                 <input type="text" name="addr" id="addr" placeholder="주소" />
                             </div>
                             <div class="form-group">
@@ -93,34 +94,37 @@
     </div>
 
     <!-- JS -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <?php
+    include '../includescr.php';
+    ?>
     <script src="../common.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
+
     <script>
-    function execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+    document.getElementById('register-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
 
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                let addr = ''; // 주소 변수
+      // Create FormData object and append form data to it
 
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                $("#zipcode").val(data.zonecode);
-                $("#addr").val(addr);
-                $("#address").focus();
+      const logform = document.getElementById("register-form");
+      var formData = new FormData(logform);
+      dispList = (resp) => {
+        if ('success' in resp) {
+                CallToast('Login successfully!!', "success")
+                window.location.href = resp['success'];
             }
-        }).open();
-    }
+            else if ('falure' in resp) {
+                CallToast('Password emplty or mismatch !!', "error")
+            }
+        }
+        dispErr = (xhr) => {
+            
+            CallToast('find password falure!', "error")
+        }
+
+        formData.append('functionName', 'SRegister');
+        CallAjax1("SMethods.php", "POST", formData, dispList, dispErr);
+    });
     </script>
 </body>
 

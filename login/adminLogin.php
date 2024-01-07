@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
-
+    <link href="../common.css" rel="stylesheet">
 </head>
 
 <body>
@@ -232,6 +232,7 @@
                 var jarr = {
                     "id": el['id'],
                     "name": el['name'],
+                    "role": el['role'] == 1 ? "지사장" : "선생님",
                     "mobile": el['mobile'],
                     "addr": el['addr'],
                     "zipcode": el['zipcode'],
