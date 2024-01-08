@@ -840,6 +840,33 @@ function SShowBoardList($data) {
 
 }
 
+function SDeleteBoardlist($data)
+{
+    session_start();
+
+    $id  = $data["id"];
+
+    global $conn;
+    $res="";
+
+    try {
+
+        $sql = "DELETE FROM repository WHERE id = '".$id."'";
+        
+        if ($conn->query($sql) === TRUE) {
+            $res = true;
+        } else {
+            $res =  json_encode(  array("Error deleting record: " . $conn->error) );
+        }
+        
+        $conn->close();
+    }
+    catch (Exception $e) {
+        echo json_encode( $e->getMessage());
+    }
+
+    echo json_encode($res);
+}
 function generateRandomString($length = 15) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomString = '';
