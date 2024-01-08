@@ -136,11 +136,11 @@ function SRegister ($data, $dest) {
     $zipcode  = $data['zipcode'];
 
     $role = 0;
-    if ( isset($_POST['idrolebm']) )   // 지사장
+    if ( isset($data['idrolebm']) )   // 지사장
         $role = 1;
-    if ( isset($_POST['idrolet']) )     // 원장, 선생님
+    if ( isset($data['idrolet']) )     // 원장, 선생님
         $role = 2;
-    if ( isset($_POST['idroleother']) )     // 일반 유료 회원
+    if ( isset($data['idroleother']) )     // 일반 유료 회원
         $role = 3;
            
     global $conn;
@@ -259,6 +259,52 @@ function SPorDetailList ($data) {
     echo json_encode($rows);
       
 }
+function SPorDetailListRange ($data) {
+    session_start();
+
+    global $conn;
+    
+    $start  = $data['start'];
+    $end    = $data['end'];
+
+    $rows = array();
+    $i = 0;
+    $res = "";
+    
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    
+    $stmt = "select * from eplat_porlist where rdate between '{$start}' and '{$end}' ";
+    
+    try {
+    
+        $rs = mysqli_query($conn, $stmt);
+        
+        while ( $row = mysqli_fetch_array($rs))
+        {
+            array_push ($rows, 
+            array (
+                'id'   => $row['id'],
+                'json' => $row['por_list'],
+                'order' => $row['order'],
+                'rdate' => $row['rdate'],
+                'addr'  => $row['addr'],
+                'mobile'  => $row['mobile'],
+                'confirm'  => $row['confirm']
+            ));
+        }
+        
+        $conn->close();
+    }
+    catch (Exception $e) {
+        echo json_encode ( $e->getMessage());
+    }
+    
+    header('Content-Type: application/json');
+    echo json_encode($rows);
+      
+}
 
 function SShowMgr ($data) {
     session_start();
@@ -270,8 +316,12 @@ function SShowMgr ($data) {
 
     try {
 
-
-        $sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '".$id."'"; 
+        if ( $role == "va")
+            $sqlString = "SELECT * FROM eplat_user where mid = '".$id."'"; 
+        else if (  $role == "v4")
+            $sqlString = "SELECT * FROM eplat_user where role = 1 and mid = '".$id."'"; 
+        else 
+            $sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '".$id."'"; 
             
         $rs = mysqli_query($conn,$sqlString);
         $rows = array();
@@ -282,6 +332,7 @@ function SShowMgr ($data) {
             array_push($rows,
                     array(  'id'        => $row['id'],
                             'name'      => $row['name'] ,
+                            'owner'     => $row['owner'] ,
                             'password'  => $row['password'],								
                             'mobile'    => $row['mobile'],								
                             'addr'      => $row['addr'],								
@@ -370,20 +421,21 @@ function SRegistermgr ($data) {
     
     $id       = $data['items']['id'];
     $name     = $data['items']['name'];
+    $owner     = $data['items']['owner'];
     $password = $data['items']['password'];
     $mobile   = $data['items']['mobile'];
     $addr     = $data['items']['addr'];
     $zipcode  = $data['items']['zipcode'];
-    $idrolebm = $data['items']['idrolebm'];
+    // $idrolebm = $data['items']['idrolebm'];
     $mid      = $data['items']['mid'];
-    $role     = 2;
+    $role     = $data['items']['role'];
     $error="";
     
     try {
         global $conn;
     
-        $sqlstring = "insert into eplat_user (id, name, password, mobile, addr, zipcode, role, mid) 
-                    values ( '{$id}', '{$name}','{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role, '{$mid}' )";
+        $sqlstring = "insert into eplat_user (id, name,owner, password, mobile, addr, zipcode, role, mid, confirm) 
+                    values ( '{$id}', '{$name}','{$owner}', '{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role, '{$mid}', 1 )";
     
         $res = mysqli_query ( $conn, $sqlstring);
     
@@ -394,14 +446,13 @@ function SRegistermgr ($data) {
         $error = $e->getMessage();
     }
     
-    //header('Content-Type: application/json');
+    header('Content-Type: application/json');
     if ($res === TRUE) {
-        $result = json_encode(  array( "success: " => " !!" ) );
+        echo json_encode(  array( "success" => $res) );
 
     } else {
-        $result = json_encode(  array( "Error: " => $error ) );
+        echo json_encode(  array( "Error" => $error ) );
     }
-    echo  $result ;
 }
 
 function SShowConfirm($data) {
@@ -614,7 +665,11 @@ function SUploadBoardPDF($data) {
 
 	$id = $data['id'];
 	$porlist = $data['postlist'];
-	$porid = $data['porid'];
+	$porid  = $data['porid'];
+	$addr   = $data['addr'];
+	$mobile = $data['mobile'];
+	$order  = $data['order'];
+	$zip    = $data['zip'];
 
 	global $conn;
 	global $location;
@@ -655,7 +710,8 @@ function SUploadBoardPDF($data) {
 	
 	try {
 
-		$sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW())";
+		$sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate, order, addr, mobile )
+                       values ( '{$id}', '{$porid}',  '{$porlist}',  NOW() , '{$order}', '{$addr}', '{$mobile}' )";
 		$res1 = mysqli_query ( $conn,  $sqlstring);
 		
 		if ($res=== TRUE && $res1 == TRUE) {

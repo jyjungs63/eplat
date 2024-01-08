@@ -71,7 +71,7 @@ table = new Tabulator("#idTable", {
         {
             title: "우편번호",
             field: "zipcode",
-            width: "10%",
+            width: "7%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -96,7 +96,7 @@ table = new Tabulator("#idTable", {
         {
             title: "등록일",
             field: "rdate",
-            width: "5%",
+            width: "8%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",

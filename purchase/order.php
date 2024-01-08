@@ -3,6 +3,7 @@
 <?php
 include "../header.php";
 ?>
+
 <head>
     <!-- <?php
         include '../include.php';
@@ -13,6 +14,7 @@ include "../header.php";
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="../common.css" rel="stylesheet">
     <style>
 
@@ -99,9 +101,9 @@ include "../header.php";
                                             role="button" data-toggle="tooltip" title="Add to Cart "
                                             aria-disabled="true"><i
                                                 class="fa-solid fa-cart-shopping"></i></a>&nbsp;&nbsp;
-                                        <a id="anchorRead" href="javascript:selectAll()" class="btn btn-success"
+                                        <!-- <a id="anchorRead" href="javascript:selectAll()" class="btn btn-success"
                                             role="button" data-toggle="tooltip" title="Select All"
-                                            aria-disabled="true"><i class="fa-solid fa-save"></i></a>
+                                            aria-disabled="true"><i class="fa-solid fa-save"></i></a> -->
                                     </div>
 
                                     <div id="idTable">
@@ -125,29 +127,33 @@ include "../header.php";
                                         <select class="form-select form-control-sm" id="idPorList"
                                             data-placeholder="Choose Items" style="width: 120px">
                                         </select>
+                                        <input class="form-control form-control-sm" id="reportrange"
+                                            style="width: 85px">
+                                        <i class="fa fa-calendar" style="margin-top: 7px; margin-left: 2px"></i>&nbsp;
+                                        </input>
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idID2" type="text"
-                                            placeholder="ID">
+                                            placeholder="아이디">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idName2" type="text"
-                                            placeholder="Name">
+                                            placeholder="이름">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idOwner2" type="text"
                                             placeholder="Owner">&nbsp;
                                         <input class="form-control form-control-sm" id="idPasswd2" type="text"
-                                            placeholder="Password">
+                                            placeholder="비밀번호">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idMobile2" type="text"
-                                            placeholder="Mobile">
+                                            placeholder="전화번호" style="width: 70px;">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idAddr2" type="text"
-                                            placeholder="Address" style="width: 150px;">
+                                            placeholder="주소" style="width: 120px;">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idFinish2" type="text"
-                                            placeholder="구매완료" style="width: 100px;">
+                                            placeholder="구매완료" style="width: 50px;">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idRdate2" type="text"
-                                            placeholder="구매일" style="width: -5px;">
+                                            placeholder="구매일" style="width: 5px;">
                                         &nbsp;
                                         <button class="btn btn-outline-primary btn-sm" type="button"
                                             onclick="execDaumPostcode('idZip','idAddr2' )">
@@ -187,24 +193,24 @@ include "../header.php";
                                         <option val="v5">주소지</option>
                                     </select>
                                     &nbsp;
-                                    <input class="form-control form-control-sm" id="idID" type="text" placeholder="ID">
+                                    <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디">
                                     &nbsp;
                                     <input class="form-control form-control-sm" id="idName" type="text"
-                                        placeholder="Name">
+                                        placeholder="이름">
                                     &nbsp;
                                     <input class="form-control form-control-sm" id="idOwner" type="text"
                                         placeholder="Owner">&nbsp;
                                     <input class="form-control form-control-sm" id="idPasswd" type="text"
-                                        placeholder="Password">
+                                        placeholder="비밀번호">
                                     &nbsp;
                                     <input class="form-control form-control-sm" id="idMobile" type="text"
-                                        placeholder="Mobile">
+                                        placeholder="전화">
                                     &nbsp;
-                                    <input class="form-control form-control-sm" id="idAddr" type="text"
-                                        placeholder="Address" style="width: 150px;">
+                                    <input class="form-control form-control-sm" id="idAddr" type="text" placeholder="주소"
+                                        style="width: 250px;">
                                     &nbsp;
                                     <input class="form-control form-control-sm" id="idZip" type="text"
-                                        placeholder="Zip Code" style="width: -5px;">
+                                        placeholder="우편번호" style="width: 20px;">
                                     &nbsp;
                                     <button class="btn btn-outline-primary btn-sm" type="button"
                                         onclick="execDaumPostcode( 'idAddr','idZip')">
@@ -265,9 +271,9 @@ include "../header.php";
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<!-- <?php
- include "../includescr.php";
- ?> -->
+    <!-- <?php
+    include "../includescr.php";
+    ?> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script>
@@ -277,136 +283,35 @@ include "../header.php";
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4/dist/fontkit.umd.min.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
-    <!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.11/chance.min.js"></script>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+
     <script src="kgardenlist_2.js"></script>
     <script src="../common.js"></script>
+    <script src="order.js"></script>
 
     <script>
-        const loc = document.querySelector('meta[name="location"]').getAttribute('content');
-        const user = document.querySelector('meta[name="user"]').getAttribute('content');
-        const role = document.querySelector('meta[name="role"]').getAttribute('content');
-        const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
-        const name = document.querySelector('meta[name="name"]').getAttribute('content');
+    const loc = document.querySelector('meta[name="location"]').getAttribute('content');
+    const user = document.querySelector('meta[name="user"]').getAttribute('content');
+    const role = document.querySelector('meta[name="role"]').getAttribute('content');
+    const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
+    const name = document.querySelector('meta[name="name"]').getAttribute('content');
 
-        if ( role != '1')
-        {
-            CallToast ("지사 관리 권한으로 로긴 하세요", "error");
-            window.location.href = "../login/login.php";
-        }
-        document.getElementById("idOrdertext").innerHTML = (name + "지사장/구매");
+    if (role != '1') {
+        CallToast("지사 관리 권한으로 로긴 하세요", "error");
+        window.location.href = "../login/login.php";
+    }
+    document.getElementById("idOrdertext").innerHTML = (name + "지사장/구매");
+
     const {
         PDFDocument,
         rgb
     } = PDFLib;
-    // Create a new PDFDocument
-
-    $(document).ready(function(e) {
-        $("#cardDest").hide();
-        $("#cardPDF").hide();
-    });
-
-    var deleteIcon = function(cell, formatterParams) { //plain text value
-        return "<i class='fa fa-trash'></i>";
-    };
-
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get the modal element by its ID
-        porTable = new Tabulator("#porTableDiv", {
-            height: "490px",
-            layout: "fitColumns",
-            rowHeight: 40, //set rows to 40px height
-            selectable: true, //make rows selectable
-            columns: [
-
-                // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-                {
-                    title: "Grade",
-                    field: "grade",
-                    width: 150,
-                    editor: "list",
-                    editor: false,
-                    editorParams: {
-                        autocomplete: "true",
-                        allowEmpty: true,
-                        listOnEmpty: true,
-                        valuesLookup: true
-                    }
-                },
-                {
-                    title: "품명",
-                    field: "title",
-                    sorter: "number",
-                    width: 350,
-                    editor: false,
-                    bottomCalcParams: {
-                        precision: 0
-                    }
-                },
-                {
-                    title: "단가",
-                    field: "price",
-                    sorter: "number",
-                    width: 150,
-                    editor: false,
-                    hozAlign: "right",
-                    formatterParams: {
-                        thousand: ",",
-                        precision: 0,
-                    },
-                },
-                {
-                    title: "Count",
-                    field: "count",
-                    editor: "input",
-                    width: 150,
-                    editor: false,
-                    hozAlign: "right",
-                    validator: "min:0",
-                    editorParams: {
-                        min: 0,
-                        max: 1000, // Adjust min and max values as needed
-                        step: 2,
-                        elementAttributes: {
-                            type: "number"
-                        }
-                    },
-                    cellEdited: function(cell) {
-                        calsum(cell);
-                    },
-                    bottomCalc: "sum"
-                },
-                {
-                    title: "Total",
-                    field: "total",
-                    editor: "input",
-                    formatter: "money",
-                    hozAlign: "right",
-                    editor: false,
-                    formatterParams: {
-                        thousand: ",",
-                        precision: 0,
-                    },
-                    editorParams: {
-                        elementAttributes: {
-                            type: "number"
-                        }
-                    },
-                    bottomCalc: "sum",
-                    bottomCalcFormatterParams: {
-                        formatter: "money",
-                        precision: 0,
-                        thousand: ","
-                    }
-                },
-            ],
-        });
-
-        orderList(null);
-
-    });
 
     orderList = () => {
         items = [];
@@ -456,315 +361,6 @@ include "../header.php";
         };
     }
 
-    listPor = (por_id) => {
-
-        var options = {
-            functionName: 'SPorDetailList',
-            otherData: {
-                id: por_id
-            }
-        };
-        dispList = (res) => {
-            var js = res[0]['json']
-            porTable.setData(JSON.parse(js));
-
-            $("#idID2").val(res[0]['id']);
-            $("#idName2").val(res[0]['order']);
-            $("#idAddr2").val(res[0]['addr']);
-            $("#idRdate2").val(res[0]['rdate']);
-            $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
-        }
-        dispErr = (error) => {
-            CallToast('SPorDetailList falure!', "error")
-        }
-
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-
-    }
-
-    document.getElementById("idPorList").addEventListener("change", function() {
-        // 선택된 옵션 가져오기
-        var selectedOption = this.options[this.selectedIndex];
-
-        // 선택된 옵션의 값(value) 가져오기
-        var selectedValue = selectedOption.value;
-
-        // 선택된 옵션의 텍스트 가져오기
-        var selectedText = selectedOption.text;
-
-        listPor(selectedText);
-    });
-
-    var table = new Tabulator("#idTable", {
-        height: "490px",
-        data: listprice2,
-        layout: "fitColumns",
-        rowHeight: 40, //set rows to 40px height
-        selectable: true, //make rows selectable
-        columns: [
-
-            // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-            {
-                title: "Grade",
-                field: "grade",
-                width: 150,
-                editor: "list",
-                editor: false,
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-            {
-                title: "품명",
-                field: "title",
-                sorter: "number",
-                width: 350,
-                editor: false,
-                bottomCalcParams: {
-                    precision: 0
-                }
-            },
-            {
-                title: "단가",
-                field: "price",
-                sorter: "number",
-                width: 150,
-                editor: false,
-                hozAlign: "right",
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-            },
-            {
-                title: "Count",
-                field: "count",
-                editor: "input",
-                width: 150,
-                hozAlign: "right",
-                validator: "min:0",
-                editorParams: {
-                    min: 0,
-                    max: 1000, // Adjust min and max values as needed
-                    step: 2,
-                    elementAttributes: {
-                        type: "number"
-                    }
-                },
-                cellEdited: function(cell) {
-                    calsum(cell);
-                },
-                bottomCalc: "sum"
-            },
-            {
-                title: "Total",
-                field: "total",
-                editor: "input",
-                formatter: "money",
-                hozAlign: "right",
-                editor: false,
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-                editorParams: {
-                    elementAttributes: {
-                        type: "number"
-                    }
-                },
-                bottomCalc: "sum",
-                bottomCalcFormatterParams: {
-                    formatter: "money",
-                    precision: 0,
-                    thousand: ","
-                }
-            },
-            {
-                formatter: deleteIcon,
-                width: 40,
-                hozAlign: "center",
-                cellClick: function(e, cell) {
-                    deleteRow(cell.getRow())
-                }
-            },
-        ],
-    });
-
-    var table1 = new Tabulator("#idTableConfirm", {
-        height: "300px",
-        layout: "fitColumns",
-        rowHeight: 40, //set rows to 40px height
-        selectable: true, //make rows selectable
-        columns: [
-            // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-            {
-                title: "Grade",
-                field: "grade",
-                width: 150,
-                editor: "list",
-                editor: false,
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-            {
-                title: "품명",
-                field: "title",
-                sorter: "number",
-                width: 350,
-                editor: false,
-                bottomCalcParams: {
-                    precision: 0
-                }
-            },
-            {
-                title: "단가",
-                field: "price",
-                sorter: "number",
-                width: 150,
-                editor: false,
-                hozAlign: "right",
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-
-            },
-            {
-                title: "수량",
-                field: "count",
-                editor: "input",
-                width: 150,
-                hozAlign: "right",
-                validator: "min:0",
-                editorParams: {
-                    min: 0,
-                    max: 150, // Adjust min and max values as needed
-                    step: 2,
-                    elementAttributes: {
-                        type: "number"
-                    }
-                },
-                cellEdited: function(cell) {
-                    calsum(cell);
-                },
-                bottomCalc: "sum"
-            },
-            {
-                title: "합계",
-                field: "total",
-                editor: "input",
-                formatter: "money",
-                hozAlign: "right",
-                editor: false,
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-                editorParams: {
-                    elementAttributes: {
-                        type: "number"
-                    }
-                },
-                bottomCalc: "sum",
-                bottomCalcFormatterParams: {
-                    formatter: "money",
-                    precision: 0,
-                    thousand: ","
-                }
-            },
-            {
-                formatter: deleteIcon,
-                width: 40,
-                hozAlign: "center",
-                cellClick: function(e, cell) {
-                    deleteRow(cell.getRow())
-                }
-            },
-        ],
-    });
-
-    var table2 = new Tabulator("#idTableDest", {
-        height: "490px",
-        data: kgardenlist,
-        layout: "fitColumns",
-        rowHeight: 40, //set rows to 40px height
-        selectable: true, //make rows selectable
-        columns: [{
-                title: "No",
-                field: "No",
-                width: 150,
-                editor: "input",
-                editor: false,
-                cellEdited: function(cell) {
-                    recal(cell);
-                },
-            },
-            {
-                title: "name",
-                field: "name",
-                width: 250,
-                editor: "list",
-                editor: false,
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-            {
-                title: "owner",
-                field: "owner",
-                width: 250,
-                editor: "list",
-                editor: false,
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-            {
-                title: "address",
-                field: "addr",
-                sorter: "number",
-                width: 550,
-                editor: false,
-                bottomCalcParams: {
-                    precision: 0
-                }
-            },
-            {
-                title: "mobile",
-                field: "mobile",
-                sorter: "number",
-                width: 150,
-                editor: false,
-                bottomCalcParams: {
-                    precision: 0
-                }
-            },
-            // { title: "password", field: "password", sorter: "number", width: 250, editor: false, bottomCalcParams: { precision: 0 } },
-            {
-                title: "rdate",
-                field: "rdate",
-                sorter: "number",
-                width: 150,
-                editor: false,
-                bottomCalcParams: {
-                    precision: 0
-                }
-            },
-        ],
-    });
 
     table2.on("rowClick", function(e, row) {
         //e - the click event object
@@ -830,108 +426,6 @@ include "../header.php";
 
     }
 
-    document.getElementById("idDest").addEventListener("change", function() {
-        // 선택된 옵션 가져오기
-        var selectedOption = this.options[this.selectedIndex];
-
-        // 선택된 옵션의 값(value) 가져오기
-        var selectedValue = selectedOption.value;
-
-        // 선택된 옵션의 텍스트 가져오기
-        var selectedText = selectedOption.text;
-
-        // 결과 출력
-        console.log("Selected Value:", selectedValue);
-        console.log("Selected Text:", selectedText);
-
-
-        var sql;
-        if ("주소지" == selectedText) {
-            var items = [];
-            var data = {
-                role: 2,
-                id: "manager"
-            };
-
-            dispList = (resp) => {
-                var i = 1;
-                var items = [];
-                resp.forEach(el => {
-                    var jarr = {
-                        "No": i,
-                        "name": el['name'],
-                        "mobile": el['mobile'],
-                        "addr": el['addr'],
-                        "zipcode": el['zipcode'],
-                        "password": el['password'],
-                        "rdate": el['rdate'],
-                    }
-                    items.push(jarr);
-                    i++;
-                });
-                table2.clearData();
-                table2.setData(items);
-                CallToast("SShowMgr success!!", "success");
-            }
-            dispErr = () => {
-                //alert(error);
-                CallToast("SShowMgr Error", "error");
-            }
-
-            var options = {
-                functionName: 'SShowMgr',
-                otherData: {
-                    role: 2,
-                    id: "manager"
-                }
-            };
-
-            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-
-        } else {
-            table2.clearData();
-            table2.setData(kgardenlist);
-        }
-
-    });
-
-    document.getElementById("idGrade").addEventListener("change", function() {
-        // 선택된 옵션 가져오기
-        var selectedOption = this.options[this.selectedIndex];
-
-        // 선택된 옵션의 값(value) 가져오기
-        var selectedValue = selectedOption.value;
-
-        // 선택된 옵션의 텍스트 가져오기
-        var selectedText = selectedOption.text;
-
-        // 결과 출력
-        console.log("Selected Value:", selectedValue);
-        console.log("Selected Text:", selectedText);
-
-        var items = [];
-        var sql;
-        if ("전체" == selectedText)
-            sql = 'select uid, grade,title,price from ?  order by uid '
-        else
-            sql = 'select uid, grade,title,price from ? where grade="' + selectedText +
-            '" order by uid asc'
-        var res = alasql(sql, [listprice2])
-
-        res.forEach(el => {
-            var jarr = {
-                "uid": el['uid'],
-                "grade": el['grade'],
-                "title": el['title'],
-                "price": el['price']
-            }
-            items.push(jarr);
-        });
-        table.clearData()
-        table.setData(items);
-        console.log(items);
-    });
-
     async function makePurchasePDFList() {
 
         const pdfDoc = await PDFDocument.create()
@@ -952,7 +446,18 @@ include "../header.php";
 
         //
         var buyArr = [];
-        var item = table1.getSelectedData();
+        var item = table1.getData();
+        //var item = table1.getSelectedData();
+
+        var name = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)")
+            .html();
+        var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
+            .html();
+        var total = $(
+                "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
+            .html();
+        var rest = cvtCurrency(parseFloat(total));
+
         item.forEach(el => {
             if (Number(el['count']) > 0) {
                 var jarr = {
@@ -966,7 +471,7 @@ include "../header.php";
                 buyArr.push(jarr)
             }
         })
-        //
+
         var xx = (510 / 5);
         var lineStart = height - 4 * fontSize; //  y axis start point of drawing
         var textStart = height - 4 * fontSize + 5; //  y axis start point of drawing
@@ -1034,16 +539,7 @@ include "../header.php";
                 tick = 1.0;
                 drawLines(page, s, e, rgb(0, 0, 0), tick);
 
-                var name = $(
-                    "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)"
-                ).html();
-                var cnt = $(
-                    "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)"
-                ).html()
-                var total = $(
-                    "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)"
-                ).html()
-                var rest = cvtCurrency(parseFloat(total));
+
                 drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize,
                     rgb(0.0, 0.0, 1.0),
                     "총금액");
@@ -1129,7 +625,7 @@ include "../header.php";
 
         var formData = new FormData();
         formData.append('pdfFile', new Blob([pdfBytes]), 'generated_pdf.pdf');
-        item = table1.getSelectedData();
+        item = table1.getData();
         var porList = []
         item.forEach(el => {
             var jarr = {
@@ -1142,7 +638,17 @@ include "../header.php";
             }
             porList.push(jarr);
         });
-        formData.append('id', 'manager');
+
+        porList.push({
+            "uid": "",
+            "grade": "총금액",
+            "title": "",
+            "price": "",
+            "count": cnt,
+            "total": total
+        });
+
+        formData.append('id', user);
         formData.append('order', chance.string({
             length: 8,
             casing: 'upper',
@@ -1205,14 +711,6 @@ include "../header.php";
 
     }
 
-    // function formatDate() {
-    //     const date = new Date(); // Get current date
-    //     const year = date.getFullYear();
-    //     const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding leading zero if needed
-    //     const day = String(date.getDate()).padStart(2, '0'); // Adding leading zero if needed
-
-    //     return `${year}-${month}-${day}`;
-    // }
 
     drawLines = (page, s, e, color, thick) => {
         page.drawLine({
