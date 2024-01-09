@@ -76,7 +76,7 @@
                             <div class="form-group">
                                 <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" checked />
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span>나는 회원가입을 위하여 약관 및 개인정보 취급방침에 동의 합니다. 
-                                <a href="assets/img/newhomepage_eplat.pdf" class="term-service">Terms of service</a></label>
+                                <a href="회원가입동의서.pdf" target="_blank" class="term-service">Terms of service</a></label>
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="등록" />
