@@ -12,5 +12,8 @@
 
 .tabulator .tabulator-header {
     background-color: var(--primary-color);
+}
 
+#table thead th {
+    background-color: var(--primary-color);
 }

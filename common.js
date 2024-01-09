@@ -89,7 +89,7 @@ CallToast = (message, stat ) => {
     if (stat == "success") {
         toastr.success(message, 'Success', {
             positionClass: 'toast-top-right',
-            timeout: 3000,
+            timeout: 2000,
             closeButton: true,
             progressBar: true
         });
@@ -98,7 +98,7 @@ CallToast = (message, stat ) => {
     {
         toastr.error(message, 'Error', {
             positionClass: 'toast-top-right',
-            timeout: 3000,
+            timeout: 2000,
             closeButton: true,
             progressBar: true
         });

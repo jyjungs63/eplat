@@ -844,14 +844,35 @@ function SDeleteBoardlist($data)
 {
     session_start();
 
-    $id  = $data["id"];
+    $num  = $data["num"][0];
 
     global $conn;
     $res="";
+    $rows = array();
+    $cont="";
 
     try {
+        $sql = "SELECT contents from repository WHERE num = ".$num."";
 
-        $sql = "DELETE FROM repository WHERE id = '".$id."'";
+        $rs = mysqli_query($conn,$sql);
+        
+        while($row = mysqli_fetch_array($rs)){
+            $cont =  $row['contents'];												
+        }
+        $jsobj = json_decode($cont, true);
+
+        if ( $jsobj !== null ) {
+            $arrlen = count( $jsobj);
+            for ( $i=0; $i < $arrlen ; $i++) {
+                if ( unlink('../board/uploads/'.$jsobj[$i]['fakename']) ) {
+                    $res = true;
+                } else {
+                    $res = false;
+                }         
+            }
+        }
+
+        $sql = "DELETE FROM repository WHERE num = '".$num."'";
         
         if ($conn->query($sql) === TRUE) {
             $res = true;
@@ -867,6 +888,7 @@ function SDeleteBoardlist($data)
 
     echo json_encode($res);
 }
+
 function generateRandomString($length = 15) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomString = '';
