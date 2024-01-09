@@ -762,7 +762,7 @@ function SUploadBoard ($data) {
             {
                 // move the file from the temporary directory to somewhere of your choosing
                 $RandomName = generateRandomString(15);
-                move_uploaded_file($fileTempName, "uploads/" . $RandomName . $fileName);
+                move_uploaded_file($fileTempName, "../board/uploads/" . $RandomName . $fileName);
                 //move_uploaded_file($fileTempName, "uploads/" . $fileName);
                 $tmp = $fileTempName;
             }
@@ -775,7 +775,7 @@ function SUploadBoard ($data) {
         $jsarr = json_encode ($rows);
         try {
     
-            $sqlstring = "insert into repository ( title, id, contents, desc, rdate ) values ( '$content', '$user',  '$jsarr', '$desc',  NOW())";
+            $sqlstring = "insert into repository ( title, id, contents, `desc`, rdate ) values ( '$content', '$user',  '$jsarr', '$desc',  NOW())";
             $res = mysqli_query ( $conn,  $sqlstring);
             
             if ($res=== TRUE) {

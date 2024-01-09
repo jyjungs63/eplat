@@ -12,7 +12,7 @@ include "../header.php";
     <?php
     include '../include.php';
     ?>
-
+    <link href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="../common.css">
     <script src="record.js"></script>
@@ -511,48 +511,50 @@ $(document).ready(function(e) {
             '</a>'
         ].join('')
     }
-
-    dispList2 = (resp) => {
-        $table = $('#table').bootstrapTable({
-            data: resp,
-            columns: [{
-                    align: 'center'
-                }, {
-                    align: 'center'
-                }, {
-                    align: 'center'
-                }, {
-                    align: 'center'
-                }, {
-                    field: 'linksColumn',
-                    title: '첨부파일',
-                    align: 'center',
-                    formatter: multipleLinksFormatter
-                },
-                {
-                    align: 'center'
-                }
-                // {
-                //     align: 'center',
-                //     formatter: operateFormatter
-                // }
-            ]
-        });
-    }
-
-    dispErr2 = (error) => {
-        CallToast('게시판 보기  !', "error")
-    }
-
-    var options = {
-        functionName: 'SShowBoardlist',
-        otherData: {
-            num: -1
+    DisplayBoard = () => {
+        dispList2 = (resp) => {
+            $table = $('#table').bootstrapTable({
+                data: resp,
+                columns: [{
+                        align: 'center'
+                    }, {
+                        align: 'center'
+                    }, {
+                        align: 'center'
+                    }, {
+                        align: 'center'
+                    }, {
+                        field: 'linksColumn',
+                        title: '첨부파일',
+                        align: 'center',
+                        formatter: multipleLinksFormatter
+                    },
+                    {
+                        align: 'center'
+                    }
+                    // {
+                    //     align: 'center',
+                    //     formatter: operateFormatter
+                    // }
+                ]
+            });
         }
-    };
 
-    CallAjax("SMethods.php", "POST", options, dispList2, dispErr2);
+        dispErr2 = (error) => {
+            CallToast('게시판 보기  !', "error")
+        }
 
+        var options = {
+            functionName: 'SShowBoardlist',
+            otherData: {
+                num: -1
+            }
+        };
+
+        CallAjax("SMethods.php", "POST", options, dispList2, dispErr2);
+    }
+
+    DisplayBoard();
     activeUpload = () => {
         if (user == "admin") {
             $("#cardList").hide();
@@ -670,11 +672,13 @@ $(document).ready(function(e) {
                 field: 'num',
                 values: ids
             })
-            CallToast('게시판 상세보기  !', "success")
+            //$table.bootstrapTable('refresh');
+            DisplayBoard();
+            CallToast('게시판 삭제  !', "success")
         }
 
         dispErr1 = (error) => {
-            CallToast('게시판 상세보기  !', "error")
+            CallToast('게시판 삭제  !', "error")
         }
 
         var options = {
