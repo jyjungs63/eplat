@@ -399,7 +399,7 @@ const loc = document.querySelector('meta[name="location"]').getAttribute('conten
 
 var $table = $('#table')
 
-const host = "https://www.eplat.co.kr/board/uploads/";
+var host = "https://www.eplat.co.kr/board/uploads/";
 if (loc == "localhost")
     host = "http://localhost:3000/board/uploads/";
 

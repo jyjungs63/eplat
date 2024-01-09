@@ -772,7 +772,7 @@ function SUploadBoard ($data) {
                 'size'     => $file['size'],
             ));		
         }
-        $jsarr = json_encode ($rows);
+        $jsarr = json_encode ($rows, JSON_UNESCAPED_UNICODE);
         try {
     
             $sqlstring = "insert into repository ( title, id, contents, `desc`, rdate ) values ( '$content', '$user',  '$jsarr', '$desc',  NOW())";
