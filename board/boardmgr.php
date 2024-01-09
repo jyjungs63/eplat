@@ -667,28 +667,31 @@ $(document).ready(function(e) {
 
     deleteBoardList = (ids) => {
 
-        dispList1 = (resp) => {
-            $table.bootstrapTable('remove', {
-                field: 'num',
-                values: ids
-            })
-            //$table.bootstrapTable('refresh');
-            DisplayBoard();
-            CallToast('게시판 삭제  !', "success")
-        }
+        if (user == 'admin') {
 
-        dispErr1 = (error) => {
-            CallToast('게시판 삭제  !', "error")
-        }
-
-        var options = {
-            functionName: 'SDeleteBoardlist',
-            otherData: {
-                num: ids
+            dispList1 = (resp) => {
+                $table.bootstrapTable('remove', {
+                    field: 'num',
+                    values: ids
+                })
+                //$table.bootstrapTable('refresh');
+                DisplayBoard();
+                CallToast('게시판 삭제  !', "success")
             }
-        };
 
-        CallAjax("SMethods.php", "POST", options, dispList1, dispErr1);
+            dispErr1 = (error) => {
+                CallToast('게시판 삭제  !', "error")
+            }
+
+            var options = {
+                functionName: 'SDeleteBoardlist',
+                otherData: {
+                    num: ids
+                }
+            };
+            CallAjax("SMethods.php", "POST", options, dispList1, dispErr1);
+        } else
+            CallToast('게시판 삭제는 admin만 가능 합니다.  !', "error")
     }
 
     $(document).on('submit', (function(e) {

@@ -43,12 +43,12 @@ function Sfindpassword($data)
             }
             else {
                 //hearder("Location: login.php");
-                echo json_encode(array ("error" => "사용자 아이디 와 휴대폰 번호가 일치하지 않아요"));
+                echo json_encode(array ("error" => "사용자 아이디 와 휴대폰 번호가 일치하지 않아요"), JSON_UNESCAPED_UNICODE);
             }
         }
         else {
             //header("Location: login.php");
-            echo json_encode(array ("error" => "사용자 아이디 와 휴대폰을 입력하세요"));
+            echo json_encode(array ("error" => "사용자 아이디 와 휴대폰을 입력하세요"), JSON_UNESCAPED_UNICODE);
         }
     
 }
