@@ -395,12 +395,12 @@ const user = document.querySelector('meta[name="user"]').getAttribute('content')
 const role = document.querySelector('meta[name="role"]').getAttribute('content');
 const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
 const name = document.querySelector('meta[name="name"]').getAttribute('content');
+const loc = document.querySelector('meta[name="location"]').getAttribute('content');
 
 var $table = $('#table')
 
-var metaDescription = "localhost";
-let host = "https://www.eplat.co.kr/board/uploads/";
-if (metaDescription == "localhost")
+const host = "https://www.eplat.co.kr/board/uploads/";
+if (loc == "localhost")
     host = "http://localhost:3000/board/uploads/";
 
 $(document).ready(function(e) {
