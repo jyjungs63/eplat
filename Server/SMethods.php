@@ -713,7 +713,7 @@ function SUploadBoardPDF($data) {
 	
 	try {
 
-		$sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate, `order`, addr, mobile ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW() , '{$order}', '{$addr}', '{$mobile}' )";
+		$sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate, `order`, addr, mobile, pdfname, zip ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW() , '{$order}', '{$addr}', '{$mobile}', '{$pdfname}' , '{$zip}')";
 		$res1 = mysqli_query ( $conn,  $sqlstring);
 		
 		if ($res=== TRUE && $res1 == TRUE) {

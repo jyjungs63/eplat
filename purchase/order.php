@@ -337,7 +337,7 @@ include "../header.php";
         html2pdf(element, opt);
     }
 
-    document.getElementById("idOrdertext").innerHTML = (name + "지사장/구매");
+    document.getElementById("idOrdertext").innerHTML = (name + " 지사장/구매");
 
     const {
         PDFDocument,
