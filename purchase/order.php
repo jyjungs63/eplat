@@ -92,6 +92,10 @@ include "../header.php";
                                                 <option val="ve">교구</option>
                                             </select>
                                         </div>
+                                        <a id="anchorRead" href="javascript:orderToPdf()" class="btn btn-warning"
+                                            role="button" data-toggle="tooltip" title="Order and PDF file"
+                                            aria-disabled="true"><i class="fa-solid fa-file-pdf"></i></a>
+                                        &nbsp;&nbsp;
                                         <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-warning"
                                             role="button" data-toggle="tooltip" title="Order and PDF file"
                                             aria-disabled="true"><i class="fa-solid fa-print"></i></a>
@@ -274,8 +278,8 @@ include "../header.php";
     <!-- <?php
     include "../includescr.php";
     ?> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script>
     <script src="listprice2.js"></script>
 
@@ -289,7 +293,7 @@ include "../header.php";
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 
     <script src="kgardenlist_2.js"></script>
     <script src="../common.js"></script>
@@ -306,6 +310,33 @@ include "../header.php";
         CallToast("지사 관리 권한으로 로긴 하세요", "error");
         window.location.href = "../login/login.php";
     }
+
+    orderToPdf = () => {
+        var element = document.getElementById('idTableConfirm');
+        var opt = {
+            margin: 1,
+            filename: 'myfile.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+            html2canvas: {
+                scale: 2
+            },
+            jsPDF: {
+                unit: 'cm',
+                format: 'a4',
+                orientation: 'landscape'
+            }
+        };
+
+        // New Promise-based usage:
+        html2pdf().set(opt).from(element).save();
+
+        // Old monolithic-style usage:
+        html2pdf(element, opt);
+    }
+
     document.getElementById("idOrdertext").innerHTML = (name + "지사장/구매");
 
     const {
@@ -655,6 +686,7 @@ include "../header.php";
             alpha: true,
             numeric: true
         }));
+        formData.append('zip', "12345");
         formData.append('addr', chance.address());
         formData.append('mobile', chance.address());
         formData.append('postlist', JSON.stringify(porList));

@@ -462,12 +462,12 @@ function SShowConfirm($data) {
 
     global $conn;
 
-    $sqlString = "SELECT *  FROM eplat_user where role = 1 or role  = 2"; 
+    $sqlString = "SELECT *  FROM eplat_user where role = 1 or role  = 2 order by rdate desc"; 
 
     if ( $num == "2")
-        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2) and confirm = 0"; 
+        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2) and confirm = 0 order by rdate desc"; 
     else if ( $num == "1")
-        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2)  and confirm = 1"; 
+        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2)  and confirm = 1 order by rdate desc"; 
 
         
     $rs = mysqli_query($conn,$sqlString);
@@ -669,7 +669,10 @@ function SUploadBoardPDF($data) {
 	$addr   = $data['addr'];
 	$mobile = $data['mobile'];
 	$order  = $data['order'];
-	$zip    = $data['zip'];
+	$zip = "";
+    if ( isset($data['zip']) )   //
+        $zip    = $data['zip'];
+    $role = 1;
 
 	global $conn;
 	global $location;
@@ -710,8 +713,7 @@ function SUploadBoardPDF($data) {
 	
 	try {
 
-		$sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate, order, addr, mobile )
-                       values ( '{$id}', '{$porid}',  '{$porlist}',  NOW() , '{$order}', '{$addr}', '{$mobile}' )";
+		$sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate, `order`, addr, mobile ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW() , '{$order}', '{$addr}', '{$mobile}' )";
 		$res1 = mysqli_query ( $conn,  $sqlstring);
 		
 		if ($res=== TRUE && $res1 == TRUE) {

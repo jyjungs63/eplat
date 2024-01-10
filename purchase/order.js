@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 var table = new Tabulator("#idTable", {
-    height: "490px",
+    height: "350px",
     data: listprice2,
     layout: "fitColumns",
     rowHeight: 40, //set rows to 40px height
@@ -116,7 +116,7 @@ var table = new Tabulator("#idTable", {
         {
             title: "Grade",
             field: "grade",
-            width: 150,
+            width: "15%",
             editor: "list",
             editor: false,
             editorParams: {
@@ -130,7 +130,7 @@ var table = new Tabulator("#idTable", {
             title: "품명",
             field: "title",
             sorter: "number",
-            width: 350,
+            width: "25%",
             editor: false,
             bottomCalcParams: {
                 precision: 0
@@ -140,7 +140,7 @@ var table = new Tabulator("#idTable", {
             title: "단가",
             field: "price",
             sorter: "number",
-            width: 150,
+            width: "15%",
             editor: false,
             hozAlign: "right",
             formatterParams: {
@@ -152,7 +152,7 @@ var table = new Tabulator("#idTable", {
             title: "Count",
             field: "count",
             editor: "input",
-            width: 150,
+            width: "15%",
             hozAlign: "right",
             validator: "min:0",
             editorParams: {
@@ -175,6 +175,7 @@ var table = new Tabulator("#idTable", {
             formatter: "money",
             hozAlign: "right",
             editor: false,
+            width: "20%",
             formatterParams: {
                 thousand: ",",
                 precision: 0,
@@ -193,7 +194,7 @@ var table = new Tabulator("#idTable", {
         },
         {
             formatter: deleteIcon,
-            width: 40,
+            width: "10%",
             hozAlign: "center",
             cellClick: function(e, cell) {
                 deleteRow(cell.getRow())
@@ -203,7 +204,7 @@ var table = new Tabulator("#idTable", {
 });
 
 var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
-    height: "300px",
+    height: "500px",
     layout: "fitColumns",
     rowHeight: 40, //set rows to 40px height
     selectable: true, //make rows selectable
@@ -212,7 +213,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
         {
             title: "Grade",
             field: "grade",
-            width: 150,
+            width: "15%",
             editor: "list",
             editor: false,
             editorParams: {
@@ -226,7 +227,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             title: "품명",
             field: "title",
             sorter: "number",
-            width: 350,
+            width: "25%",
             editor: false,
             bottomCalcParams: {
                 precision: 0
@@ -236,7 +237,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             title: "단가",
             field: "price",
             sorter: "number",
-            width: 150,
+            width: "15%",
             editor: false,
             hozAlign: "right",
             formatterParams: {
@@ -249,7 +250,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             title: "수량",
             field: "count",
             editor: "input",
-            width: 150,
+            width: "15%",
             hozAlign: "right",
             validator: "min:0",
             editorParams: {
@@ -270,6 +271,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             field: "total",
             editor: "input",
             formatter: "money",
+            width: "20%",
             hozAlign: "right",
             editor: false,
             formatterParams: {
@@ -290,7 +292,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
         },
         {
             formatter: deleteIcon,
-            width: 40,
+            width: "10%",
             hozAlign: "center",
             cellClick: function(e, cell) {
                 deleteRow(cell.getRow())

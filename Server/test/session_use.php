@@ -8,12 +8,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DateRangePicker CSS -->
     <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <style>
+    .to-hide {
+        display: none;
+        /* or visibility: hidden; */
+    }
+    </style>
 </head>
 
 <body>
 
     <div class="container mt-5">
         <h1>Date Range Selection</h1>
+        <div class="navbar" ;>
+            <!-- <div class="navbar-inner"> -->
+            <div class="container">
+
+                <a href="#" class="brand">
+                    <!-- <div  style="background:#000000" >Eplat</div> -->
+                    <!-- <p> <strong>매트로 유치원</strong></p> -->
+                    <img src="assets/img/logo.png" width="80" height="30" alt="Eplat" />
+                    <!-- This is website logo -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">About</a>
+                                </li>
+                                <li class="nav-item to-hide">
+                                    <a class="nav-link" href="#">Hide Me</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Services</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-6">

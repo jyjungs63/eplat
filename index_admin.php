@@ -23,6 +23,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
 
 
@@ -68,6 +69,16 @@
         text-align: center;
         color: white;
     }
+
+    . {
+        display: none;
+        /* or visibility: hidden; */
+    }
+
+    .custom-navbar {
+        background-color: #17334F;
+        /* Replace with your desired color code */
+    }
     </style>
 </head>
 
@@ -79,33 +90,45 @@
     <!-- 화면 맨위 좌측상단의 유치원 Logo를 표시하기 위한 위치------------------------------------------->
     <!-- styles.css 파일내에서 아래 class로 정의 함-폰트크기.스타일.Line height.margin-bottom등-->
     <!-- 유치원 이름의 바탕색을(#000000-검은색)을 표시-->
-    <div class="navbar" ;>
-        <!-- <div class="navbar-inner"> -->
+
+    <!-- <nav class="navbar navbar-expand-lg "> -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
         <div class="container">
-
-            <a href="#" class="brand">
-                <!-- <div  style="background:#000000" >Eplat</div> -->
-                <!-- <p> <strong>매트로 유치원</strong></p> -->
+            <a href="#" class="navbar-brand">
                 <img src="assets/img/logo.png" width="80" height="30" alt="Eplat" />
-                <!-- This is website logo -->
             </a>
-            <div class="d-flex">
-                <a id="idm1" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
-                    href="board/boardmgr.php">게시판</a>
-                <a id="idm2" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
-                    href="purchase/branchmgr.php">지사마당</a>
-                <a id="idm3" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
-                    href="purchase/order.php">구매</a>
-                <a id="idm4" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
-                    href="purchase/kgardenmgr.php">유치원관리</a>
-                <a id="idm5" class="nav-link py-3 px-0 px-lg-3 rounded menunoshow" style="display:none"
-                    href="login/adminLogin.php">admin</a>
-                <a id="idlogin" class="nav-link py-3 px-0 px-lg-3 rounded" href="login/login.php">Login</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                style="backgound-color: gray">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a id="idm1" class="nav-link " href="board/boardmgr.php" style="display:none">게시판</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="idm2" class="nav-link " href="purchase/branchmgr.php" style="display:none">지사마당</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="idm3" class="nav-link " href="purchase/order.php" style="display:none">구매</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="idm4" class="nav-link " href="purchase/kgardenmgr.php" style="display:none">유치원관리</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="idm44" class="nav-link " href="purchase/kgardenmgr.php" style="display:none">학습현황</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="idm5" class="nav-link " href="login/adminLogin.php" style="display:none">admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="idlogin" class="nav-link " active aria-current="page" href="login/login.php">Login</a>
+                    </li>
+                </ul>
             </div>
-
         </div>
-        <!-- </div> -->
-    </div>
+    </nav>
 
     <script>
     $(document).ready(function() {
@@ -120,23 +143,24 @@
         const role = document.querySelector('meta[name="role"]').getAttribute('content');
         const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
         const name = document.querySelector('meta[name="name"]').getAttribute('content');
+
+        $('#idClass').css('visibility', 'visible');
+
         if (user == "admin" && role == "9") { // admin menu
 
             $('#idm1').toggle(); // 게시판
-            $('#idm2').toggle(); // 지사마당 메뉴
-            $('#idm3').toggle(); // 구매
-            $('#idm4').toggle(); // 유치원관리
+            // $('#idm2').toggle(); // 지사마당 메뉴
+            // $('#idm3').toggle(); // 구매
+            // $('#idm4').toggle(); // 유치원관리
             $('#idm5').toggle(); // admin menu
-            $('#idClass').css('visibility', 'visible');
             $('#idlogin').attr('href', "login/logout.php")
             $('#idlogin').text("Logout")
 
-        } else if (role == "1" ) { // Brabch manager control
+        } else if (role == "1") { // Brabch manager control
             if (conf == "1") {
                 $('#idm1').toggle(); // 게시판
                 $('#idm2').toggle(); // 지사마당 메뉴
                 $('#idm3').toggle(); // 구매
-                $('#idClass').css('visibility', 'visible'); //학습관 바로가기
                 $('#idlogin').attr('href', "login/logout.php")
                 $('#idlogin').text("Logout")
             } else {
@@ -146,12 +170,11 @@
             if (conf == "1") {
                 $('#idm1').toggle(); // 게시판
                 $('#idm4').toggle(); // 유치원관리
-                $('#idClass').css('visibility', 'visible');
+                $('#idm44').toggle(); // 학습현황
                 $('#idlogin').attr('href', "login/logout.php")
                 $('#idlogin').text("Logout")
-            }
-             else {
-                alert( name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
+            } else {
+                alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
             }
         }
         // else {
@@ -784,7 +807,7 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
