@@ -49,6 +49,7 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <select class="form-select form-control-sm" id="idStudent"
                                         data-placeholder="Choose Items" style="width: 150px;">
+                                        <option val="v0"></option>
                                         <option val="va">전체</option>
                                         <option val="sb">4세-Basic</option>
                                         <option val="s1">5세-Step1</option>
@@ -79,7 +80,7 @@
                                     title="원아 추가 하기" onclick="addClassMember()"><i class="fa-solid fa-user"></i>추가
                                 </button> &nbsp;&nbsp;
                                 <button class="btn btn-success" type="button" data-toggle="tooltip" title="원아 프린트 하기"
-                                    onclick="printClassMember()"><i class="fa-solid fa-print"></i>출력
+                                    onclick="orderToPdf()"><i class="fa-solid fa-print"></i>출력
                                 </button>
                             </div>
 
@@ -118,8 +119,11 @@
                                                     <div class="tab-pane container active" id="revenue-chart"
                                                         style="position: relative; height: 500px;">
                                                         <!-- <canvas id="revenue-chart-canvas" height="500px"></canvas> -->
-                                                        <div id="myChart"
-                                                            style="width:100%; max-width:600px; height:500px;"></div>
+                                                        <!-- <div id="myChart" -->
+                                                        <!-- style="width:100%; max-width:600px; height:500px;"> -->
+                                                        <canvas id="revenue-chart-canvas" height="500px"
+                                                            style="height: 500px;"></canvas>
+                                                        <!-- </div> -->
                                                     </div>
                                                     <div class=" tab-pane container " id="sales-chart"
                                                         style="position: relative; height: 500px;">
@@ -148,7 +152,7 @@
     ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script src="../common.js"></script>
     <script>
     var tab;
@@ -159,37 +163,11 @@
     const name = document.querySelector('meta[name="name"]').getAttribute('content');
 
     window.addEventListener('resize', function() {
-        //drawTable();
+
     })
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
-
-        // Set Data
-        const data = google.visualization.arrayToDataTable([
-            ['Contry', 'Mhl'],
-            ['Italy', 55],
-            ['France', 49],
-            ['Spain', 44],
-            ['USA', 24],
-            ['Argentina', 15]
-        ]);
-
-        // Set Options
-        const options = {
-            title: 'World Wide Wine Production'
-        };
-
-        // Draw
-        const chart = new google.visualization.BarChart(document.getElementById('myChart'));
-        chart.draw(data, options);
-
-    }
     document.addEventListener("DOMContentLoaded", function() {
-
+        CallToast(name + "님 방문을 환영합니다!.", "success");
     });
 
     document.getElementById("idStudent").addEventListener("change", function() {
@@ -209,8 +187,7 @@
 
         dispList = (res) => {
             var js = res['json'];
-            tab.setData(js);
-            //tab.setData(JSON.parse(js));
+            drawChart(res['json']);
             CallToast('Student list successfully!!', "success")
         }
         dispErr = (xhr) => {
@@ -218,7 +195,7 @@
         }
 
         var options = {
-            functionName: 'SShowStudentList',
+            functionName: 'SShowStudyList',
             otherData: {
                 id: user,
                 step: step
@@ -227,246 +204,177 @@
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
     }
 
-    addChild = () => {
-        var selectElement = document.getElementById("idStudent");
-        var selectedValue = selectElement.value;
-
-        var classname = $("#idClassname").val();
-        var nickname = $("#idNick").val();
-        var num = $("#idNumstudent").val();
-        var arr = [...Array(Number(num)).keys()];
-        arr.forEach(el => {
-
-            var data = {
-                classnm: classname,
-                id: nickname + el + "id",
-                passwd: nickname + el + "passwd",
-                step: selectedValue
-            }
-            tab.addRow(data);
-        })
-    };
-
-    addClassMember = () => { // 학생등록
-        var items = [];
-        var item = tab.getRows();
-        item.forEach(el => {
-            var jarr = {
-                "id": el._row.data['id'],
-                "name": el._row.data['name'],
-                "passwd": el._row.data['passwd'],
-                "tid": user, //
-                "role": "0", //
-                "classnm": el._row.data['classnm'],
-                "step": el._row.data['step'],
-            }
-            items.push(jarr);
-
-        })
-        var data = {
-            "item": items
-        };
-
-        dispList = (resp) => {
-            CallToast('New Student added successfully!!', "success")
-        }
-        dispErr = (xhr) => {
-            CallToast('New Student  added falure !!', "error")
-        }
-
-        var options = {
-            functionName: 'SinsertStudent',
-            otherData: {
-                items
-            }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-
-    }
-
-    showClass = (tid) => {
-        var data = {
-            id: tid
-        };
-
-        dispList = (resp) => {
-            let select = document.getElementById('idStudent');
-            let option = document.createElement('option');
-            option.text = ""; // Set the text of the new option
-            option.value = ""; // Set the value attribute (if needed)
-            select.add(option);
-            resp.forEach(el => {
-                var jarr = {
-                    "classnm": el['classnm'],
-                }
-                //items.push(jarr);
-                // Create a new option element
-                let option = document.createElement('option');
-                option.text = el['classnm']; // Set the text of the new option
-                option.value = el['classnm']; // Set the value attribute (if needed)
-
-                // Append the new option to the select element
-                select.add(option);
-            })
-            CallToast('New Branch Manager added successfully!!', "success")
-        }
-
-        dispErr = (xhr) => {
-            CallToast('New Branch Manager added falure !!', "error")
-        }
-
-        var options = {
-            functionName: 'SShowClassList',
-            otherData: {
-                id: tid
-            }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-
-
-    };
-
-    showClassMembers = (tid) => {
-        var data = {
-            id: tid
-        };
-
-        dispList = (res) => {
-            CallToast('Student list successfully!!', "success")
-        }
-        dispErr = (xhr) => {
-            CallToast('Student list Error!!', "error")
-        }
-
-        var options = {
-            functionName: 'SShowStudentList',
-            otherData: {
-                id: user,
-                classnm: classnm
-            }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-    }
-
     /* Chart.js Charts */
-    // Sales chart
-    //var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d');
-    //$('#revenue-chart').get(0).getContext('2d');
+    drawChart = (res) => {
 
-    var salesChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-                label: 'Digital Goods',
-                backgroundColor: 'rgba(60,141,188,0.9)',
-                borderColor: 'rgba(60,141,188,0.8)',
-                pointRadius: false,
+        var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d');
+
+        var labelData = [];
+        var data = [];
+        res.forEach(el => {
+            //let labelData = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+            labelData.push(el['name']);
+            data.push(el['cnt']);
+        })
+        //let labelData = ['January', 'February', 'March', 'April'];
+
+        let dataSets = [{
+                label: "동영상 시청",
+                //label: 'Digital Goods',
+                backgroundColor: ['rgba(60,141,188,0.9)', 'rgba(210, 214, 222, 1)', 'rgba(210, 214, 222, 1)',
+                    'rgba(90, 214, 222, 1)', 'rgba(90, 214, 222, 1)'
+                ],
+                borderColor: [
+                    'rgba(60,141,188,0.8)',
+                    'rgba(210, 214, 222, 1)',
+                    'rgba(210, 214, 222, 1)',
+                    'rgba(210, 214, 222, 1)',
+                    'rgba(210, 214, 222, 1)'
+                ],
+                //pointRadius: false,
                 pointColor: '#3b8bba',
                 pointStrokeColor: 'rgba(60,141,188,1)',
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [28, 48, 40, 19, 86, 27, 90]
+                data: data
+                //data: [28, 48, 40, 19, 86, 27, 90]
             },
-            {
-                label: 'Electronics',
-                backgroundColor: 'rgba(210, 214, 222, 1)',
-                borderColor: 'rgba(210, 214, 222, 1)',
-                pointRadius: false,
-                pointColor: 'rgba(210, 214, 222, 1)',
-                pointStrokeColor: '#c1c7d1',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: [65, 59, 80, 81, 56, 55, 40]
-            },
+            // {
+            //     label: labelData[1],
+            //     //label: 'Digital Goods',
+            //     backgroundColor: 'rgba(210, 214, 222, 1)',
+            //     borderColor: 'rgba(210, 214, 222, 1)',
+            //     pointRadius: false,
+            //     pointColor: 'rgba(210, 214, 222, 1)',
+            //     pointStrokeColor: '#c1c7d1',
+            //     pointHighlightFill: '#fff',
+            //     pointHighlightStroke: 'rgba(220,220,220,1)',
+            //     //data: [65, 59, 80, 81, 56, 55, 40]
+            //     data: data[1]
+            // },
+            // {
+            //     label: labelData[2],
+            //     //label: 'Digital Goods',
+            //     backgroundColor: 'rgba(90, 214, 222, 1)',
+            //     borderColor: 'rgba(210, 214, 222, 1)',
+            //     pointRadius: false,
+            //     pointColor: 'rgba(210, 214, 222, 1)',
+            //     pointStrokeColor: '#c1c7d1',
+            //     pointHighlightFill: '#fff',
+            //     pointHighlightStroke: 'rgba(220,220,220,1)',
+            //     //data: [50, 23, 70, 81, 35, 65, 12]
+            //     data: data[2]
+            // },
+            // {
+            //     label: labelData[3],
+            //     //label: 'Digital Goods',
+            //     backgroundColor: 'rgba(90, 214, 222, 1)',
+            //     borderColor: 'rgba(210, 214, 222, 1)',
+            //     pointRadius: false,
+            //     pointColor: 'rgba(210, 214, 222, 1)',
+            //     pointStrokeColor: '#c1c7d1',
+            //     pointHighlightFill: '#fff',
+            //     pointHighlightStroke: 'rgba(220,220,220,1)',
+            //     //data: [50, 23, 70, 81, 35, 65, 12]
+            //     data: data[3]
+            // },
+            // {
+            //     label: labelData[4],
+            //     //label: 'Digital Goods',
+            //     backgroundColor: 'rgba(90, 214, 222, 1)',
+            //     borderColor: 'rgba(210, 214, 222, 1)',
+            //     pointRadius: false,
+            //     pointColor: 'rgba(210, 214, 222, 1)',
+            //     pointStrokeColor: '#c1c7d1',
+            //     pointHighlightFill: '#fff',
+            //     pointHighlightStroke: 'rgba(220,220,220,1)',
+            //     //data: [50, 23, 70, 81, 35, 65, 12]
+            //     data: data[4]
+            // },
         ]
+        var data = {
+            labels: ["January", "February", "March", "April", "May"],
+            datasets: [{
+                label: 'Monthly Sales',
+                data: [50, 80, 60, 120, 100],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Background color of bars
+                borderColor: 'rgba(75, 192, 192, 1)', // Border color of bars
+                borderWidth: 1 // Border width of bars
+            }]
+        };
+
+        // Chart configuration
+        var options = {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+
+        var salesChartData = {
+            labels: labelData,
+            datasets: dataSets
+        }
+
+        var salesChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: true
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: true,
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display: true,
+                    }
+                }]
+            }
+        }
+
+        var salesChart = new Chart(salesChartCanvas, {
+            type: 'bar',
+            data: salesChartData,
+            options: options
+        })
     }
 
-    var salesChartOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-            display: false
-        },
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }],
-            yAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }]
-        }
+
+    orderToPdf = () => {
+        var element = document.getElementById('revenue-chart');
+        var opt = {
+            margin: [3, 0, 0, 0],
+            //margin: 0.1,
+            filename: 'myfile.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 1
+            },
+            html2canvas: {
+                scale: 1
+            },
+            jsPDF: {
+                unit: 'cm',
+                format: 'a4',
+                orientation: 'landscape'
+            }
+        };
+
+        // New Promise-based usage:
+        html2pdf().set(opt).from(element).save();
+
+        // Old monolithic-style usage:
+        //html2pdf(element, opt);
     }
-
-    // This will get the first returned node in the jQuery collection.
-    //const ctx = document.getElementById('revenue-chart-canvas').getContext('2d');
-
-    // var myChart = new Chart(salesChartCanvas, {
-    //     type: 'bar',
-    //     data: {
-    //         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    //         datasets: [{
-    //             label: '# of Votes',
-    //             data: [12, 19, 3, 5, 2, 3],
-    //             backgroundColor: [
-    //                 'rgba(255, 99, 132, 0.2)',
-    //                 'rgba(54, 162, 235, 0.2)',
-    //                 'rgba(255, 206, 86, 0.2)',
-    //                 'rgba(75, 192, 192, 0.2)',
-    //                 'rgba(153, 102, 255, 0.2)',
-    //                 'rgba(255, 159, 64, 0.2)'
-    //             ],
-    //             borderColor: [
-    //                 'rgba(255, 99, 132, 1)',
-    //                 'rgba(54, 162, 235, 1)',
-    //                 'rgba(255, 206, 86, 1)',
-    //                 'rgba(75, 192, 192, 1)',
-    //                 'rgba(153, 102, 255, 1)',
-    //                 'rgba(255, 159, 64, 1)'
-    //             ],
-    //             borderWidth: 1
-    //         }]
-    //     },
-    //     options: {
-    //         scales: {
-    //             yAxes: [{
-    //                 ticks: {
-    //                     beginAtZero: true
-    //                 }
-    //             }]
-    //         }
-    //     }
-    // });
-    data = {
-        datasets: [{
-            barPercentage: 0.5,
-            barThickness: 6,
-            maxBarThickness: 8,
-            minBarLength: 2,
-            data: [10, 20, 30, 40, 50, 60, 70]
-        }]
-    };
-    options = {
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    offsetGridLines: true
-                }
-            }]
-        }
-    };
-    // var myBarChart = new Chart(salesChartCanvas, {
-    //     type: 'bar',
-    //     data: data,
-    //     options: options
-    // });
-    // var salesChart = new Chart(salesChartCanvas, {
-    //     type: 'line',
-    //     data: salesChartData,
-    //     options: salesChartOptions
-    // })
 
     // Donut Chart
     var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')

@@ -92,8 +92,8 @@ include "../header.php";
                                                 <option val="ve">교구</option>
                                             </select>
                                         </div>
-                                        <a id="anchorRead" href="javascript:orderToPdf()" class="btn btn-warning"
-                                            role="button" data-toggle="tooltip" title="Order and PDF file"
+                                        <a id="anchorRead" href="javascript:orderToPdf()" class="btn btn-success"
+                                            role="button" data-toggle="tooltip" title="Save PDF file"
                                             aria-disabled="true"><i class="fa-solid fa-file-pdf"></i></a>
                                         &nbsp;&nbsp;
                                         <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-warning"
@@ -314,7 +314,7 @@ include "../header.php";
     orderToPdf = () => {
         var element = document.getElementById('idTableConfirm');
         var opt = {
-            margin: 1,
+            margin: [3, 0.5, 0, 0.5],
             filename: 'myfile.pdf',
             image: {
                 type: 'jpeg',
@@ -334,7 +334,7 @@ include "../header.php";
         html2pdf().set(opt).from(element).save();
 
         // Old monolithic-style usage:
-        html2pdf(element, opt);
+        //html2pdf(element, opt);
     }
 
     document.getElementById("idOrdertext").innerHTML = (name + " 지사장/구매");

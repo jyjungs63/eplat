@@ -2,7 +2,7 @@
 
 // $conn = mysqli_connect('localhost','root','manager','eplat');  // local test
 // mysqli_select_db($conn,'eplat');
-require_once 'dbinit.php';
+require_once '../Server/dbinit.php';
 
 session_start();
 

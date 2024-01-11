@@ -89,11 +89,11 @@ function Slogon($data, $dest)
             $_SESSION["dest"] = $dest;
             
 			if ($dest == "classroom") {
-				echo json_encode(array('success' => '../welcome.php?dest='.'classroom' ));  
+				echo json_encode(array('success' => 'welcome.php?dest='.'classroom' ));  
 			}
 			else
             {               
-				echo json_encode(array('success' => '../index_admin.php?id='.$_SESSION["user"]));  
+				echo json_encode(array('success' => '../index.php?id='.$_SESSION["user"]));  
             }        
 		}
 		else {
@@ -570,6 +570,45 @@ function SShowStudentList ($data) {
                     'rdate'   => $row['rdate'],								
                     'classnm' => $row['classnm'],																												
             ));
+        }
+        $conn->close();
+    }
+    catch (Exception $e)
+    {
+        echo  json_encode( array("error:" => $e->getMessage()) );
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode( array ("json" => $rows) );
+}
+
+function SShowStudyList ($data) {
+    session_start();
+    
+    global $conn;
+    $tid = $data['id'];
+    $step = $data['step'];
+
+    //if ($step == '전체')
+        $sqlString = "select u.id id, u.name name , s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where u.id = s.id and u.tid = '{$tid}' group by id"; 
+    //else
+        //$sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'"; 
+
+    $rows = array();
+
+    $i = 0;
+        
+    try {
+        
+        $rs = mysqli_query($conn,$sqlString);
+        
+        while($row = mysqli_fetch_array($rs)){
+            array_push($rows,
+            array(  
+                    'id'    => $row['id'],
+                    'name'  => $row['name'] ,
+                    'cnt'   => $row['cnt'],																																			
+                ));
         }
         $conn->close();
     }

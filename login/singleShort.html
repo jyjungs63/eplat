@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <video height="100%" width="100%" src="" id="video" autoplay="true" loop="true" controls="true" playsinline></video>
+  <video height="100%" width="100%" src="" id="video" autoplay="true" controls="true" playsinline></video>
   <script>
 
     var vidSources = [
@@ -21,6 +21,7 @@
       console.log(param);
       vidSources.push(loc + param[1])
     }
+
     //studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
 
     var vidElement = document.getElementById('video');
@@ -31,7 +32,7 @@
       video.pause();
       if (Number(vidElement.currentTime) > 10)
         studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
-      
+
     });
 
     window.onbeforeunload = function () {
@@ -39,10 +40,10 @@
         studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
     }
 
-    function studyRecord (id, uid, vol, stp) {
+    function studyRecord(id, uid, vol, stp) {
       //alert('anchr click!');
       // var data = {id: "admin", step: "S1", volume: "1", uid: "w1_1"};
-      var data = { id: id, step: stp, volume: vol, uid: "#"+uid };
+      var data = { id: id, step: stp, volume: vol, uid: "#" + uid };
       $.ajax({
         url: "SstudyRecord.php",
         type: "POST",

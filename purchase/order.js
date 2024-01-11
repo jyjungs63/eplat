@@ -119,6 +119,7 @@ var table = new Tabulator("#idTable", {
             width: "15%",
             editor: "list",
             editor: false,
+            headerHozAlign: "center",
             editorParams: {
                 autocomplete: "true",
                 allowEmpty: true,
@@ -132,6 +133,7 @@ var table = new Tabulator("#idTable", {
             sorter: "number",
             width: "25%",
             editor: false,
+            headerHozAlign: "center",
             bottomCalcParams: {
                 precision: 0
             }
@@ -142,18 +144,18 @@ var table = new Tabulator("#idTable", {
             sorter: "number",
             width: "15%",
             editor: false,
-            hozAlign: "right",
+            headerHozAlign: "center",
             formatterParams: {
                 thousand: ",",
                 precision: 0,
             },
         },
         {
-            title: "Count",
+            title: "수량",
             field: "count",
             editor: "input",
             width: "15%",
-            hozAlign: "right",
+            headerHozAlign: "center",
             validator: "min:0",
             editorParams: {
                 min: 0,
@@ -169,11 +171,11 @@ var table = new Tabulator("#idTable", {
             bottomCalc: "sum"
         },
         {
-            title: "Total",
+            title: "합계",
             field: "total",
             editor: "input",
             formatter: "money",
-            hozAlign: "right",
+            headerHozAlign: "center",
             editor: false,
             width: "20%",
             formatterParams: {
@@ -216,6 +218,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             width: "15%",
             editor: "list",
             editor: false,
+            headerHozAlign: "center",
             editorParams: {
                 autocomplete: "true",
                 allowEmpty: true,
@@ -229,6 +232,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             sorter: "number",
             width: "25%",
             editor: false,
+            headerHozAlign: "center",
             bottomCalcParams: {
                 precision: 0
             }
@@ -239,7 +243,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             sorter: "number",
             width: "15%",
             editor: false,
-            hozAlign: "right",
+            headerHozAlign: "center",
             formatterParams: {
                 thousand: ",",
                 precision: 0,
@@ -251,7 +255,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             field: "count",
             editor: "input",
             width: "15%",
-            hozAlign: "right",
+            headerHozAlign: "center",
             validator: "min:0",
             editorParams: {
                 min: 0,
@@ -272,7 +276,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             editor: "input",
             formatter: "money",
             width: "20%",
-            hozAlign: "right",
+            headerHozAlign: "center",
             editor: false,
             formatterParams: {
                 thousand: ",",
