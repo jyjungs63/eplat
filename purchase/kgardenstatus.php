@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
 
     <link href="../common.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
 
@@ -27,7 +28,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h5>학생등록 관리리스트</h5>
+                        <h5 id="idStudyStatus">학생학습현황</h5>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -63,6 +64,11 @@
                                         data-placeholder="Choose Items" style="width: 150px;">
                                         <option val="va">전체</option>
                                     </select>&nbsp;&nbsp;
+
+                                    <input class="form-control form-control-sm" id="reportrange"
+                                            style="width: 200px">
+                                        <i class="fa fa-calendar" style="margin-top: 7px; margin-left: 2px"></i>&nbsp;
+                                        </input>
                                 </div>
                             </h3>
                             <div class="card-tools">
@@ -153,6 +159,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="../common.js"></script>
     <script>
     var tab;
@@ -167,6 +175,7 @@
     })
 
     document.addEventListener("DOMContentLoaded", function() {
+        $("#idStudyStatus").html( name + "학생학습현황");
         CallToast(name + "님 방문을 환영합니다!.", "success");
     });
 
@@ -221,15 +230,19 @@
         let dataSets = [{
                 label: "동영상 시청",
                 //label: 'Digital Goods',
-                backgroundColor: ['rgba(60,141,188,0.9)', 'rgba(210, 214, 222, 1)', 'rgba(210, 214, 222, 1)',
-                    'rgba(90, 214, 222, 1)', 'rgba(90, 214, 222, 1)'
+                backgroundColor: [
+                    'rgba(60,141,188,0.9)', 
+                    'rgba(0, 153, 0, 1)', 
+                    'rgba(255, 51, 0, 1)',
+                    'rgba(0, 255, 255, 1)',
+                    'rgba(204, 51, 255, 1)'
                 ],
                 borderColor: [
                     'rgba(60,141,188,0.8)',
-                    'rgba(210, 214, 222, 1)',
-                    'rgba(210, 214, 222, 1)',
-                    'rgba(210, 214, 222, 1)',
-                    'rgba(210, 214, 222, 1)'
+                    'rgba(0, 153, 0, 1)',
+                    'rgba(255, 51, 0, 1)',
+                    'rgba(0, 255, 255, 1)',
+                    'rgba(204, 51, 255, 1)'
                 ],
                 //pointRadius: false,
                 pointColor: '#3b8bba',
@@ -407,7 +420,45 @@
     printClassMember = () => {
         tab.print();
     }
-    </script>
+    
+    var start = moment().startOf('week');
+var end = moment().endOf('week');
+
+function cb(start, end) {
+    $('#reportrange span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+}
+
+$('#reportrange').daterangepicker({
+    startDate: start,
+    endDate: end,
+    locale: {
+        format: 'YYYY-MM-DD', // 날짜 표시 형식
+        separator: ' ~ ', // 날짜 범위 구분자
+        applyLabel: '적용', // 적용 버튼 레이블
+        cancelLabel: '취소', // 취소 버튼 레이블
+        fromLabel: '부터', // 시작일 레이블
+        toLabel: '까지', // 종료일 레이블
+        customRangeLabel: '직접 선택', // 사용자 정의 범위 레이블
+        weekLabel: '주', // 주 레이블
+        daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'], // 요일 배열
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], // 월 배열
+        firstDay: 0 // 주의 시작 요일 (0: 일요일, 1: 월요일, ...)
+    },
+    ranges: {
+        '오늘': [moment(), moment()],
+        '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        '지난 7일': [moment().subtract(6, 'days'), moment()],
+        '지난주': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf(
+            'week')],
+        '이번주': [moment().startOf('week'), moment().endOf('week')],
+        '다음주': [moment().add(1, 'weeks').startOf('week'), moment().add(1, 'weeks').endOf('week')],
+        '지난 30일': [moment().subtract(29, 'days'), moment()],
+        '이번달': [moment().startOf('month'), moment().endOf('month')],
+        '지난달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf(
+            'month')]
+    }
+}, cb);
+</script>
 </body>
 
 </html>

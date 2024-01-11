@@ -119,7 +119,7 @@
                         <a id="idm4" class="nav-link " href="purchase/kgardenmgr.php" style="display:none">유치원관리</a>
                     </li>
                     <li class="nav-item">
-                        <a id="idm44" class="nav-link " href="purchase/kgardenmgr.php" style="display:none">학습현황</a>
+                        <a id="idm44" class="nav-link " href="purchase/kgardenstatus.php" style="display:none">학습현황</a>
                     </li>
                     <li class="nav-item">
                         <a id="idm5" class="nav-link " href="login/adminLogin.php" style="display:none">admin</a>
