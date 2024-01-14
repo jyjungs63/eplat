@@ -804,7 +804,6 @@ img {
         const loc = "https://www.eplat.co.kr/assets/img/online_study_room/" // /v3/60-basic_01_Story_Town%20colors.mp4"
         // asign video target
 
-        // var id = "<?php echo $_SESSION['user']; ?>";
         var id = getUser();
         var mp4list = [];
         var sql =

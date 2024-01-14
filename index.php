@@ -860,7 +860,7 @@
     var role = "";
     var conf = "";
     var name = "";
-    var location = "";
+    var loca = "";
 
     $(document).ready(function() {
         // Hide the element initially using visibility: hidden
@@ -930,9 +930,9 @@
                 role = resp['success'][0]['role'];
                 conf = resp['success'][0]['confirm'];
                 name = resp['success'][0]['name'];
-                location = resp['success'][0]['location'];
+                loca = resp['success'][0]['location'];
 
-                var respo = {user: user, role: role, conf: conf, name: name, location: location};
+                var respo = {user: user, role: role, conf: conf, name: name, loca: loca};
 
                 saveLocalStorage('info', respo);
                 var rest = getLocalStorage ('info');
