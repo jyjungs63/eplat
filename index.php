@@ -143,7 +143,9 @@
                     </li>
                     <li class="nav-item">
                         <!-- <a id="idlogin" class="nav-link " active aria-current="page" href="login/login.php">Login</a> -->
-                        <a href="#" id="idlogin"class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
+                        <!-- <a href="#" id="idlogin"class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>       -->
+                        <a href="#" id="idlogin"class="nav-link" onclick="openModal(this)">Login</a>      
+                        
                         
                     </li>
                 </ul>
@@ -815,7 +817,7 @@
       <div class="modal-body" style="padding: 5rem;margin-top:50px;">
       <div class="signin-content" style="display: flex;background-color:smokewhite">
                     <div class="signin-image" style="width: 50%;overflow: hidden;">
-                        <figure><img src="login/images/signin-image.jpg" alt="sing up image"></figure>
+                        <figure><img src="login/images/signin-image.jpg" alt="sing up image" class="img-fluid"></figure>
                         <a href="register.php" class="signup-image-link">회원가입</a></br>
                         <a href="findpasswd.php" class="signup-image-link">비밀번호 찾기</a>
                     </div>
@@ -880,7 +882,7 @@
             $('#idm3').toggle(); // 구매
             $('#idm4').toggle(); // 유치원관리
             $('#idm5').toggle(); // admin menu
-            $('#idlogin').attr('href', "login/logout.php")
+            $('#idlogin').attr('href', "javascript:logout()")
             $('#idlogin').text("로그아웃")
 
         } else if (role == "1") { // Brabch manager control
@@ -888,7 +890,7 @@
                 $('#idm1').toggle(); // 게시판
                 $('#idm2').toggle(); // 지사마당 메뉴
                 $('#idm3').toggle(); // 구매
-                $('#idlogin').attr('href', "login/logout.php")
+                $('#idlogin').attr('href', "javascript:logout()")
                 $('#idlogin').text("로그아웃")
             } else {
                 alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
@@ -898,7 +900,7 @@
                 $('#idm1').toggle(); // 게시판
                 $('#idm4').toggle(); // 유치원관리
                 $('#idm44').toggle(); // 학습현황
-                $('#idlogin').attr('href', "login/logout.php")
+                $('#idlogin').attr('href', "javascript:logout()")
                 $('#idlogin').text("로그아웃")
             } else {
                 alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
@@ -912,6 +914,15 @@
     $("#signin").click(function() {
         logon();
     })
+
+    
+    openModal =()=> {
+        var text= $("#idlogin")[0].innerText;
+        if ( text == "Login")
+            $('#exampleModal').modal('show');
+        else
+            logout  ();
+    }
 
     logon = () => {
         const searchParams = new URLSearchParams(location.search);
@@ -959,6 +970,16 @@
             $('#exampleModal').modal('show');
         else
             window.location.href = "login/welcome.php";
+    }
+
+    logout = () => {
+        user = "";
+        role = "";
+        conf = "";
+        name = "";
+        loca = "";
+        deleteLocalStorage('info');
+        window.location.href = "index.php";
     }
 </script>
 </html>
