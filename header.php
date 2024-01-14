@@ -11,6 +11,6 @@ if (isset($_SESSION['user'])) {
 } 
 else
 {
-    header('location:../login/login.php');
+    //header('location:../login/login.php');
 }
 ?>

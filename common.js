@@ -88,7 +88,7 @@ CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
 CallToast = (message, stat ) => {
     if (stat == "success") {
         toastr.success(message, 'Success', {
-            positionClass: 'toast-top-right',
+            positionClass: 'toast-buttom-right',
             timeout: 2000,
             closeButton: true,
             progressBar: true
@@ -97,11 +97,35 @@ CallToast = (message, stat ) => {
     else if ( stat == "error")
     {
         toastr.error(message, 'Error', {
-            positionClass: 'toast-top-right',
+            positionClass: 'toast-buttom-right',
             timeout: 2000,
             closeButton: true,
             progressBar: true
         });
     }
 
+}
+
+saveLocalStorage = ( name, jsstr ) => {
+    localStorage.setItem(name, JSON.stringify(jsstr));
+}
+
+getLocalStorage = ( name ) => {
+    return  JSON.parse( localStorage.getItem(name) );
+}
+
+deleteLocalStorage = ( name ) => {
+    localStorage.removeItem(name);
+}
+
+getUser = () => {
+    var sto = getLocalStorage('info');
+
+    return sto['user'];
+}
+
+getName = () => {
+    var sto = getLocalStorage('info');
+
+    return sto['name'];
 }

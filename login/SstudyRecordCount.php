@@ -1,7 +1,7 @@
 <?php
 
-$conn = mysqli_connect('localhost','root','manager','eplat');  // local test
-mysqli_select_db($conn,'eplat');
+
+require_once '../Server/dbinit.php';
 
 $id       = $_POST['id'];
 $step     = $_POST['step'];

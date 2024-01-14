@@ -1,6 +1,3 @@
-<?php
-    include "header.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,9 +22,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="login/fonts/material-icon/css/material-design-iconic-font.min.css">
+
     <script src="common.js"></script>
-
-
 
     <style>
     .table-image {
@@ -72,15 +69,35 @@
         color: white;
     }
 
-    . {
-        display: none;
-        /* or visibility: hidden; */
-    }
-
     .custom-navbar {
         background-color: #17334F;
         /* Replace with your desired color code */
     }
+
+    .signup-image-link {
+    font-size: 14px;
+    color: #222;
+    display: block;
+    text-align: center; }
+    
+    a:focus, a:active {
+    text-decoration: none;
+    outline: none;
+    transition: all 300ms ease 0s;
+    -moz-transition: all 300ms ease 0s;
+    -webkit-transition: all 300ms ease 0s;
+    -o-transition: all 300ms ease 0s;
+    -ms-transition: all 300ms ease 0s; 
+    }
+
+.loginput {
+    border: none;
+    border-bottom: 1px solid #999;
+    padding: 6px 30px;
+    font-family: Poppins;
+    box-sizing: border-box; 
+}
+
     </style>
 </head>
 
@@ -96,12 +113,12 @@
     <!-- <nav class="navbar navbar-expand-lg "> -->
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
         <div class="container">
-            <a href="#" class="navbar-brand">
+            <!-- <a href="#" class="navbar-brand">
                 <img src="assets/img/logo.png" width="80" height="30" alt="Eplat" />
-            </a>
+            </a> -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-                style="backgound-color: gray">
+                style="background-color: gray">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -110,10 +127,10 @@
                         <a id="idm1" class="nav-link " href="board/boardmgr.php" style="display:none">게시판</a>
                     </li>
                     <li class="nav-item">
-                        <a id="idm2" class="nav-link " href="purchase/branchmgr.php" style="display:none">지사마당</a>
+                        <a id="idm2" class="nav-link " href="purchase/branchmgr.php" style="display:none">지사관리</a>
                     </li>
                     <li class="nav-item">
-                        <a id="idm3" class="nav-link " href="purchase/order.php" style="display:none">구매</a>
+                        <a id="idm3" class="nav-link " href="purchase/order.php" style="display:none">주문관리</a>
                     </li>
                     <li class="nav-item">
                         <a id="idm4" class="nav-link " href="purchase/kgardenmgr.php" style="display:none">유치원관리</a>
@@ -125,66 +142,16 @@
                         <a id="idm5" class="nav-link " href="login/adminLogin.php" style="display:none">admin</a>
                     </li>
                     <li class="nav-item">
-                        <a id="idlogin" class="nav-link " active aria-current="page" href="login/login.php">Login</a>
+                        <!-- <a id="idlogin" class="nav-link " active aria-current="page" href="login/login.php">Login</a> -->
+                        <a href="#" id="idlogin"class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
+                        
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <script>
-    $(document).ready(function() {
-        // Hide the element initially using visibility: hidden
-        toggleVisibility();
-    })
 
-
-
-    function toggleVisibility() {
-        const user = document.querySelector('meta[name="user"]').getAttribute('content');
-        const role = document.querySelector('meta[name="role"]').getAttribute('content');
-        const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
-        const name = document.querySelector('meta[name="name"]').getAttribute('content');
-
-        $('#idClass').css('visibility', 'visible');
-
-        CallToast(name + "님 방문을 환영 합니다.", "success");
-        if (user == "admin" && role == "9") { // admin menu
-
-            $('#idm1').toggle(); // 게시판
-            // $('#idm2').toggle(); // 지사마당 메뉴
-            // $('#idm3').toggle(); // 구매
-            // $('#idm4').toggle(); // 유치원관리
-            $('#idm5').toggle(); // admin menu
-            $('#idlogin').attr('href', "login/logout.php")
-            $('#idlogin').text("Logout")
-
-        } else if (role == "1") { // Brabch manager control
-            if (conf == "1") {
-                $('#idm1').toggle(); // 게시판
-                $('#idm2').toggle(); // 지사마당 메뉴
-                $('#idm3').toggle(); // 구매
-                $('#idlogin').attr('href', "login/logout.php")
-                $('#idlogin').text("Logout")
-            } else {
-                alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
-            }
-        } else if (role == "2") { // 유치원 선생님 메뉴
-            if (conf == "1") {
-                $('#idm1').toggle(); // 게시판
-                $('#idm4').toggle(); // 유치원관리
-                $('#idm44').toggle(); // 학습현황
-                $('#idlogin').attr('href', "login/logout.php")
-                $('#idlogin').text("Logout")
-            } else {
-                alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
-            }
-        }
-        // else {
-        //     $('#idClass').css('visibility', 'hidden');
-        // }
-    }
-    </script>
     <!-- 초기 Welcome 화면---------------------------------------------------------------------------->
     <!-- styles.css 파일내에서 아래 class로 정의 함-폰트크기.스타일.Line height.margin-bottom등-->
     <!-- Welcome화면의 Image는 styles.css file의 11409 line의 header.mastead class 밑의--
@@ -215,8 +182,8 @@
 
             <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
                 <!--<img class="img-fluid w-100" src="assets/img/environments.jpg" alt="..." />-->
-                <a href="login/welcome.php?dest=classroom"> <img class="img-fluid w-100"
-                        src="assets/img/environments.jpg" alt="Login Eplat Study Home"></a>
+                <!-- <a href="login/welcome.php?dest=classroom"> <img class="img-fluid w-100" src="assets/img/environments.jpg" alt="Login Eplat Study Home"></a> -->
+                <a href="javascript:openClass();"> <img class="img-fluid w-100" src="assets/img/environments.jpg" alt="Login Eplat Study Home"></a>
             </div>
         </div>
 
@@ -260,7 +227,7 @@
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <!-- <img class="img-fluid" src="assets/img/eng_textbook_dev.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/eng_textbook_dev-r1.jpg" alt="..." />
+                            <img class="img-fluid" src="assets/img/eng_textbook_dev-r1.jpg"  />
                             <!-- <img class="img-fluid" src="assets/img/test_sound.wav" alt="..." /> -->
 
 
@@ -285,7 +252,7 @@
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <!-- <img class="img-fluid" src="assets/img/eng_diocese_dev.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/eng_diocese_dev.jpg" alt="..." />
+                            <img class="img-fluid" src="assets/img/eng_diocese_dev.jpg"  />
                         </a>
 
                         <!-- 메뉴 아래 설명문 글자를 '영어교구개발'으로 하겠다는 말-->
@@ -329,7 +296,7 @@
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <!-- <img class="img-fluid" src="assets/img/eng_play_education.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/company_intro_1.jpg" alt="..." />
+                            <img class="img-fluid" src="assets/img/company_intro_1.jpg" />
                         </a>
 
                         <!-- 메뉴 아래 설명문 글자를 '회사소개'로 하겠다는 말-->
@@ -351,7 +318,7 @@
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <!-- <img class="img-fluid" src="assets/img/eng_play_education.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/education_movie.jpg" alt="..." />
+                            <img class="img-fluid" src="assets/img/education_movie.jpg" />
                         </a>
 
                         <!-- 메뉴 아래 설명문 글자를 '수업장면'으로 하겠다는 말-->
@@ -373,7 +340,7 @@
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
 
-                            <img class="img-fluid" src="assets/img/come_with_us.jpg" alt="..." />
+                            <img class="img-fluid" src="assets/img/come_with_us.jpg" />
                         </a>
 
                         <!-- 메뉴 아래 설명문 글자를 '강사모집'으로 하겠다는 말-->
@@ -839,6 +806,159 @@
             </div>
         </div>
     </footer>
-</body>
 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="width: 850px; height: 650px;background-color:white;border-radius: 20px;">
+
+      <div class="modal-body" style="padding: 5rem;margin-top:50px;">
+      <div class="signin-content" style="display: flex;background-color:smokewhite">
+                    <div class="signin-image" style="width: 50%;overflow: hidden;">
+                        <figure><img src="login/images/signin-image.jpg" alt="sing up image"></figure>
+                        <a href="register.php" class="signup-image-link">회원가입</a></br>
+                        <a href="findpasswd.php" class="signup-image-link">비밀번호 찾기</a>
+                    </div>
+
+                    <div class="signin-form" style="width: auto">
+                        <h2 class="form-title">로그인</h2>
+
+                        <form method="POST" class="register-form" id="login-form">
+                            <!-- <form method="POST" class="register-form" id="login-form" action="../Server/Slogon.php"> -->
+                            <div class="form-group" style="margin-top: 2rem">
+                                <label for="Email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input class="loginput" type="text" name="Email" id="Email" value = "", placeholder="아이디"/>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 2rem">
+                                <label for="Password"><i class="zmdi zmdi-lock"></i></label>
+                                <input class="loginput"  type="password" name="Password" id="your_pass" placeholder="비밀번호"/>
+                            </div>
+                            <div class="form-group" style="margin-top: 2rem">
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                <label class=""  for="remember-me" class="label-agree-term"><span><span></span></span>아이디
+                                    기억하기</label>
+                            </div>
+
+                            <div class="form-group form-button" style="margin-top: 2rem">
+                                <input type="button" name="signin" id="signin" class="form-submit loginput" value="Log in" style="background-color:#6dabe4; width:100px; height: 50px;border-radius:10px;color:white"/>
+                            </div>
+                        </form>
+                        <div class="social-login">
+                        </div>
+                    </div>
+                </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+<script>
+
+    var user = "";
+    var role = "";
+    var conf = "";
+    var name = "";
+    var location = "";
+
+    $(document).ready(function() {
+        // Hide the element initially using visibility: hidden
+        //toggleVisibility();
+    })
+
+    function toggleVisibility() {
+
+
+        $('#idClass').css('visibility', 'visible');
+        if ( user != "" )
+            CallToast(user + "님 방문을 환영 합니다.", "success");
+        if (user == "admin" && role == "9") { // admin menu
+
+            $('#idm1').toggle(); // 게시판
+            $('#idm2').toggle(); // 지사마당 메뉴
+            $('#idm3').toggle(); // 구매
+            $('#idm4').toggle(); // 유치원관리
+            $('#idm5').toggle(); // admin menu
+            $('#idlogin').attr('href', "login/logout.php")
+            $('#idlogin').text("로그아웃")
+
+        } else if (role == "1") { // Brabch manager control
+            if (conf == "1") {
+                $('#idm1').toggle(); // 게시판
+                $('#idm2').toggle(); // 지사마당 메뉴
+                $('#idm3').toggle(); // 구매
+                $('#idlogin').attr('href', "login/logout.php")
+                $('#idlogin').text("로그아웃")
+            } else {
+                alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
+            }
+        } else if (role == "2") { // 유치원 선생님 메뉴
+            if (conf == "1") {
+                $('#idm1').toggle(); // 게시판
+                $('#idm4').toggle(); // 유치원관리
+                $('#idm44').toggle(); // 학습현황
+                $('#idlogin').attr('href', "login/logout.php")
+                $('#idlogin').text("로그아웃")
+            } else {
+                alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
+            }
+        }
+        // else {
+        //     $('#idClass').css('visibility', 'hidden');
+        // }
+    }
+
+    $("#signin").click(function() {
+        logon();
+    })
+
+    logon = () => {
+        const searchParams = new URLSearchParams(location.search);
+        param = searchParams.get('dest');
+
+        const logform = document.getElementById("login-form");
+        const formData = new FormData(logform);
+
+        dispList = (resp) => {
+            if ('success' in resp) {
+                CallToast('Login successfully!!', "success")
+                // var url = window.origin+'/' + resp['success'];
+                // window.location.href = url;
+
+                user = resp['success'][0]['user'];
+                role = resp['success'][0]['role'];
+                conf = resp['success'][0]['confirm'];
+                name = resp['success'][0]['name'];
+                location = resp['success'][0]['location'];
+
+                var respo = {user: user, role: role, conf: conf, name: name, location: location};
+
+                saveLocalStorage('info', respo);
+                var rest = getLocalStorage ('info');
+
+                $('#exampleModal').modal('hide')
+                toggleVisibility();
+
+            }
+            else if ('falure' in resp) {
+                CallToast('Password emplty or mismatch !!', "error")
+            }
+        }
+        dispErr = (xhr) => {
+            CallToast('Login falure!!', "error")
+        }
+
+        formData.append('functionName', 'Slogon');
+        //CallAjax1("SMethods.php?dest=classroom", "POST", formData, dispList, dispErr);
+        CallAjax1("SMethods.php?dest="+ param, "POST", formData, dispList, dispErr);
+    }
+
+    openClass = () => {
+        if ( user == undefined || user == "")
+            $('#exampleModal').modal('show');
+        else
+            window.location.href = "login/welcome.php";
+    }
+</script>
 </html>

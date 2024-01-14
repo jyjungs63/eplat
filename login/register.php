@@ -25,7 +25,7 @@
             <div class="container">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <p><span style="color: blue">1)지사아이디     2)유치원아이디  3)유료  일반학생  아이디는 </span> 여기에서  회원  가입을  하며, 관리자  승인후에  사용이  가능합니다</p></br>
+                        <p style="font-size:14px"><span style="color: black;font-size:14px"><b>1)지사아이디     2)유치원아이디  3)유료  일반학생  아이디는 </b> </span> 여기에서  회원  가입을  하며, 관리자  승인후에  사용이  가능합니다</p></br>
                         <h4 class="form-title">회원가입</h4>
                         <form method="POST" class="register-form" id="register-form" >
                         <!-- <form method="POST" class="register-form" id="register-form" action="../Server/Sregister.php"> -->
@@ -74,12 +74,12 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" checked />
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term"  />
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span>나는 회원가입을 위하여 약관 및 개인정보 취급방침에 동의 합니다. 
-                                <a href="회원가입동의서.pdf" target="_blank" class="term-service">Terms of service</a></label>
+                                <a href="members.pdf" target="_blank" class="term-service">&nbsp;*동의서</a></label>
                             </div>
-                            <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="등록" />
+                            <div class="form-group form-button ">
+                                <input type="submit" name="signup" id="signup" class="form-submit btn-primary" style="background-color: blue" value="등록" />
                             </div>
                         </form>
                     </div>

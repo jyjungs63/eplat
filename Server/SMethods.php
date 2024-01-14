@@ -74,6 +74,9 @@ function Slogon($data, $dest)
     $Password = $data["Password"];
     global $location;
 
+    //$dest = "classroom";
+    $rows = array();
+
 	if ( !empty($Email) && !empty($Password) ) {
 		
 		$res = CheckUser( $Email, $Password);
@@ -88,13 +91,19 @@ function Slogon($data, $dest)
             $_SESSION["location"] = $location;
             $_SESSION["dest"] = $dest;
             
-			if ($dest == "classroom") {
-				echo json_encode(array('success' => 'welcome.php?dest='.'classroom' ));  
-			}
-			else
-            {               
-				echo json_encode(array('success' => '../index.php?id='.$_SESSION["user"]));  
-            }        
+            array_push ($rows, 
+            array (
+                'authenticated'   => 'true',
+                'user' => $res['id'],
+                'name' => $res['name'],
+                'role' => $res['role'],
+                'confirm'  => $res['confirm'],
+                'location'  => $location,
+                'dest'  => $dest
+            ));
+
+			echo json_encode(array('success' => $rows ));  
+   
 		}
 		else {
 			//hearder("Location: login.php");
@@ -105,6 +114,34 @@ function Slogon($data, $dest)
 		//header("Location: login.php");
 		echo json_encode(array('falure' => 'id or password empty!'));
 	}
+}
+function SetLogin($id)
+{
+    global $conn;
+    try {
+            $sql = "UPDATE eplat_user SET logstat = 1 , logdate = now()  WHERE id = '{$id}' ";
+            if ($conn->query($sql) === TRUE) {
+                $result = true;
+            } 
+        $conn->close();
+    }
+    catch (Exception $e) {
+        $result = $e->getMessage();
+    }
+}
+
+function CheckUser2($login) {
+    global $conn;
+    $user = "";
+    $login = mysqli_escape_string ( $conn, $login );
+    $rs = mysqli_query ( $conn, "select * from eplat_user where id='{$login}'" );
+    
+    if ($rs) {
+        $user = mysqli_fetch_assoc ( $rs );
+        mysqli_free_result ( $rs );
+    }
+    $conn->close();
+    return $user;
 }
 
 function CheckUser($login, $password) {
@@ -125,6 +162,7 @@ function CheckUser($login, $password) {
     $conn->close();
     return $user;
 }
+
 
 function SRegister ($data, $dest) {
 

@@ -44,7 +44,7 @@
                             <div class="input-group mb-3">
                                 <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
                                     &nbsp;&nbsp; -->
-                                <select class="form-select form-control-sm" id="idDest" data-placeholder="Choose Items">
+                                <select class="form-select form-control-sm" id="idDest" data-placeholder="필터">
                                     <option val="va">전체</option>
                                     <option val="v4">원리스트</option>
                                     <option val="v5">주소지</option>
@@ -96,7 +96,7 @@
         </section>
     </div>
 
-    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -111,8 +111,8 @@
                                     <div class="card-header">
                                         <h3 class="card-title">
                                             <div class="input-group mb-3">
-                                                <button class="btn btn-outline-secondary" type="button">Select
-                                                    Items</button>
+                                                <button class="btn btn-outline-secondary" type="button">필터
+                                                    </button>
                                                 <select class="form-select" id="idGrade"
                                                     data-placeholder="Choose Items">
                                                     <option val="va">전체</option>
@@ -135,7 +135,7 @@
                                             style="margin-bottom: 10px;">
                                             <a id="anchorRead" href="javascript:updateItem()" class="btn btn-primary"
                                                 role="button" aria-disabled="true" data-toggle="tooltip"
-                                                title="Update Branch Manager status"><i
+                                                title="Update Branch Manager status">저장<i
                                                     class="fa-solid fa-database"></i></a>
                                         </div>
 
@@ -156,12 +156,12 @@
                         </div>
                     </section>
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-toggle="tooltip"
                         title="Update Branch Manager status" onclick="updateItem()">Update</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-toggle="tooltip"
                         title="Exit ">Close</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -172,6 +172,10 @@
     <script src="../common.js"></script>
     <script src="adminLogin.js"></script>
     <script>
+
+    $("#exampleModal").on("hidden.bs.modal", function () {
+        // window.location.href = "https://www.eplat.co.kr/index.php";
+    });
     listPor = (por_id) => {
 
         dispList = (res) => {

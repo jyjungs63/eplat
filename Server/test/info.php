@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <title>Bootstrap 5 Modal Close Example</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Bootstrap 5 Modal Example</title>
 </head>
 <body>
 
-<!-- Button to trigger the modal -->
+<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Open Modal
 </button>
@@ -23,8 +23,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- Modal content goes here -->
-        <p>Modal content goes here.</p>
+        <p>This is the content of the modal.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -34,15 +33,9 @@
   </div>
 </div>
 
-<script>
-  // Close the modal using JavaScript
-  var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-
-  // Example: Close the modal after 2 seconds
-  setTimeout(function() {
-    myModal.hide();
-  }, 2000);
-</script>
+<!-- Bootstrap JS dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>

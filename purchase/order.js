@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
             {
-                title: "Grade",
+                title: "단계",
                 field: "grade",
                 width: 150,
                 editor: "list",
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 },
             },
             {
-                title: "Count",
+                title: "주문수량",
                 field: "count",
                 editor: "input",
                 width: 150,
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 bottomCalc: "sum"
             },
             {
-                title: "Total",
+                title: "합계(원)",
                 field: "total",
                 editor: "input",
                 formatter: "money",
@@ -114,7 +114,7 @@ var table = new Tabulator("#idTable", {
 
         // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
         {
-            title: "Grade",
+            title: "단계",
             field: "grade",
             width: "15%",
             editor: "list",
@@ -139,7 +139,7 @@ var table = new Tabulator("#idTable", {
             }
         },
         {
-            title: "단가",
+            title: "단가(원)",
             field: "price",
             sorter: "number",
             width: "15%",
@@ -171,7 +171,7 @@ var table = new Tabulator("#idTable", {
             bottomCalc: "sum"
         },
         {
-            title: "합계",
+            title: "합계(원)",
             field: "total",
             editor: "input",
             formatter: "money",
@@ -213,7 +213,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
     columns: [
         // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
         {
-            title: "Grade",
+            title: "단계",
             field: "grade",
             width: "15%",
             editor: "list",
@@ -238,7 +238,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             }
         },
         {
-            title: "단가",
+            title: "단가(원)",
             field: "price",
             sorter: "number",
             width: "15%",

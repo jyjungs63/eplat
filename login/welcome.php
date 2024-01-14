@@ -1,23 +1,3 @@
-<?php
-
-session_start();
-// if (isset($_GET['dest'])) {
-//     $urlFromGET = $_GET['dest'];
-//     echo "<h5 id='aa' align='center' style='visibility:hidden' >" . $urlFromGET . "</h5>";
-// }
-if (isset($_SESSION['user'])) {
-    echo "<meta name='user' content =" . $_SESSION['user'] . ">";
-    echo "<meta name='authenticated' content=" .$_SESSION["authenticated"]. ">";
-    echo "<meta name='name' content=" .$_SESSION["name"]. ">";
-    echo "<meta name='role' content=" .$_SESSION["role"]. ">";
-    echo "<meta name='confirm' content=" .$_SESSION["confirm"]. ">";
-    echo "<meta name='location' content=" .$_SESSION["location"]. ">";
-} else {
-    header('location:login.php?dest=classroom');
-}
-
-?>
-
 <html>
 
 <head>
@@ -747,9 +727,12 @@ img {
     <div id="template" style="display: none;">
         <strong>Bolded content</strong>
     </div>
+    <script src="../common.js" ></script>
     <script>
     // console.log(screen.width);
     // console.log(screen.height);
+    if ( getUser() == "" || getUser() == undefined)
+        window.location.href = "../index.hp";
     var cmap = {
         basic: "#38B6FF",
         step1: "#E60012",
@@ -821,7 +804,8 @@ img {
         const loc = "https://www.eplat.co.kr/assets/img/online_study_room/" // /v3/60-basic_01_Story_Town%20colors.mp4"
         // asign video target
 
-        var id = "<?php echo $_SESSION['user']; ?>";
+        // var id = "<?php echo $_SESSION['user']; ?>";
+        var id = getUser();
         var mp4list = [];
         var sql =
             'select step, Volumn,  week, cont1, cont2, cont3, cont4, cont5, cont6, cont7, cont8 from ? where Volumn="' +

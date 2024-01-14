@@ -53,7 +53,7 @@
                                 <label for="Email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <?php
                                     if( !isset($_SESSION['id'])) { 
-                                        echo '<input type="text" name="Email" id="Email" value = "", placeholder="Your Name"/>';
+                                        echo '<input type="text" name="Email" id="Email" value = "", placeholder="아이디"/>';
                                     } else {
                                         echo '<input type="text" name="Email" id="Email" value = "", placeholder='.$_SESSION['id'].'>';
                                     }
@@ -65,7 +65,7 @@
                                 <?php 
 
                                 if( !isset($_SESSION['password'])) { 
-                                    echo '<input type="password" name="Password" id="your_pass" placeholder="Password"/>';
+                                    echo '<input type="password" name="Password" id="your_pass" placeholder="비밀번호"/>';
 
                                 } else { 
                                     echo '<input type="text" name="Password" id="your_pass" placeholder='.$_SESSION["password"]. '>';
@@ -117,7 +117,8 @@
         dispList = (resp) => {
             if ('success' in resp) {
                 CallToast('Login successfully!!', "success")
-                window.location.href = resp['success'];
+                var url = window.origin+'/' + resp['success'];
+                window.location.href = url;
             }
             else if ('falure' in resp) {
                 CallToast('Password emplty or mismatch !!', "error")

@@ -174,7 +174,7 @@ include "../header.php";
         CallToast("지사 관리 권한으로 로긴 하세요", "error");
         window.location.href = "../login/login.php";
     }
-    document.getElementById("brachname").innerHTML = name + "님" + "지사/원관리 리스트";
+    document.getElementById("brachname").innerHTML = "["+ user + "]" + "지사/원관리 리스트";
 
     function generatePassword(length) {
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";

@@ -26,14 +26,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             },
             {
-                title: "ID",
+                title: "아이디",
                 field: "id",
                 width: "10%",
                 editor: "input",
                 editor: false,
             },
             {
-                title: "NAME",
+                title: "이름",
                 field: "name",
                 width: "15%",
                 editor: "input",
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 },
             },
             {
-                title: "Mobile",
+                title: "전화번호",
                 field: "mobile",
                 width: "10%",
                 editor: "list",
@@ -92,187 +92,185 @@ document.addEventListener("DOMContentLoaded", function() {
 
         ],
     });
-    table1 = new Tabulator("#idOrderConfirm", {
-        height: "300px",
-        layout: "fitColumns",
-        rowHeight: 40, //set rows to 40px height
-        selectable: true, //make rows selectable
-        columns: [{
-                title: "POR ID",
-                field: "por_id",
-                sorter: "number",
-                width: 350,
-                editor: false,
-                bottomCalcParams: {
-                    precision: 0
-                }
-            },
-            {
-                title: "구매자",
-                field: "order",
-                sorter: "number",
-                width: 150,
-                editor: false,
-                hozAlign: "right",
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-            },
-            {
-                title: "주소",
-                field: "addr",
-                editor: "input",
-                width: 150,
-                hozAlign: "right",
-            },
-            {
-                title: "Mobile",
-                field: "mobile",
-                editor: "input",
-                formatter: "money",
-                hozAlign: "right",
-                editor: false,
+    // table1 = new Tabulator("#idOrderConfirm", {
+    //     height: "300px",
+    //     layout: "fitColumns",
+    //     rowHeight: 40, //set rows to 40px height
+    //     selectable: true, //make rows selectable
+    //     columns: [{
+    //             title: "POR ID",
+    //             field: "por_id",
+    //             sorter: "number",
+    //             width: 350,
+    //             editor: false,
+    //             bottomCalcParams: {
+    //                 precision: 0
+    //             }
+    //         },
+    //         {
+    //             title: "구매자",
+    //             field: "order",
+    //             sorter: "number",
+    //             width: 150,
+    //             editor: false,
+    //             hozAlign: "right",
+    //             formatterParams: {
+    //                 thousand: ",",
+    //                 precision: 0,
+    //             },
+    //         },
+    //         {
+    //             title: "주소",
+    //             field: "addr",
+    //             editor: "input",
+    //             width: 150,
+    //             hozAlign: "right",
+    //         },
+    //         {
+    //             title: "Mobile",
+    //             field: "mobile",
+    //             editor: "input",
+    //             formatter: "money",
+    //             hozAlign: "right",
+    //             editor: false,
 
-            },
-            {
-                title: "rdate",
-                field: "rdate",
-                editor: "input",
-                hozAlign: "right",
-                editor: false,
+    //         },
+    //         {
+    //             title: "rdate",
+    //             field: "rdate",
+    //             editor: "input",
+    //             hozAlign: "right",
+    //             editor: false,
 
-            },
-            {
-                title: "확인",
-                field: "confirm",
-                editor: "input",
-                hozAlign: "right",
-                editor: false,
+    //         },
+    //         {
+    //             title: "확인",
+    //             field: "confirm",
+    //             editor: "input",
+    //             hozAlign: "right",
+    //             editor: false,
 
-            },
-            {
-                formatter: deleteIcon,
-                width: 40,
-                hozAlign: "center",
-                cellClick: function(e, cell) {
-                    deleteRow(cell.getRow())
-                }
-            },
-        ],
-    });
-    porTable = new Tabulator("#porTableDiv", {
-        height: "490px",
-        layout: "fitColumns",
-        rowHeight: 40, //set rows to 40px height
-        selectable: true, //make rows selectable
-        columns: [
+    //         },
+    //         {
+    //             formatter: deleteIcon,
+    //             width: 40,
+    //             hozAlign: "center",
+    //             cellClick: function(e, cell) {
+    //                 deleteRow(cell.getRow())
+    //             }
+    //         },
+    //     ],
+    // });
+    // porTable = new Tabulator("#porTableDiv", {
+    //     height: "490px",
+    //     layout: "fitColumns",
+    //     rowHeight: 40, //set rows to 40px height
+    //     selectable: true, //make rows selectable
+    //     columns: [
+    //         {
+    //             title: "Grade",
+    //             field: "grade",
+    //             width: 150,
+    //             editor: "list",
+    //             editor: false,
+    //             editorParams: {
+    //                 autocomplete: "true",
+    //                 allowEmpty: true,
+    //                 listOnEmpty: true,
+    //                 valuesLookup: true
+    //             }
+    //         },
+    //         {
+    //             title: "품명",
+    //             field: "title",
+    //             sorter: "number",
+    //             width: 350,
+    //             editor: false,
+    //             bottomCalcParams: {
+    //                 precision: 0
+    //             }
+    //         },
+    //         {
+    //             title: "단가",
+    //             field: "price",
+    //             sorter: "number",
+    //             width: 150,
+    //             editor: false,
+    //             hozAlign: "right",
+    //             formatterParams: {
+    //                 thousand: ",",
+    //                 precision: 0,
+    //             },
+    //         },
+    //         {
+    //             title: "Count",
+    //             field: "count",
+    //             editor: "input",
+    //             width: 150,
+    //             hozAlign: "right",
+    //             validator: "min:0",
+    //             editorParams: {
+    //                 min: 0,
+    //                 max: 1000, // Adjust min and max values as needed
+    //                 step: 2,
+    //                 elementAttributes: {
+    //                     type: "number"
+    //                 }
+    //             },
+    //             cellEdited: function(cell) {
+    //                 calsum(cell);
+    //             },
+    //             bottomCalc: "sum"
+    //         },
+    //         {
+    //             title: "Total",
+    //             field: "total",
+    //             editor: "input",
+    //             formatter: "money",
+    //             hozAlign: "right",
+    //             editor: false,
+    //             formatterParams: {
+    //                 thousand: ",",
+    //                 precision: 0,
+    //             },
+    //             editorParams: {
+    //                 elementAttributes: {
+    //                     type: "number"
+    //                 }
+    //             },
+    //             bottomCalc: "sum",
+    //             bottomCalcFormatterParams: {
+    //                 formatter: "money",
+    //                 precision: 0,
+    //                 thousand: ","
+    //             }
+    //         },
+    //         {
+    //             title: "rdate",
+    //             field: "rdate",
+    //             editor: "input",
+    //             hozAlign: "right",
+    //             editor: false,
 
-            // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-            {
-                title: "Grade",
-                field: "grade",
-                width: 150,
-                editor: "list",
-                editor: false,
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-            {
-                title: "품명",
-                field: "title",
-                sorter: "number",
-                width: 350,
-                editor: false,
-                bottomCalcParams: {
-                    precision: 0
-                }
-            },
-            {
-                title: "단가",
-                field: "price",
-                sorter: "number",
-                width: 150,
-                editor: false,
-                hozAlign: "right",
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-            },
-            {
-                title: "Count",
-                field: "count",
-                editor: "input",
-                width: 150,
-                hozAlign: "right",
-                validator: "min:0",
-                editorParams: {
-                    min: 0,
-                    max: 1000, // Adjust min and max values as needed
-                    step: 2,
-                    elementAttributes: {
-                        type: "number"
-                    }
-                },
-                cellEdited: function(cell) {
-                    calsum(cell);
-                },
-                bottomCalc: "sum"
-            },
-            {
-                title: "Total",
-                field: "total",
-                editor: "input",
-                formatter: "money",
-                hozAlign: "right",
-                editor: false,
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-                editorParams: {
-                    elementAttributes: {
-                        type: "number"
-                    }
-                },
-                bottomCalc: "sum",
-                bottomCalcFormatterParams: {
-                    formatter: "money",
-                    precision: 0,
-                    thousand: ","
-                }
-            },
-            {
-                title: "rdate",
-                field: "rdate",
-                editor: "input",
-                hozAlign: "right",
-                editor: false,
-
-            },
-            {
-                formatter: deleteIcon,
-                width: 40,
-                hozAlign: "center",
-                cellClick: function(e, cell) {
-                    deleteRow(cell.getRow())
-                }
-            },
-        ],
-    });
+    //         },
+    //         {
+    //             formatter: deleteIcon,
+    //             width: 40,
+    //             hozAlign: "center",
+    //             cellClick: function(e, cell) {
+    //                 deleteRow(cell.getRow())
+    //             }
+    //         },
+    //     ],
+    // });
 
     confirmList(null);
     orderList(null);
     // Show the modal
     myModal.show();
 
-    table1.on("rowClick", function(e, row) {
-        listPor(row._row.data['por_id'])
-        $("#exampleModal").modal('hide');
-    });
+    // table1.on("rowClick", function(e, row) {
+    //     listPor(row._row.data['por_id'])
+    //     $("#exampleModal").modal('hide');
+    // });
 });

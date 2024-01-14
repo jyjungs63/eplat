@@ -79,8 +79,8 @@ include "../header.php";
                                     <div class="d-flex align-items-end justify-content-end"
                                         style="margin-bottom: 10px;">
                                         <div class="input-group mb-3">
-                                            <button class="btn btn-outline-secondary btn-sm" type="button">Select
-                                                Items</button>
+                                            <button class="btn btn-outline-secondary btn-sm" type="button">필터
+                                                </button>
                                             &nbsp;
                                             <select class="form-select form-control-sm" id="idGrade"
                                                 data-placeholder="Choose Items" style="width: 120px">
@@ -337,7 +337,7 @@ include "../header.php";
         //html2pdf(element, opt);
     }
 
-    document.getElementById("idOrdertext").innerHTML = (name + " 지사장/구매");
+    document.getElementById("idOrdertext").innerHTML = (user + " 지사장/구매");
 
     const {
         PDFDocument,

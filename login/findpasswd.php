@@ -33,19 +33,19 @@
                         <form method="POST" class="register-form" id="login-form" >
                             <div class="form-group">
                                 <label for="id"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="id" id="id" placeholder="Your ID" />
+                                <input type="text" name="id" id="id" placeholder="아이디" />
                             </div>
                             <div class="form-group">
                                 <label for="mobile"><i class="zmdi zmdi-smartphone-iphone"></i></label>
-                                <input type="text" name="mobile" id="mobile" placeholder="Your Phone" />
+                                <input type="text" name="mobile" id="mobile" placeholder="전화번호" />
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="text" name="your_pass" id="your_pass" placeholder="Password" />
+                                <input type="text" name="your_pass" id="your_pass" placeholder="비밀번호" />
                             </div>
 
                             <div class="form-group form-button">
-                                <input type="submit" name="signin" id="signin" class="form-submit" value="Find" />
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="찾기" />
                             </div>
                         </form>
 
