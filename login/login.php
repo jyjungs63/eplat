@@ -135,7 +135,7 @@
 
                 saveLocalStorage('info', respo);
 
-                window.location.href = '../index.php'
+                window.location.href = window.origin + '/' + '../index.php'
             } else if ('falure' in resp) {
                 CallToast('Password emplty or mismatch !!', "error");
             }

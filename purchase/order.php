@@ -304,7 +304,7 @@ include "../header.php";
     <script src="order.js"></script>
 
     <script>
-    if (role != '1') {
+    if (role != '1' && role != '9') {
         CallToast("지사 관리 권한으로 로긴 하세요", "error");
         window.location.href = "../login/login.php";
     }

@@ -1053,7 +1053,7 @@ logon = () => {
             };
 
             saveLocalStorage('info', respo);
-            var rest = getLocalStorage('info');
+            //var rest = getLocalStorage('info');
 
             $('#exampleModal').modal('hide')
             toggleVisibility();

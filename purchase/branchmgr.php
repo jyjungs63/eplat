@@ -161,12 +161,27 @@ include "../header.php";
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="branchmgr_js.js"></script>
     <script src="../common.js"></script>
-    <script src="../header.js"></script>
+    <!-- <script src="../header.js"></script> -->
 
     <script>
     var table;
 
-    if (role != '1') {
+    var user = "";
+    var role = "";
+    var conf = "";
+    var name = "";
+    var loca = "";
+
+    // $(document).ready(function() {
+    let loginfo = getLocalStorage('info');
+    if (loginfo) {
+        user = loginfo['user'];
+        role = loginfo['role'];
+        conf = loginfo['conf'];
+        name = loginfo['name'];
+        loca = loginfo['loca'];
+    }
+    if (role != '1' && role != '9') {
         CallToast("지사 관리 권한으로 로긴 하세요", "error");
         window.location.href = "../index.php";
     }
