@@ -886,9 +886,9 @@
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content" style="background-color:white;border-radius: 20px;">
+            <div class="modal-content" style="background-color:lightgrey;border-radius: 20px;">
                 <div class="modal-body" style="padding: 1rem;margin-top:0px;">
-                    <div class="" style="">
+                    <div class="" style="background-color: lightgrey">
                         <div class="" style="width: 100%">
                             <!-- <h2 class="form-title">로그인</h2> -->
                             <div class="modal-header">
@@ -897,7 +897,7 @@
                                     aria-label="Close"></button>
                             </div>
 
-                            <form method="POST" class="" id="login-form" style="padding: 1rem;margin-top:2rem">
+                            <form method="POST" class="" id="login-form" style="padding: 5rem;margin-top:-2rem;">
                                 <!-- <div class="form-group" style="margin-top: 2rem">
                                     <label for="Email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                     <input class="" type="text" name="Email" id="Email" value="" , placeholder="아이디" />
@@ -914,33 +914,33 @@
                                         class="label-agree-term"><span><span></span></span>아이디
                                         기억하기</label>
                                 </div> -->
-                                <div class="mb-3">
+                                <div class="" style="padding: 2rem">
                                     <label for="Email" class="form-label"><i
                                             class="zmdi zmdi-account material-icons-name"></i> 아이디</label>
                                     <input type="text" class="form-control loginput" id="Email" name="Email" required
                                         placeholder="아이디">
 
                                 </div>
-                                <div class="mb-3">
+                                <div class="" style="padding: 2rem">
                                     <label for="Password" class="form-label"><i class="zmdi zmdi-lock"></i>
                                         비밀번호</label>
                                     <input type="password" class="form-control loginput" id="your_pass" name="Password"
                                         placeholder="비밀번호" required>
                                 </div>
-                                <div class="form-group" style="margin-top: 2rem">
+                                <div class="form-group" style="margin-top: 1rem;padding: 2rem">
                                     <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
                                     <label class="" for="remember-me"
                                         class="label-agree-term"><span><span></span></span>아이디
                                         기억하기</label>
                                 </div>
                                 <div class="form-group form-button justify-content-center align-items-center"
-                                    style="margin-top: 2rem">
+                                    style="margin-top: -1rem;padding: 2rem;">
                                     <input type="button" name="signin" id="signin" class="form-submit loginput"
                                         value="Log in"
                                         style="background-color:#6dabe4; width:100px; height: 50px;border-radius:10px;color:white" />
                                 </div>
                             </form>
-                            <div class="social-login">
+                            <div class="" style="margin-top: -5rem">
                                 <a style="text-decoration: none;" href="login/register.php"
                                     class="signup-image-link">회원가입</a></br>
                                 <a style="text-decoration: none;" href="login/findpasswd.php"

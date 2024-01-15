@@ -16,7 +16,7 @@ include "../header.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
 
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
-    <script src="../../common.js"></script>
+
     <link href="../common.css" rel="stylesheet">
     <title>지사 및 원관리</title>
     <style>
@@ -43,8 +43,8 @@ include "../header.php";
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="#">Prev</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
+                            <!-- <li class="breadcrumb-item active"><a href="#">Prev</a></li> -->
                         </ol>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ include "../header.php";
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-info">
+                    <div class="card card-outline card-info" id="idCardBranchManage">
                         <div class="card-header">
                             <h3 class="card-title">
                                 <div class="input-group mb-3">
@@ -67,13 +67,13 @@ include "../header.php";
                                     &nbsp;
 
                                     <input class="form-control form-control-sm" id="idOwner" type="text"
-                                        placeholder="지사/유치원명" style="width: 150px;">&nbsp;
+                                        placeholder="지사/유치원명" style="width: 100px;">&nbsp;
 
                                     <input class="form-control form-control-sm" id="idName" type="text" placeholder="이름"
                                         style="width: 150px;">&nbsp;
 
                                     <input class="form-control form-control-sm" id="idMobile" type="text"
-                                        placeholder="전화번호" style="width: 120px;">&nbsp;
+                                        placeholder="전화번호" style="width: 100px;">&nbsp;
 
                                     <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디"
                                         style="width: 100px;">&nbsp;
@@ -94,14 +94,15 @@ include "../header.php";
                                         onclick="AddBranch()">등록</button>
                                 </div>
                             </h3>
-                            <div class="card-tools"><button type="button" class="btn btn-tool btn-sm m-3"
-                                    data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i
-                                        class="fas fa-minus"></i></button><button type="button"
+                            <div  class="card-tools">
+                                <button id="idCardBranchManageBtn" type="button" class="btn  btn-md  btn-success"
+                                    data-card-widget="collapse" data-toggle="tooltip" title="Collapse">접기</button>
+                                    <!-- <button type="button"
                                     class="btn btn-tool btn-sm m-3" data-card-widget="remove" data-toggle="tooltip"
-                                    title="Remove"><i class="fas fa-times"></i></button></div>
-                        </div>
+                                    title="Remove"><i class="fas fa-times"></i></button></div> -->
+                            </div>
                         <div class="card-body pad">
-                            <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
+                            <div class="d-flex align-items-end justify-content-end" style="margin-top: 30px;">
                                 <!-- <a
                                     id="anchorRead" href="javascript:UpdateBranch()" class="btn btn-info" role="button"
                                     aria-disabled="true" data-toggle="tooltip" title="갱신하기"><i
@@ -185,6 +186,9 @@ include "../header.php";
         CallToast("지사 관리 권한으로 로긴 하세요", "error");
         window.location.href = "../index.php";
     }
+
+    cardWidgetManage ( $('#idCardBranchManage'), $('#idCardBranchManageBtn') );
+
     document.getElementById("brachname").innerHTML = "[" + user + "]" + "지사/원관리 리스트";
 
     function generatePassword(length) {
@@ -214,14 +218,6 @@ include "../header.php";
         var role = selectedValue == "v4" ? 1 : 2; // 1 branch manager , 2 // teacher
         var rdate = "";
 
-        // if (id == undefined || id == "") id = faker.name.firstName();
-        // if (name == undefined || id == "") name = faker.name.firstName();
-        // if (owner == undefined || owner == "") owner = faker.name.lastName();
-        // if (password == undefined || password == "") password = generatePassword(10);;
-        // if (mobile == undefined || mobile == "") mobile = faker.phone.phoneNumber();
-        // if (addr == undefined || addr == "") addr = faker.address.country() + " " + faker.address.county();
-        // if (zipcode == undefined || zipcode == "") zipcode = faker.address.zipCode();
-
         const formattedDate = formatDate();
         if (rdate == undefined || rdate == "") rdate = formattedDate;
 
@@ -241,19 +237,7 @@ include "../header.php";
         var data = {
             "item": items
         }
-        // $.ajax({
-        //     url: "../Server/SRegistermgr.php",
-        //     type: "POST",
-        //     dataType: "json",
-        //     data: JSON.stringify(data),
-        //     success: function(resp) {
-        //         alert("success!")
-        //     },
-        //     error: function(xhr, status, error) {
-        //         alert('SRegistermgr ' + error);
-        //         $("#err").html(e).fadeIn();
-        //     }
-        // });
+
 
         dispList = (resp) => {
             if ('success' in resp) {
@@ -295,17 +279,6 @@ include "../header.php";
         var data = {
             "item": items
         }
-        // $.ajax({
-
-        //     url: "../Server/SShowConfirmUpdate.php",
-        //     type: "POST",
-        //     dataType: "json",
-        //     data: JSON.stringify(data),
-        //     success: function(resp) {},
-        //     error: function(e) {
-        //         alert('SShowConfirmUpdate!' + e);
-        //     }
-        // });
 
         dispList = (resp) => {
             CallToast('New Branch Manager Updated successfully!!', "success")
@@ -330,6 +303,7 @@ include "../header.php";
         dispList = (resp) => {
             resp.forEach(el => {
                 var jarr = {
+                    "role": el['id'] == "1" ? "지사관리" : "원관리",
                     "id": el['id'],
                     "name": el['name'],
                     "owner": el['owner'],
@@ -398,6 +372,7 @@ include "../header.php";
         dispList = (resp) => {
             resp.forEach(el => {
                 var jarr = {
+                    "role": el['id'] == "1" ? "지사관리" : "원관리",
                     "id": el['id'],
                     "name": el['name'],
                     "owner": el['owner'],

@@ -376,7 +376,8 @@ function SShowMgr ($data) {
                             'addr'      => $row['addr'],								
                             'zipcode'   => $row['zipcode'],								
                             'confirm'   => $row['confirm'],								
-                            'rdate'     => $row['rdate'],								
+                            'rdate'     => $row['rdate'],
+                            'role'     => $row['role'],								
                     ));
         }
         $conn->close();

@@ -9,6 +9,18 @@ table = new Tabulator("#idTable", {
     selectable: true,
     columns: [
         {
+            title: "권한",
+            field: "role",
+            width: "9%",
+            editor: "input",
+            editorParams: {
+                autocomplete: "true",
+                allowEmpty: true,
+                listOnEmpty: true,
+                valuesLookup: true
+            }
+        },
+        {
             title: "지사/유치원명",
             field: "owner",
             width: "15%",
@@ -35,7 +47,7 @@ table = new Tabulator("#idTable", {
         {
             title: "전화번호",
             field: "mobile",
-            width: "10%",
+            width: "7%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -47,7 +59,7 @@ table = new Tabulator("#idTable", {
         {
             title: "아이디",
             field: "id",
-            width: "10%",
+            width: "7%",
             editor: "false",
             editorParams: {
                 autocomplete: "true",
@@ -59,7 +71,7 @@ table = new Tabulator("#idTable", {
         {
             title: "비밀번호",
             field: "password",
-            width: "10%",
+            width: "7%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
