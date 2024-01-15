@@ -389,13 +389,26 @@ include '../includescr.php';
 ?>
 <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
 <script src="../common.js"></script>
+<!-- <script src="../header.js"></script> -->
+
 <script>
 var gid;
-const user = document.querySelector('meta[name="user"]').getAttribute('content');
-const role = document.querySelector('meta[name="role"]').getAttribute('content');
-const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
-const name = document.querySelector('meta[name="name"]').getAttribute('content');
-const loc = document.querySelector('meta[name="location"]').getAttribute('content');
+
+var user = "";
+var role = "";
+var conf = "";
+var name = "";
+var loc = "";
+
+// $(document).ready(function() {
+let loginfo = getLocalStorage('info');
+if (loginfo) {
+    user = loginfo['user'];
+    role = loginfo['role'];
+    conf = loginfo['conf'];
+    name = loginfo['name'];
+    loc = loginfo['loca'];
+}
 
 var $table = $('#table')
 
