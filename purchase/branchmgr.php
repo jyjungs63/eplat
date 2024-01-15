@@ -161,20 +161,16 @@ include "../header.php";
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="branchmgr_js.js"></script>
     <script src="../common.js"></script>
+    <script src="../header.js"></script>
 
     <script>
     var table;
-    const loc = document.querySelector('meta[name="location"]').getAttribute('content');
-    const user = document.querySelector('meta[name="user"]').getAttribute('content');
-    const role = document.querySelector('meta[name="role"]').getAttribute('content');
-    const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
-    const name = document.querySelector('meta[name="name"]').getAttribute('content');
 
     if (role != '1') {
         CallToast("지사 관리 권한으로 로긴 하세요", "error");
-        window.location.href = "../login/login.php";
+        window.location.href = "../index.php";
     }
-    document.getElementById("brachname").innerHTML = "["+ user + "]" + "지사/원관리 리스트";
+    document.getElementById("brachname").innerHTML = "[" + user + "]" + "지사/원관리 리스트";
 
     function generatePassword(length) {
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";

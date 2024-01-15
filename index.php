@@ -75,29 +75,104 @@
     }
 
     .signup-image-link {
-    font-size: 14px;
-    color: #222;
-    display: block;
-    text-align: center; }
-    
-    a:focus, a:active {
-    text-decoration: none;
-    outline: none;
-    transition: all 300ms ease 0s;
-    -moz-transition: all 300ms ease 0s;
-    -webkit-transition: all 300ms ease 0s;
-    -o-transition: all 300ms ease 0s;
-    -ms-transition: all 300ms ease 0s; 
+        font-size: 14px;
+        color: #222;
+        display: block;
+        text-align: center;
     }
 
-.loginput {
-    border: none;
-    border-bottom: 1px solid #999;
-    padding: 6px 30px;
-    font-family: Poppins;
-    box-sizing: border-box; 
-}
+    a:focus,
+    a:active {
+        text-decoration: none;
+        outline: none;
+        transition: all 300ms ease 0s;
+        -moz-transition: all 300ms ease 0s;
+        -webkit-transition: all 300ms ease 0s;
+        -o-transition: all 300ms ease 0s;
+        -ms-transition: all 300ms ease 0s;
+    }
 
+    a:hover {
+        color: #007bff;
+        /* Change color on hover if desired */
+    }
+
+    .loginput {
+        border: none;
+        border-bottom: 1px solid #999;
+        padding: 6px 30px;
+        font-family: Poppins;
+        box-sizing: border-box;
+    }
+
+    /* @media screen and (max-width: 768px) {
+
+        .signup-content,
+        .signin-content {
+            flex-direction: column;
+            -moz-flex-direction: column;
+            -webkit-flex-direction: column;
+            -o-flex-direction: column;
+            -ms-flex-direction: column;
+            justify-content: center;
+            -moz-justify-content: center;
+            -webkit-justify-content: center;
+            -o-justify-content: center;
+            -ms-justify-content: center;
+        }
+
+        .signup-form {
+            margin-left: 0px;
+            margin-right: 0px;
+            padding-left: 0px;
+            padding: 0 30px;
+        }
+
+        .signin-image {
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-top: 50px;
+            order: 2;
+            -moz-order: 2;
+            -webkit-order: 2;
+            -o-order: 2;
+            -ms-order: 2;
+        }
+
+        .signup-form,
+        .signup-image,
+        .signin-form,
+        .signin-image {
+            width: auto;
+        }
+
+        .social-login {
+            justify-content: center;
+            -moz-justify-content: center;
+            -webkit-justify-content: center;
+            -o-justify-content: center;
+            -ms-justify-content: center;
+        }
+
+        .form-button {
+            text-align: center;
+        }
+
+        .signin-form {
+            order: 1;
+            -moz-order: 1;
+            -webkit-order: 1;
+            -o-order: 1;
+            -ms-order: 1;
+            margin-right: 0px;
+            margin-left: 0px;
+            padding: 0 30px;
+        }
+
+        .form-title {
+            text-align: center;
+        }
+    } */
     </style>
 </head>
 
@@ -144,9 +219,7 @@
                     <li class="nav-item">
                         <!-- <a id="idlogin" class="nav-link " active aria-current="page" href="login/login.php">Login</a> -->
                         <!-- <a href="#" id="idlogin"class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>       -->
-                        <a href="#" id="idlogin"class="nav-link" onclick="openModal(this)">Login</a>      
-                        
-                        
+                        <a href="#" id="idlogin" class="nav-link" onclick="openModal(this)">로그인</a>
                     </li>
                 </ul>
             </div>
@@ -185,7 +258,8 @@
             <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
                 <!--<img class="img-fluid w-100" src="assets/img/environments.jpg" alt="..." />-->
                 <!-- <a href="login/welcome.php?dest=classroom"> <img class="img-fluid w-100" src="assets/img/environments.jpg" alt="Login Eplat Study Home"></a> -->
-                <a href="javascript:openClass();"> <img class="img-fluid w-100" src="assets/img/environments.jpg" alt="Login Eplat Study Home"></a>
+                <a href="javascript:openClass();"> <img class="img-fluid w-100" src="assets/img/environments.jpg"
+                        alt="Login Eplat Study Home"></a>
             </div>
         </div>
 
@@ -229,7 +303,7 @@
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <!-- <img class="img-fluid" src="assets/img/eng_textbook_dev.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/eng_textbook_dev-r1.jpg"  />
+                            <img class="img-fluid" src="assets/img/eng_textbook_dev-r1.jpg" />
                             <!-- <img class="img-fluid" src="assets/img/test_sound.wav" alt="..." /> -->
 
 
@@ -254,7 +328,7 @@
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <!-- <img class="img-fluid" src="assets/img/eng_diocese_dev.jpg" alt="..." /> -->
-                            <img class="img-fluid" src="assets/img/eng_diocese_dev.jpg"  />
+                            <img class="img-fluid" src="assets/img/eng_diocese_dev.jpg" />
                         </a>
 
                         <!-- 메뉴 아래 설명문 글자를 '영어교구개발'으로 하겠다는 말-->
@@ -810,176 +884,221 @@
     </footer>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content" style="width: 850px; height: 650px;background-color:white;border-radius: 20px;">
-
-      <div class="modal-body" style="padding: 5rem;margin-top:50px;">
-      <div class="signin-content" style="display: flex;background-color:smokewhite">
-                    <div class="signin-image" style="width: 50%;overflow: hidden;">
-                        <figure><img src="login/images/signin-image.jpg" alt="sing up image" class="img-fluid"></figure>
-                        <a href="register.php" class="signup-image-link">회원가입</a></br>
-                        <a href="findpasswd.php" class="signup-image-link">비밀번호 찾기</a>
-                    </div>
-
-                    <div class="signin-form" style="width: auto">
-                        <h2 class="form-title">로그인</h2>
-
-                        <form method="POST" class="register-form" id="login-form">
-                            <!-- <form method="POST" class="register-form" id="login-form" action="../Server/Slogon.php"> -->
-                            <div class="form-group" style="margin-top: 2rem">
-                                <label for="Email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input class="loginput" type="text" name="Email" id="Email" value = "", placeholder="아이디"/>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="background-color:white;border-radius: 20px;">
+                <div class="modal-body" style="padding: 1rem;margin-top:0px;">
+                    <div class="" style="">
+                        <div class="" style="width: 100%">
+                            <!-- <h2 class="form-title">로그인</h2> -->
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="loginModalLabel">로그인</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
 
-                            <div class="form-group" style="margin-top: 2rem">
-                                <label for="Password"><i class="zmdi zmdi-lock"></i></label>
-                                <input class="loginput"  type="password" name="Password" id="your_pass" placeholder="비밀번호"/>
-                            </div>
-                            <div class="form-group" style="margin-top: 2rem">
-                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label class=""  for="remember-me" class="label-agree-term"><span><span></span></span>아이디
-                                    기억하기</label>
-                            </div>
+                            <form method="POST" class="" id="login-form" style="padding: 1rem;margin-top:2rem">
+                                <!-- <div class="form-group" style="margin-top: 2rem">
+                                    <label for="Email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                    <input class="" type="text" name="Email" id="Email" value="" , placeholder="아이디" />
+                                </div>
 
-                            <div class="form-group form-button" style="margin-top: 2rem">
-                                <input type="button" name="signin" id="signin" class="form-submit loginput" value="Log in" style="background-color:#6dabe4; width:100px; height: 50px;border-radius:10px;color:white"/>
+                                <div class="form-group" style="margin-top: 2rem">
+                                    <label for="Password"><i class="zmdi zmdi-lock"></i></label>
+                                    <input class="loginput" type="password" name="Password" id="your_pass"
+                                        placeholder="비밀번호" />
+                                </div>
+                                <div class="form-group" style="margin-top: 2rem">
+                                    <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                    <label class="" for="remember-me"
+                                        class="label-agree-term"><span><span></span></span>아이디
+                                        기억하기</label>
+                                </div> -->
+                                <div class="mb-3">
+                                    <label for="Email" class="form-label"><i
+                                            class="zmdi zmdi-account material-icons-name"></i> 아이디</label>
+                                    <input type="text" class="form-control loginput" id="Email" name="Email" required
+                                        placeholder="아이디">
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Password" class="form-label"><i class="zmdi zmdi-lock"></i>
+                                        비밀번호</label>
+                                    <input type="password" class="form-control loginput" id="your_pass" name="Password"
+                                        placeholder="비밀번호" required>
+                                </div>
+                                <div class="form-group" style="margin-top: 2rem">
+                                    <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                    <label class="" for="remember-me"
+                                        class="label-agree-term"><span><span></span></span>아이디
+                                        기억하기</label>
+                                </div>
+                                <div class="form-group form-button justify-content-center align-items-center"
+                                    style="margin-top: 2rem">
+                                    <input type="button" name="signin" id="signin" class="form-submit loginput"
+                                        value="Log in"
+                                        style="background-color:#6dabe4; width:100px; height: 50px;border-radius:10px;color:white" />
+                                </div>
+                            </form>
+                            <div class="social-login">
+                                <a style="text-decoration: none;" href="login/register.php"
+                                    class="signup-image-link">회원가입</a></br>
+                                <a style="text-decoration: none;" href="login/findpasswd.php"
+                                    class="signup-image-link">비밀번호 찾기</a>
                             </div>
-                        </form>
-                        <div class="social-login">
                         </div>
                     </div>
                 </div>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 </body>
 <script>
+var user = "";
+var role = "";
+var conf = "";
+var name = "";
+var loca = "";
 
-    var user = "";
-    var role = "";
-    var conf = "";
-    var name = "";
-    var loca = "";
+$(document).ready(function() {
+    let loginfo = getLocalStorage('info');
+    if (loginfo) {
+        user = loginfo['user'];
+        role = loginfo['role'];
+        conf = loginfo['conf'];
+        name = loginfo['name'];
+        loca = loginfo['loca'];
+        toggleVisibility();
+    }
+})
 
-    $(document).ready(function() {
-        // Hide the element initially using visibility: hidden
-        //toggleVisibility();
-    })
-
-    function toggleVisibility() {
+function toggleVisibility() {
 
 
-        $('#idClass').css('visibility', 'visible');
-        if ( user != "" )
-            CallToast(user + "님 방문을 환영 합니다.", "success");
-        if (user == "admin" && role == "9") { // admin menu
+    $('#idClass').css('visibility', 'visible');
+    if (user != "")
+        CallToast(user + "님 방문을 환영 합니다.", "success");
+    if (user == "admin" && role == "9") { // admin menu
 
+        $('#idm1').toggle(); // 게시판
+        $('#idm2').toggle(); // 지사마당 메뉴
+        $('#idm3').toggle(); // 구매
+        $('#idm4').toggle(); // 유치원관리
+        $('#idm5').toggle(); // admin menu
+        $('#idlogin').attr('href', "javascript:logout()")
+        $('#idlogin').text("로그아웃")
+
+    } else if (role == "1") { // Brabch manager control
+        if (conf == "1") {
             $('#idm1').toggle(); // 게시판
             $('#idm2').toggle(); // 지사마당 메뉴
             $('#idm3').toggle(); // 구매
-            $('#idm4').toggle(); // 유치원관리
-            $('#idm5').toggle(); // admin menu
             $('#idlogin').attr('href', "javascript:logout()")
             $('#idlogin').text("로그아웃")
-
-        } else if (role == "1") { // Brabch manager control
-            if (conf == "1") {
-                $('#idm1').toggle(); // 게시판
-                $('#idm2').toggle(); // 지사마당 메뉴
-                $('#idm3').toggle(); // 구매
-                $('#idlogin').attr('href', "javascript:logout()")
-                $('#idlogin').text("로그아웃")
-            } else {
-                alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
-            }
-        } else if (role == "2") { // 유치원 선생님 메뉴
-            if (conf == "1") {
-                $('#idm1').toggle(); // 게시판
-                $('#idm4').toggle(); // 유치원관리
-                $('#idm44').toggle(); // 학습현황
-                $('#idlogin').attr('href', "javascript:logout()")
-                $('#idlogin').text("로그아웃")
-            } else {
-                alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
-            }
+        } else {
+            alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
         }
-        // else {
-        //     $('#idClass').css('visibility', 'hidden');
-        // }
-    }
-
-    $("#signin").click(function() {
-        logon();
-    })
-
-    
-    openModal =()=> {
-        var text= $("#idlogin")[0].innerText;
-        if ( text == "Login")
-            $('#exampleModal').modal('show');
-        else
-            logout  ();
-    }
-
-    logon = () => {
-        const searchParams = new URLSearchParams(location.search);
-        param = searchParams.get('dest');
-
-        const logform = document.getElementById("login-form");
-        const formData = new FormData(logform);
-
-        dispList = (resp) => {
-            if ('success' in resp) {
-                CallToast('Login successfully!!', "success")
-                // var url = window.origin+'/' + resp['success'];
-                // window.location.href = url;
-
-                user = resp['success'][0]['user'];
-                role = resp['success'][0]['role'];
-                conf = resp['success'][0]['confirm'];
-                name = resp['success'][0]['name'];
-                loca = resp['success'][0]['location'];
-
-                var respo = {user: user, role: role, conf: conf, name: name, loca: loca};
-
-                saveLocalStorage('info', respo);
-                var rest = getLocalStorage ('info');
-
-                $('#exampleModal').modal('hide')
-                toggleVisibility();
-
-            }
-            else if ('falure' in resp) {
-                CallToast('Password emplty or mismatch !!', "error")
-            }
+    } else if (role == "2") { // 유치원 선생님 메뉴
+        if (conf == "1") {
+            $('#idm1').toggle(); // 게시판
+            $('#idm4').toggle(); // 유치원관리
+            $('#idm44').toggle(); // 학습현황
+            $('#idlogin').attr('href', "javascript:logout()")
+            $('#idlogin').text("로그아웃")
+        } else {
+            alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
         }
-        dispErr = (xhr) => {
-            CallToast('Login falure!!', "error")
+    }
+}
+
+$("#signin").click(function() {
+    logon();
+})
+
+
+openModal = () => {
+    var text = $("#idlogin")[0].innerText;
+    if (text == "로그인")
+        $('#exampleModal').modal('show');
+    else
+        logout();
+}
+
+logon = () => {
+    const searchParams = new URLSearchParams(location.search);
+    param = searchParams.get('dest');
+
+    const logform = document.getElementById("login-form");
+    const formData = new FormData(logform);
+
+    dispList = (resp) => {
+        if ('success' in resp) {
+            CallToast('Login successfully!!', "success")
+            // var url = window.origin+'/' + resp['success'];
+            // window.location.href = url;
+
+            user = resp['success'][0]['user'];
+            role = resp['success'][0]['role'];
+            conf = resp['success'][0]['confirm'];
+            name = resp['success'][0]['name'];
+            loca = resp['success'][0]['location'];
+
+            var respo = {
+                user: user,
+                role: role,
+                conf: conf,
+                name: name,
+                loca: loca
+            };
+
+            saveLocalStorage('info', respo);
+            var rest = getLocalStorage('info');
+
+            $('#exampleModal').modal('hide')
+            toggleVisibility();
+
+        } else if ('falure' in resp) {
+            CallToast('Password emplty or mismatch !!', "error")
         }
-
-        formData.append('functionName', 'Slogon');
-        //CallAjax1("SMethods.php?dest=classroom", "POST", formData, dispList, dispErr);
-        CallAjax1("SMethods.php?dest="+ param, "POST", formData, dispList, dispErr);
+    }
+    dispErr = (xhr) => {
+        CallToast('Login falure!!', "error")
     }
 
-    openClass = () => {
-        if ( user == undefined || user == "")
-            $('#exampleModal').modal('show');
-        else
-            window.location.href = "login/welcome.php";
-    }
+    formData.append('functionName', 'Slogon');
+    //CallAjax1("SMethods.php?dest=classroom", "POST", formData, dispList, dispErr);
+    CallAjax1("SMethods.php?dest=" + param, "POST", formData, dispList, dispErr);
+}
 
-    logout = () => {
-        user = "";
-        role = "";
-        conf = "";
-        name = "";
-        loca = "";
-        deleteLocalStorage('info');
-        window.location.href = "index.php";
-    }
+openClass = () => {
+    if (user == undefined || user == "")
+        $('#exampleModal').modal('show');
+    else
+        window.location.href = "login/welcome.php";
+}
+
+logout = () => {
+    user = "";
+    role = "";
+    conf = "";
+    name = "";
+    loca = "";
+    deleteLocalStorage('info');
+
+    toggleChage($('#idm1')); //.toggle(); // 게시판
+    toggleChage($('#idm2')); //.toggle(); // 지사마당 메뉴
+    toggleChage($('#idm3')); //.toggle(); // 구매
+    toggleChage($('#idm4')); //.toggle(); // 유치원관리
+    toggleChage($('#idm5')); //.toggle(); // admin menu
+    $('#idlogin').attr('href', "javascript:openModal()")
+    $('#idlogin').text("로그인");
+
+}
+
+toggleChage = (idAnchor) => {
+    return idAnchor.is(':visible') == true ? idAnchor.toggle() : null;
+}
 </script>
+
 </html>

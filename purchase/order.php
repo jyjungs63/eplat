@@ -45,7 +45,7 @@ include "../header.php";
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-info card-tabs">
+                    <div class="card card-outline card-info card-tabs" id="idCardPurchase">
                         <div class="card-header">
                             <h3 class="card-title">
 
@@ -63,12 +63,12 @@ include "../header.php";
                                 </li>
                             </ul>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
-                                    data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i></button>
-                                <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
+                                <button id="idCardPurchaseBtn" type="button" class="btn  btn-md btn-primary"
+                                    data-card-widget="collapse" data-toggle="tooltip" title="Collapse">접기
+                                </button>
+                                <!-- <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                     data-toggle="tooltip" title="Remove">
-                                    <i class="fas fa-times"></i></button>
+                                    <i class="fas fa-times"></i></button> -->
                             </div>
                         </div>
                         <div class="card-body pad" id="cardMain">
@@ -80,7 +80,7 @@ include "../header.php";
                                         style="margin-bottom: 10px;">
                                         <div class="input-group mb-3">
                                             <button class="btn btn-outline-secondary btn-sm" type="button">필터
-                                                </button>
+                                            </button>
                                             &nbsp;
                                             <select class="form-select form-control-sm" id="idGrade"
                                                 data-placeholder="Choose Items" style="width: 120px">
@@ -109,7 +109,9 @@ include "../header.php";
                                             role="button" data-toggle="tooltip" title="Select All"
                                             aria-disabled="true"><i class="fa-solid fa-save"></i></a> -->
                                     </div>
-
+                                    <p>
+                                        <b> 주문 </b>
+                                    </p>
                                     <div id="idTable">
 
                                     </div>
@@ -118,7 +120,7 @@ include "../header.php";
 
                                         </div>
                                     </div>
-
+                                    <p> <b>확정</b></p>
                                     <div id="idTableConfirm" style="margin-top: 10px;">
 
                                     </div>
@@ -167,6 +169,7 @@ include "../header.php";
                                             onclick="AddBranch()">배송지추가
                                         </button>
                                     </div>
+
                                     <div id="porTableDiv"></div>
                                 </div>
                             </div>
@@ -187,55 +190,54 @@ include "../header.php";
                     <div class="card card-outline card-primary">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <div class="input-group mb-3">
-                                    <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
-                                    &nbsp;&nbsp; -->
-                                    <select class="form-select form-control-sm" id="idDest"
-                                        data-placeholder="Choose Items">
-                                        <option val="va">전체</option>
-                                        <option val="v4">원리스트</option>
-                                        <option val="v5">주소지</option>
-                                    </select>
-                                    &nbsp;
-                                    <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디">
-                                    &nbsp;
-                                    <input class="form-control form-control-sm" id="idName" type="text"
-                                        placeholder="이름">
-                                    &nbsp;
-                                    <input class="form-control form-control-sm" id="idOwner" type="text"
-                                        placeholder="Owner">&nbsp;
-                                    <input class="form-control form-control-sm" id="idPasswd" type="text"
-                                        placeholder="비밀번호">
-                                    &nbsp;
-                                    <input class="form-control form-control-sm" id="idMobile" type="text"
-                                        placeholder="전화">
-                                    &nbsp;
-                                    <input class="form-control form-control-sm" id="idAddr" type="text" placeholder="주소"
-                                        style="width: 250px;">
-                                    &nbsp;
-                                    <input class="form-control form-control-sm" id="idZip" type="text"
-                                        placeholder="우편번호" style="width: 20px;">
-                                    &nbsp;
-                                    <button class="btn btn-outline-primary btn-sm" type="button"
-                                        onclick="execDaumPostcode( 'idAddr','idZip')">
-                                        주소찾기</button>
-                                    &nbsp;
-                                    <button class="btn btn-outline-success btn-sm" type="button"
-                                        onclick="AddBranch()">배송지추가
-                                    </button>
-                                </div>
+
+                                <p> <b>배송지</b></p>
                             </h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
-                                    data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i></button>
-                                <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
+                            <div class="input-group mb-3">
+                                <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
+                                    &nbsp;&nbsp; -->
+                                <select class="form-select form-control-sm" id="idDest" data-placeholder="Choose Items">
+                                    <option val="va">전체</option>
+                                    <option val="v4">원리스트</option>
+                                    <option val="v5">주소지</option>
+                                </select>
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idName" type="text" placeholder="이름">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idOwner" type="text"
+                                    placeholder="Owner">&nbsp;
+                                <input class="form-control form-control-sm" id="idPasswd" type="text"
+                                    placeholder="비밀번호">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idMobile" type="text" placeholder="전화">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idAddr" type="text" placeholder="주소"
+                                    style="width: 250px;">
+                                &nbsp;
+                                <input class="form-control form-control-sm" id="idZip" type="text" placeholder="우편번호"
+                                    style="width: 20px;">
+                                &nbsp;
+                                <button class="btn btn-outline-primary btn-sm" type="button"
+                                    onclick="execDaumPostcode( 'idAddr','idZip')">
+                                    주소찾기</button>
+                                &nbsp;
+                                <button class="btn btn-outline-success btn-sm" type="button" onclick="AddBranch()">배송지추가
+                                </button>
+                            </div>
+                            </h3>
+                            <div class="card-tools" id="idCardAddress">
+                                <button id="idCardAddressBtn" type="button" class="btn  btn-md btn-success"
+                                    data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                    펴기</button>
+                                <!-- <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                     data-toggle="tooltip" title="Remove">
-                                    <i class="fas fa-times"></i></button>
+                                    <i class="fas fa-times"></i></button> -->
                             </div>
                         </div>
                         <div class="card-body " id="cardDest">
-
+                            <p> <b>배송지</b></p>
                             <div id="idTableDest" style="margin-top: 10px;">
 
                             </div>
@@ -248,18 +250,19 @@ include "../header.php";
                 <div class="card card-outline card-primary">
                     <div class="card-header">
                         <h3 class="card-title">
-                            Purchase List
+                            <p> <b>구매내역서</b></p>
                         </h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
-                                data-toggle="tooltip" title="Collapse">
-                                <i class="fas fa-minus"></i></button>
-                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
+                        <div class="card-tools" id="idCardPDF">
+                            <button id="idCardPDFBtn" type="button" class="btn btn-md btn-warning"
+                                data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                펴기</button>
+                            <!-- <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                 data-toggle="tooltip" title="Remove">
-                                <i class="fas fa-times"></i></button>
+                                <i class="fas fa-times"></i></button> -->
                         </div>
                     </div>
                     <div class="card-body " id="cardPDF">
+
                         <iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe>
                     </div>
 
@@ -297,19 +300,19 @@ include "../header.php";
 
     <script src="kgardenlist_2.js"></script>
     <script src="../common.js"></script>
+    <script src="../header.js"></script>
     <script src="order.js"></script>
 
     <script>
-    const loc = document.querySelector('meta[name="location"]').getAttribute('content');
-    const user = document.querySelector('meta[name="user"]').getAttribute('content');
-    const role = document.querySelector('meta[name="role"]').getAttribute('content');
-    const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
-    const name = document.querySelector('meta[name="name"]').getAttribute('content');
-
     if (role != '1') {
         CallToast("지사 관리 권한으로 로긴 하세요", "error");
         window.location.href = "../login/login.php";
     }
+
+    cardWidgetManage($('#idCardPurchase'), $('#idCardPurchaseBtn')); //idCardAddressBtn
+    cardWidgetManage($('#idCardAddress'), $('#idCardAddressBtn')); //idCardAddressBtn
+    cardWidgetManage($('#idCardPDF'), $('#idCardPDFBtn')); //idCardAddressBtn
+
 
     orderToPdf = () => {
         var element = document.getElementById('idTableConfirm');
@@ -395,14 +398,19 @@ include "../header.php";
 
     table2.on("rowClick", function(e, row) {
         //e - the click event object
-        //table2.deselectRow();
+        var selectedRows = table2.getSelectedData();
+        selectedRows.forEach(function(row) {
+            table2.deselectRow(row.id);
+        });
+
+        // table2.deselectRow();
 
         $("#idName").val(row._row.data['name']);
         $("#idOwner").val(row._row.data['owner']);
         $("#idMobile").val(row._row.data['mobile']);
         $("#idAddr").val(row._row.data['addr']);
-        //table2.selectRow(Number(row._row.position));
-        table2.selectRow(1);
+        table2.selectRow(Number(row._row.position));
+        //table2.selectRow();
         //alert(Number(row._row.position));
     });
 
@@ -440,10 +448,32 @@ include "../header.php";
                 table1.addRow(jarr);
             }
         })
+
+        var cnt = $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
+            .html()
+        var sum = $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
+            .html()
+
+        $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
+            cvtCurrency(parseInt(cnt)));
+        $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
+            cvtCurrency(parseInt(sum)));
+
+
         var parent = $(
                 "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)"
             )
             .html("총합");
+        var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
+            .html()
+        var sum = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
+            .html()
+
+        $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
+            cvtCurrency(parseInt(cnt)));
+        $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
+            cvtCurrency(parseInt(sum)));
+
         //table1.setData(item);
     }
 

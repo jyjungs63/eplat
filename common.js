@@ -121,11 +121,28 @@ deleteLocalStorage = ( name ) => {
 getUser = () => {
     var sto = getLocalStorage('info');
 
-    return sto['user'];
+    return sto != undefined ? sto['user'] : undefined;
 }
 
 getName = () => {
     var sto = getLocalStorage('info');
 
-    return sto['name'];
+    return sto != undefined ? sto['name'] : undefined;
+}
+
+getRole = () => {
+    var sto = getLocalStorage('info');
+
+    return sto != undefined ? sto['role'] : undefined;
+}
+
+cardWidgetManage = ( widget , button ) => {
+
+    widget.on('collapsed.lte.cardwidget', function() {
+        button.html("펴기");
+    });
+
+    widget.on('expanded.lte.cardwidget', function() {
+        button.html("접기");
+    });
 }

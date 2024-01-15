@@ -105,8 +105,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="../common.js"> </script>
     <script>
-        var param="";
-    $(document).ready( function() {
+    var param = "";
+    $(document).ready(function() {
         const searchParams = new URLSearchParams(location.search);
         param = searchParams.get('dest');
     });
@@ -117,11 +117,27 @@
         dispList = (resp) => {
             if ('success' in resp) {
                 CallToast('Login successfully!!', "success")
-                var url = window.origin+'/' + resp['success'];
-                window.location.href = url;
-            }
-            else if ('falure' in resp) {
-                CallToast('Password emplty or mismatch !!', "error")
+                // var url = window.origin+'/' + resp['success'];
+                // window.location.href = url;
+                user = resp['success'][0]['user'];
+                role = resp['success'][0]['role'];
+                conf = resp['success'][0]['confirm'];
+                name = resp['success'][0]['name'];
+                loca = resp['success'][0]['location'];
+
+                var respo = {
+                    user: user,
+                    role: role,
+                    conf: conf,
+                    name: name,
+                    loca: loca
+                };
+
+                saveLocalStorage('info', respo);
+
+                window.location.href = '../index.php'
+            } else if ('falure' in resp) {
+                CallToast('Password emplty or mismatch !!', "error");
             }
         }
         dispErr = (xhr) => {
@@ -130,7 +146,7 @@
 
         formData.append('functionName', 'Slogon');
         //CallAjax1("SMethods.php?dest=classroom", "POST", formData, dispList, dispErr);
-        CallAjax1("SMethods.php?dest="+ param, "POST", formData, dispList, dispErr);
+        CallAjax1("SMethods.php?dest=" + param, "POST", formData, dispList, dispErr);
 
     })
     </script>
