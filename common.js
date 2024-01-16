@@ -167,3 +167,15 @@ function generatePassword(length) {
 
     return password;
 }
+
+function getRandomColor() {
+    // Generate random values for red, green, and blue
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue = Math.floor(Math.random() * 256);
+  
+    // Create the RGB color string
+    const color = `rgba(${red},${green},${blue},1)`;
+  
+    return color;
+  }

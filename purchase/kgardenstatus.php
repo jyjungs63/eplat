@@ -32,8 +32,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="#">Prev</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="javascipt:window.history.back()">Prev</a></li>
                         </ol>
                     </div>
                 </div>
@@ -64,11 +64,11 @@
                                         data-placeholder="Choose Items" style="width: 150px;">
                                         <option val="va">전체</option>
                                     </select>&nbsp;&nbsp;
-
-                                    <input class="form-control form-control-sm" id="reportrange"
-                                            style="width: 200px">
-                                        <i class="fa fa-calendar" style="margin-top: 7px; margin-left: 2px"></i>&nbsp;
-                                        </input>
+                                    <!-- <input type="month" class="form-control form-control-sm" id="monthPicker"
+                                        name="month" style="width: 85px"> -->
+                                    <input class="form-control form-control-sm" id="reportrange" style="width: 200px">
+                                    <i class="fa fa-calendar" style="margin-top: 7px; margin-left: 2px"></i>&nbsp;
+                                    </input>
                                 </div>
                             </h3>
                             <div class="card-tools">
@@ -137,7 +137,6 @@
                                                             style="height: 500px;"></canvas>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -147,8 +146,6 @@
                     </div>
                 </div>
             </div>
-
-
     </div>
     </section>
     </div>
@@ -162,20 +159,16 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="../common.js"></script>
+    <script src="../header.js"></script>
     <script>
     var tab;
-
-    const user = document.querySelector('meta[name="user"]').getAttribute('content');
-    const role = document.querySelector('meta[name="role"]').getAttribute('content');
-    const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
-    const name = document.querySelector('meta[name="name"]').getAttribute('content');
 
     window.addEventListener('resize', function() {
 
     })
 
     document.addEventListener("DOMContentLoaded", function() {
-        $("#idStudyStatus").html( name + "학생학습현황");
+        $("#idStudyStatus").html(name + "학생학습현황");
         CallToast(name + "님 방문을 환영합니다!.", "success");
     });
 
@@ -219,31 +212,38 @@
         var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d');
 
         var labelData = [];
-        var data = [];
+        var data = [],
+            backcolor = [],
+            bordcolor = [];
+
         res.forEach(el => {
             //let labelData = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
             labelData.push(el['name']);
             data.push(el['cnt']);
+            var color = getRandomColor();
+            backcolor.push(color);
+            bordcolor.push(color);
         })
+
         //let labelData = ['January', 'February', 'March', 'April'];
 
         let dataSets = [{
-                label: "동영상 시청",
+                label: "진도율",
                 //label: 'Digital Goods',
-                backgroundColor: [
-                    'rgba(60,141,188,0.9)', 
-                    'rgba(0, 153, 0, 1)', 
-                    'rgba(255, 51, 0, 1)',
-                    'rgba(0, 255, 255, 1)',
-                    'rgba(204, 51, 255, 1)'
-                ],
-                borderColor: [
-                    'rgba(60,141,188,0.8)',
-                    'rgba(0, 153, 0, 1)',
-                    'rgba(255, 51, 0, 1)',
-                    'rgba(0, 255, 255, 1)',
-                    'rgba(204, 51, 255, 1)'
-                ],
+                backgroundColor: backcolor
+                    // 'rgba(60,141,188,0.9)',
+                    // 'rgba(0, 153, 0, 1)',
+                    // 'rgba(255, 51, 0, 1)',
+                    // 'rgba(0, 255, 255, 1)',
+                    // 'rgba(204, 51, 255, 1)'
+                    ,
+                borderColor: bordcolor
+                    // 'rgba(60,141,188,0.8)',
+                    // 'rgba(0, 153, 0, 1)',
+                    // 'rgba(255, 51, 0, 1)',
+                    // 'rgba(0, 255, 255, 1)',
+                    // 'rgba(204, 51, 255, 1)'
+                    ,
                 //pointRadius: false,
                 pointColor: '#3b8bba',
                 pointStrokeColor: 'rgba(60,141,188,1)',
@@ -420,45 +420,55 @@
     printClassMember = () => {
         tab.print();
     }
-    
+
     var start = moment().startOf('week');
-var end = moment().endOf('week');
+    var end = moment().endOf('week');
 
-function cb(start, end) {
-    $('#reportrange span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-}
-
-$('#reportrange').daterangepicker({
-    startDate: start,
-    endDate: end,
-    locale: {
-        format: 'YYYY-MM-DD', // 날짜 표시 형식
-        separator: ' ~ ', // 날짜 범위 구분자
-        applyLabel: '적용', // 적용 버튼 레이블
-        cancelLabel: '취소', // 취소 버튼 레이블
-        fromLabel: '부터', // 시작일 레이블
-        toLabel: '까지', // 종료일 레이블
-        customRangeLabel: '직접 선택', // 사용자 정의 범위 레이블
-        weekLabel: '주', // 주 레이블
-        daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'], // 요일 배열
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], // 월 배열
-        firstDay: 0 // 주의 시작 요일 (0: 일요일, 1: 월요일, ...)
-    },
-    ranges: {
-        '오늘': [moment(), moment()],
-        '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        '지난 7일': [moment().subtract(6, 'days'), moment()],
-        '지난주': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf(
-            'week')],
-        '이번주': [moment().startOf('week'), moment().endOf('week')],
-        '다음주': [moment().add(1, 'weeks').startOf('week'), moment().add(1, 'weeks').endOf('week')],
-        '지난 30일': [moment().subtract(29, 'days'), moment()],
-        '이번달': [moment().startOf('month'), moment().endOf('month')],
-        '지난달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf(
-            'month')]
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
     }
-}, cb);
-</script>
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        locale: {
+            format: 'YYYY-MM-DD', // 날짜 표시 형식
+            separator: ' ~ ', // 날짜 범위 구분자
+            applyLabel: '적용', // 적용 버튼 레이블
+            cancelLabel: '취소', // 취소 버튼 레이블
+            fromLabel: '부터', // 시작일 레이블
+            toLabel: '까지', // 종료일 레이블
+            customRangeLabel: '직접 선택', // 사용자 정의 범위 레이블
+            weekLabel: '주', // 주 레이블
+            daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'], // 요일 배열
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], // 월 배열
+            firstDay: 0 // 주의 시작 요일 (0: 일요일, 1: 월요일, ...)
+        },
+        ranges: {
+            '오늘': [moment(), moment()],
+            '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '지난 7일': [moment().subtract(6, 'days'), moment()],
+            '지난주': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf(
+                'week')],
+            '이번주': [moment().startOf('week'), moment().endOf('week')],
+            '다음주': [moment().add(1, 'weeks').startOf('week'), moment().add(1, 'weeks').endOf('week')],
+            '지난 30일': [moment().subtract(29, 'days'), moment()],
+            '이번달': [moment().startOf('month'), moment().endOf('month')],
+            '지난달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf(
+                'month')]
+        }
+    }, cb);
+
+    // var monthPicker = document.getElementById("monthPicker");
+
+    // monthPicker.addEventListener('input', function(evt) {
+    //     let thisMoment = moment(monthPicker.value);
+    //     let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
+    //     let startOfMonth = moment(thisMoment).startOf('month').format('YYYY-MM-DD');
+
+    //     listPorRange(startOfMonth, endOfMonth)
+    // })
+    </script>
 </body>
 
 </html>
