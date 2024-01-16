@@ -111,7 +111,6 @@ var table = new Tabulator("#idTable", {
     rowHeight: 40, //set rows to 40px height
     selectable: true, //make rows selectable
     columns: [
-
         // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
         {
             title: "단계",

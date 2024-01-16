@@ -123,7 +123,7 @@ include "../header.php";
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="boardmgr.php">Home</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
                             <!-- <li class="breadcrumb-item active"><a href="./insert.php">Upload</a></li> -->
                             <li class="breadcrumb-item active"><a href="javascript:activeUpload()">Upload</a></li>
                         </ol>
@@ -551,6 +551,7 @@ $(document).ready(function(e) {
                     // }
                 ]
             });
+            CallToast('게시판 보기  !', "success")
         }
 
         dispErr2 = (error) => {

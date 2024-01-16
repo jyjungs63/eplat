@@ -3,7 +3,7 @@ var deleteIcon = function(cell, formatterParams) { //plain text value
 };
 
 table = new Tabulator("#idTable", {
-    height: "500px",
+    height: "700px",
     layout: "fitColumns",
     //autoColumns: true,
     selectable: true,
