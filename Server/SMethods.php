@@ -283,7 +283,9 @@ function SPorDetailList ($data) {
                 'rdate' => $row['rdate'],
                 'addr'  => $row['addr'],
                 'mobile'  => $row['mobile'],
-                'confirm'  => $row['confirm']
+                'zip'  => $row['zip'],
+                'confirm'  => $row['confirm'],
+                'pdfname' => $row['pdfname']
             ));
         }
         

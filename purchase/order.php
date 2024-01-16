@@ -30,9 +30,8 @@ include "../header.php";
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="#custom-tabs-one-profile">Purchase
-                                    List</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:window.history.back();">이전</a></li>
                         </ol>
                     </div>
                 </div>
@@ -131,41 +130,44 @@ include "../header.php";
                                         <select class="form-select form-control-sm" id="idPorList"
                                             data-placeholder="Choose Items" style="width: 120px">
                                         </select>
-                                        <input class="form-control form-control-sm" id="reportrange"
-                                            style="width: 85px">
-                                        <i class="fa fa-calendar" style="margin-top: 7px; margin-left: 2px"></i>&nbsp;
-                                        </input>
+                                        <input type="month" class="form-control form-control-sm" id="monthPicker"
+                                            name="month" style="width: 85px">
+                                        <!-- <input class="form-control form-control-sm" id="reportrange"
+                                            style="width: 85px"> -->
+                                        <!-- <i class="fa fa-calendar" style="margin-top: 7px; margin-left: 2px"></i>&nbsp;
+                                        </input> -->
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idID2" type="text"
-                                            placeholder="아이디">
+                                            placeholder="아이디" style="width: 50px;">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idName2" type="text"
-                                            placeholder="이름">
+                                            placeholder="이름" style="width: 50px;">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idOwner2" type="text"
-                                            placeholder="Owner">&nbsp;
-                                        <input class="form-control form-control-sm" id="idPasswd2" type="text"
-                                            placeholder="비밀번호">
-                                        &nbsp;
+                                            placeholder="Owner" style="width: 50px;">&nbsp;
+
                                         <input class="form-control form-control-sm" id="idMobile2" type="text"
                                             placeholder="전화번호" style="width: 70px;">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idAddr2" type="text"
                                             placeholder="주소" style="width: 120px;">
                                         &nbsp;
+                                        <input class="form-control form-control-sm" id="idZip2" type="text"
+                                            placeholder="우편번호">
+                                        &nbsp;
                                         <input class="form-control form-control-sm" id="idFinish2" type="text"
-                                            placeholder="구매완료" style="width: 50px;">
+                                            placeholder="구매완료" style="width: 30px;">
                                         &nbsp;
                                         <input class="form-control form-control-sm" id="idRdate2" type="text"
                                             placeholder="구매일" style="width: 5px;">
                                         &nbsp;
-                                        <button class="btn btn-outline-primary btn-sm" type="button"
+                                        <!-- <button class="btn btn-outline-primary btn-sm" type="button"
                                             onclick="execDaumPostcode('idZip','idAddr2' )">
                                             주소찾기</button>
                                         &nbsp;
                                         <button class="btn btn-outline-success btn-sm" type="button"
                                             onclick="AddBranch()">배송지추가
-                                        </button>
+                                        </button> -->
                                     </div>
 
                                     <div id="porTableDiv"></div>
@@ -200,14 +202,14 @@ include "../header.php";
                                     <option val="v5">주소지</option>
                                 </select>
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디">
-                                &nbsp;
+                                <!-- <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디">
+                                &nbsp; -->
                                 <input class="form-control form-control-sm" id="idName" type="text" placeholder="이름">
                                 &nbsp;
                                 <input class="form-control form-control-sm" id="idOwner" type="text"
                                     placeholder="Owner">&nbsp;
-                                <input class="form-control form-control-sm" id="idPasswd" type="text"
-                                    placeholder="비밀번호">
+                                <!-- <input class="form-control form-control-sm" id="idPasswd" type="text"
+                                    placeholder="비밀번호"> -->
                                 &nbsp;
                                 <input class="form-control form-control-sm" id="idMobile" type="text" placeholder="전화">
                                 &nbsp;
@@ -217,12 +219,12 @@ include "../header.php";
                                 <input class="form-control form-control-sm" id="idZip" type="text" placeholder="우편번호"
                                     style="width: 20px;">
                                 &nbsp;
-                                <button class="btn btn-outline-primary btn-sm" type="button"
+                                <!-- <button class="btn btn-outline-primary btn-sm" type="button"
                                     onclick="execDaumPostcode( 'idAddr','idZip')">
                                     주소찾기</button>
                                 &nbsp;
                                 <button class="btn btn-outline-success btn-sm" type="button" onclick="AddBranch()">배송지추가
-                                </button>
+                                </button> -->
                             </div>
                             </h3>
                             <div class="card-tools" id="idCardAddress">
@@ -398,15 +400,71 @@ include "../header.php";
         });
 
         // table2.deselectRow();
-
+        var ar = row._row.data['addr'].split('우(');
         $("#idName").val(row._row.data['name']);
         $("#idOwner").val(row._row.data['owner']);
         $("#idMobile").val(row._row.data['mobile']);
-        $("#idAddr").val(row._row.data['addr']);
+        $("#idAddr").val(ar[0]);
+        $("#idZip").val(ar[1].slice(0, ar[1].length - 1));
         table2.selectRow(Number(row._row.position));
         //table2.selectRow();
         //alert(Number(row._row.position));
     });
+
+    AddBranch2 = () => {
+
+        var selectElement = document.getElementById("idGrade"); // 지사 또는 원관리
+        var selectedValue = selectElement.value;
+
+        var id = $("#idID").val(); // 아이디
+        var name = $("#idName").val(); // 이름
+        var owner = $("#idOwner").val(); // 지사명
+        var password = $("#idPasswd").val();
+        var mobile = $("#idMobile").val();
+        var addr = $("#idAddr").val();
+        var zipcode = $("#idZip").val();
+        var role = 2; // 1 branch manager , 2 // teacher
+        var rdate = "";
+
+        const formattedDate = formatDate();
+        if (rdate == undefined || rdate == "") rdate = formattedDate;
+
+        var items = {
+            id: name,
+            name: name,
+            owner: owner,
+            password: "",
+            mobile: mobile,
+            addr: addr,
+            zipcode: zipcode,
+            mid: user,
+            role: role,
+            rdate: rdate,
+        }
+
+        var data = {
+            "item": items
+        }
+        dispList = (resp) => {
+            if ('success' in resp) {
+                CallToast('New Branch Manager added successfully!!', "success")
+                table.addRow(items);
+            } else
+                CallToast('New Branch Manager added falure!', "error")
+
+        }
+        dispErr = (xhr) => {
+            CallToast('New Branch Manager DB Call error!', "error")
+        }
+        jsdata = JSON.stringify(items);
+        var options = {
+            functionName: 'SRegistermgr',
+            otherData: {
+                items
+            }
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+    };
 
     function calsum(cell) {
         var row = cell.getRow();
@@ -482,6 +540,11 @@ include "../header.php";
     }
 
     async function makePurchasePDFList() {
+
+        if ($("#idName").val() == "" || $("#idName").val() == undefined)
+            alert('Name missing')
+        if ($("#idAddr").val() == "" || $("#idAddr").val() == undefined)
+            alert('Address  missing')
 
         const pdfDoc = await PDFDocument.create()
 
@@ -663,11 +726,13 @@ include "../header.php";
 
         // 베송지
         drawTexts(page, 100, 250, 12, rgb(0., 0., 0.), "배송지:");
-        drawTexts(page, 150, 250, 12, rgb(0., 0., 0.), $("#idName").val());
-        drawTexts(page, 250, 250, 12, rgb(0., 0., 0.), $("#idMobile").val());
+        drawTexts(page, 150, 250, 12, rgb(0., 0., 0.), $("#idAddr").val());
+        drawTexts(page, 300, 250, 12, rgb(0., 0., 0.), $("#idMobile").val());
+        drawTexts(page, 300, 250, 12, rgb(0., 0., 0.), "구매일:");
         drawTexts(page, 300, 300, 12, rgb(0., 0., 0.), formatDate());
-        drawTexts(page, 100, 200, 12, rgb(0., 0., 0.), $("#idAddr").val());
-        drawTexts(page, 150, 200, 12, rgb(0., 0., 0.), $("#idZip").val());
+        drawTexts(page, 100, 200, 12, rgb(0., 0., 0.), $("#idName").val());
+        drawTexts(page, 250, 200, 12, rgb(0., 0., 0.), "우편번호");
+        drawTexts(page, 300, 200, 12, rgb(0., 0., 0.), $("#idZip").val());
 
 
         const pdfBytes = await pdfDoc.save()
@@ -704,22 +769,21 @@ include "../header.php";
         });
 
         formData.append('id', user);
-        formData.append('order', chance.string({
-            length: 8,
-            casing: 'upper',
-            alpha: true,
-            numeric: true
-        }));
-        formData.append('zip', "12345");
-        formData.append('addr', chance.address());
-        formData.append('mobile', chance.address());
+        formData.append('order', $("#idOwner").val())
+
+        // $("#idName").val()
+        // $("#idAddr").val()
+        // $("#idOwner").val();
+        // $("#idMobile").val();
+        // $("#idAddr").val();
+        // $("#idZip").val();
+
+        formData.append('zip', $("#idZip").val());
+        formData.append('addr', $("#idAddr").val());
+        formData.append('mobile', $("#idMobile").val());
         formData.append('postlist', JSON.stringify(porList));
-        formData.append('porid', 'P-' + formatDate() + "-" + chance.string({
-            length: 8,
-            casing: 'upper',
-            alpha: true,
-            numeric: true
-        }))
+        formData.append('porid', 'P-' + "-" + formatDate() + "-" + $("#idName").val() + Math.floor(Math.random() *
+            10) + 1)
         // fetch('../Server/SUploadBoardPDF.php', {
         //     //fetch('./data.php', {
         //     method: 'POST',

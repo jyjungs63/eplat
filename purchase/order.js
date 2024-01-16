@@ -400,8 +400,11 @@ listPor = (por_id) => {
         $("#idID2").val(res[0]['id']);
         $("#idName2").val(res[0]['order']);
         $("#idAddr2").val(res[0]['addr']);
+        $("#idZip2").val(res[0]['zip']);
         $("#idRdate2").val(res[0]['rdate']);
+        $("#idMobile2").val(res[0]['mobile']);
         $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
+        document.getElementById('pdfDiv').src = window.origin + "/Server/uploads/"+ res[0]['pdfname'];
     }
     dispErr = (error) => {
         CallToast('SPorDetailList falure!', "error")
@@ -442,14 +445,18 @@ listPorRange = (start, end) => {
         var cnt = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
         var sum = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
         $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합")
-        $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(parseInt(cnt/2));
+        $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(cvtCurrency(parseInt(cnt/2)));
         $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(cvtCurrency(parseInt(sum/2)));
 
         $("#idID2").val(res[0]['id']);
         $("#idName2").val(res[0]['order']);
         $("#idAddr2").val(res[0]['addr']);
+        $("#idZip2").val(res[0]['zip']);
+        $("#idMobile2").val(res[0]['mobile']);
         $("#idRdate2").val(res[0]['rdate']);
         $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
+
+        
     }
     dispErr = (error) => {
         CallToast('SPorDetailList falure!', "error")
@@ -619,3 +626,15 @@ $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
     console.log(picker.startDate.format('YYYY-MM-DD'));
     console.log(picker.endDate.format('YYYY-MM-DD'));
   });
+
+  var monthPicker = document.getElementById("monthPicker");
+
+  monthPicker.addEventListener('input', function(evt) {
+
+    let thisMoment = moment(monthPicker.value);
+    let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
+    let startOfMonth = moment(thisMoment).startOf('month').format('YYYY-MM-DD');
+
+    listPorRange( startOfMonth, endOfMonth )
+
+  })
