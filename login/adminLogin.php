@@ -112,7 +112,7 @@
                                         <h3 class="card-title">
                                             <div class="input-group mb-3">
                                                 <button class="btn btn-outline-secondary" type="button">필터
-                                                    </button>
+                                                </button>
                                                 <select class="form-select" id="idGrade"
                                                     data-placeholder="Choose Items">
                                                     <option val="va">전체</option>
@@ -172,8 +172,7 @@
     <script src="../common.js"></script>
     <script src="adminLogin.js"></script>
     <script>
-
-    $("#exampleModal").on("hidden.bs.modal", function () {
+    $("#exampleModal").on("hidden.bs.modal", function() {
         // window.location.href = "https://www.eplat.co.kr/index.php";
     });
     listPor = (por_id) => {
