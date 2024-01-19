@@ -44,21 +44,21 @@
                             <div class="input-group mb-3">
                                 <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
                                     &nbsp;&nbsp; -->
-                                <select class="form-select form-control-sm" id="idDest" data-placeholder="필터">
+                                <!-- <select class="form-select form-control-sm" id="idDest" data-placeholder="필터">
                                     <option val="va">전체</option>
                                     <option val="v4">원리스트</option>
                                     <option val="v5">주소지</option>
-                                </select>
+                                </select> -->
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idID" type="text" placeholder="ID">
+                                <input class="form-control form-control-sm" id="idID" type="text" placeholder="POR ID">
                                 &nbsp;
                                 <input class="form-control form-control-sm" id="idName" type="text" placeholder="Name">
                                 &nbsp;
                                 <input class="form-control form-control-sm" id="idOwner" type="text"
                                     placeholder="Owner">&nbsp;
-                                <input class="form-control form-control-sm" id="idPasswd" type="text"
+                                <!-- <input class="form-control form-control-sm" id="idPasswd" type="text"
                                     placeholder="Password">
-                                &nbsp;
+                                &nbsp; -->
                                 <input class="form-control form-control-sm" id="idMobile" type="text"
                                     placeholder="Mobile">
                                 &nbsp;
@@ -68,11 +68,11 @@
                                 <input class="form-control form-control-sm" id="idRdate" type="text" placeholder="구매일"
                                     style="width: -5px;">
                                 &nbsp;
-                                <button class="btn btn-outline-primary btn-sm" type="button"
+                                <!-- <button class="btn btn-outline-primary btn-sm" type="button"
                                     onclick="execDaumPostcode()">
                                     주소찾기</button>
-                                &nbsp;
-                                <button class="btn btn-outline-success btn-sm" type="button" onclick="AddBranch()">배송지추가
+                                &nbsp; -->
+                                <button class="btn btn-outline-success btn-sm" type="button" onclick="AddBranch()">구매처리
                                 </button>
                             </div>
                         </h3>
@@ -183,6 +183,18 @@
             $("#idName").val(res[0]['order']);
             $("#idAddr").val(res[0]['addr']);
             $("#idRdate").val(res[0]['rdate']);
+            var cnt = $(
+                    "#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
+                .html()
+            var sum = $(
+                    "#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
+                .html()
+            $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html(
+                "총합")
+            $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
+                cvtCurrency(parseInt(cnt / 2)));
+            $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
+                cvtCurrency(parseInt(sum / 2)));
             CallToast('New Branch Manager Updated successfully!!', "success")
         }
         dispErr = (xhr) => {

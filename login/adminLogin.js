@@ -270,14 +270,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 editor: false,
 
             },
-            {
-                formatter: deleteIcon,
-                width: 40,
-                hozAlign: "center",
-                cellClick: function(e, cell) {
-                    deleteRow(cell.getRow())
-                }
-            },
+            // {
+            //     formatter: deleteIcon,
+            //     width: 40,
+            //     hozAlign: "center",
+            //     cellClick: function(e, cell) {
+            //         deleteRow(cell.getRow())
+            //     }
+            // },
         ],
     });
 
@@ -304,9 +304,9 @@ document.addEventListener("DOMContentLoaded", function() {
         alert('Modal is fully loaded and shown.');
         // Execute functions or perform actions that need the modal to be ready
     });
-    // table1.on("rowClick", function(e, row) {
-    //     listPor(row._row.data['por_id'])
-    //     $("#exampleModal").modal('hide');
-    // });
+    table1.on("rowClick", function(e, row) {
+        listPor(row._row.data['por_id'])
+        $("#exampleModal").modal('hide');
+    });
 });
 

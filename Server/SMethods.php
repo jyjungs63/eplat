@@ -395,6 +395,64 @@ function SShowMgr ($data) {
     }
 }
 
+function SShowAddr ($data) {
+    session_start();
+
+    global $conn;
+
+    $id   = $data['id'];
+
+    try {
+
+
+        $sqlString = "SELECT * FROM eplat_addrlist where mid = '".$id."'"; 
+
+            
+        $rs = mysqli_query($conn,$sqlString);
+        $rows = array();
+
+        $i = 0;
+
+        while($row = mysqli_fetch_array($rs)){
+            array_push($rows,
+                    array(  'id'        => $row['id'],
+                            'name'      => $row['name'] ,
+                            'owner'     => $row['owner'] ,							
+                            'mobile'    => $row['mobile'],								
+                            'addr'      => $row['addr'],								
+                            'zipcode'   => $row['zipcode'],														
+                            'rdate'     => $row['rdate'],						
+                    ));
+        }
+
+        $sqlString2 = "SELECT * FROM eplat_user where mid = '".$id."'"; 
+        $rs = mysqli_query($conn,$sqlString2);
+        
+        while($row = mysqli_fetch_array($rs)){
+            array_push($rows,
+                    array(  'id'        => $row['id'],
+                            'name'      => $row['name'] ,
+                            'owner'     => $row['owner'] ,							
+                            'mobile'    => $row['mobile'],								
+                            'addr'      => $row['addr'],								
+                            'zipcode'   => $row['zipcode'],														
+                            'rdate'     => $row['rdate'],						
+                    ));
+        }    
+        
+        $conn->close();
+        $result["rows"] = $rows;
+
+        header('Content-Type: application/json');
+        echo json_encode($rows);
+    }
+    catch (Exception $e)
+    {
+        header('Content-Type: application/json');
+        echo json_encode( array( "Error: " => $e->getMessage() ) );
+    }
+}
+
 function SDeleteChild ($data) {
     session_start();
 
@@ -470,13 +528,62 @@ function SRegistermgr ($data) {
     // $idrolebm = $data['items']['idrolebm'];
     $mid      = $data['items']['mid'];
     $role     = $data['items']['role'];
+    $confirm = 1;
+    if ( isset($data['items']['confirm']) )  
+        $confirm = (int) $data['items']['confirm'];
     $error="";
     
     try {
         global $conn;
     
         $sqlstring = "insert into eplat_user (id, name,owner, password, mobile, addr, zipcode, role, mid, confirm) 
-                    values ( '{$id}', '{$name}','{$owner}', '{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role, '{$mid}', 1 )";
+                    values ( '{$id}', '{$name}','{$owner}', '{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role, '{$mid}', $confirm )";
+    
+        $res = mysqli_query ( $conn, $sqlstring);
+    
+        $conn->close();
+    }
+    catch (Exception $e) 
+    {
+        $error = $e->getMessage();
+    }
+    
+    header('Content-Type: application/json');
+    if ($res === TRUE) {
+        echo json_encode(  array( "success" => $res) );
+
+    } else {
+        echo json_encode(  array( "Error" => $error ) );
+    }
+}
+
+function SRegistermgr2 ($data) {
+
+    session_start();
+    $result = "";
+  
+    //$json = file_get_contents('php://input');
+    // $arr = json_decode($data, true); 
+    // $row = $arr['item'];
+    
+    //$id       = $data['items']['id'];
+    $name     = $data['items']['name'];
+    $owner     = $data['items']['owner'];
+    //$password = $data['items']['password'];
+    $mobile   = $data['items']['mobile'];
+    $addr     = $data['items']['addr'];
+    $zipcode  = $data['items']['zipcode'];
+    // $idrolebm = $data['items']['idrolebm'];
+    $mid      = $data['items']['mid'];
+    //$role     = $data['items']['role'];
+
+    $error="";
+    
+    try {
+        global $conn;
+    
+        $sqlstring = "insert into eplat_addrlist ( name, owner,  mobile, addr, zipcode,  mid ) 
+                    values (  '{$name}','{$owner}', '{$mobile} ','{$addr}', '{$zipcode}',  '{$mid}' )";
     
         $res = mysqli_query ( $conn, $sqlstring);
     

@@ -925,7 +925,7 @@
                                     <label for="Password" class="form-label"><i class="zmdi zmdi-lock"></i>
                                         비밀번호</label>
                                     <input type="password" class="form-control loginput" id="your_pass" name="Password"
-                                        placeholder="비밀번호" required>
+                                        onkeydown="KeyPress(event)" placeholder="비밀번호" required>
                                 </div>
                                 <div class="form-group" style="margin-top: 1rem;padding: 2rem">
                                     <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
@@ -1098,6 +1098,12 @@ logout = () => {
 
 toggleChage = (idAnchor) => {
     return idAnchor.is(':visible') == true ? idAnchor.toggle() : null;
+}
+
+KeyPress = (event) => {
+
+    if (event.key === "Enter")
+        logon();
 }
 </script>
 

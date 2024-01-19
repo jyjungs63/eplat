@@ -1,6 +1,6 @@
 
 $(document).ready(function(e) {
-    $("#cardDest").hide();
+    //$("#cardDest").hide();
     $("#cardPDF").hide();
 });
 
@@ -479,7 +479,7 @@ document.getElementById("idPorList").addEventListener("change", function() {
     listPor(selectedText);
 });
 
-document.getElementById("idDest").addEventListener("change", function() {
+document.getElementById("idDest").addEventListener("change", function() {   // 주소지 List
     // 선택된 옵션 가져오기
     var selectedOption = this.options[this.selectedIndex];
 
@@ -499,7 +499,7 @@ document.getElementById("idDest").addEventListener("change", function() {
         var items = [];
         var data = {
             role: 2,
-            id: "manager"
+            id: user
         };
 
         dispList = (resp) => {
@@ -509,10 +509,10 @@ document.getElementById("idDest").addEventListener("change", function() {
                 var jarr = {
                     "No": i,
                     "name": el['name'],
+                    "owner": el['owner'],
                     "mobile": el['mobile'],
                     "addr": el['addr'],
                     "zipcode": el['zipcode'],
-                    "password": el['password'],
                     "rdate": el['rdate'],
                 }
                 items.push(jarr);
@@ -528,10 +528,10 @@ document.getElementById("idDest").addEventListener("change", function() {
         }
 
         var options = {
-            functionName: 'SShowMgr',
+            functionName: 'SShowAddr',
             otherData: {
-                role: 2,
-                id: "manager"
+                role: 2,    // not using current
+                id: user
             }
         };
 
@@ -544,7 +544,7 @@ document.getElementById("idDest").addEventListener("change", function() {
 
 });
 
-document.getElementById("idGrade").addEventListener("change", function() {
+document.getElementById("idGrade").addEventListener("change", function() { // 구매 목록 선택
     // 선택된 옵션 가져오기
     var selectedOption = this.options[this.selectedIndex];
 

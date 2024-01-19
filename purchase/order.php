@@ -17,6 +17,12 @@ include "../header.php";
     <link href="../common.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
+    <style>
+    .custom-width {
+        width: 50px;
+        /* Set your desired width */
+    }
+    </style>
 </head>
 
 <body>
@@ -60,7 +66,7 @@ include "../header.php";
                                 </li>
                             </ul>
                             <div class="card-tools">
-                                <button id="idCardPurchaseBtn" type="button" class="btn  btn-md btn-primary"
+                                <button id="idCardPurchaseBtn" type="button" class="btn  btn-sm btn-primary"
                                     data-card-widget="collapse" data-toggle="tooltip" title="Collapse">접기
                                 </button>
                                 <!-- <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
@@ -89,26 +95,26 @@ include "../header.php";
                                                 <option val="ve">교구</option>
                                             </select>
                                         </div>
-                                        <a id="anchorRead" href="javascript:orderToPdf()" class="btn btn-success"
+                                        <!-- <a id="anchorRead" href="javascript:orderToPdf()" class="btn btn-success"
                                             role="button" data-toggle="tooltip" title="Save PDF file"
                                             aria-disabled="true"><i class="fa-solid fa-file-pdf"></i></a>
-                                        &nbsp;&nbsp;
-                                        <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-warning"
+                                        &nbsp;&nbsp; -->
+                                        <!-- <a id="anchorRead" href="javascript:orderPrint()" class="btn btn-warning"
                                             role="button" data-toggle="tooltip" title="Order and PDF file"
                                             aria-disabled="true"><i class="fa-solid fa-print"></i></a>
-                                        &nbsp;&nbsp;
+                                        &nbsp;&nbsp; -->
 
-                                        <a id="anchorRead" href="javascript:orderBook()" class="btn btn-info"
+                                        <!-- <a id="anchorRead" href="javascript:orderBook()" class="btn btn-info"
                                             role="button" data-toggle="tooltip" title="Add to Cart "
                                             aria-disabled="true"><i
-                                                class="fa-solid fa-cart-shopping"></i></a>&nbsp;&nbsp;
+                                                class="fa-solid fa-cart-shopping"></i></a>&nbsp;&nbsp; -->
                                         <!-- <a id="anchorRead" href="javascript:selectAll()" class="btn btn-success"
                                             role="button" data-toggle="tooltip" title="Select All"
                                             aria-disabled="true"><i class="fa-solid fa-save"></i></a> -->
                                     </div>
-                                    <p>
+                                    <h5>
                                         <b> 주문 </b>
-                                    </p>
+                                    </h5>
                                     <div id="idTable">
 
                                     </div>
@@ -117,7 +123,13 @@ include "../header.php";
 
                                         </div>
                                     </div>
-                                    <p> <b>확정</b></p>
+                                    <h5> <b>확정</b></h5>
+                                    <div class="col-12 text-center">
+                                        <a id="anchorRead" href="javascript:orderBook()"
+                                            class="btn btn-info align-items-end justify-content-end" role="button"
+                                            data-toggle="tooltip" title="Add to Cart " aria-disabled="true"><i
+                                                class="fa-solid fa-cart-shopping"></i> 장바구니담기</a>&nbsp;&nbsp;
+                                    </div>
                                     <div id="idTableConfirm" style="margin-top: 10px;">
 
                                     </div>
@@ -204,32 +216,38 @@ include "../header.php";
                                 &nbsp;
                                 <!-- <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디">
                                 &nbsp; -->
-                                <input class="form-control form-control-sm" id="idName" type="text" placeholder="이름">
+                                <input class="form-control form-control-sm custom-width" id="idName" type="text"
+                                    placeholder="이름">
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idOwner" type="text"
+                                <input class="form-control form-control-sm custom-width" id="idOwner" type="text"
                                     placeholder="Owner">&nbsp;
                                 <!-- <input class="form-control form-control-sm" id="idPasswd" type="text"
                                     placeholder="비밀번호"> -->
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idMobile" type="text" placeholder="전화">
+                                <input class="form-control form-control-sm custom-width" id="idMobile" type="text"
+                                    placeholder="전화" style="width: 20px;">
                                 &nbsp;
                                 <input class="form-control form-control-sm" id="idAddr" type="text" placeholder="주소"
                                     style="width: 250px;">
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idZip" type="text" placeholder="우편번호"
-                                    style="width: 20px;">
+                                <input class="form-control form-control-sm custom-width" id="idZip" type="text"
+                                    placeholder="우편번호" style="width: 20px;">
                                 &nbsp;
-                                <!-- <button class="btn btn-outline-primary btn-sm" type="button"
-                                    onclick="execDaumPostcode( 'idAddr','idZip')">
+                                <button class="btn btn-outline-primary btn-sm" type="button"
+                                    onclick="execDaumPostcode( 'idZip','idAddr')">
                                     주소찾기</button>
                                 &nbsp;
                                 <button class="btn btn-outline-success btn-sm" type="button" onclick="AddBranch()">배송지추가
-                                </button> -->
+                                </button>
                             </div>
                             </h3>
                             <div class="card-tools" id="idCardAddress">
-                                <button id="idCardAddressBtn" type="button" class="btn  btn-md btn-success"
-                                    data-card-widget="collapse" data-toggle="tooltip" title="Collapse">펴기</button>
+                                <a id="idConfirmOrder" href="javascript:orderPrint()" class="btn btn-warning disabled"
+                                    role="button" data-toggle="tooltip" title="구매확정" aria-disabled="true"><i
+                                        class="fa-solid fa-print ">구매확정</i></a>
+                                &nbsp;&nbsp;
+                                <button id="idCardAddressBtn" type="button" class="btn  btn-sm btn-primary"
+                                    data-card-widget="collapse" data-toggle="tooltip" title="Collapse">접기</button>
                                 <!-- <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                     data-toggle="tooltip" title="Remove">
                                     <i class="fas fa-times"></i></button> -->
@@ -253,7 +271,7 @@ include "../header.php";
                                 <p> <b>구매내역서</b></p>
                             </h3>
                             <div class="card-tools">
-                                <button id="idCardPDFBtn" type="button" class="btn btn-md btn-warning"
+                                <button id="idCardPDFBtn" type="button" class="btn btn-sm btn-primary"
                                     data-card-widget="collapse" data-toggle="tooltip" title="Collapse">펴기</button>
                                 <!-- <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
                                 data-toggle="tooltip" title="Remove">
@@ -392,7 +410,7 @@ include "../header.php";
     }
 
 
-    table2.on("rowClick", function(e, row) {
+    table2.on("rowClick", function(e, row) { /// 배달 주소지 클릭시
         //e - the click event object
         var selectedRows = table2.getSelectedData();
         selectedRows.forEach(function(row) {
@@ -404,19 +422,27 @@ include "../header.php";
         $("#idName").val(row._row.data['name']);
         $("#idOwner").val(row._row.data['owner']);
         $("#idMobile").val(row._row.data['mobile']);
-        $("#idAddr").val(ar[0]);
-        $("#idZip").val(ar[1].slice(0, ar[1].length - 1));
+        if (ar.length == 2) {
+            $("#idAddr").val(ar[0]);
+            $("#idZip").val(ar[1].slice(0, ar[1].length - 1));
+        } else {
+            $("#idAddr").val(row._row.data['addr']);
+            $("#idZip").val(row._row.data['zipcode']);
+        }
+
         table2.selectRow(Number(row._row.position));
+
+        $("#idConfirmOrder").removeClass('disabled');
         //table2.selectRow();
         //alert(Number(row._row.position));
     });
 
-    AddBranch2 = () => {
+    AddBranch = () => {
 
         var selectElement = document.getElementById("idGrade"); // 지사 또는 원관리
         var selectedValue = selectElement.value;
 
-        var id = $("#idID").val(); // 아이디
+        var id = $("#idName").val(); // 아이디
         var name = $("#idName").val(); // 이름
         var owner = $("#idOwner").val(); // 지사명
         var password = $("#idPasswd").val();
@@ -440,6 +466,7 @@ include "../header.php";
             mid: user,
             role: role,
             rdate: rdate,
+            confirm: 0,
         }
 
         var data = {
@@ -458,7 +485,7 @@ include "../header.php";
         }
         jsdata = JSON.stringify(items);
         var options = {
-            functionName: 'SRegistermgr',
+            functionName: 'SRegistermgr2',
             otherData: {
                 items
             }
@@ -532,6 +559,7 @@ include "../header.php";
     var orderPrint = () => {
 
         makePurchasePDFList();
+        $("#idConfirmOrder").addClass('disabled');
 
         $("#cardMain").toggle();
         $("#cardDest").hide();
