@@ -10,95 +10,95 @@ var deleteIcon = function(cell, formatterParams) { //plain text value
 
 document.addEventListener("DOMContentLoaded", function() {
     // Get the modal element by its ID
-    porTable = new Tabulator("#porTableDiv", {
-        height: "490px",
-        layout: "fitColumns",
-        rowHeight: 40, //set rows to 40px height
-        selectable: true, //make rows selectable
-        columns: [
+    // porTable = new Tabulator("#porTableDiv", {
+    //     height: "490px",
+    //     layout: "fitColumns",
+    //     rowHeight: 40, //set rows to 40px height
+    //     selectable: true, //make rows selectable
+    //     columns: [
 
-            // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-            {
-                title: "단계",
-                field: "grade",
-                width: 150,
-                editor: "list",
-                editor: false,
-                editorParams: {
-                    autocomplete: "true",
-                    allowEmpty: true,
-                    listOnEmpty: true,
-                    valuesLookup: true
-                }
-            },
-            {
-                title: "품명",
-                field: "title",
-                sorter: "number",
-                width: 350,
-                editor: false,
-                bottomCalcParams: {
-                    precision: 0
-                }
-            },
-            {
-                title: "단가",
-                field: "price",
-                sorter: "number",
-                width: 150,
-                editor: false,
-                hozAlign: "right",
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-            },
-            {
-                title: "주문수량",
-                field: "count",
-                editor: "input",
-                width: 150,
-                editor: false,
-                hozAlign: "right",
-                validator: "min:0",
-                editorParams: {
-                    min: 0,
-                    max: 1000, // Adjust min and max values as needed
-                    step: 2,
-                    elementAttributes: {
-                        type: "number"
-                    }
-                },
-                cellEdited: function(cell) {
-                    calsum(cell);
-                },
-                bottomCalc: "sum"
-            },
-            {
-                title: "합계(원)",
-                field: "total",
-                editor: "input",
-                formatter: "money",
-                hozAlign: "right",
-                editor: false,
-                formatterParams: {
-                    thousand: ",",
-                    precision: 0,
-                },
-                editorParams: {
-                    elementAttributes: {
-                        type: "number"
-                    }
-                },
-                bottomCalc: "sum",
-                bottomCalcFormatterParams: {
-                    formatter: "money",
-                    precision: 0,
-                    thousand: ","
-                }
-            },
-        ],
-    });
+    //         // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+    //         {
+    //             title: "단계",
+    //             field: "grade",
+    //             width: 150,
+    //             editor: "list",
+    //             editor: false,
+    //             editorParams: {
+    //                 autocomplete: "true",
+    //                 allowEmpty: true,
+    //                 listOnEmpty: true,
+    //                 valuesLookup: true
+    //             }
+    //         },
+    //         {
+    //             title: "품명",
+    //             field: "title",
+    //             sorter: "number",
+    //             width: 350,
+    //             editor: false,
+    //             bottomCalcParams: {
+    //                 precision: 0
+    //             }
+    //         },
+    //         {
+    //             title: "단가",
+    //             field: "price",
+    //             sorter: "number",
+    //             width: 150,
+    //             editor: false,
+    //             hozAlign: "right",
+    //             formatterParams: {
+    //                 thousand: ",",
+    //                 precision: 0,
+    //             },
+    //         },
+    //         {
+    //             title: "주문수량",
+    //             field: "count",
+    //             editor: "input",
+    //             width: 150,
+    //             editor: false,
+    //             hozAlign: "right",
+    //             validator: "min:0",
+    //             editorParams: {
+    //                 min: 0,
+    //                 max: 1000, // Adjust min and max values as needed
+    //                 step: 2,
+    //                 elementAttributes: {
+    //                     type: "number"
+    //                 }
+    //             },
+    //             cellEdited: function(cell) {
+    //                 calsum(cell);
+    //             },
+    //             bottomCalc: "sum"
+    //         },
+    //         {
+    //             title: "합계(원)",
+    //             field: "total",
+    //             editor: "input",
+    //             formatter: "money",
+    //             hozAlign: "right",
+    //             editor: false,
+    //             formatterParams: {
+    //                 thousand: ",",
+    //                 precision: 0,
+    //             },
+    //             editorParams: {
+    //                 elementAttributes: {
+    //                     type: "number"
+    //                 }
+    //             },
+    //             bottomCalc: "sum",
+    //             bottomCalcFormatterParams: {
+    //                 formatter: "money",
+    //                 precision: 0,
+    //                 thousand: ","
+    //             }
+    //         },
+    //     ],
+    // });
 
     orderList(null);
 
@@ -210,7 +210,7 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
     rowHeight: 40, //set rows to 40px height
     selectable: true, //make rows selectable
     columns: [
-        // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
+        //{ title: "ID", field: "uid", visible: false , editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
         {
             title: "단계",
             field: "grade",
@@ -304,16 +304,23 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
     ],
 });
 
-var table2 = new Tabulator("#idTableDest", {
+var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
     height: "490px",
     data: kgardenlist,
     layout: "fitColumns",
     rowHeight: 40, //set rows to 40px height
-    selectable: true, //make rows selectable
+    selectable: 1, //make rows selectable
+    rowClick: function(e, row) {
+        // deselect previously selected rows
+        table2.deselectRow();
+  
+        // select the clicked row
+        row.toggleSelect();
+      },
     columns: [{
             title: "No",
             field: "No",
-            width: 150,
+            width: "5%",
             editor: "input",
             editor: false,
             cellEdited: function(cell) {
@@ -323,7 +330,7 @@ var table2 = new Tabulator("#idTableDest", {
         {
             title: "name",
             field: "name",
-            width: 250,
+            width: "15%",
             editor: "list",
             editor: false,
             editorParams: {
@@ -336,7 +343,7 @@ var table2 = new Tabulator("#idTableDest", {
         {
             title: "owner",
             field: "owner",
-            width: 250,
+            width: "15%",
             editor: "list",
             editor: false,
             editorParams: {
@@ -350,7 +357,7 @@ var table2 = new Tabulator("#idTableDest", {
             title: "address",
             field: "addr",
             sorter: "number",
-            width: 550,
+            width: "45%",
             editor: false,
             bottomCalcParams: {
                 precision: 0
@@ -360,7 +367,7 @@ var table2 = new Tabulator("#idTableDest", {
             title: "mobile",
             field: "mobile",
             sorter: "number",
-            width: 150,
+            width: "10%",
             editor: false,
             bottomCalcParams: {
                 precision: 0
@@ -371,7 +378,7 @@ var table2 = new Tabulator("#idTableDest", {
             title: "rdate",
             field: "rdate",
             sorter: "number",
-            width: 150,
+            width: "10%",
             editor: false,
             bottomCalcParams: {
                 precision: 0
@@ -380,7 +387,7 @@ var table2 = new Tabulator("#idTableDest", {
     ],
 });
 
-listPor = (por_id) => {
+listPor = (por_id) => {  
 
     var options = {
         functionName: 'SPorDetailList',
@@ -390,13 +397,14 @@ listPor = (por_id) => {
     };
     dispList = (res) => {
         var js = res[0]['json']
-        porTable.setData(JSON.parse(js));
+        addPurcharseList(res);
+        // porTable.setData(JSON.parse(js));
 
-        var cnt = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
-        var sum = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
-        $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합")
-        $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(parseInt(cnt/2));
-        $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(cvtCurrency(parseInt(sum/2)));
+        // var cnt = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
+        // var sum = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
+        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합")
+        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(parseInt(cnt/2));
+        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(cvtCurrency(parseInt(sum/2)));
         $("#idID2").val(res[0]['id']);
         $("#idName2").val(res[0]['order']);
         $("#idAddr2").val(res[0]['addr']);
@@ -414,7 +422,7 @@ listPor = (por_id) => {
 
 }
 
-listPorRange = (start, end) => {
+listPorRange = (start, end) => {  // 달별 구매 목록
 
     var options = {
         functionName: 'SPorDetailListRange',
@@ -423,31 +431,34 @@ listPorRange = (start, end) => {
         }
     };
     dispList = (res) => {
-        porTable.clearData();
-        res.forEach ( ell => {
-            var json = JSON.parse(ell['json']);
-            json.forEach(el => {
-                if (Number(el['count']) > 0) {
-                    var jarr = {
-                        "uid": el['uid'],
-                        "grade": el['grade'],
-                        "title": el['title'],
-                        "price": el['price'],
-                        "count": el['count'],
-                        "total": el['total']
-                    }
-                    porTable.addRow(jarr);
-                }
-            })
-            //porTable.setData(JSON.parse(el['json']));       
-        })
+        //porTable.clearData();
+        //res.forEach ( ell => {
 
-        var cnt = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
-        var sum = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
-        $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합")
-        $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(cvtCurrency(parseInt(cnt/2)));
-        $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(cvtCurrency(parseInt(sum/2)));
+            // var json = JSON.parse(ell['json']);
 
+            // json.forEach(el => {
+            //     if (Number(el['count']) > 0) {
+            //         var jarr = {
+            //             "uid": el['uid'],
+            //             "grade": el['grade'],
+            //             "title": el['title'],
+            //             "price": el['price'],
+            //             "count": el['count'],
+            //             "total": el['total']
+            //         }
+            //         porTable.addRow(jarr);
+            //     }
+            // })
+            //porTable.setData(JSON.parse(el['json']));    
+             
+        //})
+        addPurcharseList(res);  
+        // var cnt = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
+        // var sum = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
+        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합")
+        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(cvtCurrency(parseInt(cnt/2)));
+        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(cvtCurrency(parseInt(sum/2)));
+        
         $("#idID2").val(res[0]['id']);
         $("#idName2").val(res[0]['order']);
         $("#idAddr2").val(res[0]['addr']);
@@ -455,8 +466,7 @@ listPorRange = (start, end) => {
         $("#idMobile2").val(res[0]['mobile']);
         $("#idRdate2").val(res[0]['rdate']);
         $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
-
-        
+      
     }
     dispErr = (error) => {
         CallToast('SPorDetailList falure!', "error")
@@ -466,7 +476,57 @@ listPorRange = (start, end) => {
 
 }
 
-document.getElementById("idPorList").addEventListener("change", function() {
+addPurcharseList = (res) => {
+
+    var tbody = $("#porTable tbody");
+
+    $("#porTable tbody").empty();
+
+    var sum=0;
+    // Create a new row
+    res.forEach( ell =>  {
+
+    var newRow = $("<tr style='margin-top:10px'>");
+
+    var json = JSON.parse(ell['json']);
+    var dat  = ell['rdate'];
+
+    var jarr = "";
+    var total = 0; 
+    newRow.append("<td > "+ dat.slice(0,11)+"</td>");
+    var i = 1;
+    json.forEach(el => {
+        if ((el['uid']) != "") {
+            total += Number(el['total']);
+            jarr +=
+                "<tr><td class='nb'>" +i+ ". &nbsp;</td>  <td class='nb'>" + el['title'] + "</td> <td class='nb'>" + cvtCurrency(parseInt(el['price'])) + "원</td> <td class='nb'>"+el['count']+"개</td></tr>";
+        }
+        i++;
+    })
+    var a = "<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table></td>";
+    newRow.append(
+        a
+    );
+
+
+    $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
+
+    newRow.append("<td>"+ cvtCurrency(total) +"원</td>");
+    newRow.append("<td> <div> "+ ell['addr'] + "</div> <br/> <div>" + ell['order']+ "</div></td>");
+    let stat = res['confirm'] == "0" ? "미완료" : "완료"
+    newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='#'>반송<a></div></td>");
+    // Append the new row to the table body
+    tbody.append(newRow);
+        sum += total;
+    })
+
+    var newRow = $("<tr  style='background-color: steelblue'>");
+    newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td colspan='2'></td></td>");
+    // Append the new row to the table body
+    tbody.append(newRow);
+}
+
+document.getElementById("idPorList").addEventListener("change", function() {   // 개별 구매 의뢰서 내용 보기
     // 선택된 옵션 가져오기
     var selectedOption = this.options[this.selectedIndex];
 
@@ -505,22 +565,27 @@ document.getElementById("idDest").addEventListener("change", function() {   // �
         dispList = (resp) => {
             var i = 1;
             var items = [];
-            resp.forEach(el => {
-                var jarr = {
-                    "No": i,
-                    "name": el['name'],
-                    "owner": el['owner'],
-                    "mobile": el['mobile'],
-                    "addr": el['addr'],
-                    "zipcode": el['zipcode'],
-                    "rdate": el['rdate'],
-                }
-                items.push(jarr);
-                i++;
-            });
-            table2.clearData();
-            table2.setData(items);
-            CallToast("SShowMgr success!!", "success");
+            if ('success' in resp) {
+
+                resp['success'].forEach(el => {
+                    var jarr = {
+                        "No": i,
+                        "name": el['name'],
+                        "owner": el['owner'],
+                        "mobile": el['mobile'],
+                        "addr": el['addr'],
+                        "zipcode": el['zipcode'],
+                        "rdate": el['rdate'],
+                    }
+                    items.push(jarr);
+                    i++;
+                });
+                table2.clearData();
+                table2.setData(items);
+                CallToast("SShowMgr success!!", "success");
+            }
+            else 
+                CallToast("SShowMgr Error", "error");
         }
         dispErr = () => {
             //alert(error);
@@ -638,3 +703,4 @@ $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
     listPorRange( startOfMonth, endOfMonth )
 
   })
+

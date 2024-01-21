@@ -5,64 +5,64 @@ require_once 'dbinit.php';
 $urlFromGET = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (isset($_POST['functionName'] )) {
+    if (isset($_POST['functionName'])) {
         $functionName = $_POST['functionName'];
 
         if (isset($_GET['dest'])) {
-            $urlFromGET = $_GET['dest']; 
+            $urlFromGET = $_GET['dest'];
         }
 
         if (is_callable($functionName)) {
-            if ( "SUploadBoardPDF" == $functionName 
-                || "SUploadBoard" == $functionName 
-                || "Sfindpassword"== $functionName  )
+            if (
+                "SUploadBoardPDF" == $functionName
+                || "SUploadBoard" == $functionName
+                || "Sfindpassword" == $functionName
+            )
                 $functionName($_POST);
             else if ("Slogon" == $functionName || "SRegister" == $functionName)
-                $functionName($_POST,$urlFromGET);
+                $functionName($_POST, $urlFromGET);
             else
                 $functionName($_POST['otherData']);
-        }          
+        }
     }
 }
 function Sfindpassword($data)
 {
     $Id     = $data["id"];
     $Mobile = $data["mobile"];
-    
-        if ( !empty($Id) && !empty($Mobile) ) {
-            
-            $res = CheckPasswd( $Id, $Mobile);
-            
-            if( $res ) {
-                //echo json_encode($res['id']);
-                session_start();
-                $_SESSION["id"]       = $Id ;			
-                $_SESSION["password"] = $res['password'];
-                echo json_encode( array ("success" => $res['password']) );
-                //header('location: ../login/login.php?id='.$_SESSION["password"]);  
-            }
-            else {
-                //hearder("Location: login.php");
-                echo json_encode(array ("error" => "사용자 아이디 와 휴대폰 번호가 일치하지 않아요"), JSON_UNESCAPED_UNICODE);
-            }
+
+    if (!empty($Id) && !empty($Mobile)) {
+
+        $res = CheckPasswd($Id, $Mobile);
+
+        if ($res) {
+            //echo json_encode($res['id']);
+            session_start();
+            $_SESSION["id"]       = $Id;
+            $_SESSION["password"] = $res['password'];
+            echo json_encode(array("success" => $res['password']));
+            //header('location: ../login/login.php?id='.$_SESSION["password"]);  
+        } else {
+            //hearder("Location: login.php");
+            echo json_encode(array("error" => "사용자 아이디 와 휴대폰 번호가 일치하지 않아요"), JSON_UNESCAPED_UNICODE);
         }
-        else {
-            //header("Location: login.php");
-            echo json_encode(array ("error" => "사용자 아이디 와 휴대폰을 입력하세요"), JSON_UNESCAPED_UNICODE);
-        }
-    
+    } else {
+        //header("Location: login.php");
+        echo json_encode(array("error" => "사용자 아이디 와 휴대폰을 입력하세요"), JSON_UNESCAPED_UNICODE);
+    }
 }
-function CheckPasswd($login, $password) {
+function CheckPasswd($login, $password)
+{
     global $conn;
     $user = "";
-    $login = mysqli_escape_string ( $conn, $login );
-    $rs = mysqli_query ( $conn, "select * from eplat_user where id='{$login}' and mobile = '{$password}' " );
-    
+    $login = mysqli_escape_string($conn, $login);
+    $rs = mysqli_query($conn, "select * from eplat_user where id='{$login}' and mobile = '{$password}' ");
+
     if ($rs) {
-        $user = mysqli_fetch_assoc ( $rs );
-        $passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
+        $user = mysqli_fetch_assoc($rs);
+        $passwordnew = mysqli_escape_string($conn, password_hash($password, PASSWORD_BCRYPT));
         //if ($user &&  password_verify ( $password, $user ['password'] ) != true) {
-        mysqli_free_result ( $rs );
+        mysqli_free_result($rs);
     }
     $conn->close();
     return $user;
@@ -77,94 +77,95 @@ function Slogon($data, $dest)
     //$dest = "classroom";
     $rows = array();
 
-	if ( !empty($Email) && !empty($Password) ) {
-		
-		$res = CheckUser( $Email, $Password);
-		
-		if( $res ) {
-			session_start();
-			$_SESSION["authenticated"] = 'true';
-			$_SESSION["user"] = $res['id'];
-			$_SESSION["name"] = $res['name'];
-			$_SESSION["role"] = $res['role'];
-			$_SESSION["confirm"] = $res['confirm'];
+    if (!empty($Email) && !empty($Password)) {
+
+        $res = CheckUser($Email, $Password);
+
+        if ($res) {
+            session_start();
+            $_SESSION["authenticated"] = 'true';
+            $_SESSION["user"] = $res['id'];
+            $_SESSION["name"] = $res['name'];
+            $_SESSION["role"] = $res['role'];
+            $_SESSION["confirm"] = $res['confirm'];
             $_SESSION["location"] = $location;
             $_SESSION["dest"] = $dest;
-            
-            array_push ($rows, 
-            array (
-                'authenticated'   => 'true',
-                'user' => $res['id'],
-                'name' => $res['name'],
-                'role' => $res['role'],
-                'confirm'  => $res['confirm'],
-                'location'  => $location,
-                'dest'  => $dest
-            ));
 
-			echo json_encode(array('success' => $rows ));  
-   
-		}
-		else {
-			//hearder("Location: login.php");
-			echo json_encode(array('falure' => 'password mismatch'));
-		}
-	}
-	else {
-		//header("Location: login.php");
-		echo json_encode(array('falure' => 'id or password empty!'));
-	}
+            array_push(
+                $rows,
+                array(
+                    'authenticated'   => 'true',
+                    'user' => $res['id'],
+                    'name' => $res['name'],
+                    'role' => $res['role'],
+                    'confirm'  => $res['confirm'],
+                    'location'  => $location,
+                    'dest'  => $dest
+                )
+            );
+
+            echo json_encode(array('success' => $rows));
+        } else {
+            //hearder("Location: login.php");
+            echo json_encode(array('falure' => 'password mismatch'));
+        }
+    } else {
+        //header("Location: login.php");
+        echo json_encode(array('falure' => 'id or password empty!'));
+    }
 }
 function SetLogin($id)
 {
     global $conn;
     try {
-            $sql = "UPDATE eplat_user SET logstat = 1 , logdate = now()  WHERE id = '{$id}' ";
-            if ($conn->query($sql) === TRUE) {
-                $result = true;
-            } 
+        $sql = "UPDATE eplat_user SET logstat = 1 , logdate = now()  WHERE id = '{$id}' ";
+        if ($conn->query($sql) === TRUE) {
+            $result = true;
+        }
         $conn->close();
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         $result = $e->getMessage();
     }
 }
 
-function CheckUser2($login) {
+function CheckUser2($login)
+{
     global $conn;
     $user = "";
-    $login = mysqli_escape_string ( $conn, $login );
-    $rs = mysqli_query ( $conn, "select * from eplat_user where id='{$login}'" );
-    
+    $login = mysqli_escape_string($conn, $login);
+    $rs = mysqli_query($conn, "select * from eplat_user where id='{$login}'");
+
     if ($rs) {
-        $user = mysqli_fetch_assoc ( $rs );
-        mysqli_free_result ( $rs );
+        $user = mysqli_fetch_assoc($rs);
+        mysqli_free_result($rs);
     }
     $conn->close();
     return $user;
 }
 
-function CheckUser($login, $password) {
+function CheckUser($login, $password)
+{
     global $conn;
     $user = "";
-    $login = mysqli_escape_string ( $conn, $login );
-    $rs = mysqli_query ( $conn, "select * from eplat_user where id='{$login}'" );
-    
+    $login = mysqli_escape_string($conn, $login);
+    $rs = mysqli_query($conn, "select * from eplat_user where id='{$login}'");
+
     if ($rs) {
-        $user = mysqli_fetch_assoc ( $rs );
-        $passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
+        $user = mysqli_fetch_assoc($rs);
+        $passwordnew = mysqli_escape_string($conn, password_hash($password, PASSWORD_BCRYPT));
         //if ($user &&  password_verify ( $password, $user ['password'] ) != true) {
-        if ($user &&  strcmp( $password, $user ['password'] ) != 0) {
+        if ($user &&  strcmp($password, $user['password']) != 0) {
             $user = "";
         }
-        mysqli_free_result ( $rs );
+        mysqli_free_result($rs);
     }
     $conn->close();
     return $user;
 }
 
 
-function SRegister ($data, $dest) {
+function SRegister($data, $dest)
+{
 
     $id       = $data['id'];
     $name     = $data['name'];
@@ -174,46 +175,45 @@ function SRegister ($data, $dest) {
     $zipcode  = $data['zipcode'];
 
     $role = 0;
-    if ( isset($data['idrolebm']) )   // 지사장
+    if (isset($data['idrolebm']))   // 지사장
         $role = 1;
-    if ( isset($data['idrolet']) )     // 원장, 선생님
+    if (isset($data['idrolet']))     // 원장, 선생님
         $role = 2;
-    if ( isset($data['idroleother']) )     // 일반 유료 회원
+    if (isset($data['idroleother']))     // 일반 유료 회원
         $role = 3;
-           
+
     global $conn;
-    
+
     try {
-    
-        $id= mysqli_escape_string ( $conn, $id);
+
+        $id = mysqli_escape_string($conn, $id);
         //$passwordnew = mysqli_escape_string ( $conn, password_hash ( $password, PASSWORD_BCRYPT ) );
-        
+
         $sqlstring = "insert into eplat_user (id, name, password, mobile, addr, zipcode, role) 
         values ( '{$id}', '{$name}','{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role )";
-        
-        $res = mysqli_query ( $conn, $sqlstring);
-        
+
+        $res = mysqli_query($conn, $sqlstring);
+
         $conn->close();
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
     }
-    catch (Exception $e) {
-        echo json_encode( $e->getMessage() );
-    }
-    
+
     header('Content-Type: application/json');
-    if ($res=== TRUE) {
+    if ($res === TRUE) {
         $result = true;
         //header('location: ../login/login.php');
-        echo json_encode(array('success' => '../login/login.php' )); 
-    }
-     else {
-        $result = json_encode(  array( "falure: " => $conn->error ) );
+        echo json_encode(array('success' => '../login/login.php'));
+    } else {
+        $result = json_encode(array("falure: " => $conn->error));
         echo $result;
     }
 }
 
 
 
-function SShowOrderList( $data ) {
+function SShowOrderList($data)
+{
 
     session_start();
 
@@ -221,132 +221,134 @@ function SShowOrderList( $data ) {
 
     global $conn;
 
-    $sqlString = "SELECT *  FROM eplat_porlist where confirm = 0"; 
+    $sqlString = "SELECT *  FROM eplat_porlist where confirm = 0";
 
     $rows = array();
 
     $i = 0;
-        
+
     try {
-        
-        $rs = mysqli_query($conn,$sqlString);
-        
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-            array(  'id'        => $row['id'],
-            'por_id'      => $row['por_id'] ,
-            'order'  => $row['order'],								
-            'addr'    => $row['addr'],								
-            'mobile'      => $row['mobile'],								
-            'rdate'   => $row['rdate'],								
-            'confirm'   => $row['confirm'],															
-        ));
+
+        $rs = mysqli_query($conn, $sqlString);
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'        => $row['id'],
+                    'por_id'      => $row['por_id'],
+                    'order'  => $row['order'],
+                    'addr'    => $row['addr'],
+                    'mobile'      => $row['mobile'],
+                    'rdate'   => $row['rdate'],
+                    'confirm'   => $row['confirm'],
+                )
+            );
         }
         $conn->close();
-    }
-    catch (Exception $e)
-    {
-        echo  json_encode( array("error:" => $e->getMessage()) );
+    } catch (Exception $e) {
+        echo  json_encode(array("error:" => $e->getMessage()));
     }
 
     header('Content-Type: application/json');
     echo json_encode($rows);
 }
 
-function SPorDetailList ($data) {
+function SPorDetailList($data)
+{
     session_start();
 
     global $conn;
-    
+
     $pid  = $data['id'];
     $rows = array();
     $i = 0;
     $res = "";
-    
+
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    
+
     $stmt = "select * from eplat_porlist where por_id='{$pid}' ";
-    
+
     try {
-    
+
         $rs = mysqli_query($conn, $stmt);
-        
-        while ( $row = mysqli_fetch_array($rs))
-        {
-            array_push ($rows, 
-            array (
-                'id'   => $row['id'],
-                'json' => $row['por_list'],
-                'order' => $row['order'],
-                'rdate' => $row['rdate'],
-                'addr'  => $row['addr'],
-                'mobile'  => $row['mobile'],
-                'zip'  => $row['zip'],
-                'confirm'  => $row['confirm'],
-                'pdfname' => $row['pdfname']
-            ));
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'   => $row['id'],
+                    'json' => $row['por_list'],
+                    'order' => $row['order'],
+                    'rdate' => $row['rdate'],
+                    'addr'  => $row['addr'],
+                    'mobile'  => $row['mobile'],
+                    'zip'  => $row['zip'],
+                    'confirm'  => $row['confirm'],
+                    'pdfname' => $row['pdfname']
+                )
+            );
         }
-        
+
         $conn->close();
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
     }
-    catch (Exception $e) {
-        echo json_encode ( $e->getMessage());
-    }
-    
+
     header('Content-Type: application/json');
     echo json_encode($rows);
-      
 }
-function SPorDetailListRange ($data) {
+function SPorDetailListRange($data)
+{
     session_start();
 
     global $conn;
-    
+
     $start  = $data['start'];
     $end    = $data['end'];
 
     $rows = array();
     $i = 0;
     $res = "";
-    
+
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    
+
     $stmt = "select * from eplat_porlist where rdate between '{$start}' and '{$end}' ";
-    
+
     try {
-    
+
         $rs = mysqli_query($conn, $stmt);
-        
-        while ( $row = mysqli_fetch_array($rs))
-        {
-            array_push ($rows, 
-            array (
-                'id'   => $row['id'],
-                'json' => $row['por_list'],
-                'order' => $row['order'],
-                'rdate' => $row['rdate'],
-                'addr'  => $row['addr'],
-                'mobile'  => $row['mobile'],
-                'confirm'  => $row['confirm']
-            ));
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'   => $row['id'],
+                    'json' => $row['por_list'],
+                    'order' => $row['order'],
+                    'rdate' => $row['rdate'],
+                    'addr'  => $row['addr'],
+                    'mobile'  => $row['mobile'],
+                    'confirm'  => $row['confirm']
+                )
+            );
         }
-        
+
         $conn->close();
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
     }
-    catch (Exception $e) {
-        echo json_encode ( $e->getMessage());
-    }
-    
+
     header('Content-Type: application/json');
     echo json_encode($rows);
-      
 }
 
-function SShowMgr ($data) {
+function SShowMgr($data)
+{
     session_start();
 
     global $conn;
@@ -356,46 +358,48 @@ function SShowMgr ($data) {
 
     try {
 
-        if ( $role == "va")
-            $sqlString = "SELECT * FROM eplat_user where mid = '".$id."'"; 
-        else if (  $role == "v4")
-            $sqlString = "SELECT * FROM eplat_user where role = 1 and mid = '".$id."'"; 
-        else 
-            $sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '".$id."'"; 
-            
-        $rs = mysqli_query($conn,$sqlString);
+        if ($role == "va")
+            $sqlString = "SELECT * FROM eplat_user where mid = '" . $id . "'";
+        else if ($role == "v4")
+            $sqlString = "SELECT * FROM eplat_user where role = 1 and mid = '" . $id . "'";
+        else
+            $sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '" . $id . "'";
+
+        $rs = mysqli_query($conn, $sqlString);
         $rows = array();
 
         $i = 0;
 
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-                    array(  'id'        => $row['id'],
-                            'name'      => $row['name'] ,
-                            'owner'     => $row['owner'] ,
-                            'password'  => $row['password'],								
-                            'mobile'    => $row['mobile'],								
-                            'addr'      => $row['addr'],								
-                            'zipcode'   => $row['zipcode'],								
-                            'confirm'   => $row['confirm'],								
-                            'rdate'     => $row['rdate'],
-                            'role'     => $row['role'],								
-                    ));
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'        => $row['id'],
+                    'name'      => $row['name'],
+                    'owner'     => $row['owner'],
+                    'password'  => $row['password'],
+                    'mobile'    => $row['mobile'],
+                    'addr'      => $row['addr'],
+                    'zipcode'   => $row['zipcode'],
+                    'confirm'   => $row['confirm'],
+                    'rdate'     => $row['rdate'],
+                    'role'     => $row['role'],
+                )
+            );
         }
         $conn->close();
         $result["rows"] = $rows;
 
         header('Content-Type: application/json');
-        echo json_encode($rows);
-    }
-    catch (Exception $e)
-    {
+        echo json_encode(array("Success: " => $rows));
+    } catch (Exception $e) {
         header('Content-Type: application/json');
-        echo json_encode( array( "Error: " => $e->getMessage() ) );
+        echo json_encode(array("Error: " => $e->getMessage()));
     }
 }
 
-function SShowAddr ($data) {
+function SShowAddr($data)
+{
     session_start();
 
     global $conn;
@@ -405,119 +409,124 @@ function SShowAddr ($data) {
     try {
 
 
-        $sqlString = "SELECT * FROM eplat_addrlist where mid = '".$id."'"; 
+        $sqlString = "SELECT * FROM eplat_addrlist where mid = '" . $id . "'";
 
-            
-        $rs = mysqli_query($conn,$sqlString);
+
+        $rs = mysqli_query($conn, $sqlString);
         $rows = array();
 
         $i = 0;
 
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-                    array(  'id'        => $row['id'],
-                            'name'      => $row['name'] ,
-                            'owner'     => $row['owner'] ,							
-                            'mobile'    => $row['mobile'],								
-                            'addr'      => $row['addr'],								
-                            'zipcode'   => $row['zipcode'],														
-                            'rdate'     => $row['rdate'],						
-                    ));
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'        => $row['id'],
+                    'name'      => $row['name'],
+                    'owner'     => $row['owner'],
+                    'mobile'    => $row['mobile'],
+                    'addr'      => $row['addr'],
+                    'zipcode'   => $row['zipcode'],
+                    'rdate'     => $row['rdate'],
+                )
+            );
         }
 
-        $sqlString2 = "SELECT * FROM eplat_user where mid = '".$id."'"; 
-        $rs = mysqli_query($conn,$sqlString2);
-        
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-                    array(  'id'        => $row['id'],
-                            'name'      => $row['name'] ,
-                            'owner'     => $row['owner'] ,							
-                            'mobile'    => $row['mobile'],								
-                            'addr'      => $row['addr'],								
-                            'zipcode'   => $row['zipcode'],														
-                            'rdate'     => $row['rdate'],						
-                    ));
-        }    
-        
+        $sqlString2 = "SELECT * FROM eplat_user where mid = '" . $id . "'";
+        $rs = mysqli_query($conn, $sqlString2);
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'        => $row['id'],
+                    'name'      => $row['name'],
+                    'owner'     => $row['owner'],
+                    'mobile'    => $row['mobile'],
+                    'addr'      => $row['addr'],
+                    'zipcode'   => $row['zipcode'],
+                    'rdate'     => $row['rdate'],
+                )
+            );
+        }
+
         $conn->close();
         $result["rows"] = $rows;
 
         header('Content-Type: application/json');
-        echo json_encode($rows);
-    }
-    catch (Exception $e)
-    {
+        echo json_encode(array("success" => $rows));
+    } catch (Exception $e) {
         header('Content-Type: application/json');
-        echo json_encode( array( "Error: " => $e->getMessage() ) );
+        echo json_encode(array("Error: " => $e->getMessage()));
     }
 }
 
-function SDeleteChild ($data) {
+function SDeleteChild($data)
+{
     session_start();
 
     $id  = $data["id"];
 
     global $conn;
-    $res="";
+    $res = "";
 
     try {
 
-        $sql = "DELETE FROM eplat_user WHERE id = '".$id."'";
-        
+        $sql = "DELETE FROM eplat_user WHERE id = '" . $id . "'";
+
         if ($conn->query($sql) === TRUE) {
             $res = true;
         } else {
-            $res =  json_encode(  array("Error deleting record: " . $conn->error) );
+            $res =  json_encode(array("Error deleting record: " . $conn->error));
         }
-        
+
         $conn->close();
-    }
-    catch (Exception $e) {
-        echo json_encode( $e->getMessage());
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
     }
 
 
     echo json_encode($res);
 }
 
-function SDeleteMgr ($data) {
+function SDeleteMgr($data)
+{
     session_start();
 
     $id  = $data["id"];
 
     global $conn;
-    $res="";
+    $res = "";
 
     try {
 
-        $sql = "DELETE FROM eplat_user WHERE id = '".$id."'";
-        
+        $sql = "DELETE FROM eplat_user WHERE id = '" . $id . "'";
+
         if ($conn->query($sql) === TRUE) {
             $res = true;
         } else {
-            $res =  json_encode(  array("Error deleting record: " . $conn->error) );
+            $res =  json_encode(array("Error deleting record: " . $conn->error));
         }
-        
+
         $conn->close();
-    }
-    catch (Exception $e) {
-        echo json_encode( $e->getMessage());
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
     }
 
 
     echo json_encode($res);
 }
 
-function SRegistermgr ($data) {
+function SRegistermgr($data)
+{
 
     session_start();
     $result = "";
-  
+
     //$json = file_get_contents('php://input');
     // $arr = json_decode($data, true); 
     // $row = $arr['item'];
-    
+
     $id       = $data['items']['id'];
     $name     = $data['items']['name'];
     $owner     = $data['items']['owner'];
@@ -529,43 +538,41 @@ function SRegistermgr ($data) {
     $mid      = $data['items']['mid'];
     $role     = $data['items']['role'];
     $confirm = 1;
-    if ( isset($data['items']['confirm']) )  
+    if (isset($data['items']['confirm']))
         $confirm = (int) $data['items']['confirm'];
-    $error="";
-    
+    $error = "";
+
     try {
         global $conn;
-    
+
         $sqlstring = "insert into eplat_user (id, name,owner, password, mobile, addr, zipcode, role, mid, confirm) 
                     values ( '{$id}', '{$name}','{$owner}', '{$password}', '{$mobile} ','{$addr}', '{$zipcode}', $role, '{$mid}', $confirm )";
-    
-        $res = mysqli_query ( $conn, $sqlstring);
-    
+
+        $res = mysqli_query($conn, $sqlstring);
+
         $conn->close();
-    }
-    catch (Exception $e) 
-    {
+    } catch (Exception $e) {
         $error = $e->getMessage();
     }
-    
+
     header('Content-Type: application/json');
     if ($res === TRUE) {
-        echo json_encode(  array( "success" => $res) );
-
+        echo json_encode(array("success" => $res));
     } else {
-        echo json_encode(  array( "Error" => $error ) );
+        echo json_encode(array("Error" => $error));
     }
 }
 
-function SRegistermgr2 ($data) {
+function SRegistermgr2($data)
+{
 
     session_start();
     $result = "";
-  
+
     //$json = file_get_contents('php://input');
     // $arr = json_decode($data, true); 
     // $row = $arr['item'];
-    
+
     //$id       = $data['items']['id'];
     $name     = $data['items']['name'];
     $owner     = $data['items']['owner'];
@@ -577,80 +584,80 @@ function SRegistermgr2 ($data) {
     $mid      = $data['items']['mid'];
     //$role     = $data['items']['role'];
 
-    $error="";
-    
+    $error = "";
+
     try {
         global $conn;
-    
+
         $sqlstring = "insert into eplat_addrlist ( name, owner,  mobile, addr, zipcode,  mid ) 
                     values (  '{$name}','{$owner}', '{$mobile} ','{$addr}', '{$zipcode}',  '{$mid}' )";
-    
-        $res = mysqli_query ( $conn, $sqlstring);
-    
+
+        $res = mysqli_query($conn, $sqlstring);
+
         $conn->close();
-    }
-    catch (Exception $e) 
-    {
+    } catch (Exception $e) {
         $error = $e->getMessage();
     }
-    
+
     header('Content-Type: application/json');
     if ($res === TRUE) {
-        echo json_encode(  array( "success" => $res) );
-
+        echo json_encode(array("success" => $res));
     } else {
-        echo json_encode(  array( "Error" => $error ) );
+        echo json_encode(array("Error" => $error));
     }
 }
 
-function SShowConfirm($data) {
+function SShowConfirm($data)
+{
     session_start();
 
     $num = $data['num'];
 
     global $conn;
 
-    $sqlString = "SELECT *  FROM eplat_user where role = 1 or role  = 2 order by rdate desc"; 
+    $sqlString = "SELECT *  FROM eplat_user where role = 1 or role  = 2 order by rdate desc";
 
-    if ( $num == "2")
-        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2) and confirm = 0 order by rdate desc"; 
-    else if ( $num == "1")
-        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2)  and confirm = 1 order by rdate desc"; 
+    if ($num == "2")
+        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2) and confirm = 0 order by rdate desc";
+    else if ($num == "1")
+        $sqlString = "SELECT *  FROM eplat_user where (role = 1 or role  = 2)  and confirm = 1 order by rdate desc";
 
-        
-    $rs = mysqli_query($conn,$sqlString);
+
+    $rs = mysqli_query($conn, $sqlString);
     $rows = array();
 
     $i = 0;
 
     try {
 
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-            array(  'id'        => $row['id'],
-            'name'      => $row['name'] ,
-            'password'  => $row['password'],								
-            'mobile'    => $row['mobile'],								
-            'addr'      => $row['addr'],								
-            'zipcode'   => $row['zipcode'],								
-            'confirm'   => $row['confirm'],								
-            'rdate'     => $row['rdate'],
-            'role'	    => $row['role'],							
-        ));
-    }
-    $conn->close();
-    }
-    catch (Exception $e) {
-        json_encode( $e->getMessage() );
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'        => $row['id'],
+                    'name'      => $row['name'],
+                    'password'  => $row['password'],
+                    'mobile'    => $row['mobile'],
+                    'addr'      => $row['addr'],
+                    'zipcode'   => $row['zipcode'],
+                    'confirm'   => $row['confirm'],
+                    'rdate'     => $row['rdate'],
+                    'role'        => $row['role'],
+                )
+            );
+        }
+        $conn->close();
+    } catch (Exception $e) {
+        json_encode($e->getMessage());
     }
 
 
     header('Content-Type: application/json');
     echo json_encode($rows);
-
 }
 
-function SShowConfirmUpdate ($data) {
+function SShowConfirmUpdate($data)
+{
     session_start();
 
     // $json = file_get_contents('php://input');
@@ -658,168 +665,173 @@ function SShowConfirmUpdate ($data) {
 
     $arr = $data;
 
-    $id="";
+    $id = "";
     global $conn;
     $result = "";
 
     try {
-        foreach ( $arr['items'] as $row) {
-            $sql = "UPDATE eplat_user SET id = '".$row['id']."'
-            ,name = '".$row['name']."' 
-            ,password = '".$row['password']."' 
-            ,mobile = '".$row['mobile']."' 
-            ,addr = '".$row['addr']."' 
-            ,zipcode = '".$row['zipcode']."' 
-            ,confirm = ".$row['confirm']." 
-            WHERE id = '".$row['id']."'";
+        foreach ($arr['items'] as $row) {
+            $sql = "UPDATE eplat_user SET id = '" . $row['id'] . "'
+            ,name = '" . $row['name'] . "' 
+            ,password = '" . $row['password'] . "' 
+            ,mobile = '" . $row['mobile'] . "' 
+            ,addr = '" . $row['addr'] . "' 
+            ,zipcode = '" . $row['zipcode'] . "' 
+            ,confirm = " . $row['confirm'] . " 
+            WHERE id = '" . $row['id'] . "'";
             if ($conn->query($sql) === TRUE) {
                 $result = true;
-            } 
+            }
         }
 
         $conn->close();
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         $result = $e->getMessage();
     }
 
     header('Content-Type: application/json');
 
-    echo json_encode(  array( "result: " => $result ) );
+    echo json_encode(array("result: " => $result));
 }
 
-function SShowStudentList ($data) {
+function SShowStudentList($data)
+{
     session_start();
-    
+
     global $conn;
     $tid = $data['id'];
     $step = $data['step'];
 
     if ($step == '전체')
-        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' "; 
+        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
     else
-        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'"; 
+        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'";
 
     $rows = array();
 
     $i = 0;
-        
+
     try {
-        
-        $rs = mysqli_query($conn,$sqlString);
-        
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-            array(  'id'      => $row['id'],
-                    'name'  => $row['name'] ,
-                    'passwd'   => $row['password'],								
-                    'step'    => $row['step'],								
+
+        $rs = mysqli_query($conn, $sqlString);
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'      => $row['id'],
+                    'name'  => $row['name'],
+                    'passwd'   => $row['password'],
+                    'step'    => $row['step'],
                     // 'mobile'  => $row['mobile'],								
-                    'rdate'   => $row['rdate'],								
-                    'classnm' => $row['classnm'],																												
-            ));
+                    'rdate'   => $row['rdate'],
+                    'classnm' => $row['classnm'],
+                )
+            );
         }
         $conn->close();
-    }
-    catch (Exception $e)
-    {
-        echo  json_encode( array("error:" => $e->getMessage()) );
+    } catch (Exception $e) {
+        echo  json_encode(array("error:" => $e->getMessage()));
     }
 
     header('Content-Type: application/json');
-    echo json_encode( array ("json" => $rows) );
+    echo json_encode(array("json" => $rows));
 }
 
-function SShowStudyList ($data) {
+function SShowStudyList($data)
+{
     session_start();
-    
+
     global $conn;
     $tid = $data['id'];
     $step = $data['step'];
 
     //if ($step == '전체')
-        $sqlString = "select u.id id, u.name name , s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where u.id = s.id and u.tid = '{$tid}' group by id"; 
+    $sqlString = "select u.id id, u.name name , s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where u.id = s.id and u.tid = '{$tid}' group by id";
     //else
-        //$sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'"; 
+    //$sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'"; 
 
     $rows = array();
 
     $i = 0;
-        
+
     try {
-        
-        $rs = mysqli_query($conn,$sqlString);
-        
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-            array(  
+
+        $rs = mysqli_query($conn, $sqlString);
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
                     'id'    => $row['id'],
-                    'name'  => $row['name'] ,
-                    'cnt'   => $row['cnt'],																																			
-                ));
+                    'name'  => $row['name'],
+                    'cnt'   => $row['cnt'],
+                )
+            );
         }
         $conn->close();
-    }
-    catch (Exception $e)
-    {
-        echo  json_encode( array("error:" => $e->getMessage()) );
+    } catch (Exception $e) {
+        echo  json_encode(array("error:" => $e->getMessage()));
     }
 
     header('Content-Type: application/json');
-    echo json_encode( array ("json" => $rows) );
+    echo json_encode(array("json" => $rows));
 }
 
-function SShowClassList ($data) {
+function SShowClassList($data)
+{
     session_start();
 
     $tid = $data['id'];
 
     global $conn;
 
-    $sqlString = "select unique(classnm) classnm from eplat_user where tid = '{$tid}'"; 
+    $sqlString = "select unique(classnm) classnm from eplat_user where tid = '{$tid}'";
 
     $rows = array();
 
     $i = 0;
-        
+
     try {
-        
-        $rs = mysqli_query($conn,$sqlString);
-        
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-                array(  'classnm'    => $row['classnm'],													
-            ));
+
+        $rs = mysqli_query($conn, $sqlString);
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'classnm'    => $row['classnm'],
+                )
+            );
         }
         $conn->close();
-    }
-    catch (Exception $e)
-    {
-        echo  json_encode( array("error:" => $e->getMessage()) );
+    } catch (Exception $e) {
+        echo  json_encode(array("error:" => $e->getMessage()));
     }
 
     header('Content-Type: application/json');
     echo json_encode($rows);
 }
 
-function SinsertStudent($data) {
-    
+function SinsertStudent($data)
+{
+
     global $location;
     global $conn;
 
     session_start();
-    
+
     // $json = file_get_contents('php://input');
-    
+
     // $arr = json_decode($json, true);
 
-    $id="";
-    $result="";
-    
+    $id = "";
+    $result = "";
+
     try {
-    
-        foreach ( $data['items'] as $row) {
-            
+
+        foreach ($data['items'] as $row) {
+
             $id = $row['id'];
             $name = $row['name'];
             $password = $row['passwd'];
@@ -830,125 +842,116 @@ function SinsertStudent($data) {
             $confirm = 1;
             $sql = "insert into eplat_user (id, name, password, role, tid, classnm, rdate, step, confirm) 
                     values ('{$id}', '{$name}','{$password}', {$role} , '{$tid}', '{$classnm}', now(), '{$step}' , {$confirm} )";
-    
+
             if ($conn->query($sql) === TRUE) {
                 $result =  "New record created successfully";
             } else {
                 $result =  "Error: " . $sql . "<br>" . $conn->error;
             }
         }
-        
+
         $conn->close();
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         echo json_encode($e->getMessage());
     }
-    
+
     echo json_encode($result);
 }
 
-function SUploadBoardPDF($data) {
+function SUploadBoardPDF($data)
+{
     session_start();
 
-	$id = $data['id'];
-	$porlist = $data['postlist'];
-	$porid  = $data['porid'];
-	$addr   = $data['addr'];
-	$mobile = $data['mobile'];
-	$order  = $data['order'];
-	$zip = "";
-    if ( isset($data['zip']) )   //
+    $id = $data['id'];
+    $porlist = $data['postlist'];
+    $porid  = $data['porid'];
+    $addr   = $data['addr'];
+    $mobile = $data['mobile'];
+    $order  = $data['order'];
+    $zip = "";
+    if (isset($data['zip']))   //
         $zip    = $data['zip'];
     $role = 1;
 
-	global $conn;
-	global $location;
-	
-	$rows = array();
-	$pdfname="";
-	$user="admin";
-	$res = "";
-	$res1= "";
-    
-	$url="http://localhost:3000/Server/uploads/";
+    global $conn;
+    global $location;
 
-	if ( $location == "eplat")
-		$url = "https://eplat.co.kr/Server/uploads/";
+    $rows = array();
+    $pdfname = "";
+    $user = "admin";
+    $res = "";
+    $res1 = "";
 
-	foreach($_FILES as $index => $file)
-	{
-		// for easy access
-		$fileName     = $file['name'];
-		// for easy access
-		$fileTempName = $file['tmp_name'];
-		// check if there is an error for particular entry in array
-		if(!empty($file['error'][$index]))
-		{
-			return false;
-		}
-		// check whether file has temporary path and whether it indeed is an uploaded file
-		if(!empty($fileTempName) && is_uploaded_file($fileTempName))
-		{
-			// move the file from the temporary directory to somewhere of your choosing
-			$RandomName = generateRandomString(15);
-			$pdfname = $RandomName . $fileName;
-			$res = move_uploaded_file($fileTempName, "uploads/" . $RandomName . $fileName);
-			//move_uploaded_file($fileTempName, "uploads/" . $fileName);
-			$tmp = $fileTempName;
-		}	
-	}
-	
-	try {
+    $url = "http://localhost:3000/Server/uploads/";
 
-		$sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate, `order`, addr, mobile, pdfname, zip ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW() , '{$order}', '{$addr}', '{$mobile}', '{$pdfname}' , '{$zip}')";
-		$res1 = mysqli_query ( $conn,  $sqlstring);
-		
-		if ($res=== TRUE && $res1 == TRUE) {
-			$result = ['url' => $url.$pdfname];
-		} else {
-			$result =  ['url' => 'http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf'];
-		}
-		
-		$conn->close();
-	}
-	catch (Exception $e)
-	{
-		echo json_encode( array ("Error:" => $e->getMessage() ));
-	}
-	
-	// Set the response content type to JSON
-	header('Content-Type: application/json');
-	// Output the data as JSON
-	echo json_encode($result);
+    if ($location == "eplat")
+        $url = "https://eplat.co.kr/Server/uploads/";
 
+    foreach ($_FILES as $index => $file) {
+        // for easy access
+        $fileName     = $file['name'];
+        // for easy access
+        $fileTempName = $file['tmp_name'];
+        // check if there is an error for particular entry in array
+        if (!empty($file['error'][$index])) {
+            return false;
+        }
+        // check whether file has temporary path and whether it indeed is an uploaded file
+        if (!empty($fileTempName) && is_uploaded_file($fileTempName)) {
+            // move the file from the temporary directory to somewhere of your choosing
+            $RandomName = generateRandomString(15);
+            $pdfname = $RandomName . $fileName;
+            $res = move_uploaded_file($fileTempName, "uploads/" . $RandomName . $fileName);
+            //move_uploaded_file($fileTempName, "uploads/" . $fileName);
+            $tmp = $fileTempName;
+        }
+    }
+
+    try {
+
+        $sqlstring = "insert into eplat_porlist ( id, por_id, por_list, rdate, `order`, addr, mobile, pdfname, zip ) values ( '{$id}', '{$porid}',  '{$porlist}',  NOW() , '{$order}', '{$addr}', '{$mobile}', '{$pdfname}' , '{$zip}')";
+        $res1 = mysqli_query($conn,  $sqlstring);
+
+        if ($res === TRUE && $res1 == TRUE) {
+            $result = ['url' => $url . $pdfname];
+        } else {
+            $result =  ['url' => 'http://localhost:3000/Server/uploads/cC6Gw7chIxgSkKlgenerated_pdf.pdf'];
+        }
+
+        $conn->close();
+    } catch (Exception $e) {
+        echo json_encode(array("Error:" => $e->getMessage()));
+    }
+
+    // Set the response content type to JSON
+    header('Content-Type: application/json');
+    // Output the data as JSON
+    echo json_encode($result);
 }
 
-function SUploadBoard ($data) {
+function SUploadBoard($data)
+{
     session_start();
     $content   = $data['idContent'];
     $desc   = $data['idDesc'];
-    
+
     $user =  'admin';
-    
+
     global $conn;
     $rows = array();
-    
-    if (  !empty($user) ) 
-    {
-        foreach($_FILES as $index => $file)
-        {
+
+    if (!empty($user)) {
+        foreach ($_FILES as $index => $file) {
             // for easy access
             $fileName     = $file['name'];
             // for easy access
             $fileTempName = $file['tmp_name'];
             // check if there is an error for particular entry in array
-            if(!empty($file['error'][$index]))
-            {
+            if (!empty($file['error'][$index])) {
                 return false;
             }
             // check whether file has temporary path and whether it indeed is an uploaded file
-            if(!empty($fileTempName) && is_uploaded_file($fileTempName))
-            {
+            if (!empty($fileTempName) && is_uploaded_file($fileTempName)) {
                 // move the file from the temporary directory to somewhere of your choosing
                 $RandomName = generateRandomString(15);
                 move_uploaded_file($fileTempName, "../board/uploads/" . $RandomName . $fileName);
@@ -957,38 +960,35 @@ function SUploadBoard ($data) {
             }
             array_push($rows, array(
                 'name'     => $fileName,
-                'fakename' => $RandomName. $fileName,
+                'fakename' => $RandomName . $fileName,
                 'size'     => $file['size'],
-            ));		
+            ));
         }
-        $jsarr = json_encode ($rows, JSON_UNESCAPED_UNICODE);
+        $jsarr = json_encode($rows, JSON_UNESCAPED_UNICODE);
         try {
-    
+
             $sqlstring = "insert into repository ( title, id, contents, `desc`, rdate ) values ( '$content', '$user',  '$jsarr', '$desc',  NOW())";
-            $res = mysqli_query ( $conn,  $sqlstring);
-            
-            if ($res=== TRUE) {
+            $res = mysqli_query($conn,  $sqlstring);
+
+            if ($res === TRUE) {
                 $result = true;
             } else {
                 $result =  "Error: " . $sqlstring . "<br>" . $conn->error;
             }
-            
+
             $conn->close();
+        } catch (Exception $e) {
+            echo json_encode(array("error:" => $e->getMessage()));
         }
-        catch ( Exception $e)
-        {
-            echo json_encode( array ("error:" => $e->getMessage() ));
-        }
-    
-        echo json_encode( array ("result:" => $result )) ;
-    }
-    else 
-    {
+
+        echo json_encode(array("result:" => $result));
+    } else {
         Header("Location: login.php");
     }
 }
 
-function SShowBoardList($data) {
+function SShowBoardList($data)
+{
     session_start();
 
     $num = $data['num'];
@@ -996,37 +996,36 @@ function SShowBoardList($data) {
     global $conn;
 
     try {
-        if ( $num == -1) {
-            $sqlString = "SELECT num, title, id, contents, `desc`, rdate  FROM repository order by num desc"; 
-        }
-        else
-            $sqlString = "SELECT num, title, id, contents, `desc`, rdate  FROM repository where num =". $num ." order by num desc"; 
+        if ($num == -1) {
+            $sqlString = "SELECT num, title, id, contents, `desc`, rdate  FROM repository order by num desc";
+        } else
+            $sqlString = "SELECT num, title, id, contents, `desc`, rdate  FROM repository where num =" . $num . " order by num desc";
 
-        $rs = mysqli_query($conn,$sqlString);
+        $rs = mysqli_query($conn, $sqlString);
         $rows = array();
 
         $i = 0;
 
-        while($row = mysqli_fetch_array($rs)){
-            array_push($rows,
-                    array(  'num'      => $row['num'],
-                            'title'    => $row['title'] ,
-                            'id'       => $row['id'],								
-                            'contents' => $row['contents'],								
-                            'desc'     => $row['desc'],								
-                            'rdate'    => $row['rdate'],								
-                    ));
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'num'      => $row['num'],
+                    'title'    => $row['title'],
+                    'id'       => $row['id'],
+                    'contents' => $row['contents'],
+                    'desc'     => $row['desc'],
+                    'rdate'    => $row['rdate'],
+                )
+            );
         }
-    }
-    catch (Exception $e)
-    {
-        return json_encode( $e->getMessage() );
+    } catch (Exception $e) {
+        return json_encode($e->getMessage());
     }
 
     $result["rows"] = $rows;
     header('Content-Type: application/json');
     echo json_encode($rows);
-
 }
 
 function SDeleteBoardlist($data)
@@ -1036,49 +1035,49 @@ function SDeleteBoardlist($data)
     $num  = $data["num"][0];
 
     global $conn;
-    $res="";
+    $res = "";
     $rows = array();
-    $cont="";
+    $cont = "";
 
     try {
-        $sql = "SELECT contents from repository WHERE num = ".$num."";
+        $sql = "SELECT contents from repository WHERE num = " . $num . "";
 
-        $rs = mysqli_query($conn,$sql);
-        
-        while($row = mysqli_fetch_array($rs)){
-            $cont =  $row['contents'];												
+        $rs = mysqli_query($conn, $sql);
+
+        while ($row = mysqli_fetch_array($rs)) {
+            $cont =  $row['contents'];
         }
         $jsobj = json_decode($cont, true);
 
-        if ( $jsobj !== null ) {
-            $arrlen = count( $jsobj);
-            for ( $i=0; $i < $arrlen ; $i++) {
-                if ( unlink('../board/uploads/'.$jsobj[$i]['fakename']) ) {
+        if ($jsobj !== null) {
+            $arrlen = count($jsobj);
+            for ($i = 0; $i < $arrlen; $i++) {
+                if (unlink('../board/uploads/' . $jsobj[$i]['fakename'])) {
                     $res = true;
                 } else {
                     $res = false;
-                }         
+                }
             }
         }
 
-        $sql = "DELETE FROM repository WHERE num = '".$num."'";
-        
+        $sql = "DELETE FROM repository WHERE num = '" . $num . "'";
+
         if ($conn->query($sql) === TRUE) {
             $res = true;
         } else {
-            $res =  json_encode(  array("Error deleting record: " . $conn->error) );
+            $res =  json_encode(array("Error deleting record: " . $conn->error));
         }
-        
+
         $conn->close();
-    }
-    catch (Exception $e) {
-        echo json_encode( $e->getMessage());
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
     }
 
     echo json_encode($res);
 }
 
-function generateRandomString($length = 15) {
+function generateRandomString($length = 15)
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomString = '';
 
@@ -1088,20 +1087,20 @@ function generateRandomString($length = 15) {
     return $randomString;
 }
 
-function resize_image($file, $w, $h, $crop=FALSE) {
-        
+function resize_image($file, $w, $h, $crop = FALSE)
+{
+
     $percent = 0.5;
-    
+
     list($width, $height) = getimagesize($file);
     $newwidth = $width * $percent;
     $newheight = $height * $percent;
-    
+
     $src = imagecreatefromjpeg($file);
     $dst = imagecreatetruecolor($newwidth, $newheight);
     imagecopyresized($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    
+
     imagejpeg($dst);
-    
+
     return $dst;
 }
-?>

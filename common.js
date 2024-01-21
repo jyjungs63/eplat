@@ -182,5 +182,5 @@ function getRandomColor() {
 
 
 window.addEventListener('beforeunload', function(e) {
-    deleteLocalStorage('info')
+    //deleteLocalStorage('info')
 });

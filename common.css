@@ -17,3 +17,7 @@
 #table thead th {
     background-color: var(--primary-color);
 }
+
+#porTable thead th {
+    background-color: var(--primary-color);
+}

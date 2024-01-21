@@ -23,7 +23,7 @@ table = new Tabulator("#idTable", {
         {
             title: "지사/유치원명",
             field: "owner",
-            width: "15%",
+            width: "10%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -35,7 +35,7 @@ table = new Tabulator("#idTable", {
         {
             title: "이름",
             field: "name",
-            width: "15%",
+            width: "10%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -47,7 +47,7 @@ table = new Tabulator("#idTable", {
         {
             title: "전화번호",
             field: "mobile",
-            width: "7%",
+            width: "10%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -83,7 +83,7 @@ table = new Tabulator("#idTable", {
         {
             title: "우편번호",
             field: "zipcode",
-            width: "7%",
+            width: "5%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -95,7 +95,7 @@ table = new Tabulator("#idTable", {
         {
             title: "주소",
             field: "addr",
-            width: "20%",
+            width: "30%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
@@ -108,7 +108,7 @@ table = new Tabulator("#idTable", {
         {
             title: "등록일",
             field: "rdate",
-            width: "8%",
+            width: "7%",
             editor: "input",
             editorParams: {
                 autocomplete: "true",
