@@ -391,7 +391,7 @@ function SShowMgr($data)
         $result["rows"] = $rows;
 
         header('Content-Type: application/json');
-        echo json_encode(array("Success: " => $rows));
+        echo json_encode(array("success" => $rows));
     } catch (Exception $e) {
         header('Content-Type: application/json');
         echo json_encode(array("Error: " => $e->getMessage()));
