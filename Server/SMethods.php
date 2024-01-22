@@ -358,14 +358,12 @@ function SShowMgr($data)
 
     try {
 
-        if ($role == "va")
-        {
-            if ( $id == 'admin')
+        if ($role == "va") {
+            if ($id == 'admin')
                 $sqlString = "SELECT * FROM eplat_user";
             else
                 $sqlString = "SELECT * FROM eplat_user where mid = '" . $id . "'";
-        }
-        else if ($role == "v4")
+        } else if ($role == "v4")
             $sqlString = "SELECT * FROM eplat_user where role = 1 and mid = '" . $id . "'";
         else
             $sqlString = "SELECT * FROM eplat_user where role = 2 and mid = '" . $id . "'";
@@ -712,13 +710,13 @@ function SShowConfirmUpdatePOR($data)
 
     try {
 
-            $id = $arr['data']['id'];
-            $por_id = $arr['data']['porid'];
-            $sql = "UPDATE eplat_porlist SET confirm = 1  WHERE id = '{$id}'  and por_id = '{$por_id}'";
+        $id = $arr['data']['id'];
+        $por_id = $arr['data']['porid'];
+        $sql = "UPDATE eplat_porlist SET confirm = 1  WHERE id = '{$id}'  and por_id = '{$por_id}'";
 
-            if ($conn->query($sql) === TRUE) {
-                $result = true;
-            }
+        if ($conn->query($sql) === TRUE) {
+            $result = true;
+        }
 
 
         $conn->close();
@@ -740,13 +738,12 @@ function SShowStudentList($data)
     $step = $data['step'];
     $sel = $data['sel'];
 
-    if ( $sel == '1') {
+    if ($sel == '1') {
         if ($step == '전체')
             $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
-        else 
+        else
             $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'";
-    }
-    else if ( $sel == '2')
+    } else if ($sel == '2')
         $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and classnm = '{$step}'";
     $rows = array();
 
@@ -929,7 +926,7 @@ function SupdateStudent($data)
                     password = '" . $row['passwd'] . "',                     
                     classnm  = '" . $row['classnm'] . "',
                     step     = '" . $row['step'] . "'
-                    WHERE id = '" . $row['id'] . "' and tid ='" . $row['tid'] ."'";
+                    WHERE id = '" . $row['id'] . "' and tid ='" . $row['tid'] . "'";
             if ($conn->query($sql) === TRUE) {
                 $result =  "New record created successfully";
             } else {

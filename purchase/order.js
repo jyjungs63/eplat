@@ -509,11 +509,11 @@ addPurcharseList = (res) => {
     );
 
 
-    $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
+    //$("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
 
     newRow.append("<td>"+ cvtCurrency(total) +"원</td>");
     newRow.append("<td> <div> "+ ell['addr'] + "</div> <br/> <div>" + ell['order']+ "</div></td>");
-    let stat = res['confirm'] == "0" ? "미완료" : "완료"
+    let stat = res[0]['confirm'] == "0" ? "미완료" : "완료"
     newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='#'>반송<a></div></td>");
     // Append the new row to the table body
     tbody.append(newRow);
