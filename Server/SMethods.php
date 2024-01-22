@@ -359,7 +359,12 @@ function SShowMgr($data)
     try {
 
         if ($role == "va")
-            $sqlString = "SELECT * FROM eplat_user where mid = '" . $id . "'";
+        {
+            if ( $id == 'admin')
+                $sqlString = "SELECT * FROM eplat_user";
+            else
+                $sqlString = "SELECT * FROM eplat_user where mid = '" . $id . "'";
+        }
         else if ($role == "v4")
             $sqlString = "SELECT * FROM eplat_user where role = 1 and mid = '" . $id . "'";
         else

@@ -337,7 +337,7 @@ include "../header.php";
         if (result) {
             CallAjax("SMethods.php", "POST", options, dispList, dispErr);
         } else
-            console.log("delete row cancel branchmgr BranchDelete r.260!!");
+            console.log("delete row cancel branchmgr Branch Delete r.260!!");
     }
 
     document.getElementById("idGrade").addEventListener("change", function() {
