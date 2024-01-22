@@ -65,7 +65,8 @@
                                     <option val="v5">주소지</option>
                                 </select> -->
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idID" type="text" placeholder="POR ID">
+                                <input class="form-control form-control-sm" id="idPorID" type="text"
+                                    placeholder="POR ID">
                                 &nbsp;
                                 <input class="form-control form-control-sm" id="idName" type="text" placeholder="Name">
                                 &nbsp;
@@ -87,7 +88,7 @@
                                     onclick="execDaumPostcode()">
                                     주소찾기</button>
                                 &nbsp; -->
-                                <button class="btn btn-outline-success btn-sm" type="button" onclick="AddBranch()">구매처리
+                                <button class="btn btn-outline-success btn-sm" type="button" onclick="ConfirmPOR()">구매처리
                                 </button>
                             </div>
                         </h3>
@@ -185,6 +186,7 @@
     include '../includescr.php';
     ?>
     <script src="../common.js"></script>
+    <script src="../header.js"></script>
     <script src="adminLogin.js"></script>
     <script>
     $("#exampleModal").on("hidden.bs.modal", function() {
@@ -195,6 +197,7 @@
         dispList = (res) => {
             var js = res[0]['json']
             porTable.setData(JSON.parse(js));
+            $("#idPorID").val(por_id);
             $("#idName").val(res[0]['order']);
             $("#idAddr").val(res[0]['addr']);
             $("#idRdate").val(res[0]['rdate']);
@@ -372,6 +375,30 @@
         };
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
+    }
+
+    ConfirmPOR = () => {
+
+        var data = {
+            porid: $("#idPorID").val(),
+            id: user
+        };
+
+        dispList = (resp) => {
+            confirmList("전체");
+            CallToast('구매의뢰서 처리  완료!', "success")
+        }
+        dispErr = (xhr) => {
+            CallToast('구매의뢰서 처리  !', "error")
+        }
+
+        var options = {
+            functionName: 'SShowConfirmUpdatePOR',
+            otherData: {
+                data
+            }
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
     }
     </script>
 </body>

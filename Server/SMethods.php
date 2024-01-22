@@ -699,6 +699,38 @@ function SShowConfirmUpdate($data)
     echo json_encode(array("result: " => $result));
 }
 
+function SShowConfirmUpdatePOR($data)
+{
+    session_start();
+
+    // $json = file_get_contents('php://input');
+    // $arr = json_decode($json, true);
+
+    $arr = $data;
+    global $conn;
+    $result = "";
+
+    try {
+
+            $id = $arr['data']['id'];
+            $por_id = $arr['data']['porid'];
+            $sql = "UPDATE eplat_porlist SET confirm = 1  WHERE id = '{$id}'  and por_id = '{$por_id}'";
+
+            if ($conn->query($sql) === TRUE) {
+                $result = true;
+            }
+
+
+        $conn->close();
+    } catch (Exception $e) {
+        $result = $e->getMessage();
+    }
+
+    header('Content-Type: application/json');
+
+    echo json_encode(array("result: " => $result));
+}
+
 function SShowStudentList($data)
 {
     session_start();
