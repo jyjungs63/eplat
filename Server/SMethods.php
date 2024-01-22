@@ -461,7 +461,7 @@ function SShowAddr($data)
     }
 }
 
-function SDeleteChild($data)
+function SRemoveChild($data)
 {
     session_start();
 
@@ -484,7 +484,6 @@ function SDeleteChild($data)
     } catch (Exception $e) {
         echo json_encode($e->getMessage());
     }
-
 
     echo json_encode($res);
 }
@@ -701,12 +700,16 @@ function SShowStudentList($data)
     global $conn;
     $tid = $data['id'];
     $step = $data['step'];
+    $sel = $data['sel'];
 
-    if ($step == '전체')
-        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
-    else
-        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'";
-
+    if ( $sel == '1') {
+        if ($step == '전체')
+            $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
+        else 
+            $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'";
+    }
+    else if ( $sel == '2')
+        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and classnm = '{$step}'";
     $rows = array();
 
     $i = 0;
@@ -843,6 +846,52 @@ function SinsertStudent($data)
             $sql = "insert into eplat_user (id, name, password, role, tid, classnm, rdate, step, confirm) 
                     values ('{$id}', '{$name}','{$password}', {$role} , '{$tid}', '{$classnm}', now(), '{$step}' , {$confirm} )";
 
+            if ($conn->query($sql) === TRUE) {
+                $result =  "New record created successfully";
+            } else {
+                $result =  "Error: " . $sql . "<br>" . $conn->error;
+            }
+        }
+
+        $conn->close();
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
+    }
+
+    echo json_encode($result);
+}
+
+function SupdateStudent($data)
+{
+
+    global $location;
+    global $conn;
+
+    session_start();
+
+    // $json = file_get_contents('php://input');
+    // $arr = json_decode($json, true);
+
+    $id = "";
+    $result = "";
+
+    try {
+        foreach ($data['items'] as $row) {
+
+            $id = $row['id'];
+            $name = $row['name'];
+            $password = $row['passwd'];
+            $tid = $row['tid'];
+            $classnm = $row['classnm'];
+            $step = $row['step'];
+            $role = 0;
+            $confirm = 1;
+            $sql = "update eplat_user set  
+                    name     = '" . $row['name'] . "',
+                    password = '" . $row['passwd'] . "',                     
+                    classnm  = '" . $row['classnm'] . "',
+                    step     = '" . $row['step'] . "'
+                    WHERE id = '" . $row['id'] . "' and tid ='" . $row['tid'] ."'";
             if ($conn->query($sql) === TRUE) {
                 $result =  "New record created successfully";
             } else {

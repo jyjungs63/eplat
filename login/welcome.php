@@ -1012,7 +1012,6 @@ img {
             week: week
         };
         localStorage.setItem('currentStatus', JSON.stringify(stat));
-
     });
 
 

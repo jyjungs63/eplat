@@ -97,7 +97,7 @@ CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
 CallToast = (message, stat ) => {
     if (stat == "success") {
         toastr.success(message, 'Success', {
-            positionClass: 'toast-buttom-right',
+            positionClass: 'toast-top-right',
             timeout: 2000,
             closeButton: true,
             progressBar: true
@@ -106,7 +106,7 @@ CallToast = (message, stat ) => {
     else if ( stat == "error")
     {
         toastr.error(message, 'Error', {
-            positionClass: 'toast-buttom-right',
+            positionClass: 'toast-top-right',
             timeout: 2000,
             closeButton: true,
             progressBar: true
