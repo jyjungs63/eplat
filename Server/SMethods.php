@@ -677,6 +677,7 @@ function SShowConfirmUpdate($data)
         foreach ($arr['items'] as $row) {
             $sql = "UPDATE eplat_user SET id = '" . $row['id'] . "'
             ,name = '" . $row['name'] . "' 
+            ,owner = '" . $row['owner'] . "' 
             ,password = '" . $row['password'] . "' 
             ,mobile = '" . $row['mobile'] . "' 
             ,addr = '" . $row['addr'] . "' 

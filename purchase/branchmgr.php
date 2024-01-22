@@ -251,6 +251,7 @@ include "../header.php";
         item.forEach(el => {
             var jarr = {
                 "id": el['id'],
+                "owner": el['owner'],
                 "name": el['name'],
                 "mobile": el['mobile'],
                 "addr": el['addr'],
@@ -265,7 +266,8 @@ include "../header.php";
         }
 
         dispList = (resp) => {
-            CallToast('New Branch Manager Updated successfully!!', "success")
+            CallToast('New Branch Manager Updated successfully!!', "success");
+            BranchList();
         }
         dispErr = (xhr) => {
             CallToast('New Branch Manager Update falure!', "error")
@@ -335,7 +337,7 @@ include "../header.php";
     BranchDelete = (cell) => {
         var result = confirm("Are you sure to delete ??");
         var id = cell._row.data['id'];
-        if (cell._row.data['role'] != "9") {
+        if (cell._row.data['role'] != "Admin") {
             dispList = (resp) => {
                 cell.delete();
             }
@@ -355,7 +357,7 @@ include "../header.php";
             } else
                 console.log("delete row cancel branchmgr Branch Delete r.260!!");
         } else
-            alert("admin운 삭제 할 수 없습니다!!!!");
+            alert("admin관리자는  삭제 할 수 없습니다!!!!");
 
     }
 
