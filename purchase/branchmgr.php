@@ -335,7 +335,7 @@ include "../header.php";
     BranchDelete = (cell) => {
         var result = confirm("Are you sure to delete ??");
         var id = cell._row.data['id'];
-        if (cell._row.data['id'] != "9") {
+        if (cell._row.data['role'] != "9") {
             dispList = (resp) => {
                 cell.delete();
             }
