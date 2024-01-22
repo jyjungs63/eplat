@@ -224,7 +224,8 @@ include "../header.php";
         dispList = (resp) => {
             if ('success' in resp) {
                 CallToast('New Branch Manager added successfully!!', "success")
-                items['role'] = items['role'] == "1" ? "지사관리" : "원관리";
+                items['role'] = items['role'] == "1" ? "지사관리" : (items['role'] == "2" ? "원관리" : (items[
+                    'role'] == "9" ? "관리자" : "원생"));
                 table.addRow(items);
             } else
                 CallToast('New Branch Manager added falure!', "error")
@@ -283,10 +284,25 @@ include "../header.php";
     BranchList = () => {
         var items = [];
 
+        var role = "";
         dispList = (resp) => {
             resp['success'].forEach(el => {
+
+                switch (el['role']) {
+                    case "1":
+                        role = "지사관리"
+                        break;
+                    case "2":
+                        role = "원관리"
+                        break;
+                    case "9":
+                        role = "Admin"
+                        break
+                    default:
+                        role = "원생"
+                }
                 var jarr = {
-                    "role": el['role'] == "1" ? "지사관리" : "원관리",
+                    "role": role,
                     "id": el['id'],
                     "name": el['name'],
                     "owner": el['owner'],
@@ -319,25 +335,28 @@ include "../header.php";
     BranchDelete = (cell) => {
         var result = confirm("Are you sure to delete ??");
         var id = cell._row.data['id'];
-
-        dispList = (resp) => {
-            cell.delete();
-        }
-        dispErr = (xhr) => {
-            alert("SDeleteMgr Error" + xhr.statusText);
-        }
-
-        var options = {
-            functionName: 'SDeleteMgr',
-            otherData: {
-                id: id
+        if (cell._row.data['id'] != "9") {
+            dispList = (resp) => {
+                cell.delete();
             }
-        };
+            dispErr = (xhr) => {
+                alert("SDeleteMgr Error" + xhr.statusText);
+            }
 
-        if (result) {
-            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+            var options = {
+                functionName: 'SDeleteMgr',
+                otherData: {
+                    id: id
+                }
+            };
+
+            if (result) {
+                CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+            } else
+                console.log("delete row cancel branchmgr Branch Delete r.260!!");
         } else
-            console.log("delete row cancel branchmgr Branch Delete r.260!!");
+            alert("admin운 삭제 할 수 없습니다!!!!");
+
     }
 
     document.getElementById("idGrade").addEventListener("change", function() {
@@ -355,7 +374,7 @@ include "../header.php";
         dispList = (resp) => {
             resp.forEach(el => {
                 var jarr = {
-                    "role": el['id'] == "1" ? "지사관리" : "원관리",
+                    "role": el['role'] == "1" ? "지사관리" : (el['id'] == "2" ? "원관리" : "기타"),
                     "id": el['id'],
                     "name": el['name'],
                     "owner": el['owner'],

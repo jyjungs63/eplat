@@ -20,6 +20,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="login/fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -867,13 +868,15 @@
     <footer class="footer py-4">
         <div class="container">
             <div class="row align-items-center">
-                <div style="color: white;" class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
-                <div class="col-lg-4 my-3 my-lg-0">
+                <div style="color: white;" class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2024</div>
+                <div class="col-lg-4  my-lg-0">
                     <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i
                             class="fab fa-twitter"></i></a>
                     <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
                     <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i
                             class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-dark btn-social" href="#" aria-label="LinkedIn"><i
+                            class="fa-solid fa-user"></i></a>
                 </div>
                 <div class="col-lg-4 text-lg-end">
                     <!-- <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a> -->
