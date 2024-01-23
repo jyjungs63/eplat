@@ -738,13 +738,26 @@ function SShowStudentList($data)
     $step = $data['step'];
     $sel = $data['sel'];
 
-    if ($sel == '1') {
-        if ($step == '전체')
-            $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
-        else
-            $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'";
-    } else if ($sel == '2')
-        $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and classnm = '{$step}'";
+    if ( $tid == "admin")
+    {
+        if ($sel == '1') {
+            if ($step == '전체')
+                $sqlString = "SELECT *  FROM eplat_user where  role = 0";
+            else
+                $sqlString = "SELECT *  FROM eplat_user where  step = '{$step}' and role = 0";
+        } else if ($sel == '2')
+            $sqlString = "SELECT *  FROM eplat_user where classnm = '{$step}' and role = 0";
+    }
+    else
+    {
+        if ($sel == '1') {
+            if ($step == '전체')
+                $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
+            else
+                $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'";
+        } else if ($sel == '2')
+            $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and classnm = '{$step}'";
+    }
     $rows = array();
 
     $i = 0;
@@ -826,6 +839,8 @@ function SShowClassList($data)
 
     $sqlString = "select unique(classnm) classnm from eplat_user where tid = '{$tid}'";
 
+    if ( $tid == "admin" )
+        $sqlString = "select unique(classnm) classnm from eplat_user where classnm is not null";
     $rows = array();
 
     $i = 0;

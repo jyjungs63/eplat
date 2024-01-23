@@ -110,49 +110,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="fas fa-chart-pie mr-1"></i>
-                                학습현황
-                            </h3>
-                            <div class="card-tools d-flex">
-                                <ul class="nav nav-pills">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#revenue-chart" data-bs-toggle="pill">Area</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="#sales-chart" data-bs-toggle="pill">Donut</a>
-                                    </li>
-                                </ul> &nbsp; &nbsp;
-                                </ul> &nbsp; &nbsp;
-                                <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
-                                    data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i></button>
-                                <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
-                                    data-toggle="tooltip" title="Remove">
-                                    <i class="fas fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content p-0">
-                                <div class=" tab-pane container active" id="revenue-chart"
-                                    style="position: relative; height: 500px;">
-                                    <canvas id="revenue-chart-canvas" height="500px" style="height: 500px;"></canvas>
-                                </div>
-                                <div class=" tab-pane container " id="sales-chart"
-                                    style="position: relative; height: 500px;">
-                                    <canvas id="sales-chart-canvas" height="500px" style="height: 500px;"></canvas>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div> -->
     </div>
     </section>
     </div>
@@ -166,11 +123,6 @@
     <script src="../header.js"></script>
     <script>
     var tab;
-
-    // const user = document.querySelector('meta[name="user"]').getAttribute('content');
-    // const role = document.querySelector('meta[name="role"]').getAttribute('content');
-    // const conf = document.querySelector('meta[name="confirm"]').getAttribute('content');
-    // const name = document.querySelector('meta[name="name"]').getAttribute('content');
 
     document.getElementById("idHead").innerHTML = "[ " + user + " ]" + " 학생등록 관리리스트";
 
@@ -430,6 +382,7 @@
     }
 
     showClass = (tid) => {
+
         var data = {
             id: tid
         };
@@ -437,15 +390,12 @@
         dispList = (resp) => {
             let select = document.getElementById('idClass');
             let option = document.createElement('option');
-            //option.text = ""; // Set the text of the new option
-            //option.value = ""; // Set the value attribute (if needed)
-            //select.add(option);
+
             resp.forEach(el => {
                 var jarr = {
                     "classnm": el['classnm'],
                 }
-                //items.push(jarr);
-                // Create a new option element
+
                 let option = document.createElement('option');
                 option.text = el['classnm']; // Set the text of the new option
                 option.value = el['classnm']; // Set the value attribute (if needed)
@@ -494,36 +444,36 @@
     }
 
 
-    // printClassMember = () => {
-    //     tab.print();
-    // }
-
     printClassMember = () => {
-        var element = document.getElementById('idTable');
-        var opt = {
-            margin: [3, 0, 0, 0],
-            //margin: 0.1,
-            filename: 'myfile.pdf',
-            image: {
-                type: 'jpeg',
-                quality: 1
-            },
-            html2canvas: {
-                scale: 1
-            },
-            jsPDF: {
-                unit: 'cm',
-                format: 'a4',
-                orientation: 'landscape'
-            }
-        };
-
-        // New Promise-based usage:
-        html2pdf().set(opt).from(element).save();
-
-        // Old monolithic-style usage:
-        //html2pdf(element, opt);
+        tab.print();
     }
+
+    // printClassMember = () => {
+    //     var element = document.getElementById('idTable');
+    //     var opt = {
+    //         margin: [3, 0, 0, 0],
+    //         //margin: 0.1,
+    //         filename: 'myfile.pdf',
+    //         image: {
+    //             type: 'jpeg',
+    //             quality: 1
+    //         },
+    //         html2canvas: {
+    //             scale: 1
+    //         },
+    //         jsPDF: {
+    //             unit: 'cm',
+    //             format: 'a4',
+    //             orientation: 'landscape'
+    //         }
+    //     };
+
+    //     // New Promise-based usage:
+    //     html2pdf().set(opt).from(element).save();
+
+    //     // Old monolithic-style usage:
+    //     //html2pdf(element, opt);
+    // }
     </script>
 </body>
 
