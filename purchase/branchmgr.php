@@ -303,17 +303,18 @@ include "../header.php";
                     default:
                         role = "원생"
                 }
-                var jarr = {
-                    "role": role,
-                    "id": el['id'],
-                    "name": el['name'],
-                    "owner": el['owner'],
-                    "mobile": el['mobile'],
-                    "addr": el['addr'],
-                    "zipcode": el['zipcode'],
-                    "password": el['password'],
-                    "rdate": el['rdate'],
-                }
+                if (el['role'] == "1" || el['role'] == "2")
+                    var jarr = {
+                        "role": role,
+                        "id": el['id'],
+                        "name": el['name'],
+                        "owner": el['owner'],
+                        "mobile": el['mobile'],
+                        "addr": el['addr'],
+                        "zipcode": el['zipcode'],
+                        "password": el['password'],
+                        "rdate": el['rdate'],
+                    }
                 items.push(jarr);
             });
             table.clearData();
