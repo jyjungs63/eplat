@@ -285,8 +285,7 @@
         dispList = (res) => {
             var js = res['json'];
             tab.setData(js);
-            //$("#idClassname").val(res['classnm'])
-            //tab.setData(JSON.parse(js));
+
             CallToast('Student list successfully!!', "success")
         }
         dispErr = (xhr) => {

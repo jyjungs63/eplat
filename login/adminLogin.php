@@ -362,6 +362,7 @@
 
         dispList = (resp) => {
             confirmList("전체");
+            CallToast('New Branch Manager Update Success!', "success")
         }
         dispErr = (xhr) => {
             CallToast('New Branch Manager Update falure!', "error")

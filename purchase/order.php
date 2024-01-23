@@ -692,6 +692,8 @@ include "../header.php";
 
         drawTexts(page, width / 2.5, height - 4 * fontSize, fontSize, rgb(0.0, 0.0, 0.0),
             "구매내역서")
+        drawTexts(page, width / 4, height - 4 * fontSize, fontSize, rgb(0.0, 0.0, 0.0),
+            formatDate())
 
         for (var i = 0; i <= buyArr.length + 1; i++) { // x horizontal line 
 

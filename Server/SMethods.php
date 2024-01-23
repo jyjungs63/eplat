@@ -712,7 +712,7 @@ function SShowConfirmUpdatePOR($data)
 
         $id = $arr['data']['id'];
         $por_id = $arr['data']['porid'];
-        $sql = "UPDATE eplat_porlist SET confirm = 1  WHERE id = '{$id}'  and por_id = '{$por_id}'";
+        $sql = "UPDATE eplat_porlist SET confirm = 1  WHERE  por_id = '{$por_id}'";
 
         if ($conn->query($sql) === TRUE) {
             $result = true;
