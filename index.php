@@ -1037,7 +1037,7 @@ logon = () => {
 
     dispList = (resp) => {
         if ('success' in resp) {
-            CallToast('Login successfully!!', "success")
+            //CallToast('Login successfully!!', "success")
             // var url = window.origin+'/' + resp['success'];
             // window.location.href = url;
 

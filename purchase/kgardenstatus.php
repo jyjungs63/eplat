@@ -46,23 +46,23 @@
                         <div class="card-header">
                             <h3 class="card-title">
                                 <div class="input-group mb-3">
-                                    <label for="idStudent" class="form-label">Step선택</label>
+                                    <label for="idStep" class="form-label">Step선택</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <select class="form-select form-control-sm" id="idStudent"
+                                    <select class="form-select form-control-sm" id="idStep"
                                         data-placeholder="Choose Items" style="width: 150px;">
-                                        <option val="v0"></option>
-                                        <option val="va">전체</option>
-                                        <option val="sb">4세-Basic</option>
-                                        <option val="s1">5세-Step1</option>
-                                        <option val="s2">6세-Step2</option>
-                                        <option val="s3">7세-Step3</option>
+                                        <option value="v0"></option>
+                                        <option value="전체">전체</option>
+                                        <option value="basic">4세-Basic</option>
+                                        <option value="step1">5세-Step1</option>
+                                        <option value="step2">6세-Step2</option>
+                                        <option value="step3">7세-Step3</option>
                                     </select>&nbsp;&nbsp;&nbsp;
                                     <label for="idClass" class="form-label">반선택</label>
                                     <!-- <button class="btn btn-outline-secondary" type="button">반선택</button> -->
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <select class="form-select form-control-sm" id="idClass"
                                         data-placeholder="Choose Items" style="width: 150px;">
-                                        <option val="va">전체</option>
+                                        <option value="v0"></option>
                                     </select>&nbsp;&nbsp;
                                     <!-- <input type="month" class="form-control form-control-sm" id="monthPicker"
                                         name="month" style="width: 85px"> -->
@@ -105,10 +105,10 @@
                                                             <a class="nav-link active" href="#revenue-chart"
                                                                 data-bs-toggle="pill">Area</a>
                                                         </li>
-                                                        <li class="nav-item">
+                                                        <!-- <li class="nav-item">
                                                             <a class="nav-link " href="#sales-chart"
                                                                 data-bs-toggle="pill">Donut</a>
-                                                        </li>
+                                                        </li> -->
                                                     </ul> &nbsp; &nbsp;
                                                     </ul> &nbsp; &nbsp;
                                                     <button type="button" class="btn btn-tool btn-sm"
@@ -163,18 +163,91 @@
     <script>
     var tab;
 
+    var salesChart;
+    var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d');
+    var chartState = 0;
+
+
+
     window.addEventListener('resize', function() {
 
     })
 
     document.addEventListener("DOMContentLoaded", function() {
         $("#idStudyStatus").html(name + "학생학습현황");
+        showClass(user);
         CallToast(name + "님 방문을 환영합니다!.", "success");
     });
 
-    document.getElementById("idStudent").addEventListener("change", function() {
+    showClass = (tid) => {
+
+        var data = {
+            id: tid
+        };
+
+        dispList = (resp) => {
+            let select = document.getElementById('idClass');
+            let option = document.createElement('option');
+
+            resp['success'].forEach(el => {
+                var jarr = {
+                    "classnm": el['classnm'],
+                }
+
+                let option = document.createElement('option');
+                option.text = el['classnm']; // Set the text of the new option
+                option.value = el['classnm']; // Set the value attribute (if needed)
+
+                // Append the new option to the select element
+                select.add(option);
+            })
+            //CallToast('Disply student list successfully!!', "success")
+        }
+
+        dispErr = (xhr) => {
+            //CallToast('Disply student list falure !!', "error")
+        }
+
+        var options = {
+            functionName: 'SShowClassList',
+            otherData: {
+                id: tid
+            }
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+    };
+
+    var selectElement = document.getElementById('idStep');
+    selectElement.addEventListener("change", function() {
+
+        var selectedValue = selectElement.value;
+
+        var dateRangePickerValue = $('#reportrange').val();
+        var selectedDates = dateRangePickerValue.split(' ~ ');
+        var startDate = selectedDates[0];
+        var endDate = selectedDates[1];
+        // Parse the value to extract start and end dates
+
+        // 선택된 옵션 가져오기
+        //var selectedOption = this.options[this.selectedIndex];
+
+        // 선택된 옵션의 값(value) 가져오기
+        //var selectedValue = selectedOption.value;
+
+        // 선택된 옵션의 텍스트 가져오기
+        //var selectedText = selectedOption.text;
+
+        listStudent(selectedValue, startDate, endDate);
+    });
+
+    document.getElementById("idClass").addEventListener("change", function() {
         // 선택된 옵션 가져오기
         var selectedOption = this.options[this.selectedIndex];
+        var dateRangePickerValue = $('#reportrange').val();
+        var selectedDates = dateRangePickerValue.split(' ~ ');
+        var startDate = selectedDates[0].trim();
+        var endDate = selectedDates[1].trim();
+
 
         // 선택된 옵션의 값(value) 가져오기
         var selectedValue = selectedOption.value;
@@ -182,10 +255,11 @@
         // 선택된 옵션의 텍스트 가져오기
         var selectedText = selectedOption.text;
 
-        listStudent(selectedText);
+        listStudent2(selectedValue, startDate, endDate);
     });
 
-    listStudent = (step) => {
+
+    listStudent = (step, start, end) => {
 
         dispList = (res) => {
             var js = res['json'];
@@ -200,7 +274,32 @@
             functionName: 'SShowStudyList',
             otherData: {
                 id: user,
-                step: step
+                step: step,
+                start: start,
+                end: end
+            }
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+    }
+
+    listStudent2 = (classnm, start, end) => {
+
+        dispList = (res) => {
+            var js = res['json'];
+            drawChart(res['json']);
+            CallToast('Student list successfully!!', "success")
+        }
+        dispErr = (xhr) => {
+            CallToast('Student list Error!!', "error")
+        }
+
+        var options = {
+            functionName: 'SShowStudyList2',
+            otherData: {
+                id: user,
+                classnm: classnm,
+                start: start,
+                end: end
             }
         };
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
@@ -209,112 +308,22 @@
     /* Chart.js Charts */
     drawChart = (res) => {
 
-        var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d');
-
-        var labelData = [];
-        var data = [],
-            backcolor = [],
-            bordcolor = [];
+        var dataSets = [];
 
         res.forEach(el => {
-            //let labelData = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-            labelData.push(el['name']);
-            data.push(el['cnt']);
             var color = getRandomColor();
-            backcolor.push(color);
-            bordcolor.push(color);
-        })
-
-        //let labelData = ['January', 'February', 'March', 'April'];
-
-        let dataSets = [{
-                label: "진도율",
-                //label: 'Digital Goods',
-                backgroundColor: backcolor
-                    // 'rgba(60,141,188,0.9)',
-                    // 'rgba(0, 153, 0, 1)',
-                    // 'rgba(255, 51, 0, 1)',
-                    // 'rgba(0, 255, 255, 1)',
-                    // 'rgba(204, 51, 255, 1)'
-                    ,
-                borderColor: bordcolor
-                    // 'rgba(60,141,188,0.8)',
-                    // 'rgba(0, 153, 0, 1)',
-                    // 'rgba(255, 51, 0, 1)',
-                    // 'rgba(0, 255, 255, 1)',
-                    // 'rgba(204, 51, 255, 1)'
-                    ,
-                //pointRadius: false,
+            let dt = {
+                label: el['name'],
+                backgroundColor: color,
+                borderColor: color,
                 pointColor: '#3b8bba',
                 pointStrokeColor: 'rgba(60,141,188,1)',
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: data
-                //data: [28, 48, 40, 19, 86, 27, 90]
-            },
-            // {
-            //     label: labelData[1],
-            //     //label: 'Digital Goods',
-            //     backgroundColor: 'rgba(210, 214, 222, 1)',
-            //     borderColor: 'rgba(210, 214, 222, 1)',
-            //     pointRadius: false,
-            //     pointColor: 'rgba(210, 214, 222, 1)',
-            //     pointStrokeColor: '#c1c7d1',
-            //     pointHighlightFill: '#fff',
-            //     pointHighlightStroke: 'rgba(220,220,220,1)',
-            //     //data: [65, 59, 80, 81, 56, 55, 40]
-            //     data: data[1]
-            // },
-            // {
-            //     label: labelData[2],
-            //     //label: 'Digital Goods',
-            //     backgroundColor: 'rgba(90, 214, 222, 1)',
-            //     borderColor: 'rgba(210, 214, 222, 1)',
-            //     pointRadius: false,
-            //     pointColor: 'rgba(210, 214, 222, 1)',
-            //     pointStrokeColor: '#c1c7d1',
-            //     pointHighlightFill: '#fff',
-            //     pointHighlightStroke: 'rgba(220,220,220,1)',
-            //     //data: [50, 23, 70, 81, 35, 65, 12]
-            //     data: data[2]
-            // },
-            // {
-            //     label: labelData[3],
-            //     //label: 'Digital Goods',
-            //     backgroundColor: 'rgba(90, 214, 222, 1)',
-            //     borderColor: 'rgba(210, 214, 222, 1)',
-            //     pointRadius: false,
-            //     pointColor: 'rgba(210, 214, 222, 1)',
-            //     pointStrokeColor: '#c1c7d1',
-            //     pointHighlightFill: '#fff',
-            //     pointHighlightStroke: 'rgba(220,220,220,1)',
-            //     //data: [50, 23, 70, 81, 35, 65, 12]
-            //     data: data[3]
-            // },
-            // {
-            //     label: labelData[4],
-            //     //label: 'Digital Goods',
-            //     backgroundColor: 'rgba(90, 214, 222, 1)',
-            //     borderColor: 'rgba(210, 214, 222, 1)',
-            //     pointRadius: false,
-            //     pointColor: 'rgba(210, 214, 222, 1)',
-            //     pointStrokeColor: '#c1c7d1',
-            //     pointHighlightFill: '#fff',
-            //     pointHighlightStroke: 'rgba(220,220,220,1)',
-            //     //data: [50, 23, 70, 81, 35, 65, 12]
-            //     data: data[4]
-            // },
-        ]
-        var data = {
-            labels: ["January", "February", "March", "April", "May"],
-            datasets: [{
-                label: 'Monthly Sales',
-                data: [50, 80, 60, 120, 100],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Background color of bars
-                borderColor: 'rgba(75, 192, 192, 1)', // Border color of bars
-                borderWidth: 1 // Border width of bars
-            }]
-        };
+                data: [el['cnt']],
+            }
+            dataSets.push(dt);
+        })
 
         // Chart configuration
         var options = {
@@ -325,40 +334,30 @@
                     ticks: {
                         beginAtZero: true
                     }
-                }]
+                }],
+                y: {
+                    max: 100,
+                    min: 0
+                }
             }
         };
 
         var salesChartData = {
-            labels: labelData,
+            labels: ['학습현황'],
             datasets: dataSets
         }
 
-        var salesChartOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-            legend: {
-                display: true
-            },
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        display: true,
-                    }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        display: true,
-                    }
-                }]
-            }
+        if (chartState == 0) {
+            salesChart = new Chart(salesChartCanvas, {
+                type: 'bar',
+                data: salesChartData,
+                options: options
+            })
+            chartState = 1;
+        } else {
+            salesChart.data = salesChartData;
+            salesChart.update();
         }
-
-        var salesChart = new Chart(salesChartCanvas, {
-            type: 'bar',
-            data: salesChartData,
-            options: options
-        })
     }
 
 

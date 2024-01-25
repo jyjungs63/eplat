@@ -796,11 +796,57 @@ function SShowStudyList($data)
     global $conn;
     $tid = $data['id'];
     $step = $data['step'];
+    $start = $data['start'];
+    $end = $data['end'];
 
-    //if ($step == '전체')
-    $sqlString = "select u.id id, u.name name , s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where u.id = s.id and u.tid = '{$tid}' group by id";
-    //else
-    //$sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'"; 
+    $tsql = "select u.id id, u.name name , s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where ";
+    if ($step == '전체')
+        $sqlString = $tsql. "u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}'  group by id";
+    else
+        $sqlString = $tsql. " s.step = '{$step}' and u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id, s.step";
+
+    $rows = array();
+
+    $i = 0;
+
+    try {
+
+        $rs = mysqli_query($conn, $sqlString);
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'id'    => $row['id'],
+                    'name'  => $row['name'],
+                    'cnt'   => $row['cnt'],
+                )
+            );
+        }
+        $conn->close();
+    } catch (Exception $e) {
+        echo  json_encode(array("error:" => $e->getMessage()));
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode(array("json" => $rows));
+}
+
+function SShowStudyList2($data)
+{
+    session_start();
+
+    global $conn;
+    $tid = $data['id'];
+    $classnm = $data['classnm'];
+    $start = $data['start'];
+    $end = $data['end'];
+
+    $tsql = "select u.id id, u.name name ,u.classnm classnm, s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where ";
+    if ($classnm == '전체' || $classnm == "")
+        $sqlString = $tsql. "u.id = s.id and u.tid = '{$tid}' and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
+    else
+        $sqlString = $tsql. " u.classnm = '{$classnm}' and u.id = s.id and u.tid = '{$tid}' and s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
 
     $rows = array();
 
@@ -863,7 +909,7 @@ function SShowClassList($data)
     }
 
     header('Content-Type: application/json');
-    echo json_encode($rows);
+    echo json_encode(array("success" =>$rows));
 }
 
 function SinsertStudent($data)

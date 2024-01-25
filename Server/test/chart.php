@@ -1,48 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <title>Bootstrap 5 Modal Close Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Dataset Chart Example</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-
-<!-- Button to trigger the modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Open Modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Modal content goes here -->
-        <p>Modal content goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+    <div style="width:80%;">
+        <canvas id="myChart"></canvas>
     </div>
-  </div>
-</div>
 
-<script>
-  // Close the modal using JavaScript
-  var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    <script>
+    // Sample data for multiple datasets with the same period
+    var labels = ['January'];
+    var dt1 = ['12'];
+    var dt2 = ['2'];
+    var dt3 = ['3'];
+    var dt4 = ['1'];
+    var dt5 = ['5'];
 
-  // Example: Close the modal after 2 seconds
-  setTimeout(function() {
-    myModal.hide();
-  }, 2000);
-</script>
 
+
+    // Create a chart
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar', // You can change the chart type (e.g., 'bar', 'radar', etc.)
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Dataset 1',
+                data: dt1,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }, {
+                label: 'Dataset 2',
+                data: dt2,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false
+            }, {
+                label: 'Dataset 3',
+                data: dt3,
+                borderColor: 'rgba(125, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false
+            }, {
+                label: 'Dataset 4',
+                data: dt4,
+                borderColor: 'rgba(150, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false
+            }, {
+                label: 'Dataset 5',
+                data: dt5,
+                borderColor: 'rgba(178, 99, 132, 1)',
+                borderWidth: 2,
+                fill: true
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Value'
+                    }
+                }
+            }
+        }
+    });
+    </script>
 </body>
+
 </html>

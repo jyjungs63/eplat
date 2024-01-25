@@ -402,11 +402,11 @@
                 // Append the new option to the select element
                 select.add(option);
             })
-            CallToast('New Branch Manager added successfully!!', "success")
+            //CallToast('Disply student list successfully!!', "success")
         }
 
         dispErr = (xhr) => {
-            CallToast('New Branch Manager added falure !!', "error")
+            //CallToast('Disply student list falure !!', "error")
         }
 
         var options = {
@@ -416,8 +416,6 @@
             }
         };
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-
-
     };
 
     showClassMembers = (tid) => {
