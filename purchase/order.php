@@ -158,13 +158,14 @@ include "../header.php";
 
                                         </div>
                                     </div>
-                                    <h5> <b>확정</b></h5>
+
                                     <div class="col-12 text-center">
                                         <a id="anchorRead" href="javascript:orderBook()"
                                             class="btn btn-info align-items-end justify-content-end" role="button"
                                             data-toggle="tooltip" title="Add to Cart " aria-disabled="true"><i
                                                 class="fa-solid fa-cart-shopping"></i> 장바구니담기</a>&nbsp;&nbsp;
                                     </div>
+                                    <h5> <b>확정</b></h5>
                                     <div id="idTableConfirm" style="margin-top: 10px;">
 
                                     </div>
@@ -521,15 +522,17 @@ include "../header.php";
     function calsum(cell) {
         var row = cell.getRow();
         var rowData = row.getData();
-        var sum = Number(rowData.count) * Number(rowData.price);
-        row.update({
-            total: sum,
-            check: true
-        });
-        if (Number(rowData.count) > 0)
+        var sum = Number(rowData.count.replace(',', '')) * Number(rowData.price);
+        if (Number(rowData.count) > 0) {
             row.select();
-        // else
-        //     row.unselect();
+            row.update({
+                total: sum
+            });
+        } else {
+            row.update({
+                count: ''
+            });
+        }
         var parent = $(".tabulator-calcs-bottom").find('div:first').html("<p>합계</p>");
     }
 
@@ -553,30 +556,31 @@ include "../header.php";
             }
         })
 
-        var cnt = $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
-            .html()
-        var sum = $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
-            .html()
+        table1.selectRow();
+        // var cnt = $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
+        //     .html()
+        // var sum = $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
+        //     .html()
 
-        $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
-            cvtCurrency(parseInt(cnt)));
-        $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
-            cvtCurrency(parseInt(sum)));
+        // $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
+        //     cvtCurrency(parseInt(cnt)));
+        // $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
+        //     cvtCurrency(parseInt(sum)));
 
 
         var parent = $(
                 "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)"
             )
-            .html("총합");
-        var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
-            .html()
-        var sum = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
-            .html()
+            .html("합계");
+        // var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
+        //     .html()
+        // var sum = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
+        //     .html()
 
-        $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
-            cvtCurrency(parseInt(cnt)));
-        $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
-            cvtCurrency(parseInt(sum)));
+        // $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
+        //     cvtCurrency(parseInt(cnt)));
+        // $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
+        //     cvtCurrency(parseInt(sum)));
 
         //table1.setData(item);
     }

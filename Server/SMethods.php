@@ -491,6 +491,33 @@ function SRemoveChild($data)
     echo json_encode($res);
 }
 
+function SRemoveAddress($data)    // 프로그램 update 필요함
+{
+    session_start();
+
+    $id  = $data["id"];
+
+    global $conn;
+    $res = "";
+
+    try {
+
+        $sql = "DELETE FROM eplat_addrlist WHERE id = '" . $id . "'";
+
+        if ($conn->query($sql) === TRUE) {
+            $res = true;
+        } else {
+            $res =  json_encode(array("Error deleting record: " . $conn->error));
+        }
+
+        $conn->close();
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
+    }
+
+    echo json_encode($res);
+}
+
 function SDeleteMgr($data)
 {
     session_start();

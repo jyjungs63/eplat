@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-var table = new Tabulator("#idTable", {
+var table = new Tabulator("#idTable", {   // 주문 선택 테이블 정의
     height: "350px",
     data: listprice2,
     layout: "fitColumns",
@@ -144,13 +144,14 @@ var table = new Tabulator("#idTable", {
             width: "15%",
             editor: false,
             headerHozAlign: "center",
+            formatter: "money",
             formatterParams: {
                 thousand: ",",
                 precision: 0,
             },
         },
         {
-            title: "수량",
+            title: "수량(개)",
             field: "count",
             editor: "input",
             width: "15%",
@@ -158,16 +159,27 @@ var table = new Tabulator("#idTable", {
             validator: "min:0",
             editorParams: {
                 min: 0,
-                max: 1000, // Adjust min and max values as needed
+                max: 5000, // Adjust min and max values as needed
                 step: 2,
                 elementAttributes: {
                     type: "number"
                 }
             },
+            formatter: "money",
+            formatterParams: {
+                thousand: ",",
+                precision: 0,
+            },
+            bottomCalc: "sum",
+            bottomCalcFormatter: "money",
+            bottomCalcFormatterParams: {
+                formatter: "money",
+                precision: 0,
+                thousand: ","
+            },
             cellEdited: function(cell) {
                 calsum(cell);
             },
-            bottomCalc: "sum"
         },
         {
             title: "합계(원)",
@@ -187,6 +199,7 @@ var table = new Tabulator("#idTable", {
                 }
             },
             bottomCalc: "sum",
+            bottomCalcFormatter: "money",
             bottomCalcFormatterParams: {
                 formatter: "money",
                 precision: 0,
@@ -202,7 +215,8 @@ var table = new Tabulator("#idTable", {
             }
         },
     ],
-});
+}
+);
 
 var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
     height: "500px",
@@ -243,14 +257,14 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             width: "15%",
             editor: false,
             headerHozAlign: "center",
+            formatter: "money",
             formatterParams: {
                 thousand: ",",
                 precision: 0,
             },
-
         },
         {
-            title: "수량",
+            title: "수량(개)",
             field: "count",
             editor: "input",
             width: "15%",
@@ -258,25 +272,36 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             validator: "min:0",
             editorParams: {
                 min: 0,
-                max: 150, // Adjust min and max values as needed
+                max: 5000, // Adjust min and max values as needed
                 step: 2,
                 elementAttributes: {
                     type: "number"
                 }
             },
+            formatter: "money",
+            formatterParams: {
+                thousand: ",",
+                precision: 0,
+            },
+            bottomCalc: "sum",
+            bottomCalcFormatter: "money",
+            bottomCalcFormatterParams: {
+                formatter: "money",
+                precision: 0,
+                thousand: ","
+            },
             cellEdited: function(cell) {
                 calsum(cell);
             },
-            bottomCalc: "sum"
         },
         {
-            title: "합계",
+            title: "합계(원)",
             field: "total",
             editor: "input",
             formatter: "money",
-            width: "20%",
             headerHozAlign: "center",
             editor: false,
+            width: "20%",
             formatterParams: {
                 thousand: ",",
                 precision: 0,
@@ -287,22 +312,50 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
                 }
             },
             bottomCalc: "sum",
+            bottomCalcFormatter: "money",
             bottomCalcFormatterParams: {
                 formatter: "money",
                 precision: 0,
                 thousand: ","
             }
-        },
+        },      
         {
             formatter: deleteIcon,
             width: "10%",
             hozAlign: "center",
             cellClick: function(e, cell) {
-                deleteRow(cell.getRow())
+                deleteAddress(cell.getRow())
             }
         },
     ],
 });
+
+deleteAddress = (cell) => {
+
+    var result = confirm("주소지를 삭제 하시겠습까?");
+
+    var id = cell._row.data['No'];
+
+    dispList = (resp) => {
+        CallToast('주소지 삭제 성공!!', "success")
+        cell.delete();
+    }
+    dispErr = (xhr) => {
+        CallToast('주소지 삭제 실패!!', "error")
+    }
+
+    var options = {
+        functionName: 'SRemoveAddress',
+        otherData: {
+            id: id
+        }
+    };
+
+    if (result) {
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+    } else
+        CallToast("주소지 삭제 취소 !!", "error");
+}
 
 var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
     height: "490px",
@@ -367,7 +420,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             title: "mobile",
             field: "mobile",
             sorter: "number",
-            width: "10%",
+            width: "7%",
             editor: false,
             bottomCalcParams: {
                 precision: 0
@@ -378,14 +431,33 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             title: "rdate",
             field: "rdate",
             sorter: "number",
-            width: "10%",
+            width: "7%",
             editor: false,
             bottomCalcParams: {
                 precision: 0
             }
         },
+        {
+            formatter: deleteIcon,
+            width: "5%",
+            hozAlign: "center",
+            cellClick: function(e, cell) {
+                deleteRow(cell.getRow())
+            }
+        },
     ],
 });
+
+table.on("rowSelected", function(row){
+    var rowData = row.getData();
+    if (Number(rowData.count) > 0) {
+        row.select();
+    }
+    else 
+    {
+        row.deselect();
+    }
+})
 
 listPor = (por_id) => {  
 
