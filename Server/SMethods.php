@@ -221,8 +221,7 @@ function SShowOrderList($data)
 
     global $conn;
 
-    //$sqlString = "SELECT p.*, u.name FROM eplat_porlist p eplat_user u where confirm = 0";
-    $sqlString = "SELECT p.*, u.name bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0";
+    $sqlString = "SELECT *  FROM eplat_porlist where confirm = 0";
 
     $rows = array();
 
@@ -236,14 +235,13 @@ function SShowOrderList($data)
             array_push(
                 $rows,
                 array(
-                    'id'          => $row['id'],
+                    'id'        => $row['id'],
                     'por_id'      => $row['por_id'],
-                    'order'       => $row['order'],
-                    'addr'        => $row['addr'],
+                    'order'  => $row['order'],
+                    'addr'    => $row['addr'],
                     'mobile'      => $row['mobile'],
-                    'rdate'       => $row['rdate'],
-                    'confirm'     => $row['confirm'],
-                    'bname'      => $row['bname'],
+                    'rdate'   => $row['rdate'],
+                    'confirm'   => $row['confirm'],
                 )
             );
         }
@@ -302,14 +300,12 @@ function SPorDetailList($data)
     header('Content-Type: application/json');
     echo json_encode($rows);
 }
-
 function SPorDetailListRange($data)
 {
     session_start();
 
     global $conn;
 
-    $id     = $data['id'];
     $start  = $data['start'];
     $end    = $data['end'];
 
@@ -321,11 +317,8 @@ function SPorDetailListRange($data)
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $stmt = "select p.*, u.name uname from eplat_porlist p ,  eplat_user u  where u.id = p.id and p.rdate between '{$start}' and '{$end}' order by id";
+    $stmt = "select * from eplat_porlist where rdate between '{$start}' and '{$end}' ";
 
-    if ( $id != "전지사")
-        $stmt = "select p.* , u.name uname from eplat_porlist p , eplat_user u where u.id = p.id and u.name = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
-    
     try {
 
         $rs = mysqli_query($conn, $stmt);
@@ -340,8 +333,7 @@ function SPorDetailListRange($data)
                     'rdate' => $row['rdate'],
                     'addr'  => $row['addr'],
                     'mobile'  => $row['mobile'],
-                    'confirm'  => $row['confirm'],
-                    'uname'  => $row['uname']
+                    'confirm'  => $row['confirm']
                 )
             );
         }
@@ -353,37 +345,6 @@ function SPorDetailListRange($data)
 
     header('Content-Type: application/json');
     echo json_encode($rows);
-}
-
-function SPorAddParcel ( $data ) {
-    $start    = $data['start'];
-    $id       = $data['id'];
-    $name     = $data['name'];
-    $price    = $data['price'];
-
-    try {
-        global $conn;
-
-        $sqlstring = "insert into eplat_parcel (id, name, price) 
-                    values ( '{$id}', '{$name}',{$price} )";
-        if ($start != "")
-            $sqlstring = "insert into eplat_parcel (id, name, price, `date`) 
-            values ( '{$id}', '{$name}', {$price}, '{$start}' )";
-
-        $res = mysqli_query($conn, $sqlstring);
-
-        $conn->close();
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-    }
-
-    header('Content-Type: application/json');
-    if ($res === TRUE) {
-        echo json_encode(array("success" => $res));
-    } else {
-        echo json_encode(array("Error" => $error));
-    }
-
 }
 
 function SShowMgr($data)
@@ -804,8 +765,7 @@ function SShowStudentList($data)
     $step = $data['step'];
     $sel = $data['sel'];
 
-    if ( $tid == "admin")
-    {
+    if ($tid == "admin") {
         if ($sel == '1') {
             if ($step == '전체')
                 $sqlString = "SELECT *  FROM eplat_user where  role = 0";
@@ -813,9 +773,7 @@ function SShowStudentList($data)
                 $sqlString = "SELECT *  FROM eplat_user where  step = '{$step}' and role = 0";
         } else if ($sel == '2')
             $sqlString = "SELECT *  FROM eplat_user where classnm = '{$step}' and role = 0";
-    }
-    else
-    {
+    } else {
         if ($sel == '1') {
             if ($step == '전체')
                 $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
@@ -867,9 +825,9 @@ function SShowStudyList($data)
 
     $tsql = "select u.id id, u.name name , s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where ";
     if ($step == '전체')
-        $sqlString = $tsql. "u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}'  group by id";
+        $sqlString = $tsql . "u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}'  group by id";
     else
-        $sqlString = $tsql. " s.step = '{$step}' and u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id, s.step";
+        $sqlString = $tsql . " s.step = '{$step}' and u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id, s.step";
 
     $rows = array();
 
@@ -910,9 +868,9 @@ function SShowStudyList2($data)
 
     $tsql = "select u.id id, u.name name ,u.classnm classnm, s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where ";
     if ($classnm == '전체' || $classnm == "")
-        $sqlString = $tsql. "u.id = s.id and u.tid = '{$tid}' and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
+        $sqlString = $tsql . "u.id = s.id and u.tid = '{$tid}' and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
     else
-        $sqlString = $tsql. " u.classnm = '{$classnm}' and u.id = s.id and u.tid = '{$tid}' and s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
+        $sqlString = $tsql . " u.classnm = '{$classnm}' and u.id = s.id and u.tid = '{$tid}' and s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
 
     $rows = array();
 
@@ -951,7 +909,7 @@ function SShowClassList($data)
 
     $sqlString = "select unique(classnm) classnm from eplat_user where tid = '{$tid}'";
 
-    if ( $tid == "admin" )
+    if ($tid == "admin")
         $sqlString = "select unique(classnm) classnm from eplat_user where classnm is not null";
     $rows = array();
 
@@ -975,7 +933,7 @@ function SShowClassList($data)
     }
 
     header('Content-Type: application/json');
-    echo json_encode(array("success" =>$rows));
+    echo json_encode(array("success" => $rows));
 }
 
 function SinsertStudent($data)
