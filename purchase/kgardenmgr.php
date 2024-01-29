@@ -44,8 +44,10 @@
                     <div class="card card-outline card-info">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <div class="input-group mb-3">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button">Step 선택</button>
+                                <div class="input-group input-group-sm mb-3">
+                                    <!-- <button class="btn btn-outline-secondary btn-sm" type="button">Step 선택</button> -->
+
+                                    <span class="d-flex badge bg-light text-dark align-items-center">Step 선택</span>
                                     &nbsp;&nbsp;
                                     <select class="form-select form-control-sm" id="idStudent"
                                         data-placeholder="Choose Items" style="width: 70px;">
@@ -56,7 +58,8 @@
                                         <option val="s2">6세-Step2</option>
                                         <option val="s3">7세-Step3</option>
                                     </select>&nbsp;
-                                    <button class="btn btn-outline-secondary btn-sm" type="button">반선택</button>
+                                    <!-- <button class="btn btn-outline-secondary btn-sm" type="button">반선택</button> -->
+                                    <span class="d-flex badge bg-light text-dark align-items-center">반선택</span>
                                     &nbsp;&nbsp;
                                     <select class="form-select form-control-sm" id="idClass"
                                         data-placeholder="Choose Items" style="width: 70px;">
@@ -390,7 +393,7 @@
             let select = document.getElementById('idClass');
             let option = document.createElement('option');
 
-            resp.forEach(el => {
+            resp['success'].forEach(el => {
                 var jarr = {
                     "classnm": el['classnm'],
                 }

@@ -101,7 +101,7 @@
     .loginput {
         border: none;
         border-bottom: 1px solid #999;
-        padding: 6px 30px;
+        padding: 0px 5px;
         font-family: Poppins;
         box-sizing: border-box;
     }
@@ -1093,6 +1093,7 @@ logout = () => {
     toggleChage($('#idm2')); //.toggle(); // 지사마당 메뉴
     toggleChage($('#idm3')); //.toggle(); // 구매
     toggleChage($('#idm4')); //.toggle(); // 유치원관리
+    toggleChage($('#idm44')); //.toggle(); // 학습현황
     toggleChage($('#idm5')); //.toggle(); // admin menu
     $('#idlogin').attr('href', "javascript:openModal()")
     $('#idlogin').text("로그인");

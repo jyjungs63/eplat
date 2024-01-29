@@ -9,96 +9,7 @@ var deleteIcon = function(cell, formatterParams) { //plain text value
 };
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Get the modal element by its ID
-    // porTable = new Tabulator("#porTableDiv", {
-    //     height: "490px",
-    //     layout: "fitColumns",
-    //     rowHeight: 40, //set rows to 40px height
-    //     selectable: true, //make rows selectable
-    //     columns: [
-
-    //         // { title: "ID", field: "uid", width: 1lhs, editor: "input", editor: false, cellEdited: function (cell) { recal(cell); }, },
-    //         {
-    //             title: "단계",
-    //             field: "grade",
-    //             width: 150,
-    //             editor: "list",
-    //             editor: false,
-    //             editorParams: {
-    //                 autocomplete: "true",
-    //                 allowEmpty: true,
-    //                 listOnEmpty: true,
-    //                 valuesLookup: true
-    //             }
-    //         },
-    //         {
-    //             title: "품명",
-    //             field: "title",
-    //             sorter: "number",
-    //             width: 350,
-    //             editor: false,
-    //             bottomCalcParams: {
-    //                 precision: 0
-    //             }
-    //         },
-    //         {
-    //             title: "단가",
-    //             field: "price",
-    //             sorter: "number",
-    //             width: 150,
-    //             editor: false,
-    //             hozAlign: "right",
-    //             formatterParams: {
-    //                 thousand: ",",
-    //                 precision: 0,
-    //             },
-    //         },
-    //         {
-    //             title: "주문수량",
-    //             field: "count",
-    //             editor: "input",
-    //             width: 150,
-    //             editor: false,
-    //             hozAlign: "right",
-    //             validator: "min:0",
-    //             editorParams: {
-    //                 min: 0,
-    //                 max: 1000, // Adjust min and max values as needed
-    //                 step: 2,
-    //                 elementAttributes: {
-    //                     type: "number"
-    //                 }
-    //             },
-    //             cellEdited: function(cell) {
-    //                 calsum(cell);
-    //             },
-    //             bottomCalc: "sum"
-    //         },
-    //         {
-    //             title: "합계(원)",
-    //             field: "total",
-    //             editor: "input",
-    //             formatter: "money",
-    //             hozAlign: "right",
-    //             editor: false,
-    //             formatterParams: {
-    //                 thousand: ",",
-    //                 precision: 0,
-    //             },
-    //             editorParams: {
-    //                 elementAttributes: {
-    //                     type: "number"
-    //                 }
-    //             },
-    //             bottomCalc: "sum",
-    //             bottomCalcFormatterParams: {
-    //                 formatter: "money",
-    //                 precision: 0,
-    //                 thousand: ","
-    //             }
-    //         },
-    //     ],
-    // });
+  
 
     orderList(null);
 
@@ -494,7 +405,28 @@ listPor = (por_id) => {
 
 }
 
-listPorRange = (start, end) => {  // 달별 구매 목록
+listPorRange = (start, end, id) => {  // 달별 구매 목록
+
+    var options = {
+        functionName: 'SPorDetailListRange',
+        otherData: {
+            start: start, end: end, id: id
+        }
+    };
+    dispList = (res) => {
+
+        addPurcharseList(res);  
+      
+    }
+    dispErr = (error) => {
+        CallToast('SPorDetailList falure!', "error")
+    }
+
+    CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+}
+
+listPorID = ( id, start, end) => {  // 달별 구매 목록
 
     var options = {
         functionName: 'SPorDetailListRange',
@@ -503,34 +435,9 @@ listPorRange = (start, end) => {  // 달별 구매 목록
         }
     };
     dispList = (res) => {
-        //porTable.clearData();
-        //res.forEach ( ell => {
 
-            // var json = JSON.parse(ell['json']);
-
-            // json.forEach(el => {
-            //     if (Number(el['count']) > 0) {
-            //         var jarr = {
-            //             "uid": el['uid'],
-            //             "grade": el['grade'],
-            //             "title": el['title'],
-            //             "price": el['price'],
-            //             "count": el['count'],
-            //             "total": el['total']
-            //         }
-            //         porTable.addRow(jarr);
-            //     }
-            // })
-            //porTable.setData(JSON.parse(el['json']));    
-             
-        //})
         addPurcharseList(res);  
-        // var cnt = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
-        // var sum = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
-        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합")
-        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(cvtCurrency(parseInt(cnt/2)));
-        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(cvtCurrency(parseInt(sum/2)));
-        
+ 
         $("#idID2").val(res[0]['id']);
         $("#idName2").val(res[0]['order']);
         $("#idAddr2").val(res[0]['addr']);
@@ -548,6 +455,7 @@ listPorRange = (start, end) => {  // 달별 구매 목록
 
 }
 
+
 addPurcharseList = (res) => {
 
     var tbody = $("#porTable tbody");
@@ -563,9 +471,13 @@ addPurcharseList = (res) => {
     var json = JSON.parse(ell['json']);
     var dat  = ell['rdate'];
 
+    newRow.append("<td > "+ ell['uname']+"</td>");
+
     var jarr = "";
     var total = 0; 
     newRow.append("<td > "+ dat.slice(0,11)+"</td>");
+
+
     var i = 1;
     json.forEach(el => {
         if ((el['uid']) != "") {
@@ -580,7 +492,6 @@ addPurcharseList = (res) => {
         a
     );
 
-
     //$("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
 
     newRow.append("<td>"+ cvtCurrency(total) +"원</td>");
@@ -591,9 +502,15 @@ addPurcharseList = (res) => {
     tbody.append(newRow);
         sum += total;
     })
+//  add 택배비 
+    var newRow = $("<tr  style='background-color: yellow'>");
+    newRow.append("<td colspan='2'> <div><h7>탭배비<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum/100)+"원</div><td colspan='3'></td></td>");
+    tbody.append(newRow);
 
     var newRow = $("<tr  style='background-color: steelblue'>");
-    newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td colspan='2'></td></td>");
+    newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td ><h5>총합(택배비포함)<h5></td></td>");
+    newRow.append("<td> <div> <b>"+cvtCurrency(sum)+"원</div><td colspan='2'></td></td>");
+    
     // Append the new row to the table body
     tbody.append(newRow);
 }
@@ -718,61 +635,59 @@ document.getElementById("idGrade").addEventListener("change", function() { // �
     console.log(items);
 });
 
-var start = moment().startOf('week');
-var end = moment().endOf('week');
-
-function cb(start, end) {
-    $('#reportrange span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-}
-
-$('#reportrange').daterangepicker({
-    startDate: start,
-    endDate: end,
-    locale: {
-        format: 'YYYY-MM-DD', // 날짜 표시 형식
-        separator: ' ~ ', // 날짜 범위 구분자
-        applyLabel: '적용', // 적용 버튼 레이블
-        cancelLabel: '취소', // 취소 버튼 레이블
-        fromLabel: '부터', // 시작일 레이블
-        toLabel: '까지', // 종료일 레이블
-        customRangeLabel: '직접 선택', // 사용자 정의 범위 레이블
-        weekLabel: '주', // 주 레이블
-        daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'], // 요일 배열
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], // 월 배열
-        firstDay: 0 // 주의 시작 요일 (0: 일요일, 1: 월요일, ...)
-    },
-    ranges: {
-        '오늘': [moment(), moment()],
-        '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        '지난 7일': [moment().subtract(6, 'days'), moment()],
-        '지난주': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf(
-            'week')],
-        '이번주': [moment().startOf('week'), moment().endOf('week')],
-        '다음주': [moment().add(1, 'weeks').startOf('week'), moment().add(1, 'weeks').endOf('week')],
-        '지난 30일': [moment().subtract(29, 'days'), moment()],
-        '이번달': [moment().startOf('month'), moment().endOf('month')],
-        '지난달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf(
-            'month')]
-    }
-}, cb);
-
-
-$('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-
-    listPorRange( picker.startDate.format('YYYY-MM-DD'), picker.endDate.format('YYYY-MM-DD') )
-    console.log(picker.startDate.format('YYYY-MM-DD'));
-    console.log(picker.endDate.format('YYYY-MM-DD'));
-  });
-
   var monthPicker = document.getElementById("monthPicker");
-
   monthPicker.addEventListener('input', function(evt) {
 
     let thisMoment = moment(monthPicker.value);
     let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
     let startOfMonth = moment(thisMoment).startOf('month').format('YYYY-MM-DD');
 
-    listPorRange( startOfMonth, endOfMonth )
+    listPorRange( startOfMonth, endOfMonth, "" )
 
   })
 
+  document.getElementById("idPorBranch").addEventListener("change", function() {   // 개별 구매 의뢰서 내용 보기
+    // 선택된 옵션 가져오기
+    var selectedOption = this.options[this.selectedIndex];
+
+    // 선택된 옵션의 값(value) 가져오기
+    var selectedValue = selectedOption.value;
+    // 선택된 옵션의 텍스트 가져오기
+    var selectedText = selectedOption.text;
+    
+    let thisMoment = moment(monthPicker.value);
+    let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
+    let startOfMonth = moment(thisMoment).startOf('month').format('YYYY-MM-DD');
+
+    listPorRange( startOfMonth, endOfMonth,  selectedValue);
+});
+
+AddParcel = () => {
+
+    let thisMoment = moment(monthPicker.value);
+    let start = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
+
+    var selectElement = document.getElementById("idPorBranch"); // 지사 또는 원관리
+    var bname = selectElement.value;
+
+    var options = {
+        functionName: 'SPorAddParcel',
+        otherData: {
+            start: start, id: "", name: bname, price: $("#idParcel").val()
+        }
+    };
+    dispList = (res) => {
+
+        CallToast('SPorAddParcel success!', "success")
+      
+    }
+    dispErr = (error) => {
+        CallToast('SPorAddParcel falure!', "error")
+    }
+
+    CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+}
+
+  let date = new Date();
+  monthPicker.value=formatMonth();

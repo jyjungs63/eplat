@@ -117,8 +117,7 @@ include "../header.php";
                                     <div class="d-flex align-items-end justify-content-end"
                                         style="margin-bottom: 10px;">
                                         <div class="input-group mb-3">
-                                            <button class="btn btn-outline-secondary btn-sm" type="button">필터
-                                            </button>
+                                            <span class="d-flex badge bg-light text-dark align-items-center">필터</span>
                                             &nbsp;
                                             <select class="form-select form-control-sm" id="idGrade"
                                                 data-placeholder="Choose Items" style="width: 120px">
@@ -148,7 +147,7 @@ include "../header.php";
                                             aria-disabled="true"><i class="fa-solid fa-save"></i></a> -->
                                     </div>
                                     <h5>
-                                        <b> 주문 </b>
+                                        <b> 주문할 상품 선택</b>
                                     </h5>
                                     <div id="idTable">
 
@@ -165,31 +164,49 @@ include "../header.php";
                                             data-toggle="tooltip" title="Add to Cart " aria-disabled="true"><i
                                                 class="fa-solid fa-cart-shopping"></i> 장바구니담기</a>&nbsp;&nbsp;
                                     </div>
-                                    <h5> <b>확정</b></h5>
+                                    <h5> <b>주문한 상품 확정</b></h5>
                                     <div id="idTableConfirm" style="margin-top: 10px;">
 
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-profile-tab">
-                                    <div class="input-group input-group-sm mb-3" style="width: 500px">
-                                        <button class="btn btn-outline-primary btn-sm" type="button">개별조회</button>
+                                    <div class="input-group input-group-sm mb-3" style="width: 950px">
+                                        <!-- <button class="btn btn-outline-primary btn-sm" type="button">개별조회</button> -->
+                                        <span class="d-flex badge bg-light text-dark align-items-center">개별조회</span>
                                         &nbsp;&nbsp;
                                         <select class="form-select form-control-sm" id="idPorList"
-                                            data-placeholder="Choose Items" style="width: 120px">
+                                            data-placeholder="주문서선택" style="width: 150px">
                                         </select>
                                         &nbsp;&nbsp;
-                                        <button class="btn btn-outline-primary btn-sm" type="button">월별조회</button>
+                                        <span class="d-flex badge bg-light text-dark align-items-center">지사별조회</span>
+                                        &nbsp;&nbsp;
+                                        <select class="form-select form-control-sm" id="idPorBranch"
+                                            data-placeholder="지사선택" style="width: 150px">
+                                        </select>
+                                        &nbsp;&nbsp;
+                                        <!-- <button class="btn btn-outline-primary btn-sm" type="button">월별조회</button> -->
+                                        <span class="d-flex badge bg-light text-dark align-items-center">월별조회</span>
                                         &nbsp;&nbsp;
                                         <input type="month" class="form-control form-control-sm" id="monthPicker"
                                             name="month" style="width: 120px">
                                         </input>
+                                        &nbsp;
+                                        <span class="d-flex badge bg-light text-dark align-items-center">택배비</span>
+                                        &nbsp;&nbsp;
+                                        <input class="form-control form-control-sm custom-width" id="idParcel"
+                                            type="text" placeholder="택배비" style="width: 100px;">
+                                        &nbsp;&nbsp;
+                                        <button class="btn btn-outline-success btn-sm" type="button"
+                                            onclick="AddParcel()">택배비추가
+                                        </button>
                                     </div>
 
                                     <div id="porTableDiv"></div>
                                     <table id="porTable" style="width: 100%;border: 1px solid black;">
                                         <thead>
                                             <tr>
+                                                <th style="height: 50px" class="col1">지사명</th>
                                                 <th style="height: 50px" class="col1">날짜/주문번호</th>
                                                 <th class="col2">내역</th>
                                                 <th class="col3">금액</th>
@@ -223,7 +240,7 @@ include "../header.php";
                         <div class="card-header">
                             <h3 class="card-title">
 
-                                <p> <b>배송지</b></p>
+                                <p> <b>배송지 확정</b></p>
                             </h3>
                             <div class="input-group mb-3">
                                 <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
@@ -274,7 +291,7 @@ include "../header.php";
                             </div>
                         </div>
                         <div class="card-body " id="cardDest">
-                            <p> <b>배송지</b></p>
+                            <p> <b>배송지 선택</b></p>
                             <div id="idTableDest" style="margin-top: 10px;">
 
                             </div>
@@ -389,6 +406,7 @@ include "../header.php";
 
     orderList = () => {
         items = [];
+        blist = [];
 
         dispList = (resp) => {
             let select = document.getElementById('idPorList');
@@ -396,6 +414,7 @@ include "../header.php";
             option.text = ""; // Set the text of the new option
             option.value = ""; // Set the value attribute (if needed)
             select.add(option);
+
             resp.forEach(el => {
                 var jarr = {
                     "id": el['id'],
@@ -408,13 +427,32 @@ include "../header.php";
                 }
                 items.push(jarr);
                 // Create a new option element
-                let option = document.createElement('option');
+                option = document.createElement('option');
+
                 option.text = el['por_id']; // Set the text of the new option
                 option.value = el['por_id']; // Set the value attribute (if needed)
-
                 // Append the new option to the select element
                 select.add(option);
+
+                blist.push(el['bname'])
+
             })
+            const unqueArr = blist.filter((value, index, self) => self.indexOf(value) === index); // 지사명 중복 제거
+
+            let select2 = document.getElementById('idPorBranch');
+            let option2 = document.createElement('option');
+            option2.text = "전지사"; // Set the text of the new option
+            option2.value = "전지사"; // Set the value attribute (if needed)
+            select2.add(option2);
+
+            unqueArr.forEach(e => {
+                // 지사별 조회 셀렉션 박스에 지사명 추가
+                option2 = document.createElement('option');
+                option2.text = e; // Set the text of the new option
+                option2.value = e; // Set the value attribute (if needed)
+                select2.add(option2);
+            })
+
         }
 
         dispErr = (error) => {

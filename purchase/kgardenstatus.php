@@ -12,7 +12,8 @@
         include "../include.php";
     ?>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/Chart.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css"> -->
 
     <link href="../common.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -33,7 +34,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="javascipt:window.history.back()">Prev</a></li>
+                            <li class="breadcrumb-item active"><a href="javascipt:window.history.back()">이전</a></li>
                         </ol>
                     </div>
                 </div>
@@ -45,8 +46,9 @@
                     <div class="card card-outline card-info">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <div class="input-group mb-3">
-                                    <label for="idStep" class="form-label">Step선택</label>
+                                <div class="input-group input-group-sm mb-3">
+                                    <!-- <label for="idStep" class="form-label">Step선택</label> -->
+                                    <span class="d-flex badge bg-light text-dark align-items-center">Step선택</span>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <select class="form-select form-control-sm" id="idStep"
                                         data-placeholder="Choose Items" style="width: 150px;">
@@ -57,7 +59,8 @@
                                         <option value="step2">6세-Step2</option>
                                         <option value="step3">7세-Step3</option>
                                     </select>&nbsp;&nbsp;&nbsp;
-                                    <label for="idClass" class="form-label">반선택</label>
+                                    <!-- <label for="idClass" class="form-label">반선택</label> -->
+                                    <span class="d-flex badge bg-light text-dark align-items-center">반선택</span>
                                     <!-- <button class="btn btn-outline-secondary" type="button">반선택</button> -->
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <select class="form-select form-control-sm" id="idClass"
@@ -82,9 +85,9 @@
                         </div>
                         <div class="card-body pad">
                             <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
-                                <button class="btn btn-outline-primary" type="button" data-toggle="tooltip"
+                                <!-- <button class="btn btn-outline-primary" type="button" data-toggle="tooltip"
                                     title="원아 추가 하기" onclick="addClassMember()"><i class="fa-solid fa-user"></i>추가
-                                </button> &nbsp;&nbsp;
+                                </button> &nbsp;&nbsp; -->
                                 <button class="btn btn-success" type="button" data-toggle="tooltip" title="원아 프린트 하기"
                                     onclick="orderToPdf()"><i class="fa-solid fa-print"></i>출력
                                 </button>
@@ -101,10 +104,10 @@
                                                 </h3>
                                                 <div class="card-tools d-flex">
                                                     <ul class="nav nav-pills">
-                                                        <li class="nav-item">
+                                                        <!-- <li class="nav-item">
                                                             <a class="nav-link active" href="#revenue-chart"
                                                                 data-bs-toggle="pill">Area</a>
-                                                        </li>
+                                                        </li> -->
                                                         <!-- <li class="nav-item">
                                                             <a class="nav-link " href="#sales-chart"
                                                                 data-bs-toggle="pill">Donut</a>
@@ -153,7 +156,10 @@
     <?php
     include '../includescr.php';
     ?>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
+    </script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -167,14 +173,17 @@
     var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d');
     var chartState = 0;
 
-
+    var startDate;
+    var endDate;
+    var step;
+    var clas = "";
 
     window.addEventListener('resize', function() {
 
     })
 
     document.addEventListener("DOMContentLoaded", function() {
-        $("#idStudyStatus").html(name + "학생학습현황");
+        $("#idStudyStatus").html(getUser() + "학생학습현황");
         showClass(user);
         CallToast(name + "님 방문을 환영합니다!.", "success");
     });
@@ -220,24 +229,14 @@
     var selectElement = document.getElementById('idStep');
     selectElement.addEventListener("change", function() {
 
-        var selectedValue = selectElement.value;
+        step = selectElement.value;
 
         var dateRangePickerValue = $('#reportrange').val();
         var selectedDates = dateRangePickerValue.split(' ~ ');
-        var startDate = selectedDates[0];
-        var endDate = selectedDates[1];
-        // Parse the value to extract start and end dates
+        startDate = selectedDates[0];
+        endDate = selectedDates[1];
 
-        // 선택된 옵션 가져오기
-        //var selectedOption = this.options[this.selectedIndex];
-
-        // 선택된 옵션의 값(value) 가져오기
-        //var selectedValue = selectedOption.value;
-
-        // 선택된 옵션의 텍스트 가져오기
-        //var selectedText = selectedOption.text;
-
-        listStudent(selectedValue, startDate, endDate);
+        listStudent(step, startDate, endDate);
     });
 
     document.getElementById("idClass").addEventListener("change", function() {
@@ -250,12 +249,12 @@
 
 
         // 선택된 옵션의 값(value) 가져오기
-        var selectedValue = selectedOption.value;
+        clas = selectedOption.value;
 
         // 선택된 옵션의 텍스트 가져오기
         var selectedText = selectedOption.text;
 
-        listStudent2(selectedValue, startDate, endDate);
+        listStudent2(clas, startDate, endDate);
     });
 
 
@@ -305,67 +304,99 @@
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
     }
 
-    /* Chart.js Charts */
     drawChart = (res) => {
-
         var dataSets = [];
+        var lb = [];
+        var bk = [];
+        var dt = [];
 
         res.forEach(el => {
             var color = getRandomColor();
-            let dt = {
-                label: el['name'],
-                backgroundColor: color,
-                borderColor: color,
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [el['cnt']],
-            }
-            dataSets.push(dt);
+            lb.push([el['name'], '(' + el['cnt'] + ')'])
+            bk.push(color);
+            dt.push(el['cnt']);
         })
 
-        // Chart configuration
-        var options = {
-            maintainAspectRatio: false,
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }],
-                y: {
-                    max: 100,
-                    min: 0
-                }
-            }
+        var data = {
+            labels: lb,
+            datasets: [{
+                label: '학습현황',
+                data: dt,
+                backgroundColor: bk,
+                borderColor: bk,
+                borderWidth: 1
+            }]
         };
-
-        var salesChartData = {
-            labels: ['학습현황'],
-            datasets: dataSets
-        }
 
         if (chartState == 0) {
             salesChart = new Chart(salesChartCanvas, {
                 type: 'bar',
-                data: salesChartData,
-                options: options
+                data: data,
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    showTooltips: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        y: {
+                            min: 0
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: [getName() + " 학습 현황", " ", "(" + step + " - " + clas + ") 기간 : " +
+                                startDate + "~" + endDate + ""
+                            ],
+                            font: {
+                                size: 14,
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 30
+                            }
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: Math.round,
+                            font: {
+                                weight: 'bold'
+                            }
+                        }
+                    },
+
+                },
             })
             chartState = 1;
         } else {
-            salesChart.data = salesChartData;
+            salesChart.data = data;
+            salesChart.options.plugins.title = {
+                display: true,
+                text: [getName() + " 학습 현황", " ", "(" + step + " - " + clas + ") 기간 : " +
+                    startDate + "~" + endDate + ""
+                ],
+                font: {
+                    size: 14,
+                },
+                padding: {
+                    top: 10,
+                    bottom: 30
+                }
+            };
             salesChart.update();
         }
     }
 
-
     orderToPdf = () => {
         var element = document.getElementById('revenue-chart');
         var opt = {
-            margin: [3, 0, 0, 0],
-            //margin: 0.1,
+            //margin: [3, 0, 0, 0],
+            margin: [5, 2, 2, 1],
             filename: 'myfile.pdf',
             image: {
                 type: 'jpeg',
@@ -388,40 +419,12 @@
         //html2pdf(element, opt);
     }
 
-    // Donut Chart
-    var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
-    var pieData = {
-        labels: [
-            'Instore Sales',
-            'Download Sales',
-            'Mail-Order Sales',
-        ],
-        datasets: [{
-            data: [30, 12, 20],
-            backgroundColor: ['#f56954', '#00a65a', '#f39c12'],
-        }]
-    }
-    var pieOptions = {
-        legend: {
-            display: false
-        },
-        maintainAspectRatio: false,
-        responsive: true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    var pieChart = new Chart(pieChartCanvas, {
-        type: 'doughnut',
-        data: pieData,
-        options: pieOptions
-    });
-
     printClassMember = () => {
         tab.print();
     }
 
-    var start = moment().startOf('week');
-    var end = moment().endOf('week');
+    var start = moment().startOf('month');
+    var end = moment().endOf('month');
 
     function cb(start, end) {
         $('#reportrange span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
@@ -444,17 +447,9 @@
             firstDay: 0 // 주의 시작 요일 (0: 일요일, 1: 월요일, ...)
         },
         ranges: {
-            '오늘': [moment(), moment()],
-            '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            '지난 7일': [moment().subtract(6, 'days'), moment()],
-            '지난주': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf(
-                'week')],
-            '이번주': [moment().startOf('week'), moment().endOf('week')],
-            '다음주': [moment().add(1, 'weeks').startOf('week'), moment().add(1, 'weeks').endOf('week')],
-            '지난 30일': [moment().subtract(29, 'days'), moment()],
-            '이번달': [moment().startOf('month'), moment().endOf('month')],
             '지난달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf(
-                'month')]
+                'month')],
+            '이번달': [moment().startOf('month'), moment().endOf('month')]
         }
     }, cb);
 

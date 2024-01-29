@@ -221,7 +221,8 @@ function SShowOrderList($data)
 
     global $conn;
 
-    $sqlString = "SELECT *  FROM eplat_porlist where confirm = 0";
+    //$sqlString = "SELECT p.*, u.name FROM eplat_porlist p eplat_user u where confirm = 0";
+    $sqlString = "SELECT p.*, u.name bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0";
 
     $rows = array();
 
@@ -235,13 +236,14 @@ function SShowOrderList($data)
             array_push(
                 $rows,
                 array(
-                    'id'        => $row['id'],
+                    'id'          => $row['id'],
                     'por_id'      => $row['por_id'],
-                    'order'  => $row['order'],
-                    'addr'    => $row['addr'],
+                    'order'       => $row['order'],
+                    'addr'        => $row['addr'],
                     'mobile'      => $row['mobile'],
-                    'rdate'   => $row['rdate'],
-                    'confirm'   => $row['confirm'],
+                    'rdate'       => $row['rdate'],
+                    'confirm'     => $row['confirm'],
+                    'bname'      => $row['bname'],
                 )
             );
         }
@@ -300,12 +302,14 @@ function SPorDetailList($data)
     header('Content-Type: application/json');
     echo json_encode($rows);
 }
+
 function SPorDetailListRange($data)
 {
     session_start();
 
     global $conn;
 
+    $id     = $data['id'];
     $start  = $data['start'];
     $end    = $data['end'];
 
@@ -317,8 +321,11 @@ function SPorDetailListRange($data)
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $stmt = "select * from eplat_porlist where rdate between '{$start}' and '{$end}' ";
+    $stmt = "select p.*, u.name uname from eplat_porlist p ,  eplat_user u  where u.id = p.id and p.rdate between '{$start}' and '{$end}' order by id";
 
+    if ( $id != "전지사")
+        $stmt = "select p.* , u.name uname from eplat_porlist p , eplat_user u where u.id = p.id and u.name = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+    
     try {
 
         $rs = mysqli_query($conn, $stmt);
@@ -333,7 +340,8 @@ function SPorDetailListRange($data)
                     'rdate' => $row['rdate'],
                     'addr'  => $row['addr'],
                     'mobile'  => $row['mobile'],
-                    'confirm'  => $row['confirm']
+                    'confirm'  => $row['confirm'],
+                    'uname'  => $row['uname']
                 )
             );
         }
@@ -345,6 +353,37 @@ function SPorDetailListRange($data)
 
     header('Content-Type: application/json');
     echo json_encode($rows);
+}
+
+function SPorAddParcel ( $data ) {
+    $start    = $data['start'];
+    $id       = $data['id'];
+    $name     = $data['name'];
+    $price    = $data['price'];
+
+    try {
+        global $conn;
+
+        $sqlstring = "insert into eplat_parcel (id, name, price) 
+                    values ( '{$id}', '{$name}',{$price} )";
+        if ($start != "")
+            $sqlstring = "insert into eplat_parcel (id, name, price, `date`) 
+            values ( '{$id}', '{$name}', {$price}, '{$start}' )";
+
+        $res = mysqli_query($conn, $sqlstring);
+
+        $conn->close();
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
+
+    header('Content-Type: application/json');
+    if ($res === TRUE) {
+        echo json_encode(array("success" => $res));
+    } else {
+        echo json_encode(array("Error" => $error));
+    }
+
 }
 
 function SShowMgr($data)
