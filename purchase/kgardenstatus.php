@@ -350,7 +350,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: [getUser() + " 학습 현황", " ", "(" + step + " - " + clas + ") 기간 : " +
+                            text: [getName() + " 학습 현황", " ", "(" + step + " - " + clas + ") 기간 : " +
                                 startDate + "~" + endDate + ""
                             ],
                             font: {
