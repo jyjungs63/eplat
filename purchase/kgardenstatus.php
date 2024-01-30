@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
-        include "../header.php";
+    include "../header.php";
     ?>
     <?php
-        include "../include.php";
+    include "../include.php";
     ?>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/Chart.css">
@@ -161,7 +161,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
     </script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="../common.js"></script>
@@ -320,7 +321,7 @@
         var data = {
             labels: lb,
             datasets: [{
-                label: '학습현황',
+                label: '',
                 data: dt,
                 backgroundColor: bk,
                 borderColor: bk,
@@ -393,10 +394,11 @@
     }
 
     orderToPdf = () => {
+
         var element = document.getElementById('revenue-chart');
         var opt = {
             //margin: [3, 0, 0, 0],
-            margin: [5, 2, 2, 1],
+            margin: [5, 1, 2, 2],
             filename: 'myfile.pdf',
             image: {
                 type: 'jpeg',

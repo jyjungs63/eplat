@@ -324,11 +324,11 @@ function SPorDetailListRange($data)
     }
     $tsql = "select p.*, u.name uname from eplat_porlist p ,  eplat_user u  where u.id = p.id and ";
 
-    $stmt = $tsql. "p.rdate between '{$start}' and '{$end}' order by id";
+    $stmt = $tsql . "p.rdate between '{$start}' and '{$end}' order by id";
 
-    if ( $id != "전지사")
-        $stmt = $tsql. "u.id = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
-    
+    if ($id != "전지사")
+        $stmt = $tsql . "u.id = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+
     try {
 
         $rs = mysqli_query($conn, $stmt);
@@ -348,10 +348,10 @@ function SPorDetailListRange($data)
                 )
             );
         }
-        array_push ( $ret,  array ( 'list' => $rows));
+        array_push($ret,  array('list' => $rows));
 
-        $stmt = "select * from eplat_parcel where  DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";       
-        if ( $id != "전지사")
+        $stmt = "select * from eplat_parcel where  DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";
+        if ($id != "전지사")
             $stmt = "select * from eplat_parcel where id='{$id}' and DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";
 
         $rs1 = mysqli_query($conn, $stmt);
@@ -366,8 +366,8 @@ function SPorDetailListRange($data)
                     'price'  => $row['price']
                 )
             );
-        }      
-        array_push ( $ret,  array ( 'parcel' => $rows) );
+        }
+        array_push($ret,  array('parcel' => $rows));
         $conn->close();
     } catch (Exception $e) {
         echo json_encode($e->getMessage());
@@ -378,7 +378,8 @@ function SPorDetailListRange($data)
     echo json_encode($ret);
 }
 
-function SPorAddParcel ( $data ) {
+function SPorAddParcel($data)
+{
     $start    = $data['start'];
     $id       = $data['id'];
     $name     = $data['name'];
@@ -406,7 +407,6 @@ function SPorAddParcel ( $data ) {
     } else {
         echo json_encode(array("Error" => $error));
     }
-
 }
 
 function SShowMgr($data)
@@ -827,8 +827,7 @@ function SShowStudentList($data)
     $step = $data['step'];
     $sel = $data['sel'];
 
-    if ( $tid == "admin")
-    {
+    if ($tid == "admin") {
         if ($sel == '1') {
             if ($step == '전체')
                 $sqlString = "SELECT *  FROM eplat_user where  role = 0";
@@ -836,9 +835,7 @@ function SShowStudentList($data)
                 $sqlString = "SELECT *  FROM eplat_user where  step = '{$step}' and role = 0";
         } else if ($sel == '2')
             $sqlString = "SELECT *  FROM eplat_user where classnm = '{$step}' and role = 0";
-    }
-    else
-    {
+    } else {
         if ($sel == '1') {
             if ($step == '전체')
                 $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
@@ -890,9 +887,9 @@ function SShowStudyList($data)
 
     $tsql = "select u.id id, u.name name , s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where ";
     if ($step == '전체')
-        $sqlString = $tsql. "u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}'  group by id";
+        $sqlString = $tsql . "u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}'  group by id";
     else
-        $sqlString = $tsql. " s.step = '{$step}' and u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id, s.step";
+        $sqlString = $tsql . " s.step = '{$step}' and u.id = s.id and u.tid = '{$tid}'  and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id, s.step";
 
     $rows = array();
 
@@ -933,9 +930,9 @@ function SShowStudyList2($data)
 
     $tsql = "select u.id id, u.name name ,u.classnm classnm, s.volume v, s.step s, s.uid uid, count(u.id) cnt from study_record s, eplat_user u where ";
     if ($classnm == '전체' || $classnm == "")
-        $sqlString = $tsql. "u.id = s.id and u.tid = '{$tid}' and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
+        $sqlString = $tsql . "u.id = s.id and u.tid = '{$tid}' and  s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
     else
-        $sqlString = $tsql. " u.classnm = '{$classnm}' and u.id = s.id and u.tid = '{$tid}' and s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
+        $sqlString = $tsql . " u.classnm = '{$classnm}' and u.id = s.id and u.tid = '{$tid}' and s.rdate >= '{$start}' and s.rdate <= '{$end}' group by id";
 
     $rows = array();
 
@@ -974,7 +971,7 @@ function SShowClassList($data)
 
     $sqlString = "select DISTINCT classnm from eplat_user where tid = '{$tid}'";
 
-    if ( $tid == "admin" )
+    if ($tid == "admin")
         $sqlString = "select DISTINCT classnm from eplat_user where classnm is not null";
     $rows = array();
 
@@ -998,7 +995,7 @@ function SShowClassList($data)
     }
 
     header('Content-Type: application/json');
-    echo json_encode(array("success" =>$rows));
+    echo json_encode(array("success" => $rows));
 }
 
 function SinsertStudent($data)
