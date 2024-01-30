@@ -310,21 +310,24 @@ function SPorDetailListRange($data)
     global $conn;
 
     $id     = $data['id'];
+    $name   = $data['name'];
     $start  = $data['start'];
     $end    = $data['end'];
 
     $rows = array();
+    $ret  = array();
     $i = 0;
     $res = "";
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
+    $tsql = "select p.*, u.name uname from eplat_porlist p ,  eplat_user u  where u.id = p.id and ";
 
-    $stmt = "select p.*, u.name uname from eplat_porlist p ,  eplat_user u  where u.id = p.id and p.rdate between '{$start}' and '{$end}' order by id";
+    $stmt = $tsql. "p.rdate between '{$start}' and '{$end}' order by id";
 
     if ( $id != "전지사")
-        $stmt = "select p.* , u.name uname from eplat_porlist p , eplat_user u where u.id = p.id and u.name = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+        $stmt = $tsql. "u.id = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
     
     try {
 
@@ -345,14 +348,34 @@ function SPorDetailListRange($data)
                 )
             );
         }
+        array_push ( $ret,  array ( 'list' => $rows));
 
+        $stmt = "select * from eplat_parcel where  DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";       
+        if ( $id != "전지사")
+            $stmt = "select * from eplat_parcel where id='{$id}' and DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";
+
+        $rs1 = mysqli_query($conn, $stmt);
+        $rows = [];
+        while ($row = mysqli_fetch_array($rs1)) {
+            array_push(
+                $rows,
+                array(
+                    'id'     => $row['id'],
+                    'name'   => $row['name'],
+                    'date'   => $row['date'],
+                    'price'  => $row['price']
+                )
+            );
+        }      
+        array_push ( $ret,  array ( 'parcel' => $rows) );
         $conn->close();
     } catch (Exception $e) {
         echo json_encode($e->getMessage());
     }
 
     header('Content-Type: application/json');
-    echo json_encode($rows);
+    //echo json_encode($rows);
+    echo json_encode($ret);
 }
 
 function SPorAddParcel ( $data ) {
@@ -949,10 +972,10 @@ function SShowClassList($data)
 
     global $conn;
 
-    $sqlString = "select unique(classnm) classnm from eplat_user where tid = '{$tid}'";
+    $sqlString = "select DISTINCT classnm from eplat_user where tid = '{$tid}'";
 
     if ( $tid == "admin" )
-        $sqlString = "select unique(classnm) classnm from eplat_user where classnm is not null";
+        $sqlString = "select DISTINCT classnm from eplat_user where classnm is not null";
     $rows = array();
 
     $i = 0;

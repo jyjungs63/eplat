@@ -380,7 +380,7 @@ listPor = (por_id) => {
     };
     dispList = (res) => {
         var js = res[0]['json']
-        addPurcharseList(res);
+        addPurcharseList(res, "");
         // porTable.setData(JSON.parse(js));
 
         // var cnt = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
@@ -405,17 +405,17 @@ listPor = (por_id) => {
 
 }
 
-listPorRange = (start, end, id) => {  // 달별 구매 목록
+listPorRange = (start, end, name, id) => {  // 달별 구매 목록
 
     var options = {
         functionName: 'SPorDetailListRange',
         otherData: {
-            start: start, end: end, id: id
+            start: start.slice(0,7), end: end, id: id, name: name
         }
     };
     dispList = (res) => {
 
-        addPurcharseList(res);  
+        addPurcharseList(res, id);  
       
     }
     dispErr = (error) => {
@@ -431,12 +431,12 @@ listPorID = ( id, start, end) => {  // 달별 구매 목록
     var options = {
         functionName: 'SPorDetailListRange',
         otherData: {
-            start: start, end: end
+            start: start, end: end, id: id
         }
     };
     dispList = (res) => {
 
-        addPurcharseList(res);  
+        addPurcharseList(res['list'],id);  
  
         $("#idID2").val(res[0]['id']);
         $("#idName2").val(res[0]['order']);
@@ -456,7 +456,7 @@ listPorID = ( id, start, end) => {  // 달별 구매 목록
 }
 
 
-addPurcharseList = (res) => {
+addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summary
 
     var tbody = $("#porTable tbody");
 
@@ -464,19 +464,18 @@ addPurcharseList = (res) => {
 
     var sum=0;
     // Create a new row
-    res.forEach( ell =>  {
+    res[0]['list'].forEach( ell =>  {
 
     var newRow = $("<tr style='margin-top:10px'>");
 
     var json = JSON.parse(ell['json']);
     var dat  = ell['rdate'];
 
-    newRow.append("<td > "+ ell['uname']+"</td>");
+    newRow.append("<td > "+ ell['uname']+"</td>");   // branch name
 
     var jarr = "";
     var total = 0; 
-    newRow.append("<td > "+ dat.slice(0,11)+"</td>");
-
+    newRow.append("<td > "+ dat.slice(0,11)+"</td>"); 
 
     var i = 1;
     json.forEach(el => {
@@ -487,29 +486,60 @@ addPurcharseList = (res) => {
         }
         i++;
     })
-    var a = "<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table></td>";
-    newRow.append(
-        a
-    );
+    //var a = "<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table></td>";
+    newRow.append( "<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table></td>" );
 
     //$("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
 
-    newRow.append("<td>"+ cvtCurrency(total) +"원</td>");
-    newRow.append("<td> <div> "+ ell['addr'] + "</div> <br/> <div>" + ell['order']+ "</div></td>");
+    newRow.append("<td>"+ cvtCurrency(total) +"원</td>");                                            // 단가
+    newRow.append("<td> <div> "+ ell['addr'] + "</div> <br/> <div>" + ell['order']+ "</div></td>");  //주소
     let stat = res[0]['confirm'] == "0" ? "미완료" : "완료"
     newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='#'>반송<a></div></td>");
     // Append the new row to the table body
     tbody.append(newRow);
         sum += total;
     })
+
 //  add 택배비 
+
+
     var newRow = $("<tr  style='background-color: yellow'>");
-    newRow.append("<td colspan='2'> <div><h7>탭배비<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum/100)+"원</div><td colspan='3'></td></td>");
+    var i = 0;
+    var pricev = 0;
+    if ( id == "전지사") {  // 전체 조회
+         
+        jarr = "";
+
+        res[1]['parcel'].forEach(el => {
+
+            pricev += Number(el['price']);
+
+            jarr +=
+                    "<tr><td class='nb'>" + i + ". &nbsp;</td> <td class='nb'>" + el['name'] + ". &nbsp;</td> <td class='nb'>"+cvtCurrency(Number(el['price']))+"원</td colspan='3'></tr>";
+            i++;
+        })   
+
+        newRow.append("<td colspan='2'> <div><h5>택배비<h5></div> </td>");
+        newRow.append("<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table><td colspan='3'></td></td>");
+        // newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td ><h5>총합(택배비)<h5></td></td>");
+        // newRow.append("<td> <div> <b>"+cvtCurrency(pricev)+"원</div><td colspan='2'></td></td>");
+        $("#idParcel").val(cvtCurrency(pricev));     
+    }
+    else   // 지사별 조회
+    {
+        if (res[1]['parcel'].length > 0 )
+            pricev = Number(res[1]['parcel'][0]['price']);
+        $("#idParcel").val(cvtCurrency(pricev));
+
+        newRow.append("<td colspan='2'> <div><h7>택배비<h5></div> </td> <td> <div> <b>"+cvtCurrency(pricev)+"원</div><td colspan='3'></td></td>");
+        // newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td ><h5>총합(택배비)<h5></td></td>");
+        // newRow.append("<td> <div> <b>"+cvtCurrency(pricev)+"원</div><td colspan='2'></td></td>");
+    }
     tbody.append(newRow);
 
     var newRow = $("<tr  style='background-color: steelblue'>");
     newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td ><h5>총합(택배비포함)<h5></td></td>");
-    newRow.append("<td> <div> <b>"+cvtCurrency(sum)+"원</div><td colspan='2'></td></td>");
+    newRow.append("<td> <div> <b>"+cvtCurrency(sum+pricev)+"원</div><td colspan='2'></td></td>");
     
     // Append the new row to the table body
     tbody.append(newRow);
@@ -636,13 +666,17 @@ document.getElementById("idGrade").addEventListener("change", function() { // �
 });
 
   var monthPicker = document.getElementById("monthPicker");
-  monthPicker.addEventListener('input', function(evt) {
+
+  monthPicker.addEventListener('input', function(evt) {     // 월을 선택할 경우 List 출력
 
     let thisMoment = moment(monthPicker.value);
     let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
     let startOfMonth = moment(thisMoment).startOf('month').format('YYYY-MM-DD');
 
-    listPorRange( startOfMonth, endOfMonth, "" )
+    var selectElement = document.getElementById("idPorBranch"); // 지사 또는 원관리
+    var bname = selectElement.text;
+
+    listPorRange( startOfMonth, endOfMonth, "", "" )
 
   })
 
@@ -651,29 +685,36 @@ document.getElementById("idGrade").addEventListener("change", function() { // �
     var selectedOption = this.options[this.selectedIndex];
 
     // 선택된 옵션의 값(value) 가져오기
-    var selectedValue = selectedOption.value;
+    var id = selectedOption.value;
     // 선택된 옵션의 텍스트 가져오기
-    var selectedText = selectedOption.text;
+    var name = selectedOption.text;
+
     
     let thisMoment = moment(monthPicker.value);
     let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
     let startOfMonth = moment(thisMoment).startOf('month').format('YYYY-MM-DD');
 
-    listPorRange( startOfMonth, endOfMonth,  selectedValue);
+    listPorRange( startOfMonth, endOfMonth,  name, id);
+
+    
+    if ( selectedOption.text != "전체")
+        $("#idBtParcel").removeClass('disabled');
 });
 
-AddParcel = () => {
+AddParcel = () => {   // 택배비 월에 해당하는 지사에 추가
 
     let thisMoment = moment(monthPicker.value);
     let start = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
 
-    var selectElement = document.getElementById("idPorBranch"); // 지사 또는 원관리
-    var bname = selectElement.value;
+    var selectElement  = document.getElementById("idPorBranch"); // 지사 또는 원관리
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+    var bname          = selectedOption.text;
+    var id             = selectElement.value;
 
     var options = {
         functionName: 'SPorAddParcel',
         otherData: {
-            start: start, id: "", name: bname, price: $("#idParcel").val()
+            start: start, id: id, name: bname, price: $("#idParcel").val()
         }
     };
     dispList = (res) => {

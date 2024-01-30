@@ -197,8 +197,8 @@ include "../header.php";
                                         <input class="form-control form-control-sm custom-width" id="idParcel"
                                             type="text" placeholder="택배비" style="width: 100px;">
                                         &nbsp;&nbsp;
-                                        <button class="btn btn-outline-success btn-sm" type="button"
-                                            onclick="AddParcel()">택배비추가
+                                        <button id="idBtParcel" class="btn btn-outline-success btn-sm disabled"
+                                            type="button" onclick="AddParcel()">택배비추가
                                         </button>
                                     </div>
 
@@ -434,10 +434,17 @@ include "../header.php";
                 // Append the new option to the select element
                 select.add(option);
 
-                blist.push(el['bname'])
+                blist.push([el['id'], el['bname']])
 
             })
-            const unqueArr = blist.filter((value, index, self) => self.indexOf(value) === index); // 지사명 중복 제거
+            //const unqueArr = blist.filter((value, index, self) => self.indexOf(value) === index); // 지사명 중복 제거
+            const unqueArr = blist.filter((element, index) => {
+                return (
+                    blist.findIndex(
+                        (item) => item[0] === element[0] && item[1] === element[1]
+                    ) === index
+                );
+            })
 
             let select2 = document.getElementById('idPorBranch');
             let option2 = document.createElement('option');
@@ -445,13 +452,20 @@ include "../header.php";
             option2.value = "전지사"; // Set the value attribute (if needed)
             select2.add(option2);
 
-            unqueArr.forEach(e => {
-                // 지사별 조회 셀렉션 박스에 지사명 추가
+            for (let i = 0; i < unqueArr.length; i++) {
                 option2 = document.createElement('option');
-                option2.text = e; // Set the text of the new option
-                option2.value = e; // Set the value attribute (if needed)
+                option2.value = unqueArr[i][0]; // Set the value attribute (if needed)
+                option2.text = unqueArr[i][1]; // Set the text of the new option
                 select2.add(option2);
-            })
+            }
+
+            // unqueArr.forEach(e => {
+            //     // 지사별 조회 셀렉션 박스에 지사명 추가
+            //     option2 = document.createElement('option');
+            //     option2.text = e; // Set the text of the new option
+            //     option2.value = e; // Set the value attribute (if needed)
+            //     select2.add(option2);
+            // })
 
         }
 
