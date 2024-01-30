@@ -4,50 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Bootstrap 5 Modal Load Complete Example</title>
+    <title>Multi-Dataset Chart Example</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch Modal
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Content goes here...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
+    <div style="width:80%;">
+        <canvas id="myChart"></canvas>
     </div>
-
     <script>
-    // Attach an event listener to the modal's "shown.bs.modal" event
-    var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    var ctx = document.getElementById('myChart').getContext('2d');
 
-    myModal.show();
-
-    myModal._element.addEventListener('shown.bs.modal', function() {
-        // Your code here
-        console.log('Modal is fully loaded and shown.');
-        // Execute functions or perform actions that need the modal to be ready
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Label 1', 'Label 2', 'Label 3'],
+            datasets: [{
+                label: 'Dataset 1',
+                data: [10, 20, 30],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: true,
+                position: 'top', // You can set 'top', 'bottom', 'left', 'right', or custom position like {x: 0, y: 0}
+                fullWidth: true // Set to false if you want the legend to be a specific width
+            }
+        }
     });
     </script>
-
 </body>
 
 </html>
