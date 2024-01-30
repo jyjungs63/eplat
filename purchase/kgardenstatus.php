@@ -368,6 +368,9 @@
                             font: {
                                 weight: 'bold'
                             }
+                        },
+                        legend: {
+                            display: false
                         }
                     },
 
