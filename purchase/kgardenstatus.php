@@ -401,7 +401,7 @@
         var element = document.getElementById('revenue-chart');
         var opt = {
             //margin: [3, 0, 0, 0],
-            margin: [5, 1, 2, 2],
+            margin: [5, 0, 0, 0],
             filename: 'myfile.pdf',
             image: {
                 type: 'jpeg',
