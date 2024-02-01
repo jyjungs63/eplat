@@ -727,11 +727,11 @@ img {
     <div id="template" style="display: none;">
         <strong>Bolded content</strong>
     </div>
-    <script src="../common.js" ></script>
+    <script src="../common.js"></script>
     <script>
     // console.log(screen.width);
     // console.log(screen.height);
-    if ( getUser() == "" || getUser() == undefined)
+    if (getUser() == "" || getUser() == undefined)
         window.location.href = "../index.php";
     var cmap = {
         basic: "#38B6FF",
@@ -766,8 +766,15 @@ img {
         if (b.name == 'cb2' && b.checked) {
             $(".myctl").addClass("disabledbutton");
             $('#flexCheckChecked').prop('checked', false);
-        } else
+        } else {
+            const selectOpt = $("#iselect-field2").find(":selected");
+            const selectArr = selectOpt.map(function() {
+                return $(this).text();
+            }).get();
+            const selectT = selectArr.join(', ')
+            assignHref(Number(selectT));
             $(".myctl").removeClass("disabledbutton");
+        }
     }
 
     function setInit() {
@@ -811,12 +818,12 @@ img {
             vol + '" and step= "' + stp + '" order by week '
         var res = alasql(sql, [videoJson])
 
-        if ($('#flexCheckChecked').is(':checked')) {
+        if ($('#flexCheckChecked').is(':checked')) { // 개별 영상 무한 반복 Check or Not
             ck1 = 1;
         } else {
             ck1 = 0;
         }
-        if ($('#flexCheckWeekChecked').is(':checked')) {
+        if ($('#flexCheckWeekChecked').is(':checked')) { // 주간 영상 반복
             ck2 = 1;
         } else {
             ck2 = 0
@@ -836,11 +843,11 @@ img {
                 var myid = "#w" + (i + 1) + "_" + k;
                 var mmyid = "w" + (i + 1) + "_" + k++;
                 $(myid + "_t").html('')
-                if (ck1) {
+                if (ck1) { // 개별 영상 무한 
                     $(myid).prop('href', '#')
                     //$(myid).prop('href', 'singleLong.html?m1=' + result + "&id=" + id + "&uid=" + mmyid + "&vol=" + vol + "&stp=" + stp);
                     $(myid).prop('href', 'singleLong.html?m1=' + result);
-                } else {
+                } else { // 개별 영상 한번
                     $(myid).prop('href', '#')
                     $(myid).prop('href', 'singleShort.html?m1=' + result + "&id=" + id + "&uid=" +
                         mmyid + "&vol=" + vol + "&stp=" + stp);
@@ -1015,7 +1022,7 @@ img {
     });
 
 
-    var studyRecordCount = (id) => {
+    studyRecordCount = (id) => {
 
         var data = {
             id: id,

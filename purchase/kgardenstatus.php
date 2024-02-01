@@ -245,8 +245,8 @@
         var selectedOption = this.options[this.selectedIndex];
         var dateRangePickerValue = $('#reportrange').val();
         var selectedDates = dateRangePickerValue.split(' ~ ');
-        var startDate = selectedDates[0].trim();
-        var endDate = selectedDates[1].trim();
+        startDate = selectedDates[0].trim();
+        endDate = selectedDates[1].trim();
 
 
         // 선택된 옵션의 값(value) 가져오기
@@ -328,7 +328,8 @@
                 borderWidth: 1
             }]
         };
-
+        if (step == undefined) step = "";
+        if (clas == undefined) clas = "";
         if (chartState == 0) {
             salesChart = new Chart(salesChartCanvas, {
                 type: 'bar',
@@ -350,7 +351,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: [getName() + " 학습 현황", " ", "(" + step + " - " + clas + ") 기간 : " +
+                            text: [getName() + " 학습 현황", " ", "(" + step + " - " + clas + " ) 기간 : " +
                                 startDate + "~" + endDate + ""
                             ],
                             font: {
@@ -419,6 +420,22 @@
 
         // New Promise-based usage:
         html2pdf().set(opt).from(element).save();
+        // html2pdf(element)
+        //     .set(opt)
+        //     .from(element)
+        //     .outputPdf()
+        //     .then(pdf => {
+        //         // Create a Blob from the PDF data
+        //         const blob = new Blob([pdf], {
+        //             type: 'application/pdf'
+        //         });
+
+        //         // Create a URL for the Blob
+        //         const url = URL.createObjectURL(blob);
+
+        //         // Open the PDF in a new tab
+        //         window.open(url, '_blank');
+        //     });
 
         // Old monolithic-style usage:
         //html2pdf(element, opt);
