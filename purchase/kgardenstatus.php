@@ -351,7 +351,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: [getName() + " 학습 현황", " ", "(" + step + " - " + clas + " ) 기간 : " +
+                            text: [getOwner() + " 학습 현황", " ", "(" + step + " - " + clas + " ) 기간 : " +
                                 startDate + "~" + endDate + ""
                             ],
                             font: {
@@ -382,7 +382,7 @@
             salesChart.data = data;
             salesChart.options.plugins.title = {
                 display: true,
-                text: [getName() + " 학습 현황", " ", "(" + step + " - " + clas + ") 기간 : " +
+                text: [getOwner() + " 학습 현황", " ", "(" + step + " - " + clas + ") 기간 : " +
                     startDate + "~" + endDate + ""
                 ],
                 font: {

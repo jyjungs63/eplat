@@ -962,6 +962,7 @@ var user = "";
 var role = "";
 var conf = "";
 var name = "";
+var owner = "";
 var loca = "";
 
 $(document).ready(function() {
@@ -971,6 +972,7 @@ $(document).ready(function() {
         role = loginfo['role'];
         conf = loginfo['conf'];
         name = loginfo['name'];
+        owner = loginfo['owner'];
         loca = loginfo['loca'];
         toggleVisibility();
     }
@@ -1045,6 +1047,7 @@ logon = () => {
             role = resp['success'][0]['role'];
             conf = resp['success'][0]['confirm'];
             name = resp['success'][0]['name'];
+            owner = resp['success'][0]['owner'];
             loca = resp['success'][0]['location'];
 
             var respo = {
@@ -1052,6 +1055,7 @@ logon = () => {
                 role: role,
                 conf: conf,
                 name: name,
+                owner: owner,
                 loca: loca
             };
 
@@ -1087,6 +1091,7 @@ logout = () => {
     conf = "";
     name = "";
     loca = "";
+    owner = "";
     deleteLocalStorage('info');
 
     toggleChage($('#idm1')); //.toggle(); // 게시판

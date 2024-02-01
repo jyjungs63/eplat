@@ -148,6 +148,12 @@ getName = () => {
     return sto != undefined ? sto['name'] : undefined;
 }
 
+getOwner = () => {
+    var sto = getLocalStorage('info');
+
+    return sto != undefined ? sto['owner'] : undefined;
+}
+
 getRole = () => {
     var sto = getLocalStorage('info');
 

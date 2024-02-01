@@ -97,6 +97,7 @@ function Slogon($data, $dest)
                     'authenticated'   => 'true',
                     'user' => $res['id'],
                     'name' => $res['name'],
+                    'owner' => $res['owner'],
                     'role' => $res['role'],
                     'confirm'  => $res['confirm'],
                     'location'  => $location,
