@@ -323,7 +323,7 @@ function SPorDetailListRange($data)
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $tsql = "select p.*, u.name uname from eplat_porlist p ,  eplat_user u  where u.id = p.id and ";
+    $tsql = "select p.*, u.owner owner from eplat_porlist p ,  eplat_user u  where u.id = p.id and ";
 
     $stmt = $tsql . "p.rdate between '{$start}' and '{$end}' order by id";
 
@@ -345,7 +345,7 @@ function SPorDetailListRange($data)
                     'addr'  => $row['addr'],
                     'mobile'  => $row['mobile'],
                     'confirm'  => $row['confirm'],
-                    'uname'  => $row['uname']
+                    'uname'  => $row['owner']
                 )
             );
         }
