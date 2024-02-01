@@ -464,43 +464,47 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
 
     var sum=0;
     // Create a new row
-    res[0]['list'].forEach( ell =>  {
+    var arr ;
+    if ( res.length == 2)
+        arr = res[0]['list'];
+    else
+        arr = res;
 
-    var newRow = $("<tr style='margin-top:10px'>");
+    arr.forEach( ell =>  {
+        //res[0]['list'].forEach( ell =>  {
 
-    var json = JSON.parse(ell['json']);
-    var dat  = ell['rdate'];
+        var newRow = $("<tr style='margin-top:10px'>");
 
-    newRow.append("<td > "+ ell['uname']+"</td>");   // branch name
+        var json = JSON.parse(ell['json']);
+        var dat  = ell['rdate'];
 
-    var jarr = "";
-    var total = 0; 
-    newRow.append("<td > "+ dat.slice(0,11)+"</td>"); 
+        newRow.append("<td > "+ ell['uname']+"</td>");   // branch name
 
-    var i = 1;
-    json.forEach(el => {
-        if ((el['uid']) != "") {
-            total += Number(el['total']);
-            jarr +=
-                "<tr><td class='nb'>" +i+ ". &nbsp;</td>  <td class='nb'>" + el['title'] + "</td> <td class='nb'>" + cvtCurrency(parseInt(el['price'])) + "원</td> <td class='nb'>"+el['count']+"개</td></tr>";
-        }
-        i++;
-    })
-    //var a = "<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table></td>";
-    newRow.append( "<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table></td>" );
+        var jarr = "";
+        var total = 0; 
+        newRow.append("<td > "+ dat.slice(0,11)+"</td>"); 
 
-    //$("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
-
-    newRow.append("<td>"+ cvtCurrency(total) +"원</td>");                                            // 단가
-    newRow.append("<td> <div> "+ ell['addr'] + "</div> <br/> <div>" + ell['order']+ "</div></td>");  //주소
-    let stat = res[0]['confirm'] == "0" ? "미완료" : "완료"
-    newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='#'>반송<a></div></td>");
-    // Append the new row to the table body
-    tbody.append(newRow);
-        sum += total;
+        var i = 1;
+        json.forEach(el => {
+            if ((el['uid']) != "") {
+                total += Number(el['total']);
+                jarr +=
+                    "<tr><td class='nb'>" +i+ ". &nbsp;</td>  <td class='nb'>" + el['title'] + "</td> <td class='nb'>" + cvtCurrency(parseInt(el['price'])) + "원</td> <td class='nb'>"+el['count']+"개</td></tr>";
+            }
+            i++;
+        })
+        newRow.append( "<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table></td>" );
+        newRow.append("<td>"+ cvtCurrency(total) +"원</td>");                                            // 단가
+        newRow.append("<td> <div> "+ ell['addr'] + "</div> <br/> <div>" + ell['order']+ "</div></td>");  //주소
+        let stat = res[0]['confirm'] == "0" ? "미완료" : "완료"
+        newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='#'>반송<a></div></td>");
+        tbody.append(newRow);
+            sum += total;
     })
 
 //  add 택배비 
+
+    if ( res.length == 2 ) {
 
 
     var newRow = $("<tr  style='background-color: yellow'>");
@@ -521,8 +525,6 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
 
         newRow.append("<td colspan='2'> <div><h5>택배비<h5></div> </td>");
         newRow.append("<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table><td colspan='3'></td></td>");
-        // newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td ><h5>총합(택배비)<h5></td></td>");
-        // newRow.append("<td> <div> <b>"+cvtCurrency(pricev)+"원</div><td colspan='2'></td></td>");
         $("#idParcel").val(cvtCurrency(pricev));     
     }
     else   // 지사별 조회
@@ -532,10 +534,9 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         $("#idParcel").val(cvtCurrency(pricev));
 
         newRow.append("<td colspan='2'> <div><h7>택배비<h5></div> </td> <td> <div> <b>"+cvtCurrency(pricev)+"원</div><td colspan='3'></td></td>");
-        // newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td ><h5>총합(택배비)<h5></td></td>");
-        // newRow.append("<td> <div> <b>"+cvtCurrency(pricev)+"원</div><td colspan='2'></td></td>");
     }
     tbody.append(newRow);
+    }
 
     var newRow = $("<tr  style='background-color: steelblue'>");
     newRow.append("<td colspan='2'> <div><h5>합계<h5></div> </td> <td> <div> <b>"+cvtCurrency(sum)+"원</div><td ><h5>총합(택배비포함)<h5></td></td>");

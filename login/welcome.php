@@ -772,6 +772,8 @@ img {
                 return $(this).text();
             }).get();
             const selectT = selectArr.join(', ')
+            if (selectT == "")
+                selectT = "1";
             assignHref(Number(selectT));
             $(".myctl").removeClass("disabledbutton");
         }
@@ -1022,7 +1024,7 @@ img {
     });
 
 
-    studyRecordCount = (id) => {
+    function studyRecordCount(id) {
 
         var data = {
             id: id,
