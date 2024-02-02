@@ -270,7 +270,7 @@ deleteAddress = (cell) => {
 
 var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
     height: "490px",
-    data: kgardenlist,
+    //data: kgardenlist,
     layout: "fitColumns",
     rowHeight: 40, //set rows to 40px height
     selectable: 1, //make rows selectable
@@ -292,7 +292,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             },
         },
         {
-            title: "name",
+            title: "이름",
             field: "name",
             width: "15%",
             editor: "list",
@@ -305,7 +305,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             }
         },
         {
-            title: "owner",
+            title: "지사명",
             field: "owner",
             width: "15%",
             editor: "list",
@@ -318,7 +318,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             }
         },
         {
-            title: "address",
+            title: "주소",
             field: "addr",
             sorter: "number",
             width: "45%",
@@ -328,7 +328,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             }
         },
         {
-            title: "mobile",
+            title: "전화",
             field: "mobile",
             sorter: "number",
             width: "7%",
@@ -339,7 +339,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
         },
         // { title: "password", field: "password", sorter: "number", width: 250, editor: false, bottomCalcParams: { precision: 0 } },
         {
-            title: "rdate",
+            title: "등록일",
             field: "rdate",
             sorter: "number",
             width: "7%",
@@ -624,7 +624,7 @@ document.getElementById("idDest").addEventListener("change", function() {   // �
 
     } else {
         table2.clearData();
-        table2.setData(kgardenlist);
+        //table2.setData(kgardenlist);
     }
 
 });
@@ -689,8 +689,7 @@ document.getElementById("idGrade").addEventListener("change", function() { // �
     var id = selectedOption.value;
     // 선택된 옵션의 텍스트 가져오기
     var name = selectedOption.text;
-
-    
+ 
     let thisMoment = moment(monthPicker.value);
     let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
     let startOfMonth = moment(thisMoment).startOf('month').format('YYYY-MM-DD');
@@ -706,6 +705,7 @@ AddParcel = () => {   // 택배비 월에 해당하는 지사에 추가
 
     let thisMoment = moment(monthPicker.value);
     let start = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
+    let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
 
     var selectElement  = document.getElementById("idPorBranch"); // 지사 또는 원관리
     var selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -720,6 +720,7 @@ AddParcel = () => {   // 택배비 월에 해당하는 지사에 추가
     };
     dispList = (res) => {
 
+        listPorRange( start, endOfMonth,  bname, id);
         CallToast('SPorAddParcel success!', "success")
       
     }

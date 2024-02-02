@@ -218,12 +218,15 @@ function SShowOrderList($data)
 
     session_start();
 
-    //$num = $_POST['id'];
+    $id = $data['id'];
 
     global $conn;
 
     //$sqlString = "SELECT p.*, u.name FROM eplat_porlist p eplat_user u where confirm = 0";
-    $sqlString = "SELECT p.*, u.name bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0";
+    if ($id == "admin")
+        $sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0";
+    else
+        $sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0 and u.id = '{$id}'";
 
     $rows = array();
 
