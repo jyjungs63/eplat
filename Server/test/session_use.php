@@ -3,139 +3,54 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>DateRangePicker Apply Event</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DateRangePicker CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet">
-
-    <style>
-    .to-hide {
-        display: none;
-        /* or visibility: hidden; */
-    }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css" />
+    <title>Bootstrap 4.6 Nav Tabs Event</title>
 </head>
 
 <body>
 
     <div class="container mt-5">
-        <h1>Date Range Selection</h1>
-        <div class="navbar" ;>
-            <!-- <div class="navbar-inner"> -->
-            <div class="container">
+        <ul class="nav nav-tabs" id="myTabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1" aria-controls="content1">Tab
+                    1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab2" data-toggle="tab" href="#content2" aria-controls="content2">Tab 2</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab3" data-toggle="tab" href="#content3" aria-controls="content3">Tab 3</a>
+            </li>
+        </ul>
 
-                <a href="#" class="brand">
-                    <!-- <div  style="background:#000000" >Eplat</div> -->
-                    <!-- <p> <strong>매트로 유치원</strong></p> -->
-                    <img src="assets/img/logo.png" width="80" height="30" alt="Eplat" />
-                    <!-- This is website logo -->
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">About</a>
-                                </li>
-                                <li class="nav-item to-hide">
-                                    <a class="nav-link" href="#">Hide Me</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Services</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+        <div class="tab-content mt-2">
+            <div class="tab-pane fade show active" id="content1">
+                <h3>Content for Tab 1</h3>
+            </div>
+            <div class="tab-pane fade" id="content2">
+                <h3>Content for Tab 2</h3>
+            </div>
+            <div class="tab-pane fade" id="content3">
+                <h3>Content for Tab 3</h3>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <label for="dateRangePicker" class="form-label">Select Date Range:</label>
-                <input type="text" class="form-control" id="dateRangePicker" name="dateRangePicker" />
-            </div>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <label class="form-label">Selected Date Range:</label>
-                <p id="selectedDateRange"></p>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Moment.js (Required for DateRangePicker) -->
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <!-- DateRangePicker JS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
     <script>
     $(document).ready(function() {
-        var start = moment().startOf('week');
-        var end = moment().endOf('week');
-
-        function cb(start, end) {
-            $('#reportrange span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-        }
-
-        $('#dateRangePicker').daterangepicker({
-            startDate: start,
-            endDate: end,
-            locale: {
-                format: 'YYYY-MM-DD', // 날짜 표시 형식
-                separator: ' ~ ', // 날짜 범위 구분자
-                applyLabel: '적용', // 적용 버튼 레이블
-                cancelLabel: '취소', // 취소 버튼 레이블
-                fromLabel: '부터', // 시작일 레이블
-                toLabel: '까지', // 종료일 레이블
-                customRangeLabel: '직접 선택', // 사용자 정의 범위 레이블
-                weekLabel: '주', // 주 레이블
-                daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'], // 요일 배열
-                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월',
-                    '12월'
-                ], // 월 배열
-                firstDay: 0 // 주의 시작 요일 (0: 일요일, 1: 월요일, ...)
-            },
-            ranges: {
-                '오늘': [moment(), moment()],
-                '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                '지난 7일': [moment().subtract(6, 'days'), moment()],
-                '지난주': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks')
-                    .endOf(
-                        'week')
-                ],
-                '이번주': [moment().startOf('week'), moment().endOf('week')],
-                '다음주': [moment().add(1, 'weeks').startOf('week'), moment().add(1, 'weeks').endOf(
-                    'week')],
-                '지난 30일': [moment().subtract(29, 'days'), moment()],
-                '이번달': [moment().startOf('month'), moment().endOf('month')],
-                '지난달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month')
-                    .endOf(
-                        'month')
-                ]
-            }
-        }, cb);
-
-        // Apply event handler
-        $('#dateRangePicker').on('apply.daterangepicker', function(ev, picker) {
-            $('#selectedDateRange').text('Selected Range: ' + picker.startDate.format('YYYY-MM-DD') +
-                ' to ' + picker.endDate.format('YYYY-MM-DD'));
+        $('#myTabs a').on('click', function(e) {
+            e.preventDefault();
+            //$(this).tab('show');
+            //$("#content2").tab('show');
         });
     });
     </script>
+
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 :root {
     --primary-color: #3498db;
     --background-color: #2ecc71;
+    --board-color: #32757f;
     --text-color: #ffcff;
 }
 
@@ -14,8 +15,13 @@
     background-color: var(--primary-color);
 }
 
-#table thead th {
-    background-color: var(--primary-color);
+#idBoardtable thead th {
+    background-color: var(--board-color);
+}
+
+.bootstrap-table td {
+    height: 30px; /* Adjust the height as needed */
+    vertical-align: middle; /* Optional: Align content vertically */
 }
 
 #porTable thead th {

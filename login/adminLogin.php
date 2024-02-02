@@ -8,7 +8,7 @@
     <title>Document</title>
 
     <?php
-        include '../include.php';
+    include '../include.php';
     ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -26,17 +26,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
     <link href="../common.css" rel="stylesheet">
 </head>
 
-<body>
+<body style="background-color: #f4f6f9">
     <div class="p-3">
-        <section class="content-header">
+        <section class="content-header" style="background-color: #f4f6f9">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
@@ -54,7 +53,7 @@
         <section class="content">
             <div class="row">
                 <div class="card card-outline card-primary">
-                    <div class="card-header">
+                    <div class="card-header" style="background-color: #38998580">
                         <h3 class="card-title">
                             <div class="input-group mb-3">
                                 <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
@@ -65,24 +64,19 @@
                                     <option val="v5">주소지</option>
                                 </select> -->
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idPorID" type="text"
-                                    placeholder="POR ID">
+                                <input class="form-control form-control-sm" id="idPorID" type="text" placeholder="POR ID">
                                 &nbsp;
                                 <input class="form-control form-control-sm" id="idName" type="text" placeholder="Name">
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idOwner" type="text"
-                                    placeholder="Owner">&nbsp;
+                                <input class="form-control form-control-sm" id="idOwner" type="text" placeholder="Owner">&nbsp;
                                 <!-- <input class="form-control form-control-sm" id="idPasswd" type="text"
                                     placeholder="Password">
                                 &nbsp; -->
-                                <input class="form-control form-control-sm" id="idMobile" type="text"
-                                    placeholder="Mobile">
+                                <input class="form-control form-control-sm" id="idMobile" type="text" placeholder="Mobile">
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idAddr" type="text"
-                                    placeholder="Address" style="width: 150px;">
+                                <input class="form-control form-control-sm" id="idAddr" type="text" placeholder="Address" style="width: 150px;">
                                 &nbsp;
-                                <input class="form-control form-control-sm" id="idRdate" type="text" placeholder="구매일"
-                                    style="width: -5px;">
+                                <input class="form-control form-control-sm" id="idRdate" type="text" placeholder="구매일" style="width: -5px;">
                                 &nbsp;
                                 <!-- <button class="btn btn-outline-primary btn-sm" type="button"
                                     onclick="execDaumPostcode()">
@@ -93,15 +87,13 @@
                             </div>
                         </h3>
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
-                                data-toggle="tooltip" title="Collapse">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fas fa-minus"></i></button>
-                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
-                                data-toggle="tooltip" title="Remove">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove" data-toggle="tooltip" title="Remove">
                                 <i class="fas fa-times"></i></button>
                         </div>
                     </div>
-                    <div class="card-body " id="cardDest">
+                    <div class="card-body " id="cardDest" style="background-color: #88babe87">
 
                         <div id="porTableDiv"></div>
                     </div>
@@ -112,25 +104,24 @@
         </section>
     </div>
 
-    <div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #f4f6f9">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color: #f4f6f9">
                     <h5 class="modal-title" id="exampleModalLabel">회원가입승인</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="background-color: #f4f6f9">
                     <section class="content">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card card-outline card-info">
-                                    <div class="card-header">
+                                    <div class="card-header" style="background-color: #38998580">
                                         <h3 class="card-title">
                                             <div class="input-group mb-3">
                                                 <button class="btn btn-outline-secondary" type="button">필터
                                                 </button>
-                                                <select class="form-select" id="idGrade"
-                                                    data-placeholder="Choose Items">
+                                                <select class="form-select" id="idGrade" data-placeholder="Choose Items">
                                                     <option val="va">전체</option>
                                                     <option val="v4">승인</option>
                                                     <option val="v4">미승인</option>
@@ -138,21 +129,15 @@
                                             </div>
                                         </h3>
                                         <div class="card-tools">
-                                            <button type="button" class="btn btn-tool btn-sm"
-                                                data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                                 <i class="fas fa-minus"></i></button>
-                                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove"
-                                                data-toggle="tooltip" title="Remove">
+                                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove" data-toggle="tooltip" title="Remove">
                                                 <i class="fas fa-times"></i></button>
                                         </div>
                                     </div>
-                                    <div class="card-body pad">
-                                        <div class="d-flex align-items-end justify-content-end"
-                                            style="margin-bottom: 10px;">
-                                            <a id="anchorRead" href="javascript:updateItem()" class="btn btn-primary"
-                                                role="button" aria-disabled="true" data-toggle="tooltip"
-                                                title="Update Branch Manager status">저장<i
-                                                    class="fa-solid fa-database"></i></a>
+                                    <div class="card-body pad" style="background-color: #88babe87">
+                                        <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
+                                            <a id="anchorRead" href="javascript:updateItem()" class="btn btn-primary" role="button" aria-disabled="true" data-toggle="tooltip" title="Update Branch Manager status">저장<i class="fa-solid fa-database"></i></a>
                                         </div>
 
                                         <div id="idTable">
@@ -189,218 +174,218 @@
     <script src="../header.js"></script>
     <script src="adminLogin.js"></script>
     <script>
-    $("#exampleModal").on("hidden.bs.modal", function() {
-        // window.location.href = "https://www.eplat.co.kr/index.php";
-    });
-    listPor = (por_id) => {
+        $("#exampleModal").on("hidden.bs.modal", function() {
+            // window.location.href = "https://www.eplat.co.kr/index.php";
+        });
+        listPor = (por_id) => {
 
-        dispList = (res) => {
-            var js = res[0]['json']
-            porTable.setData(JSON.parse(js));
-            $("#idPorID").val(por_id);
-            $("#idName").val(res[0]['order']);
-            $("#idAddr").val(res[0]['addr']);
-            $("#idRdate").val(res[0]['rdate']);
-            var cnt = $(
-                    "#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
-                .html()
-            var sum = $(
-                    "#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
-                .html()
-            $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html(
-                "총합")
-            $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
-                cvtCurrency(parseInt(cnt / 2)));
-            $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
-                cvtCurrency(parseInt(sum / 2)));
-            CallToast('New Branch Manager Updated successfully!!', "success")
-        }
-        dispErr = (xhr) => {
-            CallToast('SPorDetailList falure!', "error")
-        }
-        var data = {
-            id: por_id
-        };
-        var options = {
-            functionName: 'SPorDetailList',
-            otherData: {
-                id: por_id
+            dispList = (res) => {
+                var js = res[0]['json']
+                porTable.setData(JSON.parse(js));
+                $("#idPorID").val(por_id);
+                $("#idName").val(res[0]['order']);
+                $("#idAddr").val(res[0]['addr']);
+                $("#idRdate").val(res[0]['rdate']);
+                var cnt = $(
+                        "#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
+                    .html()
+                var sum = $(
+                        "#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
+                    .html()
+                $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html(
+                    "총합")
+                $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
+                    cvtCurrency(parseInt(cnt / 2)));
+                $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
+                    cvtCurrency(parseInt(sum / 2)));
+                CallToast('New Branch Manager Updated successfully!!', "success")
             }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-    }
-
-
-    document.getElementById("idGrade").addEventListener("change", function() {
-        // 선택된 옵션 가져오기
-        var selectedOption = this.options[this.selectedIndex];
-
-        // 선택된 옵션의 값(value) 가져오기
-        var selectedValue = selectedOption.value;
-
-        // 선택된 옵션의 텍스트 가져오기
-        var selectedText = selectedOption.text;
-
-        confirmList(selectedText);
-    });
-
-    confirmList = (value) => {
-        var item = [];
-        var sel = 0;
-        if (value != null) {
-            if (value == "승인")
-                sel = 1;
-            else if (value == "미승인")
-                sel = 2;
-            else
-                sel = 3;
+            dispErr = (xhr) => {
+                CallToast('SPorDetailList falure!', "error")
+            }
+            var data = {
+                id: por_id
+            };
+            var options = {
+                functionName: 'SPorDetailList',
+                otherData: {
+                    id: por_id
+                }
+            };
+            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
         }
 
-        var data = {
-            num: sel
-        };
 
-        dispList3 = (resp) => {
-            resp.forEach(el => {
+        document.getElementById("idGrade").addEventListener("change", function() {
+            // 선택된 옵션 가져오기
+            var selectedOption = this.options[this.selectedIndex];
+
+            // 선택된 옵션의 값(value) 가져오기
+            var selectedValue = selectedOption.value;
+
+            // 선택된 옵션의 텍스트 가져오기
+            var selectedText = selectedOption.text;
+
+            confirmList(selectedText);
+        });
+
+        confirmList = (value) => {
+            var item = [];
+            var sel = 0;
+            if (value != null) {
+                if (value == "승인")
+                    sel = 1;
+                else if (value == "미승인")
+                    sel = 2;
+                else
+                    sel = 3;
+            }
+
+            var data = {
+                num: sel
+            };
+
+            dispList3 = (resp) => {
+                resp.forEach(el => {
+                    var jarr = {
+                        "id": el['id'],
+                        "name": el['name'],
+                        "role": el['role'] == 1 ? "지사장" : "선생님",
+                        "mobile": el['mobile'],
+                        "addr": el['addr'],
+                        "zipcode": el['zipcode'],
+                        "password": el['password'],
+                        "rdate": el['rdate'],
+                        "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+                    }
+                    item.push(jarr);
+                });
+                table.clearData()
+                table.setData(item);
+                CallToast('SShowConfirm successfully !!', "success")
+            }
+            dispErr3 = (xhr) => {
+                CallToast('SShowConfirm falure!', "error")
+            }
+
+            var options = {
+                functionName: 'SShowConfirm',
+                otherData: {
+                    num: sel
+                }
+            };
+            CallAjax("SMethods.php", "POST", options, dispList3, dispErr3);
+
+            var deleteIcon = function(cell, formatterParams) { //plain text value
+                return "<i class='fa fa-trash'></i>";
+            };
+        }
+
+        orderList = () => {
+            items = [];
+            var data = {
+                id: "manager"
+            };
+
+            dispList = (resp) => {
+                CallToast('New Branch Manager Updated successfully!!', "success")
+                resp.forEach(el => {
+                    var jarr = {
+                        "id": el['id'],
+                        "por_id": el['por_id'],
+                        "order": el['order'],
+                        "addr": el['addr'],
+                        "mobile": el['mobile'],
+                        "rdate": el['rdate'],
+                        "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+                    }
+                    items.push(jarr);
+                });
+                table1.clearData()
+                table1.setData(items);
+            }
+            dispErr = (xhr) => {
+                CallToast('New Branch Manager Update falure!', "error")
+            }
+
+            var options = {
+                functionName: 'SShowOrderList',
+                otherData: {
+                    data
+                }
+            };
+            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+            var deleteIcon = function(cell, formatterParams) { //plain text value
+                return "<i class='fa fa-trash'></i>";
+            };
+        }
+
+        updateItem = () => {
+            items = [];
+            var item = table.getSelectedData();
+
+            item.forEach(el => {
+
                 var jarr = {
                     "id": el['id'],
                     "name": el['name'],
-                    "role": el['role'] == 1 ? "지사장" : "선생님",
                     "mobile": el['mobile'],
                     "addr": el['addr'],
                     "zipcode": el['zipcode'],
                     "password": el['password'],
                     "rdate": el['rdate'],
-                    "confirm": el['confirm'] == 1 ? "승인" : "미승인",
-                }
-                item.push(jarr);
-            });
-            table.clearData()
-            table.setData(item);
-            CallToast('SShowConfirm successfully !!', "success")
-        }
-        dispErr3 = (xhr) => {
-            CallToast('SShowConfirm falure!', "error")
-        }
-
-        var options = {
-            functionName: 'SShowConfirm',
-            otherData: {
-                num: sel
-            }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList3, dispErr3);
-
-        var deleteIcon = function(cell, formatterParams) { //plain text value
-            return "<i class='fa fa-trash'></i>";
-        };
-    }
-
-    orderList = () => {
-        items = [];
-        var data = {
-            id: "manager"
-        };
-
-        dispList = (resp) => {
-            CallToast('New Branch Manager Updated successfully!!', "success")
-            resp.forEach(el => {
-                var jarr = {
-                    "id": el['id'],
-                    "por_id": el['por_id'],
-                    "order": el['order'],
-                    "addr": el['addr'],
-                    "mobile": el['mobile'],
-                    "rdate": el['rdate'],
-                    "confirm": el['confirm'] == 1 ? "승인" : "미승인",
+                    "confirm": el['confirm'] == "승인" ? 1 : 0,
                 }
                 items.push(jarr);
-            });
-            table1.clearData()
-            table1.setData(items);
-        }
-        dispErr = (xhr) => {
-            CallToast('New Branch Manager Update falure!', "error")
-        }
 
-        var options = {
-            functionName: 'SShowOrderList',
-            otherData: {
-                data
+            })
+
+            var data = {
+                "item": items
             }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
-        var deleteIcon = function(cell, formatterParams) { //plain text value
-            return "<i class='fa fa-trash'></i>";
-        };
-    }
-
-    updateItem = () => {
-        items = [];
-        var item = table.getSelectedData();
-
-        item.forEach(el => {
-
-            var jarr = {
-                "id": el['id'],
-                "name": el['name'],
-                "mobile": el['mobile'],
-                "addr": el['addr'],
-                "zipcode": el['zipcode'],
-                "password": el['password'],
-                "rdate": el['rdate'],
-                "confirm": el['confirm'] == "승인" ? 1 : 0,
+            dispList = (resp) => {
+                confirmList("전체");
+                CallToast('New Branch Manager Update Success!', "success")
             }
-            items.push(jarr);
-
-        })
-
-        var data = {
-            "item": items
-        }
-
-        dispList = (resp) => {
-            confirmList("전체");
-            CallToast('New Branch Manager Update Success!', "success")
-        }
-        dispErr = (xhr) => {
-            CallToast('New Branch Manager Update falure!', "error")
-        }
-
-        var options = {
-            functionName: 'SShowConfirmUpdate',
-            otherData: {
-                items
+            dispErr = (xhr) => {
+                CallToast('New Branch Manager Update falure!', "error")
             }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
-    }
+            var options = {
+                functionName: 'SShowConfirmUpdate',
+                otherData: {
+                    items
+                }
+            };
+            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
-    ConfirmPOR = () => {
-
-        var data = {
-            porid: $("#idPorID").val(),
-            id: user
-        };
-
-        dispList = (resp) => {
-            confirmList("전체");
-            CallToast('구매의뢰서 처리  완료!', "success")
-        }
-        dispErr = (xhr) => {
-            CallToast('구매의뢰서 처리  !', "error")
         }
 
-        var options = {
-            functionName: 'SShowConfirmUpdatePOR',
-            otherData: {
-                data
+        ConfirmPOR = () => {
+
+            var data = {
+                porid: $("#idPorID").val(),
+                id: user
+            };
+
+            dispList = (resp) => {
+                confirmList("전체");
+                CallToast('구매의뢰서 처리  완료!', "success")
             }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-    }
+            dispErr = (xhr) => {
+                CallToast('구매의뢰서 처리  !', "error")
+            }
+
+            var options = {
+                functionName: 'SShowConfirmUpdatePOR',
+                otherData: {
+                    data
+                }
+            };
+            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+        }
     </script>
 </body>
 
