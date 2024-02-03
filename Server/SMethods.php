@@ -493,7 +493,7 @@ function SShowAddr($data)
     try {
 
 
-        $sqlString = "SELECT * FROM eplat_addrlist where mid = '" . $id . "'";
+        $sqlString = "SELECT * FROM eplat_addrlist where mid = '" . $id . "'  order by rdate desc";
 
 
         $rs = mysqli_query($conn, $sqlString);

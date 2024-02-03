@@ -569,6 +569,57 @@ document.getElementById("idPorList").addEventListener("change", function() {   /
     listPor(selectedText);
 });
 
+function refreshDest() {
+    var sql;
+
+        var items = [];
+        var data = {
+            role: 2,
+            id: user
+        };
+
+        dispList = (resp) => {
+            var i = 1;
+            var items = [];
+            if ('success' in resp) {
+
+                resp['success'].forEach(el => {
+                    var jarr = {
+                        "No": i,
+                        "name": el['name'],
+                        "owner": el['owner'],
+                        "mobile": el['mobile'],
+                        "addr": el['addr'],
+                        "zipcode": el['zipcode'],
+                        "rdate": el['rdate'],
+                    }
+                    items.push(jarr);
+                    i++;
+                });
+                table2.clearData();
+                table2.setData(items);
+                CallToast("SShowAddr success!!", "success");
+            }
+            else 
+                CallToast("SShowAddr Error", "error");
+        }
+        dispErr = () => {
+            //alert(error);
+            CallToast("SShowAddr Error", "error");
+        }
+
+        var options = {
+            functionName: 'SShowAddr',
+            otherData: {
+                role: 2,    // not using current
+                id: user
+            }
+        };
+
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+}
+
 document.getElementById("idDest").addEventListener("change", function() {   // 주소지 List
     // 선택된 옵션 가져오기
     var selectedOption = this.options[this.selectedIndex];
