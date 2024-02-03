@@ -44,22 +44,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4/dist/fontkit.umd.min.js"></script>
 
+    <script src="../../libpdf.js"></script>
     <script>
 
         var page;
 
         const { PDFDocument, rgb, StandardFonts } = PDFLib;
-        const cm = 72 / 2.54;
-        var orix = 0, oriy = 0;
-
+        const black = rgb(0, 0, 0);
+        const white = rgb(1, 1, 1);
+        const headcol = rgb(0.85, 0.89, 0.95);
+        const footcol = rgb(1.00, 0.91, 0.60);
 
         async function drawPDF() {
             const pdfDoc = await PDFDocument.create();
             pdfDoc.registerFontkit(fontkit)
             const fontBytes = await fetch('http://localhost:3000/purchase/NanumBarunGothic.ttf').then((res) => res.arrayBuffer());
-            //const customFont = await pdfDoc.embedFont(fontBytes);
+            const customFont = await pdfDoc.embedFont(fontBytes);
 
-            const customFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+            // const customFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
 
             page = pdfDoc.addPage()
 
@@ -78,173 +80,94 @@
             const textWidth = customFont.widthOfTextAtSize(text, textSize)
             const textHeight = customFont.heightAtSize(textSize)
 
-            page.drawText(text, {
-                x: 40,
-                y: 450,
-                size: textSize,
-                font: customFont,
-                color: rgb(0, 0.53, 0.71),
-            })
-            page.drawRectangle({
-                x: 40,
-                y: 450,
-                width: textWidth,
-                height: textHeight,
-                borderColor: rgb(1, 0, 0),
-                borderWidth: 1.5,
-            })
+            // page.drawText(text, {
+            //     x: 40,
+            //     y: 450,
+            //     size: textSize,
+            //     font: customFont,
+            //     color: rgb(0, 0.53, 0.71),
+            // })
+            // page.drawRectangle({
+            //     x: 40,
+            //     y: 450,
+            //     width: textWidth,
+            //     height: textHeight,
+            //     borderColor: rgb(1, 0, 0),
+            //     borderWidth: 1.5,
+            // })
 
-            drawTextBox(1, 1, 10, 1, rgb(0, 0.53, 0.71), "text", 12, rgb(1, 1, 0), "left");
-            //drawTextBox(page, sx, sy, w, h, color, text, fontSize, fcolor);
+            //drawTextBox(1, 1, 10, 1, rgb(0, 0.53, 0.71), "text", 12, rgb(1, 1, 0), "left");
 
-            setOrigin(1, 26);
-            half = width / cm / 2;
-            var textwd = customFont.widthOfTextAtSize("Purchase List", fontSize) / cm;
-            drawRTexts(half - textwd, 0, 12, rgb(0, 0.53, 0.71), "Purchase List")
+            setOrigin(1, 27);
+            pwidth = width / cm;
+            half = pwidth / 2;
+
+            var textwd = customFont.widthOfTextAtSize("구매확인 내역서", fontSize) / cm;
+            drawRTexts(half - textwd, 0, 18, black, "구매확인 내역서")
+            moveDown(1.0);
+            drawRTexts(pwidth - 5, 0, 10, black, "2024-02-03");
+
+            moveDown(1.5);
+            drawRTextBox(0, 0, 18.5, 1, rgb(0.66, 0.82, 0.55), "계좌번호 : 경남은행) 207-0072-6907-01 이상민 (이플렛)", 10, rgb(0, 0, 0), "center");
+
+            moveDown(1);
+            drawRTextBox(0, 0, 1.5, 1, headcol, "번호", 10, black, "center");
+            drawRTextBox(1.5, 0, 1.5, 1, headcol, "단계", 10, black, "center");
+            drawRTextBox(3, 0, 5, 1, headcol, "품명", 10, black, "center");
+            drawRTextBox(8, 0, 3, 1, headcol, "수량", 10, black, "center");
+            drawRTextBox(11, 0, 3, 1, headcol, "수량", 10, black, "center");
+            drawRTextBox(14, 0, 4.5, 1, headcol, "공급가격", 10, black, "center");
+
+            moveDown(1);
+            for (let i = 0; i < 5; i++) {
+                drawRTextBox(0, 0, 1.5, 1, white, "번호", 10, black, "center");
+                drawRTextBox(1.5, 0, 1.5, 1, white, "단계", 10, black, "center");
+                drawRTextBox(3, 0, 5, 1, white, "품명", 10, black, "center");
+                drawRTextBox(8, 0, 3, 1, white, "수량", 10, black, "center");
+                drawRTextBox(11, 0, 3, 1, white, "수량", 10, black, "center");
+                drawRTextBox(14, 0, 4.5, 1, white, "공급가격", 10, black, "center");
+                moveDown(1);
+            }
+            drawRTextBox(0, 0, 14, 1, white, "총결재금액", 12, rgb(0, 0, 0), "center");
+            drawRTextBox(14, 0, 4.5, 1, white, "100000", 12, rgb(0, 0, 0), "center");
+
+            moveDown(1);
+            drawRTextBox(0, 0, 3, 1, footcol, "배송지 ", 10, black, "center");
+            drawRTextBox(3, 0, 5, 1, white, "[라인아이 유치원] ", 10, black, "left");
+            drawRTextBox(8, 0, 10.5, 1, white, "경남 김해시 인제로 190 (롯데리아 2층) ", 10, black, "left");
+
+            moveDown(1);
+            drawRTextBox(0, 0, 3, 1, footcol, "전화번호 ", 10, black, "center");
+            drawRTextBox(3, 0, 5, 1, white, "010-3345-3535 ", 10, black, "left");
+            drawRTextBox(8, 0, 3, 1, footcol, "우편번호 ", 10, black, "center");
+            drawRTextBox(11, 0, 3, 1, white, " 44701", 10, black, "left");
+            drawRTextBox(14, 0, 2, 1, footcol, "이름 ", 10, black, "center");
+            drawRTextBox(16, 0, 2.5, 1, white, "이강산 ", 10, black, "left");
+
+            const hcol = rgb(0.27, 0.45, 0.77);
+            const tcol = rgb(0.81, 0.84, 0.92);
 
             moveDown(2);
-            drawRTextBox(0, 0, 10, 1, rgb(0, 0.53, 0.71), "text1", 12, rgb(1, 1, 0), "center");
+            drawRTextBox(0, 0, 3.5, 1, hcol, "스텝 ", 10, black, "center");
+            drawRTextBox(3.5, 0, 3.5, 1, hcol, "반명", 10, black, "center");
+            drawRTextBox(7, 0, 3.5, 1, hcol, "이름 ", 10, black, "center");
+            drawRTextBox(10.5, 0, 3.5, 1, hcol, " 아이디", 10, black, "center");
+            drawRTextBox(14, 0, 3.5, 1, hcol, "비번 ", 10, black, "center");
 
-            moveDown(1);
-            drawRTextBox(0, 0, 5, 1, rgb(0, 0.53, 0.71), "text2", 12, rgb(1, 1, 0), "left");
-            drawRTextBox(5, 0, 5, 1, rgb(0.4, 0.53, 0.71), "text3", 12, rgb(1, 1, 0), "left");
-
-            moveDown(1);
-            drawRTextBox(0, 0, 5, 1, rgb(0, 0.53, 0.71), "text4", 12, rgb(1, 1, 0), "left");
-            drawRTextBox(5, 0, 5, 1, rgb(0.4, 0.53, 0.71), "text5", 12, rgb(1, 1, 0), "left");
 
             const pdfBytes = await pdfDoc.save()
             const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
 
             // 생성된 PDF 다운로드
-            // const downloadLink = document.createElement('a');
-            // downloadLink.href = window.URL.createObjectURL(pdfBlob);
-            // downloadLink.download = 'output.pdf';
-            // downloadLink.click();
-            const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-            document.getElementById('pdf').src = pdfDataUri;
+            const downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(pdfBlob);
+            downloadLink.download = 'output.pdf';
+            downloadLink.click();
+            // const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+            // document.getElementById('pdf').src = pdfDataUri;
 
         }
-        setOrigin = (x, y) => {
-            //page.moveTo(x * cm, page.getHeight() - y * cm);
-            orix = x * cm;
-            oriy = y * cm;
-            if (page.getHeight() < y * cm)
-                oriy = page.getHeight();
-        }
 
-        moveDown = (h) => {
-            //page.moveDown(h * cm);
-            oriy -= h * cm;
-        }
-
-        moveUp = (h) => {
-            //page.moveDown(h * cm);
-            oriy += h * cm;
-        }
-
-        drawLines = (s, e, color, thick) => {
-            page.drawLine({
-                start: {
-                    x: s.x,
-                    y: s.y
-                },
-                end: {
-                    x: e.x,
-                    y: e.y
-                },
-                color: color, // 선 색상 설정 (RGB)
-                thickness: thick, // 선 두께 설정
-            });
-        }
-
-        drawTexts = (x, y, fontSize, color, text) => {
-            page.drawText(text, {
-                x: x,
-                y: y,
-                size: fontSize,
-                // font: timesRomanFont,
-                color: color,
-            })
-        }
-        drawRTexts = (x, y, fontSize, color, text) => {
-            page.drawText(text, {
-                x: orix + x * cm,
-                y: oriy + y * cm,
-                size: fontSize,
-                // font: timesRomanFont,
-                color: color,
-            })
-        }
-
-        drawBox = (sx, sy, w, h, color) => {
-            page.drawRectangle({
-                x: sx * cm,
-                y: sy * cm,
-                width: w * cm,
-                height: h * cm,
-                color: color,
-                borderColor: rgb(1, 0, 0),
-                borderWidth: 1.5,
-            })
-        }
-
-        drawTextBox = (sx, sy, w, h, color, text, fontSize, fcolor, align = "left") => {
-
-            if (align == "left") {
-                tx = sx * cm + fontSize / 3;
-                ty = sy * cm + fontSize / 2;
-            }
-            else if (align == "center") {
-                tx = sx * cm + (w / 2);
-                ty = sy * cm + h / 2 - fontSize / 3;
-            }
-
-            page.drawRectangle({
-                x: sx * cm,
-                y: sy * cm,
-                width: w * cm,
-                height: h * cm,
-                color: color,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1.0,
-            });
-            page.drawText(text, {
-                x: tx,
-                y: ty,
-                size: fontSize,
-                // font: timesRomanFont,
-                color: fcolor
-            })
-        }
-        drawRTextBox = (sx, sy, w, h, color, text, fontSize, fcolor, align = "left") => {
-
-            if (align == "left") {
-                tx = orix + sx * cm + fontSize / 3;
-                ty = oriy + sy * cm + fontSize / 2;
-            }
-            else if (align == "center") {
-                tx = orix + sx * cm + (w * cm / 2);
-                ty = oriy + sy * cm + (h * cm / 2) - fontSize / 3;
-            }
-
-            page.drawRectangle({
-                x: orix + sx * cm,
-                y: oriy + sy * cm,
-                width: w * cm,
-                height: h * cm,
-                color: color,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1.0,
-            });
-            page.drawText(text, {
-                x: tx,
-                y: ty,
-                size: fontSize,
-                // font: timesRomanFont,
-                color: fcolor
-            })
-        }
     </script>
 </body>
 

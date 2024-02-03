@@ -321,7 +321,17 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             title: "주소",
             field: "addr",
             sorter: "number",
-            width: "45%",
+            width: "35%",
+            editor: false,
+            bottomCalcParams: {
+                precision: 0
+            }
+        },
+        {
+            title: "우편번호",
+            field: "zipcode",
+            sorter: "number",
+            width: "10%",
             editor: false,
             bottomCalcParams: {
                 precision: 0
@@ -602,14 +612,14 @@ document.getElementById("idDest").addEventListener("change", function() {   // �
                 });
                 table2.clearData();
                 table2.setData(items);
-                CallToast("SShowMgr success!!", "success");
+                CallToast("SShowAddr success!!", "success");
             }
             else 
-                CallToast("SShowMgr Error", "error");
+                CallToast("SShowAddr Error", "error");
         }
         dispErr = () => {
             //alert(error);
-            CallToast("SShowMgr Error", "error");
+            CallToast("SShowAddr Error", "error");
         }
 
         var options = {

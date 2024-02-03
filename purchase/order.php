@@ -359,6 +359,7 @@ include "../header.php";
     <script src="../common.js"></script>
     <script src="../header.js"></script>
     <script src="order.js"></script>
+    <script src="../libpdf.js"></script>
 
     <script>
     if (role != '1' && role != '9') {
@@ -648,33 +649,53 @@ include "../header.php";
 
     }
 
+    var page;
+    const black = rgb(0, 0, 0);
+    const white = rgb(1, 1, 1);
+    const headcol = rgb(0.85, 0.89, 0.95);
+    const footcol = rgb(1.00, 0.91, 0.60);
+
     async function makePurchasePDFList() {
-
-        if ($("#idName").val() == "" || $("#idName").val() == undefined)
-            alert('Name missing')
-        if ($("#idAddr").val() == "" || $("#idAddr").val() == undefined)
-            alert('Address  missing')
-
-        const pdfDoc = await PDFDocument.create()
-
+        const pdfDoc = await PDFDocument.create();
         pdfDoc.registerFontkit(fontkit)
         const fontBytes = await fetch('NanumBarunGothic.ttf').then((res) => res.arrayBuffer());
         const customFont = await pdfDoc.embedFont(fontBytes);
 
-        const page = pdfDoc.addPage()
+        page = pdfDoc.addPage()
+
         const {
             width,
             height
         } = page.getSize()
-        const fontSize = 12
+
+        const fontSize = 14;
 
         page.setFont(customFont);
         page.setFontSize(fontSize);
+        setOrigin(1, 27);
+        pwidth = width / cm;
+        half = pwidth / 2;
 
-        //
+        var textwd = customFont.widthOfTextAtSize("구매확인 내역서", fontSize) / cm;
+        drawRTexts(half - textwd, 0, 18, black, "구매확인 내역서")
+        moveDown(1.0);
+        drawRTexts(pwidth - 5, 0, 10, black, formatDate());
+
+        moveDown(1.5);
+        drawRTextBox(0, 0, 18.5, 1, rgb(0.66, 0.82, 0.55), "계좌번호 : 경남은행) 207-0072-6907-01 이상민 (이플렛)", 10, rgb(0, 0,
+            0), "center");
+
+        moveDown(1);
+        drawRTextBox(0, 0, 1.5, 1, headcol, "번호", 10, black, "center");
+        drawRTextBox(1.5, 0, 1.5, 1, headcol, "단계", 10, black, "center");
+        drawRTextBox(3, 0, 5, 1, headcol, "품명", 10, black, "center");
+        drawRTextBox(8, 0, 3, 1, headcol, "단가", 10, black, "center");
+        drawRTextBox(11, 0, 3, 1, headcol, "수량", 10, black, "center");
+        drawRTextBox(14, 0, 4.5, 1, headcol, "공급가격", 10, black, "center");
+        moveDown(1);
+
         var buyArr = [];
         var item = table1.getData();
-        //var item = table1.getSelectedData();
 
         var name = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)")
             .html();
@@ -699,167 +720,32 @@ include "../header.php";
             }
         })
 
-        var xx = (510 / 5);
-        var lineStart = height - 5 * fontSize; //  y axis start point of drawing
-        var textStart = height - 5 * fontSize + 5; //  y axis start point of drawing
-        var lineStep = fontSize * 1.7;
-
-        var lhs = 50,
-            lhe = 560,
-            mn = 10;
-
-
-        var s = {
-            x: lhs,
-            y: lineStart
-        };
-        var e = {
-            x: lhe,
-            y: lineStart
-        };
-
-        tick = 1.;
-        drawLines(page, s, e, rgb(0, 0, 0), tick);
-
-        var header = ['단계', '품명', '단가(원)', '수량', '합계(원)', ''];
-
-        for (var i = 0; i < 6; i++) { // vertical line 
-
-            var s = {
-                x: lhs + (xx * i),
-                y: lineStart - (lineStep * 0)
-            };
-            var e = {
-                x: lhs + (xx * i),
-                y: lineStart - (lineStep * (buyArr.length + 1))
-            };
-
-            if (i == 0 || i == 5)
-                tick = 1.;
-            else
-                tick = 0.5;
-
-            drawLines(page, s, e, rgb(0, 0, 0), tick);
-
-            drawTexts(page, lhs + (xx * i) + mn, textStart - (lineStep * 1), fontSize, rgb(0.0, 0.0,
-                0.0), header[
-                i]);
+        for (let i = 1; i < buyArr.length; i++) {
+            drawRTextBox(0, 0, 1.5, 1, white, i.toString(), 10, black, "center");
+            drawRTextBox(1.5, 0, 1.5, 1, white, buyArr[i]['grade'], 10, black, "center");
+            drawRTextBox(3, 0, 5, 1, white, buyArr[i]['title'], 10, black, "center");
+            drawRTextBox(8, 0, 3, 1, white, cvtCurrency(parseFloat(buyArr[i]['price'])), 10, black, "center");
+            drawRTextBox(11, 0, 3, 1, white, buyArr[i]['count'], 10, black, "center");
+            drawRTextBox(14, 0, 4.5, 1, white, cvtCurrency(parseFloat(buyArr[i]['total'])), 10, black, "center");
+            moveDown(1);
         }
+        drawRTextBox(0, 0, 14, 1, white, "총결재금액", 12, rgb(0, 0, 0), "center");
+        drawRTextBox(14, 0, 4.5, 1, white, total, 12, rgb(0, 0, 0), "center");
 
-        drawTexts(page, width / 2.5, height - 4 * fontSize, fontSize, rgb(0.0, 0.0, 0.0),
-            "구매내역서")
-        drawTexts(page, width / 4, height - 4 * fontSize, fontSize, rgb(0.0, 0.0, 0.0),
-            formatDate())
+        moveDown(1);
+        drawRTextBox(0, 0, 3, 1, footcol, "배송지 ", 10, black, "center");
+        drawRTextBox(3, 0, 5, 1, white, $("#idOwner").val(), 10, black, "left");
+        drawRTextBox(8, 0, 10.5, 1, white, $("#idAddr").val(), 10, black, "left");
 
-        for (var i = 0; i <= buyArr.length + 1; i++) { // x horizontal line 
-
-            s = {
-                x: lhs,
-                y: lineStart - (lineStep * i)
-            };
-            e = {
-                x: lhe,
-                y: lineStart - (lineStep * i)
-            };
-
-            if (i == buyArr.length) {
-                tick = 0.5;
-                drawLines(page, s, e, rgb(0, 0, 0), tick);
-            } else if (i == buyArr.length + 1) {
-                tick = 1.0;
-                drawLines(page, s, e, rgb(0, 0, 0), tick);
-
-                drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 1.0),
-                    "총금액");
-                drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 1.0),
-                    "");
-                drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 1.0),
-                    "");
-                drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 1.0),
-                    cnt);
-                drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 1.0),
-                    rest)
-                s = {
-                    x: lhs,
-                    y: lineStart - (lineStep * (i + 2))
-                };
-                e = {
-                    x: lhe,
-                    y: lineStart - (lineStep * (i + 2))
-                };
-                drawLines(page, s, e, rgb(0, 0, 0), tick);
-            } else {
-                tick = 0.5;
-                if (i == 1)
-                    tick = 1.0;
-                drawLines(page, s, e, rgb(0, 0, 0), tick);
-
-                drawTexts(page, lhs + (xx * 0) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 0.0),
-                    buyArr[i]['grade']);
-                drawTexts(page, lhs + (xx * 1) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 0.0),
-                    buyArr[i]['title']);
-                drawTexts(page, lhs + (xx * 2) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 0.0),
-                    cvtCurrency(parseFloat(buyArr[i]['price'])));
-                drawTexts(page, lhs + (xx * 3) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 0.0),
-                    buyArr[i]['count']);
-                drawTexts(page, lhs + (xx * 4) + mn, textStart - (lineStep * (i + 2)), fontSize,
-                    rgb(0.0, 0.0, 0.0),
-                    cvtCurrency(parseFloat(buyArr[i]['total'])));
-            }
-        }
-
-
-        // Serialize the PDFDocument to bytes (a Uint8Array)
-
-        const pngUrl = 'https://www.eplat.co.kr/assets/img/logo.png'
-
-        const pngImageBytes = await fetch(pngUrl).then((res) => res.arrayBuffer())
-
-        const pngImage = await pdfDoc.embedPng(pngImageBytes)
-
-        const pngDims = pngImage.scale(0.07)
-
-        page.drawImage(pngImage, {
-            x: pngDims.width + 10,
-            y: page.getHeight() - 50,
-            width: pngDims.width,
-            height: pngDims.height,
-        })
-
-        // 베송지
-        let cm = 28.34;
-        var xm = 30;
-        var ym = -50;
-
-        drawTexts(page, 100 + xm, 160 + ym, 12, rgb(0., 0., 0.), "배송지:");
-        drawTexts(page, 150 + xm, 160 + ym, 12, rgb(0., 0., 0.), $("#idAddr").val());
-        drawTexts(page, 100 + xm, 130 + ym, 12, rgb(0., 0., 0.), "주문인:");
-        drawTexts(page, 150 + xm, 130 + ym, 12, rgb(0., 0., 0.), $("#idName").val());
-        drawTexts(page, 300 + xm, 130 + ym, 12, rgb(0., 0., 0.), "우편번호:");
-        drawTexts(page, 350 + xm, 130 + ym, 12, rgb(0., 0., 0.), $("#idZip").val());
-        drawTexts(page, 100 + xm, 100 + ym, 12, rgb(0., 0., 0.), "구매일:");
-        drawTexts(page, 150 + xm, 100 + ym, 12, rgb(0., 0., 0.), formatDate());
-        drawTexts(page, 300 + xm, 100 + ym, 12, rgb(0., 0., 0.), "모바일:");
-        drawTexts(page, 350 + xm, 100 + ym, 12, rgb(0., 0., 0.), $("#idMobile").val());
-
-
+        moveDown(1);
+        drawRTextBox(0, 0, 3, 1, footcol, "전화번호 ", 10, black, "center");
+        drawRTextBox(3, 0, 5, 1, white, $("#idMobile").val(), 10, black, "left");
+        drawRTextBox(8, 0, 3, 1, footcol, "우편번호 ", 10, black, "center");
+        drawRTextBox(11, 0, 3, 1, white, $("#idZip").val(), 10, black, "left");
+        drawRTextBox(14, 0, 2, 1, footcol, "이름 ", 10, black, "center");
+        drawRTextBox(16, 0, 2.5, 1, white, $("#idName").val(), 10, black, "left");
 
         const pdfBytes = await pdfDoc.save()
-
-
-        // Trigger the browser to download the PDF document
-        //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
-
-        // 예시: fetch를 사용한 파일 업로드
 
         var formData = new FormData();
         formData.append('pdfFile', new Blob([pdfBytes]), 'generated_pdf.pdf');
@@ -889,12 +775,6 @@ include "../header.php";
         formData.append('id', user);
         formData.append('order', $("#idOwner").val())
 
-        // $("#idName").val()
-        // $("#idAddr").val()
-        // $("#idOwner").val();
-        // $("#idMobile").val();
-        // $("#idAddr").val();
-        // $("#idZip").val();
 
         formData.append('zip', $("#idZip").val());
         formData.append('addr', $("#idAddr").val());
@@ -902,39 +782,6 @@ include "../header.php";
         formData.append('postlist', JSON.stringify(porList));
         formData.append('porid', 'P' + "-" + formatDate() + "-" + $("#idName").val() + Math.floor(Math.random() *
             10) + 1)
-        // fetch('../Server/SUploadBoardPDF.php', {
-        //     //fetch('./data.php', {
-        //     method: 'POST',
-        //     body: formData,
-        // })
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-        //         return response.json();
-
-        //     }).then(data => {
-        //         // Process the fetched data
-        //         ///alert(data);
-        //         document.getElementById('pdfDiv').src = data['url'];
-        //     })
-        //     .catch(error => {
-        //         alert('error');
-        //         // 오류 처리
-        //     });
-        // $.ajax({
-        //     url: '../Server/SUploadBoardPDF.php',
-        //     type: "POST",
-        //     processData: false,
-        //     contentType: false,
-        //     data: formData,
-        //     success: function(response) {
-        //         document.getElementById('pdfDiv').src = response['url'];
-        //     },
-        //     error: function(e) {
-        //         CallToast('SUploadBoardPDF!', "error")
-        //     }
-        // })
 
         dispList = (resp) => {
             CallToast('Upload Pdf successfully!!', "success")
@@ -947,33 +794,10 @@ include "../header.php";
         formData.append('functionName', 'SUploadBoardPDF');
         CallAjax1("SMethods.php", "POST", formData, dispList, dispErr);
 
-    }
 
 
-    drawLines = (page, s, e, color, thick) => {
-        page.drawLine({
-            start: {
-                x: s.x,
-                y: s.y
-            },
-            end: {
-                x: e.x,
-                y: e.y
-            },
-            color: color, // 선 색상 설정 (RGB)
-            thickness: thick, // 선 두께 설정
-        });
     }
 
-    drawTexts = (page, x, y, fontSize, color, text) => {
-        page.drawText(text, {
-            x: x,
-            y: y,
-            size: fontSize,
-            // font: timesRomanFont,
-            color: color,
-        })
-    }
     selectAll = () => {
         //var parent = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").val("총합");
         //var parent = $(".tabulator-calcs-bottom").find('div:first').html("<p>합계</p>");

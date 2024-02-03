@@ -392,13 +392,28 @@ function SPorAddParcel($data)
     try {
         global $conn;
 
-        $sqlstring = "insert into eplat_parcel (id, name, price) 
-                    values ( '{$id}', '{$name}',{$price} )";
-        if ($start != "")
-            $sqlstring = "insert into eplat_parcel (id, name, price, `date`) 
+        // check id, date exist
+
+        $stmt = "select * from eplat_parcel where id='{$id}' and DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";
+
+        $rs1 = mysqli_query($conn, $stmt);
+
+        if ($rs1->num_rows > 0) {
+            $sql = "UPDATE eplat_parcel SET price =  {$price}  WHERE  id = '{$id}' and  DATE_FORMAT(`date`,'%Y-%m') = '{$start}'";
+
+            if ($conn->query($sql) === TRUE) {
+                $result = true;
+            }
+        } // update
+        else {
+            $sqlstring = "insert into eplat_parcel (id, name, price) 
+            values ( '{$id}', '{$name}',{$price} )";
+            if ($start != "")
+                $sqlstring = "insert into eplat_parcel (id, name, price, `date`) 
             values ( '{$id}', '{$name}', {$price}, '{$start}' )";
 
-        $res = mysqli_query($conn, $sqlstring);
+            $res = mysqli_query($conn, $sqlstring);
+        }
 
         $conn->close();
     } catch (Exception $e) {
