@@ -37,10 +37,17 @@ function Sfindpassword($data)
 
         if ($res) {
             //echo json_encode($res['id']);
-            session_start();
-            $_SESSION["id"]       = $Id;
-            $_SESSION["password"] = $res['password'];
-            echo json_encode(array("success" => $res['password']));
+            // session_start();
+            // $_SESSION["id"]       = $Id;
+            // $_SESSION["password"] = $res['password'];
+
+            $characterToRemove = "-";
+            $passwd1 = str_replace(' ', '', str_replace($characterToRemove, "", $res['mobile']));
+            $passwd2 = str_replace(' ', '', str_replace($characterToRemove, "", $Mobile));
+            if ($passwd1 == $passwd2)
+                echo json_encode(array("success" => $res['password']));
+            else
+                echo json_encode(array("error" => "사용자 아이디 와 휴대폰 번호가 일치하지 않아요"), JSON_UNESCAPED_UNICODE);
             //header('location: ../login/login.php?id='.$_SESSION["password"]);  
         } else {
             //hearder("Location: login.php");
@@ -56,7 +63,8 @@ function CheckPasswd($login, $password)
     global $conn;
     $user = "";
     $login = mysqli_escape_string($conn, $login);
-    $rs = mysqli_query($conn, "select * from eplat_user where id='{$login}' and mobile = '{$password}' ");
+    //$rs = mysqli_query($conn, "select * from eplat_user where id='{$login}' and mobile = '{$password}' ");
+    $rs = mysqli_query($conn, "select * from eplat_user where id='{$login}' ");
 
     if ($rs) {
         $user = mysqli_fetch_assoc($rs);

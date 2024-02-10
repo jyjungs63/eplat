@@ -10,10 +10,57 @@ var deleteIcon = function(cell, formatterParams) { //plain text value
 
 document.addEventListener("DOMContentLoaded", function() {
   
-
     orderList(null);
-
+    addrList();   // display 주소록
 });
+
+function addrList() {
+    var items = [];
+    var data = {
+        role: 2,
+        id: user
+    };
+
+    dispList = (resp) => {
+        var i = 1;
+        var items = [];
+        if ('success' in resp) {
+
+            resp['success'].forEach(el => {
+                var jarr = {
+                    "No": el['id'],
+                    "name": el['name'],
+                    "owner": el['owner'],
+                    "mobile": el['mobile'],
+                    "addr": el['addr'],
+                    "zipcode": el['zipcode'],
+                    "rdate": el['rdate'],
+                }
+                items.push(jarr);
+                i++;
+            });
+            table2.clearData();
+            table2.setData(items);
+            CallToast("SShowAddr success!!", "success");
+        }
+        else 
+            CallToast("SShowAddr Error", "error");
+    }
+    dispErr = () => {
+        //alert(error);
+        CallToast("SShowAddr Error", "error");
+    }
+
+    var options = {
+        functionName: 'SShowAddr',
+        otherData: {
+            role: 2,    // not using current
+            id: user
+        }
+    };
+
+    CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+}
 
 var table = new Tabulator("#idTable", {   // 주문 선택 테이블 정의
     height: "350px",
@@ -235,24 +282,24 @@ var table1 = new Tabulator("#idTableConfirm", { //구매 확정된 Table
             width: "10%",
             hozAlign: "center",
             cellClick: function(e, cell) {
-                deleteAddress(cell.getRow())
+                deletePlist(cell.getRow())
             }
         },
     ],
 });
 
-deleteAddress = (cell) => {
+deletePlist = (cell) => {
 
-    var result = confirm("주소지를 삭제 하시겠습까?");
+    var result = confirm("주문한 확정 상품을 삭제 하시겠습까?");
 
     var id = cell._row.data['No'];
 
     dispList = (resp) => {
-        CallToast('주소지 삭제 성공!!', "success")
+        CallToast('주문한 확정 삭제 성공!!', "success")
         cell.delete();
     }
     dispErr = (xhr) => {
-        CallToast('주소지 삭제 실패!!', "error")
+        CallToast('주문한 확정 삭제 실패!!', "error")
     }
 
     var options = {
@@ -305,7 +352,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             }
         },
         {
-            title: "지사명",
+            title: "지사명/원명",
             field: "owner",
             width: "15%",
             editor: "list",
@@ -363,11 +410,37 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
             width: "5%",
             hozAlign: "center",
             cellClick: function(e, cell) {
-                deleteRow(cell.getRow())
+                deleteAddr(cell.getRow());
+                //deleteRow(cell.getRow())
             }
         },
     ],
 });
+
+function deleteAddr(cell) {
+    var result = confirm("주소록에서 선택한 주소를 삭제 하시겠습니까 ?");
+    var id = cell._row.data['No'];
+
+        dispList = (resp) => {
+            cell.delete();
+            refreshDest();
+        }
+        dispErr = (xhr) => {
+            alert("SRemoveAddress Error " + xhr.statusText);
+        }
+
+        var options = {
+            functionName: 'SRemoveAddress',
+            otherData: {
+                id: id
+            }
+        };
+
+        if (result) {
+            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+        } else
+            console.log("delete address list cancel");
+    }
 
 table.on("rowSelected", function(row){
     var rowData = row.getData();
@@ -585,7 +658,7 @@ function refreshDest() {
 
                 resp['success'].forEach(el => {
                     var jarr = {
-                        "No": i,
+                        "No": el['id'],
                         "name": el['name'],
                         "owner": el['owner'],
                         "mobile": el['mobile'],
@@ -650,7 +723,7 @@ document.getElementById("idDest").addEventListener("change", function() {   // �
 
                 resp['success'].forEach(el => {
                     var jarr = {
-                        "No": i,
+                        "No": el['id'],
                         "name": el['name'],
                         "owner": el['owner'],
                         "mobile": el['mobile'],

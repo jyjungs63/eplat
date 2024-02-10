@@ -230,7 +230,7 @@ include "../header.php";
                                     &nbsp;&nbsp; -->
                                 <select class="form-select form-control-sm" id="idDest" data-placeholder="Choose Items">
                                     <option val="va">전체</option>
-                                    <option val="v4">원리스트</option>
+                                    <!-- <option val="v4">원리스트</option> -->
                                     <option val="v5">주소지</option>
                                 </select>
                                 &nbsp;
@@ -693,9 +693,10 @@ include "../header.php";
                     buyArr.push(jarr)
                 }
             })
-
-            for (let i = 1; i < buyArr.length; i++) {
-                drawRTextBox(0, 0, 1.5, 1, white, i.toString(), 10, black, "center");
+            var k;
+            for (let i = 0; i < buyArr.length; i++) {
+                k = i + 1;
+                drawRTextBox(0, 0, 1.5, 1, white, (k).toString(), 10, black, "center");
                 drawRTextBox(1.5, 0, 1.5, 1, white, buyArr[i]['grade'], 10, black, "center");
                 drawRTextBox(3, 0, 5, 1, white, buyArr[i]['title'], 10, black, "center");
                 drawRTextBox(8, 0, 3, 1, white, cvtCurrency(parseFloat(buyArr[i]['price'])), 10, black, "center");
