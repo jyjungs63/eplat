@@ -189,7 +189,7 @@ include "../header.php";
                                     <table id="porTable" style="width: 100%;border: 1px solid black;">
                                         <thead>
                                             <tr>
-                                                <th style="height: 50px" class="col1">지사명</th>
+                                                <th style="height: 50px" class="col1">지사/유치원명</th>
                                                 <th style="height: 50px" class="col1">날짜/주문번호</th>
                                                 <th class="col2">내역</th>
                                                 <th class="col3">금액</th>
@@ -284,7 +284,10 @@ include "../header.php";
                                 <p> <b>구매내역서</b></p>
 
                             </h3>
-                            <div class="text-center"><a id="idConfirmOrder" href="javascript:orderPrint()" class="btn btn-warning disabled" role="button" data-toggle="tooltip" title="구매확정" aria-disabled="true"><i class="fa-solid fa-print "></i>구매확정</a>
+                            <div class="text-center">
+                                <a id="idConfirmOrder" href="javascript:orderPrint()" class="btn btn-warning disabled" role="button" data-toggle="tooltip" title="장바구니" aria-disabled="true"><i class="fa-solid fa-cart-shopping"></i>장바구니</a>
+                                <a id="idModifyOrder" href="javascript:orderModify()" class="btn btn-warning disabled" role="button" data-toggle="tooltip" title="수정" aria-disabled="true">수정(재작성)</a>
+                                <a id="idOKOrder" href="javascript:orderOK()" class="btn btn-warning disabled" role="button" data-toggle="tooltip" title="구매완료" aria-disabled="true"></i>구매완료</a>
                             </div>
                             <div class="card-tools">
                                 <button id="idCardPDFBtn" type="button" class="btn btn-sm btn-primary" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">접기/펴기</button>
@@ -335,6 +338,7 @@ include "../header.php";
     <script src="../libpdf.js"></script>
 
     <script>
+        var porId = "";
         if (role != '1' && role != '9') {
             CallToast("지사 관리 권한으로 로긴 하세요", "error");
             window.location.href = "../login/login.php";
@@ -383,6 +387,7 @@ include "../header.php";
             blist = [];
 
             dispList = (resp) => {
+                $('#idPorList').empty();
                 let select = document.getElementById('idPorList');
                 let option = document.createElement('option');
                 option.text = ""; // Set the text of the new option
@@ -422,24 +427,20 @@ include "../header.php";
 
                 let select2 = document.getElementById('idPorBranch');
                 let option2 = document.createElement('option');
-                option2.text = "전지사"; // Set the text of the new option
-                option2.value = "전지사"; // Set the value attribute (if needed)
+                option2.text = ""; // Set the text of the new option
+                option2.value = ""; // Set the value attribute (if needed)
                 select2.add(option2);
-
+                if (user == "admin") {
+                    option2.text = "전지사"; // Set the text of the new option
+                    option2.value = "전지사"; // Set the value attribute (if needed)
+                    select2.add(option2);
+                }
                 for (let i = 0; i < unqueArr.length; i++) {
                     option2 = document.createElement('option');
                     option2.value = unqueArr[i][0]; // Set the value attribute (if needed)
                     option2.text = unqueArr[i][1]; // Set the text of the new option
                     select2.add(option2);
                 }
-
-                // unqueArr.forEach(e => {
-                //     // 지사별 조회 셀렉션 박스에 지사명 추가
-                //     option2 = document.createElement('option');
-                //     option2.text = e; // Set the text of the new option
-                //     option2.value = e; // Set the value attribute (if needed)
-                //     select2.add(option2);
-                // })
 
             }
 
@@ -584,44 +585,61 @@ include "../header.php";
             })
 
             table1.selectRow();
-            // var cnt = $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
-            //     .html()
-            // var sum = $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
-            //     .html()
-
-            // $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
-            //     cvtCurrency(parseInt(cnt)));
-            // $("#idTable > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
-            //     cvtCurrency(parseInt(sum)));
-
 
             var parent = $(
                     "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)"
                 )
                 .html("합계");
-            // var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
-            //     .html()
-            // var sum = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
-            //     .html()
 
-            // $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(
-            //     cvtCurrency(parseInt(cnt)));
-            // $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(
-            //     cvtCurrency(parseInt(sum)));
+        }
 
-            //table1.setData(item);
+        var orderOK = () => {
+
+            var result = confirm("구매가 완료되었습니다. \n감사합니다!. \n구매를 계속 하시겠습니까 ?");
+
+            if (result) {
+                location.reload();
+            } else {
+                window.location.href = '../index.php';
+            }
+
+        }
+
+        var orderModify = () => {
+
+            dispList = (resp) => {
+                CallToast('주문 취소 성공!!', "success")
+            }
+            dispErr = (xhr) => {
+                CallToast('주문 취소 실패!!', "error")
+            }
+
+            var options = {
+                functionName: 'SRemovPorID',
+                otherData: {
+                    id: porId,
+                    pdfname: _pdfname
+                }
+            };
+
+            location.reload();
         }
 
         var orderPrint = () => {
 
             makePurchasePDFList();
+
             $("#idConfirmOrder").addClass('disabled');
+            $("#idOKOrder").removeClass('disabled');
+            $("#idModifyOrder").removeClass('disabled');
 
             $("#cardMain").toggle();
             $("#cardDest").hide();
             $("#cardPDF").show();
 
         }
+
+
 
         var page;
         const black = rgb(0, 0, 0);
@@ -755,8 +773,8 @@ include "../header.php";
             formData.append('addr', $("#idAddr").val());
             formData.append('mobile', $("#idMobile").val());
             formData.append('postlist', JSON.stringify(porList));
-            formData.append('porid', 'P' + "-" + formatDate() + "-" + $("#idName").val() + Math.floor(Math.random() *
-                10) + 1)
+            porId = 'P' + "-" + formatDate() + "-" + $("#idName").val() + Math.floor(Math.random() * 10) + 1;
+            formData.append('porid', porId)
 
             dispList = (resp) => {
                 CallToast('Upload Pdf successfully!!', "success")
@@ -768,8 +786,6 @@ include "../header.php";
 
             formData.append('functionName', 'SUploadBoardPDF');
             CallAjax1("SMethods.php", "POST", formData, dispList, dispErr);
-
-
 
         }
 
@@ -794,14 +810,26 @@ include "../header.php";
             e.preventDefault();
             //alert(this)
             if (this.id == "custom-tabs-one-profile-tab") {
-                $("#cardDest").remove();
-                $("#cardPDF").remove();
-                $("#idSecDiv").empty();
+                // $("#cardDest").remove();
+                // $("#cardPDF").remove();
+                //$("#idSecDiv").empty();
+                $('#idSecDiv').hide();
 
                 var newDiv = $('<iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe>');
 
                 $("#idCardPurchase").append(newDiv)
 
+            }
+
+        });
+        $('#custom-tabs-one-tab a').on('click', function(e) {
+            e.preventDefault();
+            //alert(this)
+            if (this.id == "custom-tabs-one-home-tab") {
+                // $("#cardDest").remove();
+                // $("#cardPDF").remove();
+                $("#idSecDiv").show();
+                $("#pdfDiv").remove();
             }
 
         });

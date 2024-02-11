@@ -1,7 +1,24 @@
-
+var _pdfname="";
 $(document).ready(function(e) {
     //$("#cardDest").hide();
     $("#cardPDF").hide();
+
+    if ( user == "admin")
+    {
+        $("#custom-tabs-one-home-tab").parent().hide();
+        $("#custom-tabs-one-home").hide();
+
+        $("#cardDest").remove();  // remove 주문 창
+        $("#cardPDF").remove();
+        $("#cardMain").show();
+        $("#idSecDiv").empty();
+
+        // var newDiv = $('<iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe>');
+
+        // $("#idCardPurchase").append(newDiv)
+
+		//$('#custom-tabs-one-profile-tab').addClass('active');
+    }
 });
 
 var deleteIcon = function(cell, formatterParams) { //plain text value
@@ -295,11 +312,11 @@ deletePlist = (cell) => {
     var id = cell._row.data['No'];
 
     dispList = (resp) => {
-        CallToast('주문한 확정 삭제 성공!!', "success")
+        CallToast('주소록 삭제 성공!!', "success")
         cell.delete();
     }
     dispErr = (xhr) => {
-        CallToast('주문한 확정 삭제 실패!!', "error")
+        CallToast('주소록 삭제 실패!!', "error")
     }
 
     var options = {
@@ -462,7 +479,12 @@ listPor = (por_id) => {
         }
     };
     dispList = (res) => {
-        var js = res[0]['json']
+        var js="";
+        if (res.length > 0 ) {
+             js = res[0]['json']
+        }
+
+
         addPurcharseList(res, "");
         // porTable.setData(JSON.parse(js));
 
@@ -478,7 +500,18 @@ listPor = (por_id) => {
         $("#idRdate2").val(res[0]['rdate']);
         $("#idMobile2").val(res[0]['mobile']);
         $("#idFinish2").val(res[0]['confirm'] == "0" ? "미완료" : "완료");
-        document.getElementById('pdfDiv').src = window.origin + "/Server/uploads/"+ res[0]['pdfname'];
+        
+        if ($('#pdfDiv').length > 0) {
+            console.log('  ');
+        }
+        else
+        {
+            var newDiv = $('<iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe>');
+            $("#idCardPurchase").append(newDiv)
+        }
+
+        _pdfname =  res[0]['pdfname'];
+        document.getElementById('pdfDiv').src = window.origin + "/Server/uploads/"+ _pdfname;
     }
     dispErr = (error) => {
         CallToast('SPorDetailList falure!', "error")
@@ -561,7 +594,10 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         var json = JSON.parse(ell['json']);
         var dat  = ell['rdate'];
 
-        newRow.append("<td > "+ ell['uname']+"</td>");   // branch name
+        if ( ell['uname'] == undefined)
+            newRow.append("<td > "+ ell['id']+"</td>");   // branch name
+        else 
+            newRow.append("<td > "+ ell['uname']+"</td>");   // branch name
 
         var jarr = "";
         var total = 0; 
@@ -580,7 +616,7 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         newRow.append("<td>"+ cvtCurrency(total) +"원</td>");                                            // 단가
         newRow.append("<td> <div> "+ ell['addr'] + "</div> <br/> <div>" + ell['order']+ "</div></td>");  //주소
         let stat = res[0]['confirm'] == "0" ? "미완료" : "완료"
-        newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='#'>반송<a></div></td>");
+        newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='javascript:cancelOrder()'>구매취소<a></div></td>");
         tbody.append(newRow);
             sum += total;
     })
@@ -627,6 +663,37 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
     
     // Append the new row to the table body
     tbody.append(newRow);
+}
+
+function cancelOrder() {
+    
+    const selectOpt = $("#idPorList").find(":selected");
+    const selectArr = selectOpt.map(function() {
+        return $(this).text();
+    }).get();
+    const porId = selectArr.join(', ')
+
+    dispList = (resp) => {
+        CallToast('주문 취소 성공!!', "success")
+        document.getElementById('pdfDiv').src = "";
+    }
+    dispErr = (xhr) => {
+        CallToast('주문 취소 실패!!', "error")
+    }
+
+    var options = {
+        functionName: 'SRemovPorID',
+        otherData: {
+            id: porId,
+            pdfname: _pdfname
+        }
+    };
+
+    CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+    orderList();
+    listPor(porId);
+
 }
 
 document.getElementById("idPorList").addEventListener("change", function() {   // 개별 구매 의뢰서 내용 보기
@@ -833,6 +900,9 @@ document.getElementById("idGrade").addEventListener("change", function() { // �
     
     if ( selectedOption.text != "전체")
         $("#idBtParcel").removeClass('disabled');
+
+    $("#pdfDiv").remove();
+    
 });
 
 AddParcel = () => {   // 택배비 월에 해당하는 지사에 추가

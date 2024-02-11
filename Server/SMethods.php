@@ -399,19 +399,19 @@ function SPorAddParcel($data)
 
     try {
         global $conn;
+        $res = "";
 
         // check id, date exist
 
-        $stmt = "select * from eplat_parcel where id='{$id}' and DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";
+        //$stmt = "select * from eplat_parcel where id='{$id}' and DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";
+        $stmt = "select * from eplat_parcel where id='{$id}' and `date` = '{$start} 00:00:00' ";
 
         $rs1 = mysqli_query($conn, $stmt);
 
         if ($rs1->num_rows > 0) {
-            $sql = "UPDATE eplat_parcel SET price =  {$price}  WHERE  id = '{$id}' and  DATE_FORMAT(`date`,'%Y-%m') = '{$start}'";
-
-            if ($conn->query($sql) === TRUE) {
-                $result = true;
-            }
+            $sql = "UPDATE eplat_parcel SET price =  {$price}  WHERE  id = '{$id}' and  `date` = '{$start} 00:00:00'";
+            //$sql = "UPDATE eplat_parcel SET price =  {$price}  WHERE  id = '{$id}' and  DATE_FORMAT(`date`,'%Y-%m') = '{$start}'";
+            $res = $conn->query($sql);
         } // update
         else {
             $sqlstring = "insert into eplat_parcel (id, name, price) 
@@ -595,6 +595,41 @@ function SRemoveAddress($data)    // 프로그램 update 필요함
 
         if ($conn->query($sql) === TRUE) {
             $res = true;
+        } else {
+            $res =  json_encode(array("Error deleting record: " . $conn->error));
+        }
+
+        $conn->close();
+    } catch (Exception $e) {
+        echo json_encode($e->getMessage());
+    }
+
+    echo json_encode($res);
+}
+
+function SRemovPorID($data)    // 프로그램 update 필요함
+{
+    //session_start();
+
+    $id  = $data["id"];
+    $pdf = $data["pdfname"];
+
+    global $conn;
+    $res = "";
+
+    try {
+
+        $sql = "DELETE FROM eplat_porlist WHERE por_id = '" . $id . "'";
+
+        if ($conn->query($sql) === TRUE) {
+            $res = true;
+            if (file_exists('../Server/uploads/' . $pdf)) {
+                if (unlink('../Server/uploads/' . $pdf)) {
+                    $res = true;
+                } else {
+                    $res = false;
+                }
+            }
         } else {
             $res =  json_encode(array("Error deleting record: " . $conn->error));
         }
