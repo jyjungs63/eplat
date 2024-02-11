@@ -336,6 +336,8 @@ include "../header.php";
     <script src="../header.js"></script>
     <script src="order.js"></script>
     <script src="../libpdf.js"></script>
+    <script src="acount.js"></script>
+
 
     <script>
         var porId = "";
@@ -674,8 +676,9 @@ include "../header.php";
             drawRTexts(pwidth - 5, 0, 10, black, formatDate());
 
             moveDown(1.5);
-            drawRTextBox(0, 0, 18.5, 1, rgb(0.66, 0.82, 0.55), "계좌번호 : 경남은행) 207-0072-6907-01 이상민 (이플렛)", 10, rgb(0, 0,
-                0), "center");
+            acct["acount"]
+            // drawRTextBox(0, 0, 18.5, 1, rgb(0.66, 0.82, 0.55), "계좌번호 : 경남은행) 207-0072-6907-01 이상민 (이플렛)", 10, rgb(0, 0,0), "center");
+            drawRTextBox(0, 0, 18.5, 1, rgb(0.66, 0.82, 0.55), acct["acount"], 10, rgb(0, 0, 0), "center");
 
             moveDown(1);
             drawRTextBox(0, 0, 1.5, 1, headcol, "번호", 10, black, "center");

@@ -256,7 +256,7 @@ include "../header.php";
                                         <span id="msg" style="color:red"></span><br />
 
                                         <div class="row">
-                                            <button type="submit" value="Submit" class="btn btn-default">등록</button>
+                                            <button type="submit" value="Submit" class="btn btn-primary">등록</button>
                                             <!-- <button type="button" id="btToggle" onclick="closeUpload()" class="btn btn-primary" data-dismiss="modal">OK</button> -->
                                         </div>
 

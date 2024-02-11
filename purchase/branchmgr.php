@@ -59,8 +59,8 @@ include "../header.php";
                                 <div class="input-group mb-3">
                                     <select class="form-select form-control-sm" id="idGrade" data-placeholder="Choose Items" style="width: 120px;">
                                         <option val="va">전체</option>
-                                        <option val="v4" selected>지사관리</option>
-                                        <option val="v5">원관리</option>
+                                        <option val="v4">지사관리</option>
+                                        <option val="v5" selected>원관리</option>
                                     </select>&nbsp;
                                     &nbsp;
                                     <input class="form-control form-control-sm" id="idOwner" type="text" placeholder="지사/유치원명" style="width: 150px;">&nbsp;

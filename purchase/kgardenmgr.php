@@ -143,7 +143,7 @@
         };
 
         tab = new Tabulator("#idTable", {
-            height: "500px",
+            height: "700px",
             layout: "fitColumns",
             selectable: true,
             columns: [{
@@ -469,67 +469,72 @@
 
         // const customFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
 
-        page = pdfDoc.addPage()
-
-        const {
-            width,
-            height
-        } = page.getSize()
-
-        const fontSize = 14;
-
-        page.setFont(customFont);
-        page.setFontSize(fontSize);
-
-        const text = 'This is text in an embedded font!'
-        const textSize = 35
-        const textWidth = customFont.widthOfTextAtSize(text, textSize)
-        const textHeight = customFont.heightAtSize(textSize)
-
-        setOrigin(0.5, 27);
-        pwidth = width / cm;
-        half = pwidth / 2;
-        let xm = 1.3;
-        let ym = 1.5;
-        let hcol = rgb(0.27, 0.45, 0.77);
-        let tcol = rgb(0.81, 0.84, 0.92);
+        for (var j = 0; j < 2; j++) {
 
 
-        var item = tab.getData();
-        var Arr = [];
-        item.forEach(el => {
+            page = pdfDoc.addPage()
 
-            var jarr = {
-                "step": el['step'],
-                "classnm": el['classnm'],
-                "name": el['name'],
-                "id": el['id'],
-                "passwd": el['passwd']
+            const {
+                width,
+                height
+            } = page.getSize()
+
+            const fontSize = 14;
+
+            page.setFont(customFont);
+            page.setFontSize(fontSize);
+
+            const text = 'This is text in an embedded font!'
+            const textSize = 35
+            const textWidth = customFont.widthOfTextAtSize(text, textSize)
+            const textHeight = customFont.heightAtSize(textSize)
+
+            setOrigin(0.5, 27);
+            pwidth = width / cm;
+            half = pwidth / 2;
+            let xm = 1.3;
+            let ym = 1.5;
+            let hcol = rgb(0.37, 0.66, 0.62); // header color
+            let tcol = rgb(0.98, 0.91, 1.00); // row color
+
+
+            var item = tab.getData();
+            var Arr = [];
+            item.forEach(el => {
+
+                var jarr = {
+                    "step": el['step'],
+                    "classnm": el['classnm'],
+                    "name": el['name'],
+                    "id": el['id'],
+                    "passwd": el['passwd']
+                }
+                Arr.push(jarr)
+            })
+
+            let m = 0;
+            let fs = 8;
+            for (let k = 1; k < 9; k++) {
+                for (let i = 0; i < 3; i++) {
+                    drawRTextBox(0, 0, xm, ym, hcol, "스텝 ", fs, white, "left");
+                    drawRTextBox(1.3, 0, xm, ym, hcol, "반명", fs, white, "left");
+                    drawRTextBox(2.6, 0, xm, ym, hcol, "이름 ", fs, white, "left");
+                    drawRTextBox(3.9, 0, xm, ym, hcol, " 아이디", fs, white, "left");
+                    drawRTextBox(5.2, 0, xm, ym, hcol, "비번 ", fs, white, "left");
+                    moveDown(ym)
+                    drawRTextBox(0, 0, xm, ym, tcol, Arr[j + m]['step'], fs, black, "left");
+                    drawRTextBox(1.3, 0, xm, ym, tcol, Arr[j + m]['classnm'], fs, black, "left");
+                    drawRTextBox(2.6, 0, xm, ym, tcol, Arr[j + m]['name'], fs, black, "left");
+                    drawRTextBox(3.9, 0, xm, ym, tcol, Arr[j + m]['id'], fs, black, "left");
+                    drawRTextBox(5.2, 0, xm, ym, tcol, Arr[j + m]['passwd'], fs, black, "left");
+                    moveUp(ym)
+                    moveRight(6.8);
+                    m++;
+                }
+                moveLeft(6.8 * 3);
+                moveDown(ym * 2 + 0.5);
+                if (m > Arr.length) break;
             }
-            Arr.push(jarr)
-        })
-
-        let m = 0;
-        let fs = 8;
-        for (let k = 1; k < 8; k++) {
-            for (let i = 0; i < 3; i++) {
-                drawRTextBox(0, 0, xm, ym, hcol, "스텝 ", fs, black, "left");
-                drawRTextBox(1.3, 0, xm, ym, hcol, "반명", fs, black, "left");
-                drawRTextBox(2.6, 0, xm, ym, hcol, "이름 ", fs, black, "left");
-                drawRTextBox(3.9, 0, xm, ym, hcol, " 아이디", fs, black, "left");
-                drawRTextBox(5.2, 0, xm, ym, hcol, "비번 ", fs, black, "left");
-                moveDown(ym)
-                drawRTextBox(0, 0, xm, ym, tcol, Arr[m]['step'], fs, black, "left");
-                drawRTextBox(1.3, 0, xm, ym, tcol, Arr[m]['classnm'], fs, black, "left");
-                drawRTextBox(2.6, 0, xm, ym, tcol, Arr[m]['name'], fs, black, "left");
-                drawRTextBox(3.9, 0, xm, ym, tcol, Arr[m]['id'], fs, black, "left");
-                drawRTextBox(5.2, 0, xm, ym, tcol, Arr[m]['passwd'], fs, black, "left");
-                moveUp(ym)
-                moveRight(6.8);
-                m++;
-            }
-            moveLeft(6.8 * 3);
-            moveDown(ym * 2 + 0.5);
         }
 
         const pdfBytes = await pdfDoc.save()
