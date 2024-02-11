@@ -899,7 +899,8 @@ document.getElementById("idGrade").addEventListener("change", function() { // �
 
     
     if ( selectedOption.text != "전체")
-        $("#idBtParcel").removeClass('disabled');
+        if ( user == "admin")
+            $("#idBtParcel").removeClass('disabled');
 
     $("#pdfDiv").remove();
     

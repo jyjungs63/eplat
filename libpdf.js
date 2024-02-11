@@ -1,6 +1,7 @@
 
 const cm = 72 / 2.54;
 var orix = 0, oriy = 0;
+var font;
 
 setOrigin = (x, y) => {
     //page.moveTo(x * cm, page.getHeight() - y * cm);
@@ -110,12 +111,59 @@ drawTextBox = (sx, sy, w, h, color, text, fontSize, fcolor, align = "left") => {
 }
 drawRTextBox = (sx, sy, w, h, color, text, fontSize, fcolor, align = "left") => {
 
+    const th = font.heightAtSize(fontSize);
+    const tw = font.widthOfTextAtSize(text, fontSize);
+
     if (align == "left") {
         tx = orix + sx * cm + fontSize / 3;
         ty = oriy + sy * cm + fontSize / 1.0;
     }
     else if (align == "center") {
-        tx = orix + sx * cm + (w * cm / 2);
+        //tx = orix + sx * cm + (w * cm / 2);
+        tx = orix + sx * cm + (w * cm / 2) -  tw  / 2;
+        ty = oriy + sy * cm + (h * cm / 2) - fontSize / 3;
+    }
+    else if (align == "right")
+    {
+        tx = orix + sx * cm + (w * cm ) -  tw ;
+        ty = oriy + sy * cm + (h * cm / 2) - fontSize / 3;
+    }
+
+    page.drawRectangle({
+        x: orix + sx * cm,
+        y: oriy + sy * cm,
+        width: w * cm,
+        height: h * cm,
+        color: color,
+        borderColor: rgb(0, 0, 0),
+        borderWidth: 0.5,
+    });
+    page.drawText(text, {
+        x: tx,
+        y: ty,
+        size: fontSize,
+        // font: timesRomanFont,
+        color: fcolor
+    })
+}
+
+drawRTextBox1 = (sx, sy, w, h, color, text, fontSize, fcolor, align = "left") => {
+
+    const th = font.heightAtSize(fontSize);
+    const tw = font.widthOfTextAtSize(text, fontSize);
+
+    if (align == "left") {
+        tx = orix + sx * cm + fontSize / 3;
+        ty = oriy + sy * cm + fontSize / 1.0;
+    }
+    else if (align == "center") {
+        tx = orix + sx * cm + (w * cm / 2) -  tw  / 2;
+        ty = oriy + sy * cm + (h * cm / 2) - fontSize / 3;
+        //ty = oriy + sy * cm + (h * cm / 2) - th  / 2;
+    }
+    else if (align == "right")
+    {
+        tx = orix + sx * cm + (w * cm ) -  tw ;
         ty = oriy + sy * cm + (h * cm / 2) - fontSize / 3;
     }
 

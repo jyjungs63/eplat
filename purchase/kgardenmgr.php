@@ -466,6 +466,7 @@
         const fontBytes = await fetch('NanumBarunGothic.ttf').then((res) => res
             .arrayBuffer());
         const customFont = await pdfDoc.embedFont(fontBytes);
+        font = customFont;
 
         // const customFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
 
@@ -516,17 +517,17 @@
             let fs = 8;
             for (let k = 1; k < 9; k++) {
                 for (let i = 0; i < 3; i++) {
-                    drawRTextBox(0, 0, xm, ym, hcol, "스텝 ", fs, white, "left");
-                    drawRTextBox(1.3, 0, xm, ym, hcol, "반명", fs, white, "left");
-                    drawRTextBox(2.6, 0, xm, ym, hcol, "이름 ", fs, white, "left");
-                    drawRTextBox(3.9, 0, xm, ym, hcol, " 아이디", fs, white, "left");
-                    drawRTextBox(5.2, 0, xm, ym, hcol, "비번 ", fs, white, "left");
+                    drawRTextBox(0, 0, xm, ym, hcol, "스텝 ", fs, white, "center");
+                    drawRTextBox(1.3, 0, xm, ym, hcol, "반명", fs, white, "center");
+                    drawRTextBox(2.6, 0, xm, ym, hcol, "이름 ", fs, white, "center");
+                    drawRTextBox(3.9, 0, xm, ym, hcol, " 아이디", fs, white, "center");
+                    drawRTextBox(5.2, 0, xm, ym, hcol, "비번 ", fs, white, "center");
                     moveDown(ym)
-                    drawRTextBox(0, 0, xm, ym, tcol, Arr[j + m]['step'], fs, black, "left");
-                    drawRTextBox(1.3, 0, xm, ym, tcol, Arr[j + m]['classnm'], fs, black, "left");
-                    drawRTextBox(2.6, 0, xm, ym, tcol, Arr[j + m]['name'], fs, black, "left");
-                    drawRTextBox(3.9, 0, xm, ym, tcol, Arr[j + m]['id'], fs, black, "left");
-                    drawRTextBox(5.2, 0, xm, ym, tcol, Arr[j + m]['passwd'], fs, black, "left");
+                    drawRTextBox(0, 0, xm, ym, tcol, Arr[j + m]['step'], fs, black, "center");
+                    drawRTextBox(1.3, 0, xm, ym, tcol, Arr[j + m]['classnm'], fs, black, "center");
+                    drawRTextBox(2.6, 0, xm, ym, tcol, Arr[j + m]['name'], fs, black, "center");
+                    drawRTextBox(3.9, 0, xm, ym, tcol, Arr[j + m]['id'], fs, black, "center");
+                    drawRTextBox(5.2, 0, xm, ym, tcol, Arr[j + m]['passwd'], fs, black, "center");
                     moveUp(ym)
                     moveRight(6.8);
                     m++;
