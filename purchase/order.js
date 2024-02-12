@@ -26,7 +26,7 @@ var deleteIcon = function(cell, formatterParams) { //plain text value
 };
 
 document.addEventListener("DOMContentLoaded", function() {
-  
+    table2.hideColumn("No");
     orderList(null);
     addrList();   // display 주소록
 });
@@ -348,7 +348,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
     columns: [{
             title: "No",
             field: "No",
-            width: "5%",
+            width: "0%",
             editor: "input",
             editor: false,
             cellEdited: function(cell) {
@@ -371,7 +371,7 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
         {
             title: "지사명/원명",
             field: "owner",
-            width: "15%",
+            width: "20%",
             editor: "list",
             editor: false,
             editorParams: {
@@ -433,6 +433,10 @@ var table2 = new Tabulator("#idTableDest", {   // 주소 리스트 table 생성
         },
     ],
 });
+
+
+
+
 
 function deleteAddr(cell) {
     var result = confirm("주소록에서 선택한 주소를 삭제 하시겠습니까 ?");
@@ -597,7 +601,8 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         if ( ell['uname'] == undefined)
             newRow.append("<td > "+ ell['id']+"</td>");   // branch name
         else 
-            newRow.append("<td > "+ ell['uname']+"</td>");   // branch name
+            newRow.append("<td > "+ ell['order']+"</td>");   // branch name
+            //newRow.append("<td > "+ ell['uname']+"</td>");   // branch name
 
         var jarr = "";
         var total = 0; 
@@ -760,75 +765,73 @@ function refreshDest() {
 
 }
 
-document.getElementById("idDest").addEventListener("change", function() {   // 주소지 List
-    // 선택된 옵션 가져오기
-    var selectedOption = this.options[this.selectedIndex];
+// document.getElementById("idDest").addEventListener("change", function() {  
 
-    // 선택된 옵션의 값(value) 가져오기
-    var selectedValue = selectedOption.value;
-
-    // 선택된 옵션의 텍스트 가져오기
-    var selectedText = selectedOption.text;
-
-    // 결과 출력
-    console.log("Selected Value:", selectedValue);
-    console.log("Selected Text:", selectedText);
+//     var selectedOption = this.options[this.selectedIndex];
 
 
-    var sql;
-    if ("주소지" == selectedText) {
-        var items = [];
-        var data = {
-            role: 2,
-            id: user
-        };
+//     var selectedValue = selectedOption.value;
 
-        dispList = (resp) => {
-            var i = 1;
-            var items = [];
-            if ('success' in resp) {
 
-                resp['success'].forEach(el => {
-                    var jarr = {
-                        "No": el['id'],
-                        "name": el['name'],
-                        "owner": el['owner'],
-                        "mobile": el['mobile'],
-                        "addr": el['addr'],
-                        "zipcode": el['zipcode'],
-                        "rdate": el['rdate'],
-                    }
-                    items.push(jarr);
-                    i++;
-                });
-                table2.clearData();
-                table2.setData(items);
-                CallToast("SShowAddr success!!", "success");
-            }
-            else 
-                CallToast("SShowAddr Error", "error");
-        }
-        dispErr = () => {
-            //alert(error);
-            CallToast("SShowAddr Error", "error");
-        }
+//     var selectedText = selectedOption.text;
 
-        var options = {
-            functionName: 'SShowAddr',
-            otherData: {
-                role: 2,    // not using current
-                id: user
-            }
-        };
+//     console.log("Selected Value:", selectedValue);
+//     console.log("Selected Text:", selectedText);
 
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
-    } else {
-        table2.clearData();
-        //table2.setData(kgardenlist);
-    }
+//     var sql;
+//     if ("주소지" == selectedText) {
+//         var items = [];
+//         var data = {
+//             role: 2,
+//             id: user
+//         };
 
-});
+//         dispList = (resp) => {
+//             var i = 1;
+//             var items = [];
+//             if ('success' in resp) {
+
+//                 resp['success'].forEach(el => {
+//                     var jarr = {
+//                         "No": el['id'],
+//                         "name": el['name'],
+//                         "owner": el['owner'],
+//                         "mobile": el['mobile'],
+//                         "addr": el['addr'],
+//                         "zipcode": el['zipcode'],
+//                         "rdate": el['rdate'],
+//                     }
+//                     items.push(jarr);
+//                     i++;
+//                 });
+//                 table2.clearData();
+//                 table2.setData(items);
+//                 CallToast("SShowAddr success!!", "success");
+//             }
+//             else 
+//                 CallToast("SShowAddr Error", "error");
+//         }
+//         dispErr = () => {
+//             //alert(error);
+//             CallToast("SShowAddr Error", "error");
+//         }
+
+//         var options = {
+//             functionName: 'SShowAddr',
+//             otherData: {
+//                 role: 2,    // not using current
+//                 id: user
+//             }
+//         };
+
+//         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+//     } else {
+//         table2.clearData();
+//     }
+
+// });
 
 document.getElementById("idGrade").addEventListener("change", function() { // 구매 목록 선택
     // 선택된 옵션 가져오기

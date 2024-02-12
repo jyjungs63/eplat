@@ -162,7 +162,7 @@ include "../header.php";
                                         <a id="anchorRead" href="javascript:orderBook()"
                                             class="btn btn-info align-items-end justify-content-end" role="button"
                                             data-toggle="tooltip" title="Add to Cart " aria-disabled="true"><i
-                                                class="fa-solid fa-cart-shopping"></i> 장바구니담기</a>&nbsp;&nbsp;
+                                                class="fa-solid fa-cart-shopping"></i> 장바구니</a>&nbsp;&nbsp;
                                     </div>
                                     <h5> <b>주문한 상품 확정</b></h5>
                                     <div id="idTableConfirm" style="margin-top: 10px;">
@@ -192,7 +192,8 @@ include "../header.php";
                                             name="month" style="width: 120px">
                                         </input>
                                         &nbsp;
-                                        <span class="d-flex badge bg-light text-dark align-items-center">택배비</span>
+                                        <span id="idLbParcel"
+                                            class=" badge bg-light text-dark align-items-center">택배비</span>
                                         &nbsp;&nbsp;
                                         <input class="form-control form-control-sm custom-width" id="idParcel"
                                             type="text" placeholder="택배비" style="width: 100px;">
@@ -245,11 +246,12 @@ include "../header.php";
                             <div class="input-group mb-3">
                                 <!-- <button class="btn btn-outline-secondary" type="button">배송지선택</button>
                                     &nbsp;&nbsp; -->
-                                <select class="form-select form-control-sm" id="idDest" data-placeholder="Choose Items">
-                                    <option val="va">전체</option>
-                                    <!-- <option val="v4">원리스트</option> -->
-                                    <option val="v5">주소지</option>
-                                </select>
+                                <!-- <select class="form-select form-control-sm" id="idDest" data-placeholder="Choose Items"> -->
+                                <!-- <option val="va">전체</option> -->
+                                <!-- <option val="v4">원리스트</option> -->
+                                <!-- <option val="v5">주소지</option>
+                                </select> -->
+                                <span class="d-flex badge bg-light text-dark align-items-center">주소지</span>
                                 &nbsp;
                                 <!-- <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디">
                                 &nbsp; -->
@@ -257,7 +259,7 @@ include "../header.php";
                                     placeholder="이름">
                                 &nbsp;
                                 <input class="form-control form-control-sm custom-width" id="idOwner" type="text"
-                                    placeholder="지사명">&nbsp;
+                                    placeholder="원명">&nbsp;
                                 <!-- <input class="form-control form-control-sm" id="idPasswd" type="text"
                                     placeholder="비밀번호"> -->
                                 &nbsp;
@@ -310,8 +312,8 @@ include "../header.php";
                             </h3>
                             <div class="text-center">
                                 <a id="idConfirmOrder" href="javascript:orderPrint()" class="btn btn-warning disabled"
-                                    role="button" data-toggle="tooltip" title="장바구니" aria-disabled="true"><i
-                                        class="fa-solid fa-cart-shopping"></i>장바구니</a>
+                                    role="button" data-toggle="tooltip" title="구매내역서확인" aria-disabled="true"><i
+                                        class="fa-solid fa-cart-shopping"></i>구매내역서확인</a>
                                 <a id="idModifyOrder" href="javascript:orderModify()" class="btn btn-warning disabled"
                                     role="button" data-toggle="tooltip" title="수정" aria-disabled="true">수정(재작성)</a>
                                 <a id="idOKOrder" href="javascript:orderOK()" class="btn btn-warning disabled"
@@ -444,7 +446,11 @@ include "../header.php";
                 // Append the new option to the select element
                 select.add(option);
 
-                blist.push([el['id'], el['bname']])
+                if (user == "admin") {
+                    blist.push([el['id'], el['bname']])
+                } else {
+                    blist.push([el['id'], el['order']])
+                }
 
             })
             //const unqueArr = blist.filter((value, index, self) => self.indexOf(value) === index); // 지사명 중복 제거
@@ -464,6 +470,14 @@ include "../header.php";
             if (user == "admin") {
                 option2.text = "전지사"; // Set the text of the new option
                 option2.value = "전지사"; // Set the value attribute (if needed)
+                select2.add(option2);
+            } else {
+                option2.text = "전유치원"; // Set the text of the new option
+                option2.value = "전유치원"; // Set the value attribute (if needed)
+                $("#idLbParcel").hide();
+
+                $("#idParcel").hide();
+                $("#idBtParcel").hide();
                 select2.add(option2);
             }
             for (let i = 0; i < unqueArr.length; i++) {
@@ -692,8 +706,16 @@ include "../header.php";
             height
         } = page.getSize()
 
-        const fontSize = 14;
+        var name = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)")
+            .html();
+        var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
+            .html();
+        var total = $(
+                "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
+            .html();
+        var rest = cvtCurrency(parseFloat(total));
 
+        const fontSize = 14;
         page.setFont(customFont);
         page.setFontSize(fontSize);
         setOrigin(1, 27);
@@ -721,16 +743,6 @@ include "../header.php";
 
         var buyArr = [];
         var item = table1.getData();
-
-        var name = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)")
-            .html();
-        var cnt = $("#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)")
-            .html();
-        var total = $(
-                "#idTableConfirm > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)")
-            .html();
-        var rest = cvtCurrency(parseFloat(total));
-
         item.forEach(el => {
             if (Number(el['count']) > 0) {
                 var jarr = {
@@ -768,8 +780,60 @@ include "../header.php";
         drawRTextBox(3, 0, 5, 1, white, $("#idMobile").val(), 10, black, "left");
         drawRTextBox1(8, 0, 3, 1, footcol, "우편번호 ", 10, black, "center");
         drawRTextBox(11, 0, 3, 1, white, $("#idZip").val(), 10, black, "left");
-        drawRTextBox(14, 0, 2, 1, footcol, "이름 ", 10, black, "center");
-        drawRTextBox(16, 0, 2.5, 1, white, $("#idName").val(), 10, black, "left");
+        drawRTextBox(14, 0, 2, 1, footcol, "비고 ", 10, black, "center");
+        //drawRTextBox(16, 0, 2.5, 1, white, $("#idName").val(), 10, black, "left");
+        drawRTextBox(16, 0, 2.5, 1, white, "", 10, black, "left");
+
+        moveDown(2);
+
+        var textwd = customFont.widthOfTextAtSize("구매수량 내역서", fontSize) / cm;
+        drawRTexts(half - textwd, 0, 18, black, "구매수량 내역서")
+        moveDown(1.0);
+        drawRTexts(pwidth - 5, 0, 10, black, formatDate());
+
+        moveDown(1.5);
+
+        // drawRTextBox(0, 0, 18.5, 1, rgb(0.66, 0.82, 0.55), "계좌번호 : 경남은행) 207-0072-6907-01 이상민 (이플렛)", 10, rgb(0, 0,0), "center");
+        drawRTextBox(0, 0, 18.5, 1, rgb(0.9, 0.34, 0.55), "", 10, rgb(0, 0, 0), "right");
+
+        moveDown(1);
+        drawRTextBox1(0, 0, 1.5, 1, headcol, "번호", 10, black, "center");
+        drawRTextBox(1.5, 0, 1.5, 1, headcol, "단계", 10, black, "center");
+        drawRTextBox(3, 0, 5, 1, headcol, "품명", 10, black, "center");
+        drawRTextBox(8, 0, 3, 1, headcol, "", 10, black, "center");
+        drawRTextBox(11, 0, 3, 1, headcol, "수량", 10, black, "center");
+        drawRTextBox(14, 0, 4.5, 1, headcol, "", 10, black, "center");
+        moveDown(1);
+
+        var k;
+        var cot = 0;
+        for (let i = 0; i < buyArr.length; i++) {
+            k = i + 1;
+            drawRTextBox(0, 0, 1.5, 1, white, (k).toString(), 10, black, "center");
+            drawRTextBox(1.5, 0, 1.5, 1, white, buyArr[i]['grade'], 10, black, "center");
+            drawRTextBox(3, 0, 5, 1, white, buyArr[i]['title'], 10, black, "center");
+            drawRTextBox(8, 0, 3, 1, white, "", 10, black, "center");
+            drawRTextBox(11, 0, 3, 1, white, buyArr[i]['count'], 10, black, "center");
+            cot += Number(buyArr[i]['count'])
+            drawRTextBox(14, 0, 4.5, 1, white, "", 10, black, "center");
+            moveDown(1);
+        }
+        drawRTextBox(0, 0, 14, 1, white, "총수량", 12, rgb(0, 0, 0), "center");
+        drawRTextBox(11, 0, 7.5, 1, white, cot.toString(), 12, rgb(0, 0, 0), "center");
+
+        moveDown(1);
+        drawRTextBox1(0, 0, 3, 1, footcol, "배송지 ", 10, black, "center");
+        drawRTextBox(3, 0, 5, 1, white, $("#idOwner").val(), 10, black, "left");
+        drawRTextBox(8, 0, 10.5, 1, white, $("#idAddr").val(), 10, black, "left");
+
+        moveDown(1);
+        drawRTextBox1(0, 0, 3, 1, footcol, "전화번호 ", 10, black, "center");
+        drawRTextBox(3, 0, 5, 1, white, $("#idMobile").val(), 10, black, "left");
+        drawRTextBox1(8, 0, 3, 1, footcol, "우편번호 ", 10, black, "center");
+        drawRTextBox(11, 0, 3, 1, white, $("#idZip").val(), 10, black, "left");
+        drawRTextBox(14, 0, 2, 1, footcol, "비고 ", 10, black, "center");
+        //drawRTextBox(16, 0, 2.5, 1, white, $("#idName").val(), 10, black, "left");
+        drawRTextBox(16, 0, 2.5, 1, white, "", 10, black, "left");
 
         const pdfBytes = await pdfDoc.save()
 
@@ -806,7 +870,7 @@ include "../header.php";
         formData.append('addr', $("#idAddr").val());
         formData.append('mobile', $("#idMobile").val());
         formData.append('postlist', JSON.stringify(porList));
-        porId = 'P' + "-" + formatDate() + "-" + $("#idName").val() + Math.floor(Math.random() * 10) + 1;
+        porId = 'P' + "-" + formatDate() + "-" + $("#idOwner").val() + Math.floor(Math.random() * 10) + 1;
         formData.append('porid', porId)
 
         dispList = (resp) => {
