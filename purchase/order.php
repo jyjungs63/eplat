@@ -179,7 +179,8 @@ include "../header.php";
                                             data-placeholder="주문서선택" style="width: 150px">
                                         </select>
                                         &nbsp;&nbsp;
-                                        <span class="d-flex badge bg-light text-dark align-items-center">지사별조회</span>
+                                        <span id="idSpfind"
+                                            class="d-flex badge bg-light text-dark align-items-center">지사별조회</span>
                                         &nbsp;&nbsp;
                                         <select class="form-select form-control-sm" id="idPorBranch"
                                             data-placeholder="지사선택" style="width: 150px">
@@ -475,9 +476,9 @@ include "../header.php";
                 option2.text = "전유치원"; // Set the text of the new option
                 option2.value = "전유치원"; // Set the value attribute (if needed)
                 $("#idLbParcel").hide();
-
                 $("#idParcel").hide();
                 $("#idBtParcel").hide();
+                $("#idSpfind").text("유치원별조회");
                 select2.add(option2);
             }
             for (let i = 0; i < unqueArr.length; i++) {
