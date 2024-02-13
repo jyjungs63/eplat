@@ -787,8 +787,8 @@ include "../header.php";
 
         moveDown(2);
 
-        var textwd = customFont.widthOfTextAtSize("구매수량 내역서", fontSize) / cm;
-        drawRTexts(half - textwd, 0, 18, black, "구매수량 내역서")
+        var textwd = customFont.widthOfTextAtSize("구매물품 내역서", fontSize) / cm;
+        drawRTexts(half - textwd, 0, 18, black, "구매물품 내역서")
         moveDown(1.0);
         drawRTexts(pwidth - 5, 0, 10, black, formatDate());
 

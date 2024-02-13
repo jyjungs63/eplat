@@ -215,6 +215,9 @@
                         <a id="idm44" class="nav-link " href="purchase/kgardenstatus.php" style="display:none">학습현황</a>
                     </li>
                     <li class="nav-item">
+                        <a id="idm45" class="nav-link " href="memory-game/index.html" style="display:none">게임</a>
+                    </li>
+                    <li class="nav-item">
                         <a id="idm5" class="nav-link " href="login/adminLogin.php" style="display:none">admin</a>
                     </li>
                     <li class="nav-item">
@@ -1009,6 +1012,7 @@ function toggleVisibility() {
             $('#idm1').toggle(); // 게시판
             $('#idm4').toggle(); // 유치원관리
             $('#idm44').toggle(); // 학습현황
+            $('#idm45').toggle(); // 게임
             $('#idlogin').attr('href', "javascript:logout()")
             $('#idlogin').text("로그아웃")
         } else {
@@ -1099,6 +1103,7 @@ logout = () => {
     toggleChage($('#idm3')); //.toggle(); // 구매
     toggleChage($('#idm4')); //.toggle(); // 유치원관리
     toggleChage($('#idm44')); //.toggle(); // 학습현황
+    toggleChage($('#idm45')); //.toggle(); // 게임
     toggleChage($('#idm5')); //.toggle(); // admin menu
     $('#idlogin').attr('href', "javascript:openModal()")
     $('#idlogin').text("로그인");
