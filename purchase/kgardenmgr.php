@@ -469,9 +469,26 @@
         font = customFont;
 
         // const customFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+        var item = tab.getData();
+        var Arr = [];
+        item.forEach(el => {
 
-        for (var j = 0; j < 2; j++) {
+            var jarr = {
+                "step": el['step'],
+                "classnm": el['classnm'],
+                "name": el['name'],
+                "id": el['id'],
+                "passwd": el['passwd']
+            }
+            Arr.push(jarr)
+        })
 
+        let loop = 1;
+
+        if (Arr.length > 24)
+            loop = 2;
+        let m = 0;
+        for (var j = 0; j < loop; j++) {
 
             page = pdfDoc.addPage()
 
@@ -485,56 +502,33 @@
             page.setFont(customFont);
             page.setFontSize(fontSize);
 
-            const text = 'This is text in an embedded font!'
-            const textSize = 35
-            const textWidth = customFont.widthOfTextAtSize(text, textSize)
-            const textHeight = customFont.heightAtSize(textSize)
-
             setOrigin(0.5, 27);
             pwidth = width / cm;
             half = pwidth / 2;
-            let xm = 1.3;
+            let xm = 3.25;
             let ym = 1.5;
             let hcol = rgb(0.37, 0.66, 0.62); // header color
-            let tcol = rgb(0.98, 0.91, 1.00); // row color
+            let tcol = rgb(1.00, 0.97, 0.82); // row color
 
+            let fs = 10;
 
-            var item = tab.getData();
-            var Arr = [];
-            item.forEach(el => {
-
-                var jarr = {
-                    "step": el['step'],
-                    "classnm": el['classnm'],
-                    "name": el['name'],
-                    "id": el['id'],
-                    "passwd": el['passwd']
-                }
-                Arr.push(jarr)
-            })
-
-            let m = 0;
-            let fs = 8;
             for (let k = 1; k < 9; k++) {
                 for (let i = 0; i < 3; i++) {
-                    drawRTextBox(0, 0, xm, ym, hcol, "스텝 ", fs, white, "center");
-                    drawRTextBox(1.3, 0, xm, ym, hcol, "반명", fs, white, "center");
-                    drawRTextBox(2.6, 0, xm, ym, hcol, "이름 ", fs, white, "center");
-                    drawRTextBox(3.9, 0, xm, ym, hcol, " 아이디", fs, white, "center");
-                    drawRTextBox(5.2, 0, xm, ym, hcol, "비번 ", fs, white, "center");
+                    if (m >= Arr.length) {
+                        m = 0;
+                    }
+                    drawRTextBox(0, 0, xm, ym, hcol, Arr[m]['classnm'], fs, white, "center");
+                    drawRTextBox(xm, 0, xm, ym, hcol, Arr[m]['name'], fs, white, "center");
+
                     moveDown(ym)
-                    drawRTextBox(0, 0, xm, ym, tcol, Arr[j + m]['step'], fs, black, "center");
-                    drawRTextBox(1.3, 0, xm, ym, tcol, Arr[j + m]['classnm'], fs, black, "center");
-                    drawRTextBox(2.6, 0, xm, ym, tcol, Arr[j + m]['name'], fs, black, "center");
-                    drawRTextBox(3.9, 0, xm, ym, tcol, Arr[j + m]['id'], fs, black, "center");
-                    drawRTextBox(5.2, 0, xm, ym, tcol, Arr[j + m]['passwd'], fs, black, "center");
+                    drawRTextBox(0, 0, xm, ym, tcol, "ID: " + Arr[m]['id'], fs, black, "center");
+                    drawRTextBox(xm, 0, xm, ym, tcol, "PW: " + Arr[m]['passwd'], fs, black, "center");
                     moveUp(ym)
                     moveRight(6.8);
                     m++;
                 }
                 moveLeft(6.8 * 3);
                 moveDown(ym * 2 + 0.5);
-                if (m > Arr.length) break;
             }
         }
 

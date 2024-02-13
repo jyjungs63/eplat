@@ -888,16 +888,24 @@ function SShowStudentList($data)
     $tid = $data['id'];
     $step = $data['step'];
     $sel = $data['sel'];
+    $kgarden = $data['kgarden'];
 
     if ($tid == "admin") {
         if ($sel == '1') {
             if ($step == '전체')
                 $sqlString = "SELECT *  FROM eplat_user where  role = 0";
             else
-                $sqlString = "SELECT *  FROM eplat_user where  step = '{$step}' and role = 0";
-        } else if ($sel == '2')
-            $sqlString = "SELECT *  FROM eplat_user where classnm = '{$step}' and role = 0";
-    } else {
+                $sqlString = "SELECT *  FROM eplat_user where  step = '{$step}' and role = 0 and owner='{$kgarden}'";
+        } 
+        else if ($sel == '2') {
+            
+            $sqlString = "SELECT *  FROM eplat_user where classnm = '{$step}' and role = 0 and owner='{$kgarden}'";
+        }
+        else if ($sel == '3')
+            $sqlString = "SELECT *  FROM eplat_user where owner = '{$step}' and role = 0";
+    } 
+    else 
+    {
         if ($sel == '1') {
             if ($step == '전체')
                 $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
@@ -1048,6 +1056,43 @@ function SShowClassList($data)
                 $rows,
                 array(
                     'classnm'    => $row['classnm'],
+                )
+            );
+        }
+        $conn->close();
+    } catch (Exception $e) {
+        echo  json_encode(array("error:" => $e->getMessage()));
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode(array("success" => $rows));
+}
+
+function SShowKgardenList($data)
+{
+    session_start();
+
+    $tid = $data['id'];
+
+    global $conn;
+
+    $sqlString = "select DISTINCT classnm from eplat_user where tid = '{$tid}'";
+
+    if ($tid == "admin")
+        $sqlString = "select DISTINCT owner from eplat_user where classnm is not null";
+    $rows = array();
+
+    $i = 0;
+
+    try {
+
+        $rs = mysqli_query($conn, $sqlString);
+
+        while ($row = mysqli_fetch_array($rs)) {
+            array_push(
+                $rows,
+                array(
+                    'owner'    => $row['owner'],
                 )
             );
         }

@@ -992,6 +992,7 @@ function toggleVisibility() {
         $('#idm1').toggle(); // 게시판
         $('#idm2').toggle(); // 지사마당 메뉴
         $('#idm3').toggle(); // 구매
+        $('#idm4').attr('href', "purchase/kgardenmgradmin.php")
         $('#idm4').toggle(); // 유치원관리
         $('#idm5').toggle(); // admin menu
         $('#idlogin').attr('href', "javascript:logout()")
@@ -1012,13 +1013,18 @@ function toggleVisibility() {
             $('#idm1').toggle(); // 게시판
             $('#idm4').toggle(); // 유치원관리
             $('#idm44').toggle(); // 학습현황
-            $('#idm45').toggle(); // 게임
+            //$('#idm45').toggle(); // 게임
             $('#idlogin').attr('href', "javascript:logout()")
             $('#idlogin').text("로그아웃")
         } else {
             alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
         }
+    } else {
+        $('#idm45').toggle(); // 게임
+        $('#idlogin').attr('href', "javascript:logout()")
+        $('#idlogin').text("로그아웃")
     }
+
 }
 
 $("#signin").click(function() {
