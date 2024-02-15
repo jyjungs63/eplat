@@ -1011,6 +1011,7 @@ function toggleVisibility() {
     } else if (role == "2") { // 유치원 선생님 메뉴
         if (conf == "1") {
             $('#idm1').toggle(); // 게시판
+            $('#idm4').attr('href', "purchase/kgardenmgr.php")
             $('#idm4').toggle(); // 유치원관리
             $('#idm44').toggle(); // 학습현황
             //$('#idm45').toggle(); // 게임
