@@ -911,6 +911,7 @@ include "../header.php";
             // $("#cardDest").remove();
             // $("#cardPDF").remove();
             //$("#idSecDiv").empty();
+            $("#cardMain").show();
             $('#idSecDiv').hide();
 
             var newDiv = $('<iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe>');
