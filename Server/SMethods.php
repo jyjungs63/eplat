@@ -888,7 +888,9 @@ function SShowStudentList($data)
     $tid = $data['id'];
     $step = $data['step'];
     $sel = $data['sel'];
-    $kgarden = $data['kgarden'];
+    if (isset($data['zkgardenip']))   //
+        $kgarden    = $data['zkgardenip'];
+
 
     if ($tid == "admin") {
         if ($sel == '1') {

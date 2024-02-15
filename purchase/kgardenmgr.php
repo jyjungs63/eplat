@@ -280,14 +280,14 @@
         var selectedValue = selectedOption.value;
 
         // 선택된 옵션의 텍스트 가져오기
-        var selectedText = selectedOption.text;
+        var classText = selectedOption.text;
 
-        listStudent(selectedText, 2);
+        listStudent(classText, 2);
         //$("#idClass").val("v0");
-        $("#idClassname").val(selectedText);
+        $("#idClassname").val(classText);
     });
 
-    listStudent = (step, sel) => {
+    listStudent = (step, classText) => {
 
         dispList = (res) => {
             var js = res['json'];
@@ -304,7 +304,7 @@
             otherData: {
                 id: user,
                 step: step,
-                sel: sel,
+                sel: classText,
             }
         };
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
@@ -312,6 +312,7 @@
     }
 
     addChild = () => {
+        tab.clearData();
         var selectElement = document.getElementById("idStudent");
         var selectedValue = selectElement.value;
         var classname = $("#idClassname").val();
@@ -397,8 +398,12 @@
         };
 
         dispList = (resp) => {
+            $("#idClass").empty();
             let select = document.getElementById('idClass');
             let option = document.createElement('option');
+            option.text = ""; // Set the text of the new option
+            option.value = ""; // Set the value attribute (if needed)
+            select.add(option);
 
             resp['success'].forEach(el => {
                 var jarr = {
@@ -428,27 +433,27 @@
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
     };
 
-    showClassMembers = (tid) => {
-        var data = {
-            id: tid
-        };
+    // showClassMembers = (tid) => {
+    //     var data = {
+    //         id: tid
+    //     };
 
-        dispList = (res) => {
-            CallToast('Student list successfully!!', "success")
-        }
-        dispErr = (xhr) => {
-            CallToast('Student list Error!!', "error")
-        }
+    //     dispList = (res) => {
+    //         CallToast('Student list successfully!!', "success")
+    //     }
+    //     dispErr = (xhr) => {
+    //         CallToast('Student list Error!!', "error")
+    //     }
 
-        var options = {
-            functionName: 'SShowStudentList',
-            otherData: {
-                id: user,
-                classnm: classnm
-            }
-        };
-        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-    }
+    //     var options = {
+    //         functionName: 'SShowStudentList',
+    //         otherData: {
+    //             id: user,
+    //             classnm: classnm
+    //         }
+    //     };
+    //     CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+    // }
 
     var page;
 
