@@ -319,7 +319,7 @@
         var num = $("#idNumstudent").val();
         var start = $("#idStartNum").val();
 
-        if (selectedValue != "" && classname != "" && nickname != "" && num != "") {
+        if (selectedValue != "전체" && selectedValue != "" && classname != "" && nickname != "" && num != "") {
 
             var no = 0;
             var arr = [...Array(Number(num)).keys()];
@@ -333,8 +333,10 @@
                 }
                 tab.addRow(data);
             })
-        } else
-            alert(" 생성 할 학생의 정보를 입력 하세요");
+        } else {
+
+            alert(" 생성 할 학생의 정보를 입력하세요/ Step 에서 전체를 선택하면 안됩니다!!.");
+        }
     };
 
     addClassMember = (chos) => { // 학생등록
@@ -365,6 +367,7 @@
             let option = document.createElement('option');
             option.text = clsname; // Set the text of the new option
             option.value = clsname; // Set the value attribute (if needed)
+            showClass(user);
             if (chos == 1)
                 CallToast('New Student added successfully!!', "success")
             else
