@@ -273,9 +273,10 @@
                 // Append the new option to the select element
                 select.add(option);
             })
+            CallToast('유치원 보여주기  성공 !!', "success")
         }
         dispErr = (xhr) => {
-
+            CallToast('유치원 보여주기 실패 !!', "error")
         }
         var options = {
             functionName: 'SShowKgardenList',
@@ -325,7 +326,7 @@
 
         listStudent(kgardenmn, selectedText, 2);
         //$("#idClass").val("v0");  
-        $("#idClassname").val(selectedText);
+        //$("#idClassname").val(selectedText);
     });
 
     document.getElementById("idKgarden").addEventListener("change", function() {
@@ -336,11 +337,11 @@
         var selectedValue = selectedOption.value;
 
         // 선택된 옵션의 텍스트 가져오기
-        var selectedText = selectedOption.text;
+        var kgardenmn = selectedOption.text;
 
-        listStudent('', selectedText, 3);
+        listStudent('', kgardenmn, 3);
         //$("#idClass").val("v0");  idKgarden
-        $("#idClassname").val(selectedText);
+        //$("#idClassname").val(selectedText);
     });
 
     listStudent = (kgarden, step, sel) => {

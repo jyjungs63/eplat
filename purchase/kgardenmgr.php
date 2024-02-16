@@ -269,7 +269,6 @@
         var selectedText = selectedOption.text;
 
         listStudent(selectedText, 1);
-        //$("#idStudent").val("v0");
     });
 
     document.getElementById("idClass").addEventListener("change", function() {
@@ -376,7 +375,7 @@
         }
         dispErr = (xhr) => {
             if (chos == 1)
-                CallToast('New Student added successfully!!', "success")
+                CallToast('New Student added successfully!!', "error")
             else
                 CallToast('New Student  Update falure !!', "error")
         }

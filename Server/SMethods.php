@@ -888,8 +888,8 @@ function SShowStudentList($data)
     $tid = $data['id'];
     $step = $data['step'];
     $sel = $data['sel'];
-    if (isset($data['zkgardenip']))   //
-        $kgarden    = $data['zkgardenip'];
+    if (isset($data['kgarden']))   //
+        $kgarden    = $data['kgarden'];
 
 
     if ($tid == "admin") {
@@ -915,6 +915,11 @@ function SShowStudentList($data)
                 $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and step = '{$step}'";
         } else if ($sel == '2')
             $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and classnm = '{$step}'";
+        else if ($sel == '3')
+            if ($step == '전체')
+                $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
+            else
+                $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' and owner = '{$step}'";
     }
     $rows = array();
 
@@ -1078,7 +1083,7 @@ function SShowKgardenList($data)
 
     global $conn;
 
-    $sqlString = "select DISTINCT classnm from eplat_user where tid = '{$tid}'";
+    $sqlString = "select DISTINCT owner from eplat_user where tid = '{$tid}' and classnm is not null";
 
     if ($tid == "admin")
         $sqlString = "select DISTINCT owner from eplat_user where classnm is not null";
