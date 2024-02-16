@@ -138,9 +138,22 @@
                     width: "10%"
                 },
                 {
+                    title: "원명",
+                    field: "owner",
+                    width: "15%",
+                    editor: "input",
+                    headerHozAlign: "center",
+                    editorParams: {
+                        autocomplete: "true",
+                        allowEmpty: true,
+                        listOnEmpty: true,
+                        valuesLookup: true
+                    }
+                },
+                {
                     title: "스텝",
                     field: "step",
-                    width: "10%",
+                    width: "15%",
                     editor: "input",
                     headerHozAlign: "center",
                     editorParams: {
@@ -179,7 +192,7 @@
                 {
                     title: "아이디",
                     field: "id",
-                    width: "20%",
+                    width: "15%",
                     editor: false,
                     headerHozAlign: "center",
                     editorParams: {
@@ -192,7 +205,7 @@
                 {
                     title: "비밀번호",
                     field: "passwd",
-                    width: "20%",
+                    width: "15%",
                     editor: "input",
                     headerHozAlign: "center",
                     editorParams: {
@@ -202,16 +215,16 @@
                         valuesLookup: true
                     }
                 },
-                {
-                    title: "삭제",
-                    formatter: deleteIcon,
-                    width: "10%",
-                    headerHozAlign: "center",
-                    hozAlign: "center",
-                    cellClick: function(e, cell) {
-                        ChildDelete(cell.getRow())
-                    }
-                },
+                // {
+                //     title: "삭제",
+                //     formatter: deleteIcon,
+                //     width: "10%",
+                //     headerHozAlign: "center",
+                //     hozAlign: "center",
+                //     cellClick: function(e, cell) {
+                //         ChildDelete(cell.getRow())
+                //     }
+                // },
             ],
         });
     }
@@ -219,17 +232,23 @@
     document.addEventListener("DOMContentLoaded", function() {
         drawTable();
         showKgarden(user);
-        showClass(user);
     });
 
-    showClass = (tid) => {
+    showClass = (kgarden) => {
         var data = {
-            id: tid
+            id: user,
+            kgarden: kgarden
         };
 
         dispList = (resp) => {
+
+            document.getElementById("idClass").innerHTML = "";
+
             let select = document.getElementById('idClass');
             let option = document.createElement('option');
+            option.text = ''; // Set the text of the new option
+            option.value = ''; // Set the value attribute (if needed)
+            select.add(option);
 
             resp['success'].forEach(el => {
                 var jarr = {
@@ -248,7 +267,8 @@
         var options = {
             functionName: 'SShowClassList',
             otherData: {
-                id: tid
+                id: user,
+                kgarden: kgarden
             }
         };
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
@@ -340,6 +360,7 @@
         var kgardenmn = selectedOption.text;
 
         listStudent('', kgardenmn, 3);
+        showClass(kgardenmn);
         //$("#idClass").val("v0");  idKgarden
         //$("#idClassname").val(selectedText);
     });
@@ -368,28 +389,6 @@
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
     }
-
-    // showClassMembers = (tid) => {
-    //     var data = {
-    //         id: tid
-    //     };
-
-    //     dispList = (res) => {
-    //         CallToast('Student list successfully!!', "success")
-    //     }
-    //     dispErr = (xhr) => {
-    //         CallToast('Student list Error!!', "error")
-    //     }
-
-    //     var options = {
-    //         functionName: 'SShowStudentList',
-    //         otherData: {
-    //             id: user,
-    //             classnm: classnm
-    //         }
-    //     };
-    //     CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-    // }
     </script>
 </body>
 

@@ -897,14 +897,21 @@ function SShowStudentList($data)
             if ($step == '전체')
                 $sqlString = "SELECT *  FROM eplat_user where  role = 0";
             else
-                $sqlString = "SELECT *  FROM eplat_user where  step = '{$step}' and role = 0 and owner='{$kgarden}'";
+                //$sqlString = "SELECT *  FROM eplat_user where  step = '{$step}' and role = 0 and tid='{$kgarden}'";
+                $sqlString = "SELECT *  FROM eplat_user au, (select id from eplat_user where owner = '{$kgarden}') u where u.id = au.tid and role = 0 and step='{$step}'";
         } 
         else if ($sel == '2') {
             
-            $sqlString = "SELECT *  FROM eplat_user where classnm = '{$step}' and role = 0 and owner='{$kgarden}'";
+            //$sqlString = "SELECT *  FROM eplat_user where classnm = '{$step}' and role = 0 and tid='{$kgarden}'";
+            $sqlString = "SELECT *  FROM eplat_user au, (select id from eplat_user where owner = '{$kgarden}') u where u.id = au.tid and role = 0 and classnm='{$step}'";
         }
         else if ($sel == '3')
-            $sqlString = "SELECT *  FROM eplat_user where owner = '{$step}' and role = 0";
+            //$sqlString = "SELECT *  FROM eplat_user where tid = '{$step}' and role = 0";
+            if ($step == '전체')
+                //$sqlString = "SELECT *  FROM eplat_user where  role = 0";
+                $sqlString = "SELECT * , u.owner FROM eplat_user au, (select id uid, owner from eplat_user  ) u where u.uid = au.tid and role = 0";
+            else
+                $sqlString =  "SELECT *  FROM eplat_user au, (select id from eplat_user where owner = '{$step}' ) u where u.id = au.tid and role = 0";
     } 
     else 
     {
@@ -940,6 +947,7 @@ function SShowStudentList($data)
                     // 'mobile'  => $row['mobile'],								
                     'rdate'   => $row['rdate'],
                     'classnm' => $row['classnm'],
+                    'owner'   => $row['owner'],
                 )
             );
         }
@@ -1043,13 +1051,15 @@ function SShowClassList($data)
     session_start();
 
     $tid = $data['id'];
+    $kgarden = $data['kgarden'];
 
     global $conn;
 
     $sqlString = "select DISTINCT classnm from eplat_user where tid = '{$tid}'";
 
     if ($tid == "admin")
-        $sqlString = "select DISTINCT classnm from eplat_user where classnm is not null";
+        //$sqlString = "select DISTINCT classnm from eplat_user where tid = '{$kgarden}' and classnm is not null";
+        $sqlString = "SELECT DISTINCT classnm FROM eplat_user au, (select id from eplat_user where owner = '{$kgarden}') u where u.id = au.tid and role = 0";
     $rows = array();
 
     $i = 0;
@@ -1083,10 +1093,10 @@ function SShowKgardenList($data)
 
     global $conn;
 
-    $sqlString = "select DISTINCT owner from eplat_user where tid = '{$tid}' and owner is not null";
+    $sqlString = "select DISTINCT owner from eplat_user where mid = '{$tid}' and owner is not null and role=2";
 
     if ($tid == "admin")
-        $sqlString = "select DISTINCT owner from eplat_user where owner is not null";
+        $sqlString = "select DISTINCT owner from eplat_user where owner is not null and role=2";
     $rows = array();
 
     $i = 0;
