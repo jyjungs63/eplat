@@ -1083,10 +1083,10 @@ function SShowKgardenList($data)
 
     global $conn;
 
-    $sqlString = "select DISTINCT owner from eplat_user where tid = '{$tid}' and classnm is not null";
+    $sqlString = "select DISTINCT owner from eplat_user where tid = '{$tid}' and owner is not null";
 
     if ($tid == "admin")
-        $sqlString = "select DISTINCT owner from eplat_user where classnm is not null";
+        $sqlString = "select DISTINCT owner from eplat_user where owner is not null";
     $rows = array();
 
     $i = 0;
