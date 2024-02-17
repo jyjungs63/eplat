@@ -598,10 +598,11 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         var json = JSON.parse(ell['json']);
         var dat  = ell['rdate'];
 
-        if ( ell['uname'] == undefined)
-            newRow.append("<td > "+ ell['id']+"</td>");   // branch name
-        else 
-            newRow.append("<td > "+ ell['order']+"</td>");   // branch name
+        newRow.append("<td > "+ ell['id']+"</td>");   // branch name
+        // if ( ell['uname'] == undefined)
+        //     newRow.append("<td > "+ ell['id']+"</td>");   // branch name
+        // else 
+        //     newRow.append("<td > "+ ell['order']+"</td>");   // branch name
             //newRow.append("<td > "+ ell['uname']+"</td>");   // branch name
 
         var jarr = "";
@@ -620,8 +621,23 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         newRow.append( "<td><table class='nb' style='width:100%; margin-top:0px'>" + jarr + "</table></td>" );
         newRow.append("<td>"+ cvtCurrency(total) +"원</td>");                                            // 단가
         newRow.append("<td> <div> "+ ell['addr'] + "</div> <br/> <div>" + ell['order']+ "</div></td>");  //주소
-        let stat = res[0]['confirm'] == "0" ? "미완료" : "완료"
-        //newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='javascript:cancelOrder()'>구매취소<a></div></td>");
+        let stat =ell['confirm'] == "0" ? "발송미완료" : "발송완료"
+        
+
+        if ( stat == "발송미완료")
+        {
+            $("#idBtDelever").removeClass('disabled');
+
+            newRow.append("<td> <div style='color: red'>"+ stat+ "</div> <br/>");
+        }
+        else
+        {
+            $("#idBtDelever").addClass('disabled');
+            newRow.append("<td> <div style='color: blue'>"+ stat+ "</div> <br/>");
+        }
+
+        
+        // newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='javascript:cancelOrder()'>구매취소<a></div></td>");
         tbody.append(newRow);
             sum += total;
     })
@@ -668,6 +684,36 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
     
     // Append the new row to the table body
     tbody.append(newRow);
+}
+
+function AddDelever() {
+
+    const selectOpt = $("#idPorList").find(":selected");
+    const selectArr = selectOpt.map(function() {
+        return $(this).text();
+    }).get();
+    const porId = selectArr.join(', ')
+
+    dispList = (resp) => {
+        CallToast('배송 처리 완료!!', "success")
+        listPor(porId);
+    }
+    dispErr = (xhr) => {
+        CallToast('배송 처리 실패!!', "error")
+    }
+
+    var options = {
+        // functionName: 'SRemovPorID',
+        functionName: 'SAddDelever',
+        otherData: {
+            id: porId
+        }
+    };
+
+    CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+
+    orderList();
+    listPor(porId);
 }
 
 function cancelOrder() {

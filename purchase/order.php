@@ -171,7 +171,7 @@ include "../header.php";
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-profile-tab">
-                                    <div class="input-group input-group-sm mb-3" style="width: 950px">
+                                    <div class="input-group input-group-sm mb-3" style="width: 1200px">
                                         <!-- <button class="btn btn-outline-primary btn-sm" type="button">개별조회</button> -->
                                         <span class="d-flex badge bg-light text-dark align-items-center">개별조회</span>
                                         &nbsp;&nbsp;
@@ -194,13 +194,16 @@ include "../header.php";
                                         </input>
                                         &nbsp;
                                         <span id="idLbParcel"
-                                            class=" badge bg-light text-dark align-items-center">택배비</span>
+                                            class="d-flex badge bg-light text-dark align-items-center">택배비</span>
                                         &nbsp;&nbsp;
                                         <input class="form-control form-control-sm custom-width" id="idParcel"
                                             type="text" placeholder="택배비" style="width: 100px;">
                                         &nbsp;&nbsp;
                                         <button id="idBtParcel" class="btn btn-outline-success btn-sm disabled"
                                             type="button" onclick="AddParcel()">택배비추가
+                                        </button>&nbsp;&nbsp;
+                                        <button id="idBtDelever" class="btn btn-outline-primary btn-sm disabled"
+                                            type="button" onclick="AddDelever()">배송완료
                                         </button>
                                     </div>
 
@@ -462,17 +465,19 @@ include "../header.php";
                     ) === index
                 );
             })
-
+            $('#idPorBranch').empty();
             let select2 = document.getElementById('idPorBranch');
             let option2 = document.createElement('option');
             option2.text = ""; // Set the text of the new option
             option2.value = ""; // Set the value attribute (if needed)
             select2.add(option2);
             if (user == "admin") {
+                option2 = document.createElement('option');
                 option2.text = "전지사"; // Set the text of the new option
                 option2.value = "전지사"; // Set the value attribute (if needed)
                 select2.add(option2);
             } else {
+                option2 = document.createElement('option');
                 option2.text = "전유치원"; // Set the text of the new option
                 option2.value = "전유치원"; // Set the value attribute (if needed)
                 $("#idLbParcel").hide();
@@ -871,7 +876,7 @@ include "../header.php";
         formData.append('addr', $("#idAddr").val());
         formData.append('mobile', $("#idMobile").val());
         formData.append('postlist', JSON.stringify(porList));
-        porId = 'P' + "-" + formatDate() + "-" + $("#idOwner").val() + Math.floor(Math.random() * 10) + 1;
+        porId = 'P' + formatDate().slice(2) + $("#idOwner").val() + Math.floor(Math.random() * 10) + 1;
         formData.append('porid', porId)
 
         dispList = (resp) => {

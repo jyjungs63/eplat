@@ -4,38 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap 5 Select with Event Listeners</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Tabulator.js Multi-line Cell</title>
+    <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.2.0/dist/css/tabulator.min.css">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.0/dist/js/tabulator.min.js"></script>
 </head>
 
 <body>
 
-    <div class="container mt-3">
-        <label for="selectExample" class="form-label">Select Example:</label>
-        <select id="selectExample" class="form-select">
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-        </select>
-
-        <p id="sampleText">Sample Text</p>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div id="example-table"></div>
 
     <script>
-    let selectElement = document.getElementById('selectExample');
-    let sampleTextElement = document.getElementById('sampleText');
+    var tableData = [{
+            id: 1,
+            name: 'John Doe',
+            description: 'Line 1\nLine 2\nLine 3'
+        },
+        {
+            id: 2,
+            name: 'Jane Smith',
+            description: 'Multi-line\ncontent\nhere'
+        },
+    ];
 
-    // Event listener for change event
-    selectElement.addEventListener('change', function() {
-        sampleTextElement.innerText = "Selected value: " + this.value;
-    });
-
-    // Event listener for click event
-    selectElement.addEventListener('click', function() {
-        // Additional logic for click event if needed
-        console.log("Select element clicked" + this.value);
+    var table = new Tabulator("#example-table", {
+        height: "300px",
+        data: tableData,
+        layout: "fitColumns",
+        columns: [{
+                title: "ID",
+                field: "id",
+                width: 50
+            },
+            {
+                title: "Name",
+                field: "name",
+                width: 150
+            },
+            {
+                title: "Description",
+                field: "description",
+                formatter: "textarea",
+                width: 200,
+            },
+        ],
     });
     </script>
 

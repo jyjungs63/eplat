@@ -642,6 +642,31 @@ function SRemovPorID($data)    // 프로그램 update 필요함
     echo json_encode($res);
 }
 
+function SAddDelever($data)    // 프로그램 update 필요함
+{
+    //session_start();
+
+    $id  = $data["id"];
+
+    global $conn;
+    $res = "";
+
+    try {
+
+        $sql = "UPDATE eplat_porlist SET confirm = 1  WHERE  por_id = '{$id}'";
+
+        if ($conn->query($sql) === TRUE) {
+            $res = true;
+        }
+
+        $conn->close();
+    } catch (Exception $e) {
+        $res = $e->getMessage();
+    }
+
+    echo json_encode($res);
+}
+
 function SDeleteMgr($data)
 {
     session_start();
@@ -899,22 +924,18 @@ function SShowStudentList($data)
             else
                 //$sqlString = "SELECT *  FROM eplat_user where  step = '{$step}' and role = 0 and tid='{$kgarden}'";
                 $sqlString = "SELECT *  FROM eplat_user au, (select id from eplat_user where owner = '{$kgarden}') u where u.id = au.tid and role = 0 and step='{$step}'";
-        } 
-        else if ($sel == '2') {
-            
+        } else if ($sel == '2') {
+
             //$sqlString = "SELECT *  FROM eplat_user where classnm = '{$step}' and role = 0 and tid='{$kgarden}'";
             $sqlString = "SELECT *  FROM eplat_user au, (select id from eplat_user where owner = '{$kgarden}') u where u.id = au.tid and role = 0 and classnm='{$step}'";
-        }
-        else if ($sel == '3')
+        } else if ($sel == '3')
             //$sqlString = "SELECT *  FROM eplat_user where tid = '{$step}' and role = 0";
             if ($step == '전체')
                 //$sqlString = "SELECT *  FROM eplat_user where  role = 0";
                 $sqlString = "SELECT * , u.owner FROM eplat_user au, (select id uid, owner from eplat_user  ) u where u.uid = au.tid and role = 0";
             else
                 $sqlString =  "SELECT *  FROM eplat_user au, (select id from eplat_user where owner = '{$step}' ) u where u.id = au.tid and role = 0";
-    } 
-    else 
-    {
+    } else {
         if ($sel == '1') {
             if ($step == '전체')
                 $sqlString = "SELECT *  FROM eplat_user where tid = '{$tid}' ";
