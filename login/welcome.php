@@ -146,15 +146,15 @@ img {
                                             <option val="v1">v1</option>
                                             <option val="v2">v2</option>
                                             <option val="v3">v3</option>
-                                            <option val="v4">v4</option>
-                                            <option val="v5">v5</option>
-                                            <option val="v6">v6</option>
-                                            <option val="v7">v7</option>
-                                            <option val="v8">v8</option>
-                                            <option val="v9">v9</option>
-                                            <option val="v10">v10</option>
-                                            <option val="v11">v11</option>
-                                            <option val="v12">v12</option>
+                                            <option val="v4" disabled>v4</option>
+                                            <option val="v5" disabled>v5</option>
+                                            <option val="v6" disabled>v6</option>
+                                            <option val="v7" disabled>v7</option>
+                                            <option val="v8" disabled>v8</option>
+                                            <option val="v9" disabled>v9</option>
+                                            <option val="v10" disabled>v10</option>
+                                            <option val="v11" disabled>v11</option>
+                                            <option val="v12" disabled>v12</option>
                                         </select>
                                     </div>
                                 </td>
@@ -240,7 +240,18 @@ img {
                             <tr class="">
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
-                                    class="talign " scope="col" colspan="2">1st Week</th>
+                                    class="talign " scope="col" colspan="1">1st Week</th>
+                                <th height="70"
+                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    class="talign " scope="col" colspan="1">
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail" /></span></a></span>
+                                    &nbsp;&nbsp;
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -348,7 +359,18 @@ img {
                             <tr class="">
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
-                                    class="talign" scope="col" colspan="2">2nd Week</th>
+                                    class="talign" scope="col" colspan="1">2nd Week</th>
+                                <th height="70"
+                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    class="talign " scope="col" colspan="1">
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail" /></span></a></span>
+                                    &nbsp;&nbsp;
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -459,7 +481,18 @@ img {
                             <tr class="">
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
-                                    class="talign" scope="col" colspan="2">3rd Week</th>
+                                    class="talign" scope="col" colspan="1">3rd Week</th>
+                                <th height="70"
+                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    class="talign " scope="col" colspan="1">
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail" /></span></a></span>
+                                    &nbsp;&nbsp;
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -567,7 +600,18 @@ img {
                             <tr class="">
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
-                                    class="talign" scope="col" colspan="2">4th Week</th>
+                                    class="talign" scope="col" colspan="1">4th Week</th>
+                                <th height="70"
+                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    class="talign " scope="col" colspan="1">
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail" /></span></a></span>
+                                    &nbsp;&nbsp;
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -771,7 +815,7 @@ img {
             const selectArr = selectOpt.map(function() {
                 return $(this).text();
             }).get();
-            const selectT = selectArr.join(', ')
+            var selectT = selectArr.join(', ')
             if (selectT == "")
                 selectT = "1";
             assignHref(Number(selectT));
