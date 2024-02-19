@@ -68,6 +68,12 @@ img {
     border: 0px;
 }
 
+.img-thumbnail1 {
+    width: 25px;
+    height: 18px;
+    background-size: 100% 100%;
+}
+
 .modal-dialog {
     max-width: 800px;
     margin: 30px auto;
@@ -246,11 +252,10 @@ img {
                                     class="talign " scope="col" colspan="1">
                                     <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail" /></span></a></span>
-                                    &nbsp;&nbsp;
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
                         </thead>
@@ -366,11 +371,10 @@ img {
                                     <span>GAME&nbsp;<a id="w1_5555"
                                             href="https://ellisonleao.github.io/clumsy-bird/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://mimstris.onrender.com/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail" /></span></a></span>
-                                    &nbsp;&nbsp;
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
                         </thead>
@@ -489,12 +493,11 @@ img {
                                     <span>GAME&nbsp;<a id="w1_5555"
                                             href="https://www.edopedia.com/demo/pixeldefense/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555"
                                             href="https://iamkun.github.io/tower_game/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail" /></span></a></span>
-                                    &nbsp;&nbsp;
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
                         </thead>
@@ -610,11 +613,10 @@ img {
                                     <span>GAME&nbsp;<a id="w1_5555"
                                             href="https://www.edopedia.com/demo/2048/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://mk.mgechev.com/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail" /></span></a></span>
-                                    &nbsp;&nbsp;
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
                         </thead>
