@@ -50,7 +50,8 @@ const generateGame = () => {
         throw new Error("The dimension of the board must be an even number.")
     }
 
-    const emojis = ['🥔', '🍒', '🥑', '🌽', '🥕', '🍇', '🍉', '🍌', '🥭', '🍍']
+    const emojis = ['family_1.png', 'family_2.png', 'family_3.png', 'family_4.png', 'family_5.png', 'family_6.png', 'family_7.png', 'family_8.png', 'family_9.png', 'family_10.png']
+    //const emojis = ['🥔', '🍒', '🥑', '🌽', '🥕', '🍇', '🍉', '🍌', '🥭', '🍍']
     const picks = pickRandom(emojis, (dimensions * dimensions) / 2) 
     const items = shuffle([...picks, ...picks])
     const cards = `
@@ -58,12 +59,12 @@ const generateGame = () => {
             ${items.map(item => `
                 <div class="card">
                     <div class="card-front"></div>
-                    <div class="card-back">${item}</div>
+                    <div class="card-back "><img  style="width:100%; height: 100%" class="img-responsive" src=assets/${item}></img></div>
                 </div>
             `).join('')}
        </div>
     `
-    
+    //<div class="card-back">${item}</div>
     const parser = new DOMParser().parseFromString(cards, 'text/html')
 
     selectors.board.replaceWith(parser.querySelector('.board'))
@@ -104,9 +105,15 @@ const flipCard = card => {
     if (state.flippedCards === 2) {
         const flippedCards = document.querySelectorAll('.flipped:not(.matched)')
 
-        if (flippedCards[0].innerText === flippedCards[1].innerText) {
+        if (flippedCards[0].innerHTML == flippedCards[1].innerHTML) {
+            //if (flippedCards[0].innerText === flippedCards[1].innerText) {
             flippedCards[0].classList.add('matched')
             flippedCards[1].classList.add('matched')
+            
+            var audio = new Audio('assets/success.mp3');
+
+            // Play the audio
+            audio.play();
         }
 
         setTimeout(() => {
