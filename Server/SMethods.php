@@ -336,10 +336,20 @@ function SPorDetailListRange($data)
     }
     $tsql = "select p.*, u.owner owner from eplat_porlist p ,  eplat_user u  where u.id = p.id and ";
 
-    $stmt = $tsql . "p.rdate between '{$start}' and '{$end}' order by id";
+    
+    if ( $name == "전지사" )
+        $stmt = $tsql . "p.rdate between '{$start}' and '{$end}' order by id";
 
-    if ($id != "전지사")
+    else if ( $name == "전유치원" )
         $stmt = $tsql . "u.id = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+
+    else
+    {
+        if ($id != "admin" )
+            $stmt = $tsql . "p.order = '{$name}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+        else
+            $stmt = $tsql . "p.id = '{$name}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+    }
 
     try {
 
