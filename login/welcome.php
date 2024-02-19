@@ -247,7 +247,7 @@ img {
                                     <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail" /></span></a></span>
                                     &nbsp;&nbsp;
@@ -363,10 +363,11 @@ img {
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                    <span>GAME&nbsp;<a id="w1_5555"
+                                            href="https://ellisonleao.github.io/clumsy-bird/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://mimstris.onrender.com/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail" /></span></a></span>
                                     &nbsp;&nbsp;
@@ -485,10 +486,12 @@ img {
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                    <span>GAME&nbsp;<a id="w1_5555"
+                                            href="https://www.edopedia.com/demo/pixeldefense/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                    <span>EXTR&nbsp;<a id="w1_5555"
+                                            href="https://iamkun.github.io/tower_game/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail" /></span></a></span>
                                     &nbsp;&nbsp;
@@ -604,10 +607,11 @@ img {
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                    <span>GAME&nbsp;<a id="w1_5555"
+                                            href="https://www.edopedia.com/demo/2048/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://mk.mgechev.com/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail" /></span></a></span>
                                     &nbsp;&nbsp;
