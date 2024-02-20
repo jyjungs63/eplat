@@ -248,7 +248,7 @@ img {
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">1st Week</th>
                                 <th height="70"
-                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    style="font-size: 1.0rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
                                     <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
@@ -366,7 +366,7 @@ img {
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign" scope="col" colspan="1">2nd Week</th>
                                 <th height="70"
-                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    style="font-size: 1.0rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
                                     <span>GAME&nbsp;<a id="w1_5555"
                                             href="https://ellisonleao.github.io/clumsy-bird/"><span><img
@@ -488,7 +488,7 @@ img {
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign" scope="col" colspan="1">3rd Week</th>
                                 <th height="70"
-                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    style="font-size: 1.0rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
                                     <span>GAME&nbsp;<a id="w1_5555"
                                             href="https://www.edopedia.com/demo/pixeldefense/"><span><img
@@ -608,13 +608,17 @@ img {
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign" scope="col" colspan="1">4th Week</th>
                                 <th height="70"
-                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    style="font-size: 1rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
                                     <span>GAME&nbsp;<a id="w1_5555"
                                             href="https://www.edopedia.com/demo/2048/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://mk.mgechev.com/"><span><img
+                                    <!-- <span>EXTR&nbsp;<a id="w1_5555" href="https://mk.mgechev.com/"><span><img
+                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span> -->
+                                    <span>EXTR&nbsp;<a id="w1_5555"
+                                            href=" https://codingnepalweb.com/demos/snake-game-javascript/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
