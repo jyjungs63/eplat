@@ -7,10 +7,11 @@ $(document).ready(function(e) {
     {
         $("#custom-tabs-one-home-tab").parent().hide();
         $("#custom-tabs-one-home").hide();
+        $('#custom-tabs-one-profile-tab').tab('show');
+        $("#cardMain").show();
 
         $("#cardDest").remove();  // remove 주문 창
         $("#cardPDF").remove();
-        $("#cardMain").show();
         $("#idSecDiv").empty();
 
         // var newDiv = $('<iframe id="pdfDiv" style="width: 100%; height: 900px"></iframe>');
@@ -490,13 +491,7 @@ listPor = (por_id) => {
 
 
         addPurcharseList(res, "");
-        // porTable.setData(JSON.parse(js));
 
-        // var cnt = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html()
-        // var sum = $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html()
-        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(1)").html("총합")
-        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(4)").html(parseInt(cnt/2));
-        // $("#porTableDiv > div.tabulator-footer > div.tabulator-calcs-holder > div > div:nth-child(5)").html(cvtCurrency(parseInt(sum/2)));
         $("#idID2").val(res[0]['id']);
         $("#idName2").val(res[0]['order']);
         $("#idAddr2").val(res[0]['addr']);
@@ -598,7 +593,11 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         var json = JSON.parse(ell['json']);
         var dat  = ell['rdate'];
 
-        newRow.append("<td > "+ ell['id']+"</td>");   // branch name
+        if ( user == 'admin')
+            newRow.append("<td > "+ ell['id']+"</td>");   // branch name
+        else
+            newRow.append("<td > "+ ell['order']+"</td>");   // 유치원 이름 
+
         // if ( ell['uname'] == undefined)
         //     newRow.append("<td > "+ ell['id']+"</td>");   // branch name
         // else 
@@ -624,7 +623,7 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         let stat =ell['confirm'] == "0" ? "발송미완료" : "발송완료"
         
 
-        if ( stat == "발송미완료")
+        if ( stat == "발송미완료" && id == "")
         {
             $("#idBtDelever").removeClass('disabled');
 
@@ -758,6 +757,8 @@ document.getElementById("idPorList").addEventListener("change", function() {   /
     var selectedText = selectedOption.text;
 
     listPor(selectedText);
+    $("#idBtDelever").removeClass('disabled');
+    $("#idBtParcel").addClass('disabled');
 });
 
 function refreshDest() {
@@ -935,10 +936,8 @@ document.getElementById("idGrade").addEventListener("change", function() { // �
     // 선택된 옵션 가져오기
     var selectedOption = this.options[this.selectedIndex];
 
-    // 선택된 옵션의 값(value) 가져오기
-    var id = selectedOption.value;
-    // 선택된 옵션의 텍스트 가져오기
-    var name = selectedOption.text;
+    var name = selectedOption.text;     
+    var id   = selectedOption.value;    // admin or 지사명
  
     let thisMoment = moment(monthPicker.value);
     let endOfMonth = moment(thisMoment).endOf('month').format('YYYY-MM-DD');
@@ -947,11 +946,16 @@ document.getElementById("idGrade").addEventListener("change", function() { // �
     listPorRange( startOfMonth, endOfMonth,  name, id);
 
     
-    if ( selectedOption.text != "전체")
+    if ( selectedOption.text != "전지사")
+    {
         if ( user == "admin")
             $("#idBtParcel").removeClass('disabled');
-
+        else
+            $("#idBtParcel").addClass('disabled');
+    }   
     $("#pdfDiv").remove();
+    $("#idBtDelever").addClass('disabled');
+    
     
 });
 

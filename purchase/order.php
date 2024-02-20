@@ -211,8 +211,10 @@ include "../header.php";
                                     <table id="porTable" style="width: 100%;border: 1px solid black;">
                                         <thead>
                                             <tr>
-                                                <th style="height: 50px" class="col1">지사/유치원명</th>
-                                                <th style="height: 50px" class="col1">날짜/주문번호</th>
+                                                <th style="height: 50px" class="col1"><a
+                                                        href="javascript:alert('지사/유치원명')">지사/유치원명</a></th>
+                                                <th style="height: 50px" class="col1"><a
+                                                        href="javascript:alert('날짜/주문번호')">날짜/주문번호</a></th>
                                                 <th class="col2">내역</th>
                                                 <th class="col3">금액</th>
                                                 <th class="col4">배송주소</th>
@@ -385,6 +387,10 @@ include "../header.php";
     cardWidgetManage($('#idCardAddress'), $('#idCardAddressBtn')); //idCardAddressBtn
     cardWidgetManage($('#idCardPDF'), $('#idCardPDFBtn')); //idCardAddressBtn
 
+    if (user == 'admin')
+        $("#idBtDelever").css('visibility', 'visible');
+    else
+        $("#idBtDelever").css('visibility', 'hidden');
 
     orderToPdf = () => {
         var element = document.getElementById('idTableConfirm');
@@ -451,7 +457,8 @@ include "../header.php";
                 select.add(option);
 
                 if (user == "admin") {
-                    blist.push([el['id'], el['bname']])
+                    //blist.push([el['id'], el['bname']])
+                    blist.push([el['id'], el['id']])
                 } else {
                     blist.push([el['id'], el['order']])
                 }
@@ -474,12 +481,12 @@ include "../header.php";
             if (user == "admin") {
                 option2 = document.createElement('option');
                 option2.text = "전지사"; // Set the text of the new option
-                option2.value = "전지사"; // Set the value attribute (if needed)
+                option2.value = "admin"; // Set the value attribute (if needed)
                 select2.add(option2);
             } else {
                 option2 = document.createElement('option');
                 option2.text = "전유치원"; // Set the text of the new option
-                option2.value = "전유치원"; // Set the value attribute (if needed)
+                option2.value = user; // Set the value attribute (if needed)
                 $("#idLbParcel").hide();
                 $("#idParcel").hide();
                 $("#idBtParcel").hide();
@@ -488,8 +495,11 @@ include "../header.php";
             }
             for (let i = 0; i < unqueArr.length; i++) {
                 option2 = document.createElement('option');
-                option2.value = unqueArr[i][0]; // Set the value attribute (if needed)
-                option2.text = unqueArr[i][1]; // Set the text of the new option
+                if (user == 'admin')
+                    option2.value = 'admin'; // 지사명
+                else
+                    option2.value = unqueArr[i][0]; // 지사명
+                option2.text = unqueArr[i][1]; // 유치원명
                 select2.add(option2);
             }
 
