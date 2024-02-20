@@ -1176,13 +1176,13 @@ function SinsertStudent($data)
             if ($conn->query($sql) === TRUE) {
                 $result =  "New record created successfully";
             } else {
-                $result =  "Error: " . $sql . "<br>" . $conn->error;
+                $result =  array("error:" =>  $sql . "<br>" . $conn->error);
             }
         }
 
         $conn->close();
     } catch (Exception $e) {
-        echo json_encode($e->getMessage());
+        echo  json_encode(array("error:" => $e->getMessage()));
     }
 
     echo json_encode($result);

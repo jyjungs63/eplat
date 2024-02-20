@@ -382,9 +382,10 @@
                 CallToast('New Student Update successfully!!', "success")
         }
         dispErr = (xhr) => {
-            if (chos == 1)
-                CallToast('New Student added successfully!!', "error")
-            else
+            if (chos == 1) {
+                alert(' 아이디가 이미 사용중입니다.')
+                CallToast('아이디가 이미 사용중입니다!!', "error")
+            } else
                 CallToast('New Student  Update falure !!', "error")
         }
 
