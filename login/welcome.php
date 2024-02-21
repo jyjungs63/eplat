@@ -69,8 +69,12 @@ img {
 }
 
 .img-thumbnail1 {
-    width: 25px;
-    height: 18px;
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    border: 1px;
+    border-style: solid;
+    border-color: white;
     background-size: 100% 100%;
 }
 
@@ -248,13 +252,13 @@ img {
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">1st Week</th>
                                 <th height="70"
-                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
-                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game3/index.html"><span><img
+                                                    src='..\memory-game3\game.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    src='..\memory-game3\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -366,14 +370,13 @@ img {
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign" scope="col" colspan="1">2nd Week</th>
                                 <th height="70"
-                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555"
-                                            href="https://ellisonleao.github.io/clumsy-bird/"><span><img
-                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://mimstris.onrender.com/"><span><img
-                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game3/index.html"><span><img
+                                                    src='..\memory-game3\game.jpg'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
+                                                    src='..\memory-game3\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -487,7 +490,7 @@ img {
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign" scope="col" colspan="1">3rd Week</th>
-                                <th height="70"
+                                <!-- <th height="70"
                                     style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
                                     <span>GAME&nbsp;<a id="w1_5555"
@@ -497,6 +500,16 @@ img {
                                     <span>EXTR&nbsp;<a id="w1_5555"
                                             href="https://iamkun.github.io/tower_game/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>
+                                </th> -->
+                                <th height="70"
+                                    style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    class="talign " scope="col" colspan="1">
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game3/index.html"><span><img
+                                                    src='..\memory-game3\game.jpg'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
+                                                    src='..\memory-game3\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -607,7 +620,7 @@ img {
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign" scope="col" colspan="1">4th Week</th>
-                                <th height="70"
+                                <!-- <th height="70"
                                     style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
                                     <span>GAME&nbsp;<a id="w1_5555"
@@ -616,6 +629,16 @@ img {
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://mk.mgechev.com/"><span><img
                                                     src='..\assets\img\online_study_room\internal_images\online_icon5.png'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>
+                                </th> -->
+                                <th height="70"
+                                    style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
+                                    class="talign " scope="col" colspan="1">
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game3/index.html"><span><img
+                                                    src='..\memory-game3\game.jpg'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
+                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
+                                                    src='..\memory-game3\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
