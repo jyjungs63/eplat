@@ -254,11 +254,11 @@ img {
                                 <th height="70"
                                     style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game3/index.html"><span><img
-                                                    src='..\memory-game3\game.jpg'
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\memory-game\game.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\memory-game3\extr.jpg'
+                                                    src='..\memory-game\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -372,11 +372,11 @@ img {
                                 <th height="70"
                                     style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game3/index.html"><span><img
-                                                    src='..\memory-game3\game.jpg'
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\memory-game\game.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\memory-game3\extr.jpg'
+                                                    src='..\memory-game\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -505,11 +505,11 @@ img {
                                 <th height="70"
                                     style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game3/index.html"><span><img
-                                                    src='..\memory-game3\game.jpg'
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\memory-game\game.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\memory-game3\extr.jpg'
+                                                    src='..\memory-game\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -634,11 +634,11 @@ img {
                                 <th height="70"
                                     style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game3/index.html"><span><img
-                                                    src='..\memory-game3\game.jpg'
+                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
+                                                    src='..\memory-game\game.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
                                     <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\memory-game3\extr.jpg'
+                                                    src='..\memory-game\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
