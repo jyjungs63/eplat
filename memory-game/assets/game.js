@@ -1,3 +1,12 @@
+
+const searchParams = new URLSearchParams(location.search);
+var clas = searchParams.get('clas');
+var sor  = searchParams.get('sor');
+if ( clas == '' || clas == null)
+    clas = 'y7';
+if ( sor == '' || sor == null)
+    sor = 'sentens';
+
 const selectors = {
     boardContainer: document.querySelector('.board-container'),
     board: document.querySelector('.board'),
@@ -50,7 +59,9 @@ const generateGame = () => {
         throw new Error("The dimension of the board must be an even number.")
     }
 
-    const emojis = ['1.png', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg']
+    let emojis = ['PH-1.jpg', 'PH-2.jpg', 'PH-3.jpg', 'PH-4.jpg', 'PH-5.jpg', 'PH-6.jpg', 'PH-7.jpg', 'PH-8.jpg']
+    if ( sor != 'sentens')
+        emojis = ['PS-1.png', 'PS-2.jpg', 'PS-3.jpg', 'PS-4.jpg', 'PS-5.jpg', 'PS-6.jpg', 'PS-7.jpg', 'PS-8.jpg'];
     //const emojis = ['family_1.png', 'family_2.png', 'family_3.png', 'family_4.png', 'family_5.png', 'family_6.png', 'family_7.png', 'family_8.png', 'family_9.png', 'family_10.png']
     //const emojis = ['🥔', '🍒', '🥑', '🌽', '🥕', '🍇', '🍉', '🍌', '🥭', '🍍']
     const picks = pickRandom(emojis, (dimensions * dimensions) / 2) 
@@ -59,8 +70,8 @@ const generateGame = () => {
         <div class="board" style="grid-template-columns: repeat(${dimensions}, auto)">
             ${items.map(item => `
                 <div class="card">                 
-                    <div class="card-front" style="background-image: url('assets/front.png');background-size: cover;background-position: center;"></div>  
-                    <div class="card-back "><img  style="width:100%; height: 100%" class="img-responsive" src=assets/seven/${item}></img></div>
+                    <div class="card-front" style="background-image: url('assets/front.png');background-size: contain;background-position: center;"></div>  
+                    <div class="card-back "><img  style="width:100%; height: 100%" class="img-responsive" src=assets/${clas}/${item}></img></div>
                 </div>
             `).join('')}
        </div>
@@ -110,11 +121,14 @@ const flipCard = card => {
         if (flippedCards[0].innerHTML == flippedCards[1].innerHTML) {
             //if (flippedCards[0].innerText === flippedCards[1].innerText) {
             flippedCards[0].classList.add('matched')
-            flippedCards[1].classList.add('matched')
+            const mydom = new DOMParser().parseFromString(flippedCards[0].innerHTML, 'text/html')
             
+            flippedCards[1].classList.add('matched')
 
+            let sound = replaceFileExtension( mydom.getElementsByTagName('img')[0].attributes['src'].value, 'wav')
+            var audio = new Audio(sound);
+            audio.play();
         }
-
         setTimeout(() => {
             flipBackCards()
         }, 1000)
@@ -137,6 +151,22 @@ const flipCard = card => {
         }, 1000)
     }
 }
+
+function replaceFileExtension(fileName, newExtension) {
+    // Find the last dot in the file name
+    var lastDotIndex = fileName.lastIndexOf('.');
+
+    // Check if a dot is found and it's not the first character
+    if (lastDotIndex !== -1 && lastDotIndex > 0) {
+        // Replace the old extension with the new one
+        var newFileName = fileName.substr(0, lastDotIndex) + '.' + newExtension;
+        return newFileName;
+    } else {
+        // No dot found or dot is at the beginning, simply append the new extension
+        return fileName + '.' + newExtension;
+    }
+}
+
 
 const attachEventListeners = () => {
     document.addEventListener('click', event => {

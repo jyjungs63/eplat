@@ -72,9 +72,9 @@ img {
     width: 40px;
     height: 40px;
     padding: 0px;
-    border: 1px;
+    border: 2px;
     border-style: solid;
-    border-color: white;
+    border-color: yellow;
     background-size: 100% 100%;
 }
 
@@ -254,11 +254,9 @@ img {
                                 <th height="70"
                                     style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
-                                                    src='..\memory-game\game.jpg'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\memory-game\extr.jpg'
+                                    <span><a id="w1_g" href="#"><span><img src='..\memory-game\game.jpg'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span><a id="w1_e" href="#"><span><img src='..\memory-game\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -372,11 +370,9 @@ img {
                                 <th height="70"
                                     style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
-                                                    src='..\memory-game\game.jpg'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\memory-game\extr.jpg'
+                                    <span><a id="w2_g" href="#"><span><img src='..\memory-game\game.jpg'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span><a id="w2_e" href="#"><span><img src='..\memory-game\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -490,26 +486,12 @@ img {
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign" scope="col" colspan="1">3rd Week</th>
-                                <!-- <th height="70"
-                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
-                                    class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555"
-                                            href="https://www.edopedia.com/demo/pixeldefense/"><span><img
-                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555"
-                                            href="https://iamkun.github.io/tower_game/"><span><img
-                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>
-                                </th> -->
                                 <th height="70"
                                     style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
-                                                    src='..\memory-game\game.jpg'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\memory-game\extr.jpg'
+                                    <span><a id="w3_g" href="#"><span><img src='..\memory-game\game.jpg'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span><a id="w3_e" href="#"><span><img src='..\memory-game\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -620,25 +602,12 @@ img {
                                 <th height="70"
                                     style="font-size: 1.5rem; background-color:#271841;color:white;text-align: -webkit-center;"
                                     class="talign" scope="col" colspan="1">4th Week</th>
-                                <!-- <th height="70"
-                                    style="font-size: 1.5rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
-                                    class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555"
-                                            href="https://www.edopedia.com/demo/2048/"><span><img
-                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://mk.mgechev.com/"><span><img
-                                                    src='..\assets\img\online_study_room\internal_images\online_icon5.png'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>
-                                </th> -->
                                 <th height="70"
                                     style="font-size: 1.2rem; background-color:#412c6f;color:white;text-align: -webkit-center;"
                                     class="talign " scope="col" colspan="1">
-                                    <span>GAME&nbsp;<a id="w1_5555" href="../memory-game/index.html"><span><img
-                                                    src='..\memory-game\game.jpg'
-                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;
-                                    <span>EXTR&nbsp;<a id="w1_5555" href="https://hexgl.bkcore.com/play/"><span><img
-                                                    src='..\memory-game\extr.jpg'
+                                    <span><a id="w4_g" href="#"><span><img src='..\memory-game\game.jpg'
+                                                    class="img-thumbnail img-thumbnail1" /></span></a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span><a id="w4_e" href="#"><span><img src='..\memory-game\extr.jpg'
                                                     class="img-thumbnail img-thumbnail1" /></span></a></span>
                                 </th>
                             </tr>
@@ -742,64 +711,7 @@ img {
         <!-- </div> -->
     </div>
 
-    <div class="container" style="visibility: hidden;">
-        <!-- <div class="container"> -->
-        <h1>Play YouTube or Vimeo Videos in Bootstrap 5 Modal</h1>
 
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary video-btn" data-bs-toggle="modal"
-            data-src="https://www.youtube.com/embed/Jfrjeg26Cwk" data-bs-target="#myModal">
-            Play Video 1 - autoplay
-        </button>
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary video-btn" data-bs-toggle="modal"
-            data-src="https://www.youtube.com/embed/IP7uGKgJL8U" data-bs-target="#myModal">
-            Play Video 2
-        </button>
-
-
-        <!-- Button trigger modal -->
-        <!-- <button type="button" class="btn btn-primary video-btn" data-bs-toggle="modal"
-            data-src="https://www.youtube.com/embed/A-twOC3W558" data-bs-target="#myModal">
-            Play Video 3
-        </button> -->
-        <button type="button" class="btn btn-primary video-btn" data-bs-toggle="modal"
-            data-src="http://127.0.0.1:5502/login/1.mp4" data-bs-target="#myModal">
-            Play Video 3
-        </button>
-        <!-- data-src="http://127.0.0.1:5502/assets/test.mp4" data-bs-target="#myModal"> -->
-
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary video-btn" data-bs-toggle="modal"
-            data-src="https://player.vimeo.com/video/58385453?badge=0" data-bs-target="#myModal">
-            Play Vimeo Video
-        </button>
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></span>
-                        </button>
-                        <!-- 16:9 aspect ratio -->
-                        <div class="ratio ratio-16x9">
-                            <iframe class="embed-responsive-item" src="" id="video" allowscriptaccess="always"
-                                allow="autoplay"></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="template" style="display: none;">
-        <strong>Bolded content</strong>
-    </div>
     <script src="../common.js"></script>
     <script>
     // console.log(screen.width);
@@ -967,29 +879,23 @@ img {
     $(document).ready(function() {
 
         assignHref(1);
-        // Gets the video src from the data-src on each button
+        assinGame("basic");
 
         var $videoSrc;
         $('.video-btn').click(function() {
             $videoSrc = $(this).data("src");
         });
-        //console.log($videoSrc);
 
         // when the modal is opened autoplay it  
         $('#myModal').on('shown.bs.modal', function(e) {
-
-            // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
             $("#video").attr('src', $videoSrc +
                 "?autoplay=1&amp;modestbranding=1&amp;showinfo=0&amp;controls=0");
         })
 
         // stop playing the youtube video when I close the modal
         $('#myModal').on('hide.bs.modal', function(e) {
-            // a poor man's stop video
             $("#video").attr('src', $videoSrc);
         })
-
-        // document ready  
 
         $("#select-field, #iselect-field2").select2({ // volumr select 변경시
             theme: "bootstrap-5",
@@ -1008,6 +914,25 @@ img {
         $(".colr").css("background-color", e.value);
         stp = e.id
         $('#select-field').val('v0').trigger('change');
+        assinGame(stp);
+
+    }
+
+    function assinGame(stp) {
+        var clas = "y4";
+        if (stp == "step1") {
+            clas = "y5";
+        } else if (stp == "step2") {
+            clas = "y6";
+        } else if (stp == "step3") {
+            clas = "y7";
+        }
+        for (var i = 1; i < 5; i++) {
+            let idgame = "#w" + i + "_g";
+            let idextr = "#w" + i + "_e";
+            $(idgame).prop('href', '../memory-game/index.html?clas=' + clas + '&sor=phonex');
+            $(idextr).prop('href', '../memory-game/index.html?clas=' + clas + "&sor=sentens");
+        }
     }
 
     function changecolor2(value) {
@@ -1021,7 +946,6 @@ img {
         // $('#select-field').val('v0').trigger('change');
     }
 
-
     // $('#select-field, #iselect-field2').on('select2:select', function(e) {
     $('#iselect-field2').on('select2:select', function(e) { // volume select 변경시
 
@@ -1032,57 +956,14 @@ img {
         if ($('#flexCheckWeekChecked').is(':checked')) {
             $("#anchorAll")[0].click();
         }
-
     });
 
     $('#select-field').on('select2:select', function(e) {
 
         var data = e.params.data.text;
-
         vol = data
         assignHref(Number(1))
     });
-
-    var saveJson = () => {
-        var intid = Math.floor((Math.random() * 100));
-        var jsn = JSON.stringify(videoJson)
-        //var jsn   = videoJson;
-        $.ajax({
-            url: "saveJsonDBcopy.php",
-            type: "POST",
-            dataType: "json",
-            data: {
-                id: intid,
-                json_file: jsn
-            },
-            success: function(res) {
-                alert(res)
-            },
-            error: function(jqXFR, textStatus, errorThrown) {
-                if (textStatus == "error") {
-                    alert(loc + ' ' + textStatus);
-                }
-            }
-        });
-    }
-
-    var readJson = () => {
-        var intid = 3;
-        //var jsn   = videoJson;
-        $.ajax({
-            url: "readJsonDB.php",
-            type: "POST",
-            dataType: "json",
-            data: {
-                id: intid
-            },
-            error: function(jqXFR, textStatus, errorThrown) {
-                if (textStatus == "error") {
-                    alert(loc + ' ' + textStatus);
-                }
-            }
-        });
-    }
 
     window.addEventListener('beforeunload', function(e) {
 
@@ -1095,7 +976,6 @@ img {
         };
         localStorage.setItem('currentStatus', JSON.stringify(stat));
     });
-
 
     function studyRecordCount(id) {
 
