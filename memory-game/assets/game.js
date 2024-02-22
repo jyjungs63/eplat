@@ -97,7 +97,7 @@ const startGame = () => {
 
 const flipBackCards = () => {
     document.querySelectorAll('.card:not(.matched)').forEach(card => {
-        card.classList.remove('flipped')
+        card.classList.remove('flipped','shake')
     })
 
     state.flippedCards = 0
@@ -121,18 +121,28 @@ const flipCard = card => {
         if (flippedCards[0].innerHTML == flippedCards[1].innerHTML) {
             //if (flippedCards[0].innerText === flippedCards[1].innerText) {
             flippedCards[0].classList.add('matched')
-            const mydom = new DOMParser().parseFromString(flippedCards[0].innerHTML, 'text/html')
-            
             flippedCards[1].classList.add('matched')
 
-            let sound = replaceFileExtension( mydom.getElementsByTagName('img')[0].attributes['src'].value, 'wav')
-            var audio = new Audio(sound);
-            audio.play();
+            // const mydom = new DOMParser().parseFromString(flippedCards[0].innerHTML, 'text/html')
+            // let sound = replaceFileExtension( mydom.getElementsByTagName('img')[0].attributes['src'].value, 'wav')
+            // var audio = new Audio(sound);
+            // audio.play();
         }
+
+            setTimeout(() => {
+                flippedCards[0].classList.add('shake');
+                flippedCards[1].classList.add('shake');
+            }, 400);
+
+
         setTimeout(() => {
             flipBackCards()
         }, 1000)
     }
+    const mydom = new DOMParser().parseFromString(card.innerHTML, 'text/html')
+    let sound = replaceFileExtension( mydom.getElementsByTagName('img')[0].attributes['src'].value, 'wav')
+    var audio = new Audio(sound);
+    audio.play();
 
     // If there are no more cards that we can flip, we won the game
     if (!document.querySelectorAll('.card:not(.flipped)').length) {
