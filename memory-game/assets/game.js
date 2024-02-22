@@ -61,7 +61,7 @@ const generateGame = () => {
 
     let emojis = ['PH-1.jpg', 'PH-2.jpg', 'PH-3.jpg', 'PH-4.jpg', 'PH-5.jpg', 'PH-6.jpg', 'PH-7.jpg', 'PH-8.jpg']
     if ( sor != 'sentens')
-        emojis = ['PS-1.png', 'PS-2.jpg', 'PS-3.jpg', 'PS-4.jpg', 'PS-5.jpg', 'PS-6.jpg', 'PS-7.jpg', 'PS-8.jpg'];
+        emojis = ['PS-1.jpg', 'PS-2.jpg', 'PS-3.jpg', 'PS-4.jpg', 'PS-5.jpg', 'PS-6.jpg', 'PS-7.jpg', 'PS-8.jpg'];
     //const emojis = ['family_1.png', 'family_2.png', 'family_3.png', 'family_4.png', 'family_5.png', 'family_6.png', 'family_7.png', 'family_8.png', 'family_9.png', 'family_10.png']
     //const emojis = ['🥔', '🍒', '🥑', '🌽', '🥕', '🍇', '🍉', '🍌', '🥭', '🍍']
     const picks = pickRandom(emojis, (dimensions * dimensions) / 2) 
