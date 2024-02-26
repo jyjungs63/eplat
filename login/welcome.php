@@ -205,10 +205,10 @@ img {
                                         <!-- <div id="idselect" class="input-group-text">Week</div> -->
                                         <select id="iselect-field2" class="form-select">
                                             <option></option>
-                                            <option val="v1">1</option>
-                                            <option val="v2">2</option>
-                                            <option val="v3">3</option>
-                                            <option val="v4">4</option>
+                                            <option val="v1">1주</option>
+                                            <option val="v2">2주</option>
+                                            <option val="v3">3주</option>
+                                            <option val="v4">4주</option>
                                         </select>
                                     </div>
                                 </td>
@@ -758,8 +758,8 @@ img {
             }).get();
             var selectT = selectArr.join(', ')
             if (selectT == "")
-                selectT = "1";
-            assignHref(Number(selectT));
+                selectT = "1주";
+            assignHref(Number(selectT.slice(0, 1)));
             $(".myctl").removeClass("disabledbutton");
         }
     }
@@ -951,7 +951,7 @@ img {
 
         var data = e.params.data.text;
 
-        assignHref(Number(data))
+        assignHref(Number(data.slice(0, 1)))
 
         if ($('#flexCheckWeekChecked').is(':checked')) {
             $("#anchorAll")[0].click();

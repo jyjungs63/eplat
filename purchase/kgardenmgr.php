@@ -342,13 +342,13 @@
                 tab.addRow(data);
             })
         } else {
-            if (selectedValue != "")
+            if (selectedValue == "")
                 alert(" 생성 할 학생의 정보를 입력하세요/ Step [4세-Basic, 5세-Step1, 6세-Step2, 7세-Step3]  선택해주세요 !!.");
-            if (classname != "")
+            if (classname == "")
                 alert(" 생성 할 학생의 정보를 입력하세요/  반을 입력 입력해 주세요 !!.");
-            if (nickname != "")
+            if (nickname == "")
                 alert(" 생성 할 학생의 정보를 입력하세요/ 생성할 ID를 입력해 주세요 !!.");
-            if (num != "")
+            if (num == "")
                 alert(" 생성 할 학생의 정보를 입력하세요/ 생성할 원아 총 수를 입력해주세요 !!.");
         }
     };
