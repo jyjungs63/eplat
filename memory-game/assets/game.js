@@ -139,8 +139,8 @@ const flipCard = card => {
             flipBackCards()
         }, 1000)
     }
-    const mydom = new DOMParser().parseFromString(card.innerHTML, 'text/html')
-    let sound = replaceFileExtension( mydom.getElementsByTagName('img')[0].attributes['src'].value, 'wav')
+    //const mydom = new DOMParser().parseFromString(card.innerHTML, 'text/html')
+    let sound = replaceFileExtension( card.getElementsByTagName('img')[0].attributes['src'].value, 'wav')
     var audio = new Audio(sound);
     audio.play();
 
