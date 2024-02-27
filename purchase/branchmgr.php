@@ -20,16 +20,16 @@ include "../header.php";
     <link href="../common.css" rel="stylesheet">
     <title>지사 및 원관리</title>
     <style>
-        .form-control-xsm {
-            padding: .25rem .5rem;
-            /* 내부 여백(padding) 설정 */
-            font-size: .875rem;
-            /* 폰트 크기 설정 */
-            line-height: 0.5;
-            /* 줄 간격 설정 */
-            border-radius: .2rem;
-            /* 테두리 반경 설정 */
-        }
+    .form-control-xsm {
+        padding: .25rem .5rem;
+        /* 내부 여백(padding) 설정 */
+        font-size: .875rem;
+        /* 폰트 크기 설정 */
+        line-height: 0.5;
+        /* 줄 간격 설정 */
+        border-radius: .2rem;
+        /* 테두리 반경 설정 */
+    }
     </style>
 </head>
 
@@ -57,40 +57,52 @@ include "../header.php";
                         <div class="card-header" style="background-color: #8bd5ef;">
                             <h3 class="card-title">
                                 <div class="input-group mb-3">
-                                    <select class="form-select form-control-sm" id="idGrade" data-placeholder="Choose Items" style="width: 120px;">
+                                    <select class="form-select form-control-sm" id="idGrade"
+                                        data-placeholder="Choose Items" style="width: 120px;">
                                         <option val="va">전체</option>
                                         <option val="v4">지사관리</option>
                                         <option val="v5" selected>원관리</option>
                                     </select>&nbsp;
                                     &nbsp;
-                                    <input class="form-control form-control-sm" id="idOwner" type="text" placeholder="지사/유치원명" style="width: 150px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idOwner" type="text"
+                                        placeholder="지사/유치원명" style="width: 150px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idName" type="text" placeholder="이름" style="width: 150px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idName" type="text" placeholder="이름"
+                                        style="width: 150px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idMobile" type="text" placeholder="전화번호" style="width: 120px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idMobile" type="text"
+                                        placeholder="전화번호" style="width: 120px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디" style="width: 100px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idID" type="text" placeholder="아이디"
+                                        style="width: 100px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idPasswd" type="text" placeholder="비밀번호" style="width: 100px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idPasswd" type="text"
+                                        placeholder="비밀번호" style="width: 100px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idZip" type="text" placeholder="우편번호" style="width: 70px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idZip" type="text"
+                                        placeholder="우편번호" style="width: 70px;">&nbsp;
 
-                                    <input class="form-control form-control-sm" id="idAddr" type="text" placeholder="주소" style="width: 250px;">&nbsp;
+                                    <input class="form-control form-control-sm" id="idAddr" type="text" placeholder="주소"
+                                        style="width: 250px;">&nbsp;
 
-                                    <button class="btn btn-outline-primary btn-sm" type="button" onclick="execDaumPostcode('idZip','idAddr')">주소검색</button>&nbsp;
+                                    <button class="btn btn-outline-primary btn-sm" type="button"
+                                        onclick="execDaumPostcode('idZip','idAddr')">주소검색</button>&nbsp;
                                     &nbsp;
-                                    <button class="btn btn-success btn-sm" type="button" onclick="AddBranch()">등록</button>
+                                    <button class="btn btn-success btn-sm" type="button"
+                                        onclick="AddBranch()">등록</button>
                                 </div>
                             </h3>
                             <div class="card-tools" id="idCardBranchManageBtn">
-                                <button type="button" class="btn btn-tool btn-sm m-3" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+                                <button type="button" class="btn btn-tool btn-sm m-3" data-card-widget="collapse"
+                                    data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
                                 <!-- <button type="button" class="btn btn-tool btn-sm m-3" data-card-widget="remove"
                                     data-toggle="tooltip" title="Remove"><i class="fas fa-times"></i></button> -->
                             </div>
                         </div>
                         <div class="card-body pad" style="background-color: #88babe87;">
                             <div class="d-flex align-items-end justify-content-end" style="margin-bottom: 10px;">
-                                <button class="btn btn-primary" type="button" data-toggle="tooltip" title="지사 추가 하기" onclick="UpdateBranch()"><i class="fa-solid fa-user"></i>수정
+                                <button class="btn btn-primary" type="button" data-toggle="tooltip" title="지사 추가 하기"
+                                    onclick="UpdateBranch()"><i class="fa-solid fa-user"></i>수정
                                 </button>
                             </div>
 
@@ -146,226 +158,154 @@ include "../header.php";
     <!-- <script src="../header.js"></script> -->
 
     <script>
-        var table;
+    var table;
 
-        var user = "";
-        var role = "";
-        var conf = "";
-        var name = "";
-        var loca = "";
+    var user = "";
+    var role = "";
+    var conf = "";
+    var name = "";
+    var loca = "";
 
-        // $(document).ready(function() {
-        let loginfo = getLocalStorage('info');
-        if (loginfo) {
-            user = loginfo['user'];
-            role = loginfo['role'];
-            conf = loginfo['conf'];
-            name = loginfo['name'];
-            loca = loginfo['loca'];
-        }
-        if (role != '1' && role != '9') {
-            CallToast("지사 관리 권한으로 로긴 하세요", "error");
-            window.location.href = "../index.php";
-        }
+    // $(document).ready(function() {
+    let loginfo = getLocalStorage('info');
+    if (loginfo) {
+        user = loginfo['user'];
+        role = loginfo['role'];
+        conf = loginfo['conf'];
+        name = loginfo['name'];
+        loca = loginfo['loca'];
+    }
+    if (role != '1' && role != '9') {
+        CallToast("지사 관리 권한으로 로긴 하세요", "error");
+        window.location.href = "../index.php";
+    }
 
-        let w1 = $('#idCardBranchManage');
-        let w2 = $('#idCardBranchManageBtn');
+    let w1 = $('#idCardBranchManage');
+    let w2 = $('#idCardBranchManageBtn');
 
-        //cardWidgetManage(w1, w2);
+    //cardWidgetManage(w1, w2);
 
-        document.getElementById("brachname").innerHTML = "[" + user + "]" + "지사/원관리 리스트";
+    document.getElementById("brachname").innerHTML = "[" + user + "]" + "지사/원관리 리스트";
 
-        AddBranch = () => {
+    AddBranch = () => {
 
-            var selectElement = document.getElementById("idGrade"); // 지사 또는 원관리
-            var selectedValue = selectElement.value;
+        var selectElement = document.getElementById("idGrade"); // 지사 또는 원관리
+        var selectedValue = selectElement.value;
 
-            var id = $("#idID").val().trim(); // 아이디
-            var name = $("#idName").val().trim(); // 이름
-            var owner = $("#idOwner").val().trim(); // 지사명
-            var password = $("#idPasswd").val().trim();
-            var mobile = $("#idMobile").val().trim();
-            var addr = $("#idAddr").val();
-            var zipcode = $("#idZip").val();
-            var role = selectedValue == "지사관리" ? 1 : 2; // 1 branch manager , 2 // teacher
-            var rdate = "";
+        var id = $("#idID").val().trim(); // 아이디
+        var name = $("#idName").val().trim(); // 이름
+        var owner = $("#idOwner").val().trim(); // 지사명
+        var password = $("#idPasswd").val().trim();
+        var mobile = $("#idMobile").val().trim();
+        var addr = $("#idAddr").val();
+        var zipcode = $("#idZip").val();
+        var role = selectedValue == "지사관리" ? 1 : 2; // 1 branch manager , 2 // teacher
+        var rdate = "";
 
-            const formattedDate = formatDate();
-            if (rdate == undefined || rdate == "") rdate = formattedDate;
+        const formattedDate = formatDate();
+        if (rdate == undefined || rdate == "") rdate = formattedDate;
 
-            var items = {
-                id: id,
-                name: name,
-                owner: owner,
-                password: password,
-                mobile: mobile,
-                addr: addr,
-                zipcode: zipcode,
-                mid: user,
-                role: role,
-                rdate: rdate,
-            }
-
-            var data = {
-                "item": items
-            }
-            dispList = (resp) => {
-                if ('success' in resp) {
-                    CallToast('New Branch Manager added successfully!!', "success")
-                    items['role'] = items['role'] == "1" ? "지사관리" : (items['role'] == "2" ? "원관리" : (items[
-                        'role'] == "9" ? "관리자" : "원생"));
-                    table.addRow(items);
-                } else
-                    CallToast('New Branch Manager added falure!', "error")
-
-            }
-            dispErr = (xhr) => {
-                CallToast('New Branch Manager DB Call error!', "error")
-            }
-            jsdata = JSON.stringify(items);
-            var options = {
-                functionName: 'SRegistermgr',
-                otherData: {
-                    items
-                }
-            };
-            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-        };
-
-        UpdateBranch = () => {
-            var item = table.getSelectedData();
-            var items = [];
-
-            item.forEach(el => {
-                var jarr = {
-                    "id": el['id'],
-                    "owner": el['owner'],
-                    "name": el['name'],
-                    "mobile": el['mobile'],
-                    "addr": el['addr'],
-                    "zipcode": el['zipcode'],
-                    "password": el['password'],
-                    "confirm": 1,
-                }
-                items.push(jarr);
-            })
-            var data = {
-                "item": items
-            }
-
-            dispList = (resp) => {
-                CallToast('New Branch Manager Updated successfully!!', "success");
-                BranchList();
-            }
-            dispErr = (xhr) => {
-                CallToast('New Branch Manager Update falure!', "error")
-            }
-
-            var options = {
-                functionName: 'SShowConfirmUpdate',
-                otherData: {
-                    items
-                }
-            };
-            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-
+        var items = {
+            id: id,
+            name: name,
+            owner: owner,
+            password: password,
+            mobile: mobile,
+            addr: addr,
+            zipcode: zipcode,
+            mid: user,
+            role: role,
+            rdate: rdate,
         }
 
-        BranchList = () => {
-            var items = [];
-
-            var role = "";
-            dispList = (resp) => {
-                resp['success'].forEach(el => {
-
-                    switch (el['role']) {
-                        case "1":
-                            role = "지사관리"
-                            break;
-                        case "2":
-                            role = "원관리"
-                            break;
-                        case "9":
-                            role = "Admin"
-                            break
-                        default:
-                            role = "원생"
-                    }
-                    if (el['role'] == "1" || el['role'] == "2")
-                        var jarr = {
-                            "role": role,
-                            "id": el['id'],
-                            "name": el['name'],
-                            "owner": el['owner'],
-                            "mobile": el['mobile'],
-                            "addr": el['addr'],
-                            "zipcode": el['zipcode'],
-                            "password": el['password'],
-                            "rdate": el['rdate'],
-                        }
-                    items.push(jarr);
-                });
-                table.clearData();
-                table.setData(items);
-            }
-            dispErr = (e) => {
-                alert("SShowMgr Error!" + e);
-            }
-
-            var options = {
-                functionName: 'SShowMgr',
-                otherData: {
-                    role: "va", //전체
-                    id: user
-                }
-            };
-
-            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+        var data = {
+            "item": items
         }
-
-        BranchDelete = (cell) => {
-            var result = confirm("Are you sure to delete ??");
-            var id = cell._row.data['id'];
-            if (cell._row.data['role'] != "Admin") {
-                dispList = (resp) => {
-                    cell.delete();
-                }
-                dispErr = (xhr) => {
-                    alert("SDeleteMgr Error" + xhr.statusText);
-                }
-
-                var options = {
-                    functionName: 'SDeleteMgr',
-                    otherData: {
-                        id: id
-                    }
-                };
-
-                if (result) {
-                    CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-                } else
-                    console.log("delete row cancel branchmgr Branch Delete r.260!!");
+        dispList = (resp) => {
+            if ('success' in resp) {
+                CallToast('New Branch Manager added successfully!!', "success")
+                items['role'] = items['role'] == "1" ? "지사관리" : (items['role'] == "2" ? "원관리" : (items[
+                    'role'] == "9" ? "관리자" : "원생"));
+                table.addRow(items);
             } else
-                alert("admin관리자는  삭제 할 수 없습니다!!!!");
+                CallToast('New Branch Manager added falure!', "error")
 
         }
+        dispErr = (xhr) => {
+            CallToast(`${id}은 이미등록 되있습니다. 다른 ID를 사용하세요`, "error")
+        }
+        jsdata = JSON.stringify(items);
+        var options = {
+            functionName: 'SRegistermgr',
+            otherData: {
+                items
+            }
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+    };
 
-        document.getElementById("idGrade").addEventListener("change", function() {
-            // 선택된 옵션 가져오기
-            var selectedOption = this.options[this.selectedIndex];
+    UpdateBranch = () => {
+        var item = table.getSelectedData();
+        var items = [];
 
-            // 선택된 옵션의 값(value) 가져오기
-            var selectedValue = selectedOption.value;
+        item.forEach(el => {
+            var jarr = {
+                "id": el['id'],
+                "owner": el['owner'],
+                "name": el['name'],
+                "mobile": el['mobile'],
+                "addr": el['addr'],
+                "zipcode": el['zipcode'],
+                "password": el['password'],
+                "confirm": 1,
+            }
+            items.push(jarr);
+        })
+        var data = {
+            "item": items
+        }
 
-            // 선택된 옵션의 텍스트 가져오기
-            var selectedText = selectedOption.text;
+        dispList = (resp) => {
+            CallToast('New Branch Manager Updated successfully!!', "success");
+            BranchList();
+        }
+        dispErr = (xhr) => {
+            CallToast('New Branch Manager Update falure!', "error")
+        }
 
-            var items = [];
+        var options = {
+            functionName: 'SShowConfirmUpdate',
+            otherData: {
+                items
+            }
+        };
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
 
-            dispList = (resp) => {
-                resp.forEach(el => {
+    }
+
+    BranchList = () => {
+        var items = [];
+
+        var role = "";
+        dispList = (resp) => {
+            resp['success'].forEach(el => {
+
+                switch (el['role']) {
+                    case "1":
+                        role = "지사관리"
+                        break;
+                    case "2":
+                        role = "원관리"
+                        break;
+                    case "9":
+                        role = "Admin"
+                        break
+                    default:
+                        role = "원생"
+                }
+                if (el['role'] == "1" || el['role'] == "2")
                     var jarr = {
-                        "role": el['role'] == "1" ? "지사관리" : (el['id'] == "2" ? "원관리" : "기타"),
+                        "role": role,
                         "id": el['id'],
                         "name": el['name'],
                         "owner": el['owner'],
@@ -375,27 +315,99 @@ include "../header.php";
                         "password": el['password'],
                         "rdate": el['rdate'],
                     }
-                    items.push(jarr);
-                });
-                table.clearData();
-                table.setData(items);
+                items.push(jarr);
+            });
+            table.clearData();
+            table.setData(items);
+        }
+        dispErr = (e) => {
+            alert("SShowMgr Error!" + e);
+        }
+
+        var options = {
+            functionName: 'SShowMgr',
+            otherData: {
+                role: "va", //전체
+                id: user
             }
-            dispErr = (e) => {
-                alert("SShowMgr Error!" + e);
+        };
+
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+    }
+
+    BranchDelete = (cell) => {
+        var result = confirm("Are you sure to delete ??");
+        var id = cell._row.data['id'];
+        if (cell._row.data['role'] != "Admin") {
+            dispList = (resp) => {
+                cell.delete();
+            }
+            dispErr = (xhr) => {
+                alert("SDeleteMgr Error" + xhr.statusText);
             }
 
             var options = {
-                functionName: 'SShowMgr',
+                functionName: 'SDeleteMgr',
                 otherData: {
-                    role: selectedValue,
-                    id: user
+                    id: id
                 }
             };
 
-            CallAjax("SMethods.php", "POST", options, dispList, dispErr);
-        });
+            if (result) {
+                CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+            } else
+                console.log("delete row cancel branchmgr Branch Delete r.260!!");
+        } else
+            alert("admin관리자는  삭제 할 수 없습니다!!!!");
 
-        BranchList();
+    }
+
+    document.getElementById("idGrade").addEventListener("change", function() {
+        // 선택된 옵션 가져오기
+        var selectedOption = this.options[this.selectedIndex];
+
+        // 선택된 옵션의 값(value) 가져오기
+        var selectedValue = selectedOption.value;
+
+        // 선택된 옵션의 텍스트 가져오기
+        var selectedText = selectedOption.text;
+
+        var items = [];
+
+        dispList = (resp) => {
+            resp.forEach(el => {
+                var jarr = {
+                    "role": el['role'] == "1" ? "지사관리" : (el['id'] == "2" ? "원관리" : "기타"),
+                    "id": el['id'],
+                    "name": el['name'],
+                    "owner": el['owner'],
+                    "mobile": el['mobile'],
+                    "addr": el['addr'],
+                    "zipcode": el['zipcode'],
+                    "password": el['password'],
+                    "rdate": el['rdate'],
+                }
+                items.push(jarr);
+            });
+            table.clearData();
+            table.setData(items);
+        }
+        dispErr = (e) => {
+            alert("SShowMgr Error!" + e);
+        }
+
+        var options = {
+            functionName: 'SShowMgr',
+            otherData: {
+                role: selectedValue,
+                id: user
+            }
+        };
+
+        CallAjax("SMethods.php", "POST", options, dispList, dispErr);
+    });
+
+    BranchList();
     </script>
 </body>
 
