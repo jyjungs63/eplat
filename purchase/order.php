@@ -688,16 +688,19 @@ include "../header.php";
 
     var orderPrint = () => {
 
-        makePurchasePDFList();
+        if (table1.getDataCount() > 0) {
+            makePurchasePDFList();
 
-        $("#idConfirmOrder").addClass('disabled');
-        $("#idOKOrder").removeClass('disabled');
-        $("#idModifyOrder").removeClass('disabled');
+            $("#idConfirmOrder").addClass('disabled');
+            $("#idOKOrder").removeClass('disabled');
+            $("#idModifyOrder").removeClass('disabled');
 
-        $("#cardMain").toggle();
-        $("#cardDest").hide();
-        $("#cardPDF").show();
-
+            $("#cardMain").toggle();
+            $("#cardDest").hide();
+            $("#cardPDF").show();
+        } else {
+            alert("상품 선택을 1권 이상 해야 주문이 가능 합니다.!!")
+        }
     }
 
 
