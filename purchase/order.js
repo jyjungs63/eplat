@@ -636,7 +636,7 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
         }
 
         if ( user == "admin" && id == "")
-            newRow.append("<td> <div>"+ stat+ "</div> <br/> <div> <a href='javascript:cancelOrder()'>구매취소<a></div></td>");
+            newRow.append("<td><div> <a href='javascript:cancelOrder()'>구매취소<a></div></td>");
         tbody.append(newRow);
             sum += total;
     })
