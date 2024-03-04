@@ -191,12 +191,13 @@ include "../header.php";
                                     <thead>
                                         <tr>
                                             <th data-field="num" data-width="50" class="mobile-hide"
-                                                class="mobile-hide">순서</th>
-                                            <th data-field="title" data-width="300">제목</th>
-                                            <th data-field="cate" data-width="150" class="mobile-hide">종류</th>
+                                                data-sortable="true" class="mobile-hide">순서</th>
+                                            <th data-field="title" data-width="300" data-sortable="true">제목</th>
+                                            <th data-field="cate" data-width="150" class="mobile-hide"
+                                                data-sortable="true">종류</th>
                                             <!-- <th data-field="id" data-width="150" class="mobile-hide">종류</th> -->
                                             <th data-field="rdate" data-width="150" class="mobile-hide"
-                                                class="mobile-hide">날짜</th>
+                                                class="mobile-hide" data-sortable="true">날짜</th>
                                             <th data-field="file" data-width="150">File</th>
                                             <th data-field="state" data-checkbox="true">삭제</th>
                                         </tr>
