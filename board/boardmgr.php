@@ -164,7 +164,7 @@ include "../header.php";
                                             class="fa fa-trash"></i> &nbsp;삭제</button>
                                     &nbsp;&nbsp;
 
-                                    <label class="input-group-text" for="idSelect">자료선택</label>&nbsp;&nbsp;
+                                    <label class="input-group-text" for="idSelect">분류선택</label>&nbsp;&nbsp;
                                     <select class="custom-select" id="idSelect" style="height: 40px">
                                         <option value="all" selected>전체</option>
                                         <option value="n1">01호</option>
@@ -194,7 +194,7 @@ include "../header.php";
                                                 data-sortable="true" class="mobile-hide">순서</th>
                                             <th data-field="title" data-width="300" data-sortable="true">제목</th>
                                             <th data-field="cate" data-width="150" class="mobile-hide"
-                                                data-sortable="true">종류</th>
+                                                data-sortable="true">분류</th>
                                             <!-- <th data-field="id" data-width="150" class="mobile-hide">종류</th> -->
                                             <th data-field="rdate" data-width="150" class="mobile-hide"
                                                 class="mobile-hide" data-sortable="true">날짜</th>
@@ -254,7 +254,6 @@ include "../header.php";
                                             </div>
                                             <div class="col-75">
                                                 <select class="custom-select" id="idSelect2" style="height: 40px">
-                                                    <option value="all" selected>전체</option>
                                                     <option value="n1">01호</option>
                                                     <option value="n2">02호</option>
                                                     <option value="n3">03호</option>
@@ -370,7 +369,7 @@ include "../header.php";
                                         </div>
                                         <div class="row">
                                             <div class="col-25">
-                                                <label for="Record" class="control-label">종류</label>
+                                                <label for="Record" class="control-label">분류</label>
                                             </div>
                                             <div class="col-75">
                                                 <input type="text" class="form-control" id="idCate">
