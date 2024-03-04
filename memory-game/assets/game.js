@@ -69,14 +69,15 @@ const generateGame = () => {
     const cards = `
         <div class="board" style="grid-template-columns: repeat(${dimensions}, auto)">
             ${items.map((item, index)  => `
-                <div class="card">                 
-                    <div class="card-front" style="color: white; font-size: 3rem; justify-content: center;align-items: center;display: flex">${index+1}</div>  
+                <div class="card">  
+                <div class="card-front" style="color: white; font-size: 3rem; justify-content: center;align-items: center;display: flex">${index+1}</div>                                   
                     <div class="card-back "><img  style="width:100%; height: 100%" class="img-responsive" src=assets/${clas}/${item}></img></div>
                 </div>
             `).join('')}
        </div>
     `
-    // <div class="card-front" style="background-image: url('assets/front.png');background-size: contain;background-position: center;"></div>  
+    // <div class="card-front" style="background-image: url('assets/front.png');background-size: contain;background-position: center;"></div>
+    //  <div class="card-front" style="color: white; font-size: 3rem; justify-content: center;align-items: center;display: flex">${index+1}</div>  
     // <div class="card-front"><img  style="width:100%; height: 100%" class="img-responsive" src=assets/front.png></img></div> 
     //<div class="card-back">${item}</div>
     const parser = new DOMParser().parseFromString(cards, 'text/html')
@@ -119,7 +120,7 @@ const flipCard = card => {
     if (state.flippedCards === 2) {
         const flippedCards = document.querySelectorAll('.flipped:not(.matched)')
 
-        if (flippedCards[0].innerHTML == flippedCards[1].innerHTML) {
+        if (flippedCards[0].lastElementChild.innerHTML == flippedCards[1].lastElementChild.innerHTML) {
             //if (flippedCards[0].innerText === flippedCards[1].innerText) {
             flippedCards[0].classList.add('matched')
             flippedCards[1].classList.add('matched')

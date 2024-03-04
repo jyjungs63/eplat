@@ -167,15 +167,15 @@ include "../header.php";
                                     <label class="input-group-text" for="idSelect">자료선택</label>&nbsp;&nbsp;
                                     <select class="custom-select" id="idSelect" style="height: 40px">
                                         <option value="all" selected>전체</option>
-                                        <option value="n1">1호</option>
-                                        <option value="n2">2호</option>
-                                        <option value="n3">3호</option>
-                                        <option value="n4">4호</option>
-                                        <option value="n5">5호</option>
-                                        <option value="n6">6호</option>
-                                        <option value="n7">7호</option>
-                                        <option value="n8">8호</option>
-                                        <option value="n9">9호</option>
+                                        <option value="n1">01호</option>
+                                        <option value="n2">02호</option>
+                                        <option value="n3">03호</option>
+                                        <option value="n4">04호</option>
+                                        <option value="n5">05호</option>
+                                        <option value="n6">06호</option>
+                                        <option value="n7">07호</option>
+                                        <option value="n8">08호</option>
+                                        <option value="n9">09호</option>
                                         <option value="n10">10호</option>
                                         <option value="n11">11호</option>
                                         <option value="n12">12호</option>
@@ -255,15 +255,15 @@ include "../header.php";
                                             <div class="col-75">
                                                 <select class="custom-select" id="idSelect2" style="height: 40px">
                                                     <option value="all" selected>전체</option>
-                                                    <option value="n1">1호</option>
-                                                    <option value="n2">2호</option>
-                                                    <option value="n3">3호</option>
-                                                    <option value="n4">4호</option>
-                                                    <option value="n5">5호</option>
-                                                    <option value="n6">6호</option>
-                                                    <option value="n7">7호</option>
-                                                    <option value="n8">8호</option>
-                                                    <option value="n9">9호</option>
+                                                    <option value="n1">01호</option>
+                                                    <option value="n2">02호</option>
+                                                    <option value="n3">03호</option>
+                                                    <option value="n4">04호</option>
+                                                    <option value="n5">05호</option>
+                                                    <option value="n6">06호</option>
+                                                    <option value="n7">07호</option>
+                                                    <option value="n8">08호</option>
+                                                    <option value="n9">09호</option>
                                                     <option value="n10">10호</option>
                                                     <option value="n11">11호</option>
                                                     <option value="n12">12호</option>
