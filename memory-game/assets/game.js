@@ -68,14 +68,15 @@ const generateGame = () => {
     const items = shuffle([...picks, ...picks])
     const cards = `
         <div class="board" style="grid-template-columns: repeat(${dimensions}, auto)">
-            ${items.map(item => `
+            ${items.map((item, index)  => `
                 <div class="card">                 
-                    <div class="card-front" style="background-image: url('assets/front.png');background-size: contain;background-position: center;"></div>  
+                    <div class="card-front" style="color: white; font-size: 3rem; justify-content: center;align-items: center;display: flex">${index+1}</div>  
                     <div class="card-back "><img  style="width:100%; height: 100%" class="img-responsive" src=assets/${clas}/${item}></img></div>
                 </div>
             `).join('')}
        </div>
     `
+    // <div class="card-front" style="background-image: url('assets/front.png');background-size: contain;background-position: center;"></div>  
     // <div class="card-front"><img  style="width:100%; height: 100%" class="img-responsive" src=assets/front.png></img></div> 
     //<div class="card-back">${item}</div>
     const parser = new DOMParser().parseFromString(cards, 'text/html')

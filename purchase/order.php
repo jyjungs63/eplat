@@ -171,7 +171,7 @@ include "../header.php";
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-profile-tab">
-                                    <div class="input-group input-group-sm mb-3" style="width: 1200px">
+                                    <div class="col-md-12 input-group input-group-sm mb-3">
                                         <!-- <button class="btn btn-outline-primary btn-sm" type="button">개별조회</button> -->
                                         <span class="d-flex badge bg-light text-dark align-items-center">개별조회</span>
                                         &nbsp;&nbsp;
@@ -212,13 +212,17 @@ include "../header.php";
                                         <thead>
                                             <tr>
                                                 <th style="height: 50px" class="col1"><a
-                                                        href="javascript:alert('지사/유치원명')">지사/유치원명</a></th>
+                                                        href="javascript:alert('지사/유치원명')">지사/유치원명<i
+                                                            class="fa-solid fa-sort"></i></a></th>
                                                 <th style="height: 50px" class="col1"><a
-                                                        href="javascript:alert('날짜/주문번호')">날짜/주문번호</a></th>
+                                                        href="javascript:alert('날짜')">날짜<i
+                                                            class="fa-solid fa-sort"></i></a></th>
                                                 <th class="col2">내역</th>
                                                 <th class="col3">금액</th>
                                                 <th class="col4">배송주소</th>
-                                                <th class="col5">주문상태</th>
+                                                <th class="col5"><a href="javascript:alert('주문상태')">주문상태<i
+                                                            class="fa-solid fa-sort"></i></a></th>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>

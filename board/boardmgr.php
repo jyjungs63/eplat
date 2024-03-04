@@ -159,17 +159,42 @@ include "../header.php";
                         <div class="card-body pad" style="background-color:#88babe87">
 
                             <div class="mb-3 table-responsive">
-                                <div id="toolbar">
-                                    <button id="button" class="btn btn-secondary btn-md">삭제</button>
+                                <div class="d-flex" id="toolbar" style="width: 400px ; height: 40px">
+                                    <button id="button" class="btn btn-danger btn-sm" style="width:150px"><i
+                                            class="fa fa-trash"></i> &nbsp;삭제</button>
+                                    &nbsp;&nbsp;
+
+                                    <label class="input-group-text" for="idSelect">자료선택</label>&nbsp;&nbsp;
+                                    <select class="custom-select" id="idSelect" style="height: 40px">
+                                        <option value="all" selected>전체</option>
+                                        <option value="n1">1호</option>
+                                        <option value="n2">2호</option>
+                                        <option value="n3">3호</option>
+                                        <option value="n4">4호</option>
+                                        <option value="n5">5호</option>
+                                        <option value="n6">6호</option>
+                                        <option value="n7">7호</option>
+                                        <option value="n8">8호</option>
+                                        <option value="n9">9호</option>
+                                        <option value="n10">10호</option>
+                                        <option value="n11">11호</option>
+                                        <option value="n12">12호</option>
+                                        <option value="e1">기타1</option>
+                                        <option value="e2">기타2</option>
+                                        <option value="y1">연간자료</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+
                                 </div>
                                 <table id="idBoardtable" data-pagination="true" data-page-size="10" data-search="true"
-                                    data-id-field="id" data-row-style="rowStyle">
+                                    data-id-field="id" data-row-style="rowStyle" data-toolbar="#toolbar">
                                     <thead>
                                         <tr>
                                             <th data-field="num" data-width="50" class="mobile-hide"
                                                 class="mobile-hide">순서</th>
                                             <th data-field="title" data-width="300">제목</th>
-                                            <th data-field="id" data-width="150" class="mobile-hide">작성자</th>
+                                            <th data-field="cate" data-width="150" class="mobile-hide">종류</th>
+                                            <!-- <th data-field="id" data-width="150" class="mobile-hide">종류</th> -->
                                             <th data-field="rdate" data-width="150" class="mobile-hide"
                                                 class="mobile-hide">날짜</th>
                                             <th data-field="file" data-width="150">File</th>
@@ -220,6 +245,32 @@ include "../header.php";
                                             </div>
                                             <div class="col-75">
                                                 <textarea type="text" rows="4" cols="50" id="idDesc"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-25">
+                                                <label class="control-label" for="idSelect2">자료선택</label>
+                                            </div>
+                                            <div class="col-75">
+                                                <select class="custom-select" id="idSelect2" style="height: 40px">
+                                                    <option value="all" selected>전체</option>
+                                                    <option value="n1">1호</option>
+                                                    <option value="n2">2호</option>
+                                                    <option value="n3">3호</option>
+                                                    <option value="n4">4호</option>
+                                                    <option value="n5">5호</option>
+                                                    <option value="n6">6호</option>
+                                                    <option value="n7">7호</option>
+                                                    <option value="n8">8호</option>
+                                                    <option value="n9">9호</option>
+                                                    <option value="n10">10호</option>
+                                                    <option value="n11">11호</option>
+                                                    <option value="n12">12호</option>
+                                                    <option value="e1">기타1</option>
+                                                    <option value="e2">기타2</option>
+                                                    <option value="y1">연간자료</option>
+                                                    <!-- Add more options as needed -->
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -318,10 +369,11 @@ include "../header.php";
                                         </div>
                                         <div class="row">
                                             <div class="col-25">
-                                                <label for="Record" class="control-label">작성자</label>
+                                                <label for="Record" class="control-label">종류</label>
                                             </div>
                                             <div class="col-75">
-                                                <input type="text" class="form-control" id="idID">
+                                                <input type="text" class="form-control" id="idCate">
+                                                <!-- <input type="text" class="form-control" id="idID"> -->
                                             </div>
                                         </div>
                                         <div class="row">
@@ -529,8 +581,12 @@ $(document).ready(function(e) {
             '</a>'
         ].join('')
     }
-    DisplayBoard = () => {
+
+    DisplayBoard = (cate) => {
+        if (cate == "" || cate == undefined)
+            cate = "전체";
         dispList2 = (resp) => {
+            $('#idBoardtable').bootstrapTable('removeAll');
             $table = $('#idBoardtable').bootstrapTable({
                 data: resp,
                 columns: [{
@@ -550,10 +606,6 @@ $(document).ready(function(e) {
                     {
                         align: 'center'
                     }
-                    // {
-                    //     align: 'center',
-                    //     formatter: operateFormatter
-                    // }
                 ]
             });
             CallToast('게시판 보기  !', "success")
@@ -566,14 +618,39 @@ $(document).ready(function(e) {
         var options = {
             functionName: 'SShowBoardlist',
             otherData: {
-                num: -1
+                num: cate,
+                cate: 1
+            }
+        };
+
+        CallAjax("SMethods.php", "POST", options, dispList2, dispErr2);
+    }
+    DisplayBoard1 = (cate) => {
+        if (cate == "" || cate == undefined)
+            cate = "전체";
+        dispList2 = (resp) => {
+            $('#idBoardtable').bootstrapTable('removeAll');
+            $table = $('#idBoardtable').bootstrapTable('load', resp);
+            CallToast('게시판 보기  !', "success")
+        }
+
+        dispErr2 = (error) => {
+            CallToast('게시판 보기  !', "error")
+        }
+
+        var options = {
+            functionName: 'SShowBoardlist',
+            otherData: {
+                num: cate,
+                cate: 1
             }
         };
 
         CallAjax("SMethods.php", "POST", options, dispList2, dispErr2);
     }
 
-    DisplayBoard();
+    DisplayBoard("전체");
+
     activeUpload = () => {
         if (user == "admin") {
             $("#cardList").hide();
@@ -616,7 +693,8 @@ $(document).ready(function(e) {
 
             $("#idNum").val(resp[0]['num']);
             $("#idTitle").val(resp[0]['title']);
-            $("#idID").val(resp[0]['id']);
+            // $("#idID").val(resp[0]['id']);
+            $("#idCate").val(resp[0]['cate']);
             $("#idDesc2").val(resp[0]['desc']);
             $("#idDate").val(resp[0]['rdate']);
 
@@ -677,7 +755,8 @@ $(document).ready(function(e) {
         var options = {
             functionName: 'SShowBoardlist',
             otherData: {
-                num: num
+                num: num,
+                cate: 0,
             }
         };
 
@@ -687,14 +766,16 @@ $(document).ready(function(e) {
     deleteBoardList = (ids) => {
 
         if (user == 'admin') {
-
+            var result = confirm("정말 삭제 하시겠습니까 ??");
             dispList1 = (resp) => {
                 $table.bootstrapTable('remove', {
                     field: 'num',
                     values: ids
                 })
-                //$table.bootstrapTable('refresh');
-                DisplayBoard();
+                var selOption = this.options[this.selectedIndex];
+                var selText = selOption.text;
+                var setVal = selOption.value;
+                DisplayBoard1(selOption.text);
                 CallToast('게시판 삭제  !', "success")
             }
 
@@ -708,7 +789,9 @@ $(document).ready(function(e) {
                     num: ids
                 }
             };
-            CallAjax("SMethods.php", "POST", options, dispList1, dispErr1);
+            if (result) {
+                CallAjax("SMethods.php", "POST", options, dispList1, dispErr1);
+            }
         } else
             CallToast('게시판 삭제는 admin만 가능 합니다.  !', "error")
     }
@@ -727,6 +810,9 @@ $(document).ready(function(e) {
 
             form_data.append("idContent", $('#idContent').val());
             form_data.append("idDesc", $('#idDesc').val());
+            var selEle = document.getElementById("idSelect2");
+            var selOpt = selEle[selEle.selectedIndex]
+            form_data.append("idSelect2", selOpt.text)
 
             dispList = (resp) => {
                 CallToast('자료실에 등록이 성공적으로 수행했습니다. !', "success")
@@ -743,6 +829,13 @@ $(document).ready(function(e) {
         }
         closeUpload();
     }));
+
+    document.getElementById("idSelect").addEventListener("change", function() {
+        var selOption = this.options[this.selectedIndex];
+        var selText = selOption.text;
+        var setVal = selOption.value;
+        DisplayBoard1(selOption.text);
+    })
 });
 </script>
 

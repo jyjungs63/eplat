@@ -1320,7 +1320,7 @@ function SUploadBoard($data)
     session_start();
     $content   = $data['idContent'];
     $desc   = $data['idDesc'];
-
+    $cate   = $data['idSelect2'];
     $user =  'admin';
 
     global $conn;
@@ -1353,7 +1353,7 @@ function SUploadBoard($data)
         $jsarr = json_encode($rows, JSON_UNESCAPED_UNICODE);
         try {
 
-            $sqlstring = "insert into repository ( title, id, contents, `desc`, rdate ) values ( '$content', '$user',  '$jsarr', '$desc',  NOW())";
+            $sqlstring = "insert into repository ( title, id, contents, `desc`, rdate, cate ) values ( '$content', '$user',  '$jsarr', '$desc',  NOW(), '$cate')";
             $res = mysqli_query($conn,  $sqlstring);
 
             if ($res === TRUE) {
@@ -1378,14 +1378,18 @@ function SShowBoardList($data)
     session_start();
 
     $num = $data['num'];
+    $cate = $data['cate'];
 
     global $conn;
 
     try {
-        if ($num == -1) {
-            $sqlString = "SELECT num, title, id, contents, `desc`, rdate  FROM repository order by num desc";
-        } else
-            $sqlString = "SELECT num, title, id, contents, `desc`, rdate  FROM repository where num =" . $num . " order by num desc";
+        if ($cate == "1") {
+            if ( $num == "전체")
+                $sqlString = "SELECT num, title, id, contents, `desc`, rdate, cate  FROM repository order by num desc";
+            else
+                $sqlString = "SELECT num, title, id, contents, `desc`, rdate, cate  FROM repository where cate = '$num' order by num desc";
+        } else 
+            $sqlString = "SELECT num, title, id, contents, `desc`, rdate, cate  FROM repository where num = $num order by num desc";
 
         $rs = mysqli_query($conn, $sqlString);
         $rows = array();
@@ -1402,6 +1406,7 @@ function SShowBoardList($data)
                     'contents' => $row['contents'],
                     'desc'     => $row['desc'],
                     'rdate'    => $row['rdate'],
+                    'cate'     => $row['cate'],
                 )
             );
         }
