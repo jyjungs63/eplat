@@ -114,6 +114,11 @@ img {
 .mn10 {
     margin-top: -20px;
 }
+
+.modal-smaller {
+    max-width: 450px;
+    /* Adjust the maximum width as needed */
+}
 </style>
 <!-- width: calc( 100% - 0px ); -->
 
@@ -714,7 +719,7 @@ img {
         <!-- </div> -->
     </div>
     <div class="modal fade" tabindex="-1" role="dialog" id="idInfo">
-        <div class="modal-dialog modal-sm modal-dialog-centered" role="document" style="width: 700px;">
+        <div class="modal-dialog modal-smaller fixed-bottom" role="document" style="width: 700px;">
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <div id="checkIcon">
@@ -722,8 +727,8 @@ img {
                     </div>
                     <div class="mt-4 py-2">
 
-                        <h4 class="h5">동영상 연속시청 중 더이상 재생이 안될시 브라우저를 </h4>
-                        <h4 class="h5">닫고 브라우저 새로 열어서 시청 하시면 됩니다.</h4>
+                        <h6 class="h6">동영상 연속시청 중 더이상 재생이 안될시 브라우저를 </h6>
+                        <h6 class="h6">닫고 브라우저 새로 열어서 시청 하시면 됩니다.</h6>
                     </div>
                     <div class="py-1"><button id="idClose" type="button"
                             class="btn btn-sm btn-outline-success rounded-pill px-5" data-bs-dismiss="modal">OK</button>
