@@ -22,6 +22,9 @@
     <!-- json util like sql -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="../common.js"></script>
 </head>
 <style>
 * {
@@ -711,7 +714,7 @@ img {
         <!-- </div> -->
     </div>
     <div class="modal fade" tabindex="-1" role="dialog" id="idInfo">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 700px;">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document" style="width: 700px;">
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <div id="checkIcon">
