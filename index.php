@@ -959,7 +959,28 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="idInfo">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document" style="width: 700px;">
+            <!-- <div class="modal-dialog modal-smaller fixed-bottom" role="document" style="width: 700px;"> -->
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <!-- <div id="checkIcon">
+                        <i class="text-success fa-solid fa-circle-check fa-3x"></i>
+                    </div> -->
+                    <div class="mt-4 py-2">
+                        <h6 id="idNotice" class="h6"> </h6>
+                    </div>
+                    <div class="py-1"><button id="idClose" type="button"
+                            class="btn btn-sm btn-outline-success rounded-pill px-5"
+                            data-bs-dismiss="modal">그만보기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script src="notice.js"></script>
 <script>
 var user = "";
 var role = "";
@@ -1126,6 +1147,48 @@ KeyPress = (event) => {
     if (event.key === "Enter")
         logon();
 }
+
+var myModal = new bootstrap.Modal(document.getElementById('idInfo'));
+document.addEventListener('DOMContentLoaded', function() {
+
+    if (noticeJson[0]["show"] == "Y" || noticeJson[0]["show"] == "y") {
+        $("#idNotice").html(noticeJson[0]["content"])
+        if (handleStorage.getStorage("today")) {
+            myModal.hide();
+        } else {
+            myModal.show();
+        }
+    } else {
+        myModal.hide();
+    }
+});
+var handleStorage = {
+    // 스토리지에 데이터 쓰기(이름, 만료일)
+    setStorage: function(name, exp) {
+        // 만료 시간 구하기(exp를 ms단위로 변경)
+        var date = new Date();
+        date = date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+
+        // 로컬 스토리지에 저장하기
+        // (값을 따로 저장하지 않고 만료 시간을 저장)
+        localStorage.setItem(name, date)
+    },
+    // 스토리지 읽어오기
+    getStorage: function(name) {
+        var now = new Date();
+        now = now.setTime(now.getTime());
+        // 현재 시각과 스토리지에 저장된 시각을 각각 비교하여
+        // 시간이 남아 있으면 true, 아니면 false 리턴
+        return parseInt(localStorage.getItem(name)) > now
+    }
+};
+
+// 오늘하루 보지 않기 버튼
+$("#idClose").on("click", function() {
+    // 로컬 스토리지에 today라는 이름으로 1일(24시간 뒤) 동안 보이지 않게
+    handleStorage.setStorage("today", 1);
+    myModal.hide();
+});
 </script>
 
 </html>
