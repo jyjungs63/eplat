@@ -103,6 +103,29 @@ CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
     });
 }
 
+CallAjax2 = ( fucName, fntype="POST", options, retFn, errFn) => {
+    var host = window.location.host;
+    var url = "http://localhost:3000/Server/"
+    if ( host.includes('eplat'))
+        url = "https://eplat.co.kr/Server/";
+    var status = true;
+    $.ajax({
+        url: url + fucName, //
+        type: fntype,
+        dataType: "json",
+        data: options,
+        async: false,
+        // processData: false,
+        // contentType: false,
+        success: function(resp) {
+            retFn(resp);
+        },
+        error: function(xhr, status, error) {
+            errFn ( xhr )
+        }
+    });
+}
+
 CallToast = (message, stat ) => {
     if (stat == "success") {
         toastr.success(message, 'Success', {

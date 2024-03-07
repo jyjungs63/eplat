@@ -308,6 +308,24 @@
 
         }
 
+        checkExistID = (id) => {
+            var js
+            dispList = (res) => {
+                js = res['result'];
+            }
+            dispErr = (xhr) => {
+                CallToast('Student list Error!!', "error")
+            }
+            var options = {
+                functionName: 'SCheckStudentID',
+                otherData: {
+                    id: id,
+                }
+            };
+            CallAjax2("SMethods.php", "POST", options, dispList, dispErr);
+            return js;
+        }
+
         addChild = () => {
             tab.clearData();
             var selectElement = document.getElementById("idStudent");
@@ -317,29 +335,35 @@
             var num = $("#idNumstudent").val();
             var start = $("#idStartNum").val();
 
-            if (selectedValue != "전체" && selectedValue != "" && classname != "" && nickname != "" && num != "") {
+            let isexist = checkExistID(nickname);
 
-                var no = 0;
-                var arr = [...Array(Number(num)).keys()];
-                arr.forEach(el => {
-                    no = Number(start) + el;
-                    var data = {
-                        classnm: classname,
-                        id: nickname + no,
-                        passwd: nickname + no,
-                        step: selectedValue
-                    }
-                    tab.addRow(data);
-                })
+            if (isexist < 1) {
+                if (selectedValue != "전체" && selectedValue != "" && classname != "" && nickname != "" && num != "") {
+
+                    var no = 0;
+                    var arr = [...Array(Number(num)).keys()];
+                    arr.forEach(el => {
+                        no = Number(start) + el;
+                        var data = {
+                            classnm: classname,
+                            id: nickname + no,
+                            passwd: nickname + no,
+                            step: selectedValue
+                        }
+                        tab.addRow(data);
+                    })
+                } else {
+                    if (selectedValue == "")
+                        alert(" 생성 할 학생의 정보를 입력하세요/ Step [4세-Basic, 5세-Step1, 6세-Step2, 7세-Step3]  선택해주세요 !!.");
+                    if (classname == "")
+                        alert(" 생성 할 학생의 정보를 입력하세요/  반을 입력 입력해 주세요 !!.");
+                    if (nickname == "")
+                        alert(" 생성 할 학생의 정보를 입력하세요/ 생성할 ID를 입력해 주세요 !!.");
+                    if (num == "")
+                        alert(" 생성 할 학생의 정보를 입력하세요/ 생성할 원아 총 수를 입력해주세요 !!.");
+                }
             } else {
-                if (selectedValue == "")
-                    alert(" 생성 할 학생의 정보를 입력하세요/ Step [4세-Basic, 5세-Step1, 6세-Step2, 7세-Step3]  선택해주세요 !!.");
-                if (classname == "")
-                    alert(" 생성 할 학생의 정보를 입력하세요/  반을 입력 입력해 주세요 !!.");
-                if (nickname == "")
-                    alert(" 생성 할 학생의 정보를 입력하세요/ 생성할 ID를 입력해 주세요 !!.");
-                if (num == "")
-                    alert(" 생성 할 학생의 정보를 입력하세요/ 생성할 원아 총 수를 입력해주세요 !!.");
+                alert('다른 아이디를 입력해서 원아 아이디를 생성해주세요');
             }
         };
 

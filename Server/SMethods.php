@@ -336,16 +336,15 @@ function SPorDetailListRange($data)
     }
     $tsql = "select p.*, u.owner owner from eplat_porlist p ,  eplat_user u  where u.id = p.id and ";
 
-    
-    if ( $name == "전지사" )
+
+    if ($name == "전지사")
         $stmt = $tsql . "p.rdate between '{$start}' and '{$end}' order by id";
 
-    else if ( $name == "전유치원" )
+    else if ($name == "전유치원")
         $stmt = $tsql . "u.id = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
 
-    else
-    {
-        if ($id != "admin" )
+    else {
+        if ($id != "admin")
             $stmt = $tsql . "p.order = '{$name}' and p.rdate between '{$start}' and '{$end}' order by p.id";
         else
             $stmt = $tsql . "p.id = '{$name}' and p.rdate between '{$start}' and '{$end}' order by p.id";
@@ -1034,6 +1033,36 @@ function SShowStudyList($data)
     echo json_encode(array("json" => $rows));
 }
 
+function SCheckStudentID($data)
+{
+    session_start();
+
+    global $conn;
+    $result = 0;
+    $id = $data['id'];
+
+    $sql = "select  id from  eplat_user where id like '{$id}%'";
+
+    $rows = array();
+
+    $i = 0;
+
+    try {
+
+        $rs = mysqli_query($conn, $sql);
+
+        $conn->close();
+
+        if (mysqli_num_rows($rs) > 0)
+            $result = 1;
+    } catch (Exception $e) {
+        echo  json_encode(array("error:" => $e->getMessage()));
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode(array("result" => $result));
+}
+
 function SShowStudyList2($data)
 {
     session_start();
@@ -1384,11 +1413,11 @@ function SShowBoardList($data)
 
     try {
         if ($cate == "1") {
-            if ( $num == "전체")
+            if ($num == "전체")
                 $sqlString = "SELECT num, title, id, contents, `desc`, rdate, cate  FROM repository order by num desc";
             else
                 $sqlString = "SELECT num, title, id, contents, `desc`, rdate, cate  FROM repository where cate = '$num' order by num desc";
-        } else 
+        } else
             $sqlString = "SELECT num, title, id, contents, `desc`, rdate, cate  FROM repository where num = $num order by num desc";
 
         $rs = mysqli_query($conn, $sqlString);
