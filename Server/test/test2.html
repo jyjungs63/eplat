@@ -1,77 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Table</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th,
-        td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #4246b7;
-        }
-
-        /* Add your own styling for borders */
-        /* For example, removing the border from the first column */
-        tr td:first-child,
-        tr th:first-child {
-            border-left: none;
-        }
-
-        /* For example, removing the border from the last column */
-        tr td:last-child,
-        tr th:last-child {
-            border-right: none;
-        }
-
-        /* For example, removing the border from the first row */
-        tr:first-child th,
-        tr:first-child td {
-            border-top: none;
-        }
-
-        /* For example, removing the border from the last row */
-        tr:last-child th,
-        tr:last-child td {
-            border-bottom: none;
-        }
-    </style>
+    <title>Password에 한글 입력 예제</title>
 </head>
 
 <body>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Header 1</th>
-                <th>Header 2</th>
-                <th>Header 3</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-            </tr>
-            <tr>
-                <td>Data 4</td>
-                <td>Data 5</td>
-                <td>Data 6</td>
-            </tr>
-        </tbody>
-    </table>
+    <label for="password">비밀번호:</label>
+    <input type="text" id="password">
 
 </body>
 

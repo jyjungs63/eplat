@@ -441,7 +441,8 @@
         var options = {
             functionName: 'SShowClassList',
             otherData: {
-                id: tid
+                id: tid,
+                kgarden: ""
             }
         };
         CallAjax("SMethods.php", "POST", options, dispList, dispErr);
