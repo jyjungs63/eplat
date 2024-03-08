@@ -767,11 +767,11 @@ img {
     var myModal = new bootstrap.Modal(document.getElementById('idInfo'));
 
     document.addEventListener('DOMContentLoaded', function() {
-        if (handleStorage.getStorage("today")) {
-            myModal.hide();
-        } else {
-            myModal.show();
-        }
+        // if (handleStorage.getStorage("today")) {
+        //     myModal.hide();
+        // } else {
+        //     myModal.show();
+        // }
     });
     var handleStorage = {
         // 스토리지에 데이터 쓰기(이름, 만료일)
