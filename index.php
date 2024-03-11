@@ -28,85 +28,85 @@
     <script src="common.js"></script>
 
     <style>
-    .table-image {
+        .table-image {
 
-        td,
-        th {
-            vertical-align: middle;
+            td,
+            th {
+                vertical-align: middle;
+            }
         }
-    }
 
-    hr {
-        height: 2px;
-        background-color: #17324d;
-        border: none;
-    }
+        hr {
+            height: 2px;
+            background-color: #17324d;
+            border: none;
+        }
     </style>
 
     <style>
-    .firstcharacter {
-        float: left;
-        font-family: Georgia;
-        font-size: 50px;
-        line-height: 36px;
-        padding-top: 1px;
-        padding-right: 1px;
-        padding-left: 1px;
-    }
+        .firstcharacter {
+            float: left;
+            font-family: Georgia;
+            font-size: 50px;
+            line-height: 36px;
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+        }
     </style>
 
     <style>
-    strong {
-        font-weight: bold;
-    }
+        strong {
+            font-weight: bold;
+        }
 
-    subtitle1-tt {
-        float: left;
-        padding: 10px;
-        width: 100%;
-        background-color: #5f6ca7;
-        height: 50px;
-        text-align: center;
-        color: white;
-    }
+        subtitle1-tt {
+            float: left;
+            padding: 10px;
+            width: 100%;
+            background-color: #5f6ca7;
+            height: 50px;
+            text-align: center;
+            color: white;
+        }
 
-    .custom-navbar {
-        background-color: #17334F;
-        /* Replace with your desired color code */
-    }
+        .custom-navbar {
+            background-color: #17334F;
+            /* Replace with your desired color code */
+        }
 
-    .signup-image-link {
-        font-size: 14px;
-        color: #222;
-        display: block;
-        text-align: center;
-    }
+        .signup-image-link {
+            font-size: 14px;
+            color: #222;
+            display: block;
+            text-align: center;
+        }
 
-    a:focus,
-    a:active {
-        text-decoration: none;
-        outline: none;
-        transition: all 300ms ease 0s;
-        -moz-transition: all 300ms ease 0s;
-        -webkit-transition: all 300ms ease 0s;
-        -o-transition: all 300ms ease 0s;
-        -ms-transition: all 300ms ease 0s;
-    }
+        a:focus,
+        a:active {
+            text-decoration: none;
+            outline: none;
+            transition: all 300ms ease 0s;
+            -moz-transition: all 300ms ease 0s;
+            -webkit-transition: all 300ms ease 0s;
+            -o-transition: all 300ms ease 0s;
+            -ms-transition: all 300ms ease 0s;
+        }
 
-    a:hover {
-        color: #007bff;
-        /* Change color on hover if desired */
-    }
+        a:hover {
+            color: #007bff;
+            /* Change color on hover if desired */
+        }
 
-    .loginput {
-        border: none;
-        border-bottom: 1px solid #999;
-        padding: 0px 5px;
-        font-family: Poppins;
-        box-sizing: border-box;
-    }
+        .loginput {
+            border: none;
+            border-bottom: 1px solid #999;
+            padding: 0px 5px;
+            font-family: Poppins;
+            box-sizing: border-box;
+        }
 
-    /* @media screen and (max-width: 768px) {
+        /* @media screen and (max-width: 768px) {
 
         .signup-content,
         .signin-content {
@@ -192,9 +192,7 @@
             <!-- <a href="#" class="navbar-brand">
                 <img src="assets/img/logo.png" width="80" height="30" alt="Eplat" />
             </a> -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-                style="background-color: gray">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: gray">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -262,8 +260,7 @@
             <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
                 <!--<img class="img-fluid w-100" src="assets/img/environments.jpg" alt="..." />-->
                 <!-- <a href="login/welcome.php?dest=classroom"> <img class="img-fluid w-100" src="assets/img/environments.jpg" alt="Login Eplat Study Home"></a> -->
-                <a href="javascript:openClass();"> <img class="img-fluid w-100" src="assets/img/environments.jpg"
-                        alt="Login Eplat Study Home"></a>
+                <a href="javascript:openClass();"> <img class="img-fluid w-100" src="assets/img/environments.jpg" alt="Login Eplat Study Home"></a>
             </div>
         </div>
 
@@ -443,8 +440,7 @@
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -462,67 +458,44 @@
 
 
                                 <!--Main_cover -->
-                                <img class="img-fluid d-block mx-auto"
-                                    src="assets/img/eplat_eng_book/eplat_eng_book1.jpg" alt="..." />
-                                <a href="http://www.eplat.co.kr/assets/img/main_introduction_of_brochure.mp4"><img
-                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."> </a>
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eplat_eng_book/eplat_eng_book1.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/main_introduction_of_brochure.mp4"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
 
                                 <!--스토리_파닉스_브로셔소개 -->
-                                <img class="img-fluid d-block mx-auto"
-                                    src="assets/img/eplat_eng_book/eplat_eng_book2.jpg" alt="..." />
-                                <a href="http://www.eplat.co.kr/assets/img/story_brochure.mp4"><img
-                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."> </a>
-                                <a href="http://www.eplat.co.kr/assets/img/phonics_brochure.mp4"><img
-                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."> </a>
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eplat_eng_book/eplat_eng_book2.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/story_brochure.mp4"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
+                                <a href="http://www.eplat.co.kr/assets/img/phonics_brochure.mp4"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
 
                                 <!--스토리문장_파닉스문장_브로셔소개 -->
-                                <img class="img-fluid d-block mx-auto"
-                                    src="assets/img/eplat_eng_book/eplat_eng_book3.jpg" alt="..." />
-                                <a href="http://www.eplat.co.kr/assets/img/story_sentencs_brochure.mp4"><img
-                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."> </a>
-                                <a href="http://www.eplat.co.kr/assets/img/phonics_sentencs_brochure.mp4"><img
-                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."> </a>
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eplat_eng_book/eplat_eng_book3.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/story_sentencs_brochure.mp4"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
+                                <a href="http://www.eplat.co.kr/assets/img/phonics_sentencs_brochure.mp4"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
 
                                 <!--Funny_브로셔소개 -->
-                                <img class="img-fluid d-block mx-auto"
-                                    src="assets/img/eplat_eng_book/eplat_eng_book4.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eplat_eng_book/eplat_eng_book4.jpg" alt="..." />
                                 <!--<a href="https://youtu.be/wEaPF9q-T6c" ><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>  -->
 
 
                                 <!--혼자서도 잘해요_브로셔소개 -->
-                                <img class="img-fluid d-block mx-auto"
-                                    src="assets/img/eplat_eng_book/eplat_eng_book5.jpg" alt="..." />
-                                <a href="http://www.eplat.co.kr/assets/img/myself_study_brochure.mp4"><img
-                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."> </a>
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eplat_eng_book/eplat_eng_book5.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/myself_study_brochure.mp4"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
 
                                 <!--Content_브로셔소개 -->
-                                <img class="img-fluid d-block mx-auto"
-                                    src="assets/img/eplat_eng_book/eplat_eng_book6.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eplat_eng_book/eplat_eng_book6.jpg" alt="..." />
                                 <!--<a href="https://youtu.be/wEaPF9q-T6c" ><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a> -->
 
                                 <!--영어문장 어순감각확립_브로셔소개 -->
-                                <img class="img-fluid d-block mx-auto"
-                                    src="assets/img/eplat_eng_book/eplat_eng_book7.jpg" alt="..." />
-                                <a href="http://www.eplat.co.kr/assets/img/english_sentencs_brochure.mp4"><img
-                                        src="assets/img/vmovie_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."> </a>
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eplat_eng_book/eplat_eng_book7.jpg" alt="..." />
+                                <a href="http://www.eplat.co.kr/assets/img/english_sentencs_brochure.mp4"><img src="assets/img/vmovie_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."> </a>
 
                                 <!--맨 뒤_cover -->
-                                <img class="img-fluid d-block mx-auto"
-                                    src="assets/img/eplat_eng_book/eplat_eng_book8.jpg" alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eplat_eng_book/eplat_eng_book8.jpg" alt="..." />
 
 
                                 <hr style="border: solid 1px gray;">
                                 <br>
 
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                    type="button">
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                     <i class="fas fa-xmark me-1"></i>
                                     Close Project
                                 </button>
@@ -539,8 +512,7 @@
     <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -575,8 +547,7 @@
                                     <h3>파닉스카드</h3>
                                 </subtitle1-tt>
                                 <p align="Center" style="font-size: 20px;color: #7D7676"><strong>(120단어)</strong></p>
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_card_1.jpg"
-                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_diocese_card_1.jpg" alt="..." />
 
                                 <!-- 로그맵-->
                                 <!-- <h4 style="background-color:#FAAC58;">로그맵 30종</h4> -->
@@ -602,8 +573,7 @@
 
                                 <br>
 
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                    type="button">
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                     <i class="fas fa-xmark me-1"></i>
                                     Close Project
                                 </button>
@@ -620,8 +590,7 @@
     <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -635,18 +604,12 @@
                                 <!-- <h4 style="background-color:#FAAC58;">이플렛요약</h4> -->
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_play_1.jpg" alt="..." />
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_edu_process.jpg" alt="...">
-                                <a
-                                    href="https://instagram.com/stories/blocks_english/2971698557168297149?utm_source=ig_story_item_share&igshid=MDJmNzVkMjY="><img
-                                        src="assets/img/instagram_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."></a>
-                                <a href="https://instagram.com/littlebeeenglish?igshid=YmMyMTA2M2Y="><img
-                                        src="assets/img/instagram_icon.png" class="img-responsive mt-xs"
-                                        style="max-width: 50px;" alt="..."></a>
+                                <a href="https://instagram.com/stories/blocks_english/2971698557168297149?utm_source=ig_story_item_share&igshid=MDJmNzVkMjY="><img src="assets/img/instagram_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."></a>
+                                <a href="https://instagram.com/littlebeeenglish?igshid=YmMyMTA2M2Y="><img src="assets/img/instagram_icon.png" class="img-responsive mt-xs" style="max-width: 50px;" alt="..."></a>
                                 <p class="item-intro text-muted">①부산센타 ②포항센타</p>
 
                                 <br> </br>
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                    type="button">
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                     <i class="fas fa-xmark me-1"></i>
                                     Close Project
                                 </button>
@@ -663,8 +626,7 @@
     <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -688,8 +650,7 @@
                                         <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교재개발</strong>
                                         </p>
 
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_textbook_dev.jpg"
-                                            alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_textbook_dev.jpg" alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교재개발</strong></p> -->
                                         <p><span class="firstcharacter">E</span>
@@ -701,8 +662,7 @@
 
                                         <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교구개발</strong>
                                         </p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_2.jpg"
-                                            alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_2.jpg" alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교구개발</strong></p> -->
                                         <p><span class="firstcharacter">E</span>
@@ -714,8 +674,7 @@
 
                                         <p align="Center" style="font-size: 26px;color: #4169E1"><strong>온라인개발</strong>
                                         </p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_3.jpg"
-                                            alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_3.jpg" alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>온라인개발</strong></p> -->
                                         <p><span class="firstcharacter">E</span>
@@ -726,8 +685,7 @@
 
                                         <p align="Center" style="font-size: 26px;color: #4169E1"><strong>교육개발 및
                                                 강사교육</strong></p>
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_4.jpg"
-                                            alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_intro_4.jpg" alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>교육개발 및 강사교육</strong></p> -->
                                         <p><span class="firstcharacter">E</span>
@@ -748,8 +706,7 @@
                                             <div class="divider-custom-line"></div>
                                         </div>
 
-                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_life.jpg"
-                                            alt="..." />
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/company_life.jpg" alt="..." />
                                         <p> </p>
                                         <!-- <p  align="Center" style="font-size: 26px;color: #4169E1" ><strong>회사연혁</strong></p> -->
                                         <!-- <p><span class="firstcharacter">E</span>  -->
@@ -777,8 +734,7 @@
     <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -790,27 +746,21 @@
                                 <hr style="border: solid 1px gray;">
 
                                 <!-- <h4 style="background-color:#FAAC58;">이플렛요약</h4> -->
-                                <p><a href="assets/img/Block_activity.mp4"><img src="assets/img/Block_activity.jpg "
-                                            width="100%" height="100%" /></a></p>
-                                <p><a href="assets/img/ActiviBlock_cleanup.mp4"><img
-                                            src="assets/img/ActiviBlock_cleanup.jpg " width="100%" height="100%" /></a>
+                                <p><a href="assets/img/Block_activity.mp4"><img src="assets/img/Block_activity.jpg " width="100%" height="100%" /></a></p>
+                                <p><a href="assets/img/ActiviBlock_cleanup.mp4"><img src="assets/img/ActiviBlock_cleanup.jpg " width="100%" height="100%" /></a>
                                 </p>
-                                <p><a href="assets/img/block_play.mp4"><img src="assets/img/block_play.jpg "
-                                            width="100%" height="100%" /></a></p>
-                                <p><a href="assets/img/teacher_sene.mp4"><img src="assets/img/teacher_sene.jpg "
-                                            width="100%" height="100%" /></a></p>
+                                <p><a href="assets/img/block_play.mp4"><img src="assets/img/block_play.jpg " width="100%" height="100%" /></a></p>
+                                <p><a href="assets/img/teacher_sene.mp4"><img src="assets/img/teacher_sene.jpg " width="100%" height="100%" /></a></p>
 
                                 <hr style="border: solid 1px gray;">
                                 <p align="Left" style="font-size: 20px;color: #7D7676"><strong>*New Homepage_reference
                                         spec</strong></p>
-                                <p><a href="assets/img/newhomepage_eplat.pdf"><img
-                                            src="assets/img/newhomepage_eplat.jpg " width="100%" height="100%" /></a>
+                                <p><a href="assets/img/newhomepage_eplat.pdf"><img src="assets/img/newhomepage_eplat.jpg " width="100%" height="100%" /></a>
                                 </p>
 
 
                                 <br> </br>
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                    type="button">
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                     <i class="fas fa-xmark me-1"></i>
                                     Close Project
                                 </button>
@@ -826,8 +776,7 @@
     <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
@@ -838,13 +787,11 @@
                                 <hr style="border: solid 1px gray;">
 
                                 <img class="img-fluid d-block mx-auto" src="assets/img/eng_edu_process.jpg" alt="..." />
-                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_edu_process-add.jpg"
-                                    alt="..." />
+                                <img class="img-fluid d-block mx-auto" src="assets/img/eng_edu_process-add.jpg" alt="..." />
 
 
                                 <br> </br>
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                    type="button">
+                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                     <i class="fas fa-xmark me-1"></i>
                                     Close Project
                                 </button>
@@ -873,13 +820,10 @@
             <div class="row align-items-center">
                 <div style="color: white;" class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2024</div>
                 <div class="col-lg-4  my-lg-0">
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i
-                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-dark btn-social" href="#" aria-label="LinkedIn"><i
-                            class="fa-solid fa-user"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-dark btn-social" href="#" aria-label="LinkedIn"><i class="fa-solid fa-user"></i></a>
                 </div>
                 <div class="col-lg-4 text-lg-end">
                     <!-- <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a> -->
@@ -899,8 +843,7 @@
                             <!-- <h2 class="form-title">로그인</h2> -->
                             <div class="modal-header">
                                 <h3 class="modal-title" id="loginModalLabel">로그인</h3>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
                             <form method="POST" class="" id="login-form" style="padding: 5rem;margin-top:-2rem;">
@@ -921,36 +864,27 @@
                                         기억하기</label>
                                 </div> -->
                                 <div class="" style="padding: 2rem">
-                                    <label for="Email" class="form-label"><i
-                                            class="zmdi zmdi-account material-icons-name"></i> 아이디</label>
-                                    <input type="text" class="form-control loginput" id="Email" name="Email" required
-                                        placeholder="아이디">
+                                    <label for="Email" class="form-label"><i class="zmdi zmdi-account material-icons-name"></i> 아이디</label>
+                                    <input type="text" class="form-control loginput" id="Email" name="Email" required placeholder="아이디">
 
                                 </div>
                                 <div class="" style="padding: 2rem">
                                     <label for="Password" class="form-label"><i class="zmdi zmdi-lock"></i>
                                         비밀번호</label>
-                                    <input type="password" class="form-control loginput" id="your_pass" name="Password"
-                                        onkeydown="KeyPress(event)" placeholder="비밀번호" required>
+                                    <input type="text" class="form-control loginput" id="your_pass" name="Password" onkeydown="KeyPress(event)" placeholder="비밀번호" required>
                                 </div>
                                 <div class="form-group" style="margin-top: 1rem;padding: 2rem">
                                     <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                    <label class="" for="remember-me"
-                                        class="label-agree-term"><span><span></span></span>아이디
+                                    <label class="" for="remember-me" class="label-agree-term"><span><span></span></span>아이디
                                         기억하기</label>
                                 </div>
-                                <div class="form-group form-button justify-content-center align-items-center"
-                                    style="margin-top: -1rem;padding: 2rem;">
-                                    <input type="button" name="signin" id="signin" class="form-submit loginput"
-                                        value="Log in"
-                                        style="background-color:#6dabe4; width:100px; height: 50px;border-radius:10px;color:white" />
+                                <div class="form-group form-button justify-content-center align-items-center" style="margin-top: -1rem;padding: 2rem;">
+                                    <input type="button" name="signin" id="signin" class="form-submit loginput" value="Log in" style="background-color:#6dabe4; width:100px; height: 50px;border-radius:10px;color:white" />
                                 </div>
                             </form>
                             <div class="" style="margin-top: -5rem">
-                                <a style="text-decoration: none;" href="login/register.php"
-                                    class="signup-image-link">회원가입</a></br>
-                                <a style="text-decoration: none;" href="login/findpasswd.php"
-                                    class="signup-image-link">비밀번호 찾기</a>
+                                <a style="text-decoration: none;" href="login/register.php" class="signup-image-link">회원가입</a></br>
+                                <a style="text-decoration: none;" href="login/findpasswd.php" class="signup-image-link">비밀번호 찾기</a>
                             </div>
                         </div>
                     </div>
@@ -970,9 +904,7 @@
                     <div class="mt-4 py-2">
                         <h6 id="idNotice" class="h6"> </h6>
                     </div>
-                    <div class="py-1"><button id="idClose" type="button"
-                            class="btn btn-sm btn-outline-success rounded-pill px-5"
-                            data-bs-dismiss="modal">그만보기</button>
+                    <div class="py-1"><button id="idClose" type="button" class="btn btn-sm btn-outline-success rounded-pill px-5" data-bs-dismiss="modal">그만보기</button>
                     </div>
                 </div>
             </div>
@@ -982,213 +914,213 @@
 
 <script src="notice.js"></script>
 <script>
-var user = "";
-var role = "";
-var conf = "";
-var name = "";
-var owner = "";
-var loca = "";
+    var user = "";
+    var role = "";
+    var conf = "";
+    var name = "";
+    var owner = "";
+    var loca = "";
 
-$(document).ready(function() {
-    let loginfo = getLocalStorage('info');
-    if (loginfo) {
-        user = loginfo['user'];
-        role = loginfo['role'];
-        conf = loginfo['conf'];
-        name = loginfo['name'];
-        owner = loginfo['owner'];
-        loca = loginfo['loca'];
-        toggleVisibility();
-    }
-})
+    $(document).ready(function() {
+        let loginfo = getLocalStorage('info');
+        if (loginfo) {
+            user = loginfo['user'];
+            role = loginfo['role'];
+            conf = loginfo['conf'];
+            name = loginfo['name'];
+            owner = loginfo['owner'];
+            loca = loginfo['loca'];
+            toggleVisibility();
+        }
+    })
 
-function toggleVisibility() {
+    function toggleVisibility() {
 
 
-    $('#idClass').css('visibility', 'visible');
-    if (user != "")
-        CallToast(user + "님 방문을 환영 합니다.", "success");
-    if (user == "admin" && role == "9") { // admin menu
+        $('#idClass').css('visibility', 'visible');
+        if (user != "")
+            CallToast(user + "님 방문을 환영 합니다.", "success");
+        if (user == "admin" && role == "9") { // admin menu
 
-        $('#idm1').toggle(); // 게시판
-        $('#idm2').toggle(); // 지사마당 메뉴
-        $('#idm3').toggle(); // 구매
-        $('#idm4').attr('href', "purchase/kgardenmgradmin.php")
-        $('#idm4').toggle(); // 유치원관리
-        $('#idm5').toggle(); // admin menu
-        $('#idlogin').attr('href', "javascript:logout()")
-        $('#idlogin').text("로그아웃")
-
-    } else if (role == "1") { // Brabch manager control
-        if (conf == "1") {
             $('#idm1').toggle(); // 게시판
             $('#idm2').toggle(); // 지사마당 메뉴
             $('#idm3').toggle(); // 구매
-            $('#idlogin').attr('href', "javascript:logout()")
-            $('#idlogin').text("로그아웃")
-        } else {
-            alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
-        }
-    } else if (role == "2") { // 유치원 선생님 메뉴
-        if (conf == "1") {
-            $('#idm1').toggle(); // 게시판
-            $('#idm4').attr('href', "purchase/kgardenmgr.php")
+            $('#idm4').attr('href', "purchase/kgardenmgradmin.php")
             $('#idm4').toggle(); // 유치원관리
-            $('#idm44').toggle(); // 학습현황
-            //$('#idm45').toggle(); // 게임
+            $('#idm5').toggle(); // admin menu
             $('#idlogin').attr('href', "javascript:logout()")
             $('#idlogin').text("로그아웃")
+
+        } else if (role == "1") { // Brabch manager control
+            if (conf == "1") {
+                $('#idm1').toggle(); // 게시판
+                $('#idm2').toggle(); // 지사마당 메뉴
+                $('#idm3').toggle(); // 구매
+                $('#idlogin').attr('href', "javascript:logout()")
+                $('#idlogin').text("로그아웃")
+            } else {
+                alert(name + "님은 eplat관리자의 승인 후 정상 이용가능 합니다.")
+            }
+        } else if (role == "2") { // 유치원 선생님 메뉴
+            if (conf == "1") {
+                $('#idm1').toggle(); // 게시판
+                $('#idm4').attr('href', "purchase/kgardenmgr.php")
+                $('#idm4').toggle(); // 유치원관리
+                $('#idm44').toggle(); // 학습현황
+                //$('#idm45').toggle(); // 게임
+                $('#idlogin').attr('href', "javascript:logout()")
+                $('#idlogin').text("로그아웃")
+            } else {
+                alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
+            }
         } else {
-            alert(name + "님은 eplat 관리자의 승인 후 정상 이용가능 합니다.")
+            $('#idm45').toggle(); // 게임
+            $('#idlogin').attr('href', "javascript:logout()")
+            $('#idlogin').text("로그아웃")
         }
-    } else {
-        $('#idm45').toggle(); // 게임
-        $('#idlogin').attr('href', "javascript:logout()")
-        $('#idlogin').text("로그아웃")
+
     }
 
-}
-
-$("#signin").click(function() {
-    logon();
-})
-
-
-openModal = () => {
-    var text = $("#idlogin")[0].innerText;
-    if (text == "로그인")
-        $('#exampleModal').modal('show');
-    else
-        logout();
-}
-
-logon = () => {
-    const searchParams = new URLSearchParams(location.search);
-    param = searchParams.get('dest');
-
-    const logform = document.getElementById("login-form");
-    const formData = new FormData(logform);
-
-    dispList = (resp) => {
-        if ('success' in resp) {
-            //CallToast('Login successfully!!', "success")
-            // var url = window.origin+'/' + resp['success'];
-            // window.location.href = url;
-
-            user = resp['success'][0]['user'];
-            role = resp['success'][0]['role'];
-            conf = resp['success'][0]['confirm'];
-            name = resp['success'][0]['name'];
-            owner = resp['success'][0]['owner'];
-            loca = resp['success'][0]['location'];
-
-            var respo = {
-                user: user,
-                role: role,
-                conf: conf,
-                name: name,
-                owner: owner,
-                loca: loca
-            };
-
-            saveLocalStorage('info', respo);
-            //var rest = getLocalStorage('info');
-
-            $('#exampleModal').modal('hide')
-            toggleVisibility();
-
-        } else if ('falure' in resp) {
-            CallToast('Password emplty or mismatch !!', "error")
-        }
-    }
-    dispErr = (xhr) => {
-        CallToast('Login falure!!', "error")
-    }
-
-    formData.append('functionName', 'Slogon');
-    //CallAjax1("SMethods.php?dest=classroom", "POST", formData, dispList, dispErr);
-    CallAjax1("SMethods.php?dest=" + param, "POST", formData, dispList, dispErr);
-}
-
-openClass = () => {
-    if (user == undefined || user == "")
-        $('#exampleModal').modal('show');
-    else
-        window.location.href = "login/welcome.php";
-}
-
-logout = () => {
-    user = "";
-    role = "";
-    conf = "";
-    name = "";
-    loca = "";
-    owner = "";
-    deleteLocalStorage('info');
-
-    toggleChage($('#idm1')); //.toggle(); // 게시판
-    toggleChage($('#idm2')); //.toggle(); // 지사마당 메뉴
-    toggleChage($('#idm3')); //.toggle(); // 구매
-    toggleChage($('#idm4')); //.toggle(); // 유치원관리
-    toggleChage($('#idm44')); //.toggle(); // 학습현황
-    toggleChage($('#idm45')); //.toggle(); // 게임
-    toggleChage($('#idm5')); //.toggle(); // admin menu
-    $('#idlogin').attr('href', "javascript:openModal()")
-    $('#idlogin').text("로그인");
-
-}
-
-toggleChage = (idAnchor) => {
-    return idAnchor.is(':visible') == true ? idAnchor.toggle() : null;
-}
-
-KeyPress = (event) => {
-
-    if (event.key === "Enter")
+    $("#signin").click(function() {
         logon();
-}
+    })
 
-var myModal = new bootstrap.Modal(document.getElementById('idInfo'));
-document.addEventListener('DOMContentLoaded', function() {
 
-    if (noticeJson[0]["show"] == "Y" || noticeJson[0]["show"] == "y") {
-        $("#idNotice").html(noticeJson[0]["content"])
-        if (handleStorage.getStorage("today")) {
-            myModal.hide();
-        } else {
-            myModal.show();
+    openModal = () => {
+        var text = $("#idlogin")[0].innerText;
+        if (text == "로그인")
+            $('#exampleModal').modal('show');
+        else
+            logout();
+    }
+
+    logon = () => {
+        const searchParams = new URLSearchParams(location.search);
+        param = searchParams.get('dest');
+
+        const logform = document.getElementById("login-form");
+        const formData = new FormData(logform);
+
+        dispList = (resp) => {
+            if ('success' in resp) {
+                //CallToast('Login successfully!!', "success")
+                // var url = window.origin+'/' + resp['success'];
+                // window.location.href = url;
+
+                user = resp['success'][0]['user'];
+                role = resp['success'][0]['role'];
+                conf = resp['success'][0]['confirm'];
+                name = resp['success'][0]['name'];
+                owner = resp['success'][0]['owner'];
+                loca = resp['success'][0]['location'];
+
+                var respo = {
+                    user: user,
+                    role: role,
+                    conf: conf,
+                    name: name,
+                    owner: owner,
+                    loca: loca
+                };
+
+                saveLocalStorage('info', respo);
+                //var rest = getLocalStorage('info');
+
+                $('#exampleModal').modal('hide')
+                toggleVisibility();
+
+            } else if ('falure' in resp) {
+                CallToast('Password emplty or mismatch !!', "error")
+            }
         }
-    } else {
+        dispErr = (xhr) => {
+            CallToast('Login falure!!', "error")
+        }
+
+        formData.append('functionName', 'Slogon');
+        //CallAjax1("SMethods.php?dest=classroom", "POST", formData, dispList, dispErr);
+        CallAjax1("SMethods.php?dest=" + param, "POST", formData, dispList, dispErr);
+    }
+
+    openClass = () => {
+        if (user == undefined || user == "")
+            $('#exampleModal').modal('show');
+        else
+            window.location.href = "login/welcome.php";
+    }
+
+    logout = () => {
+        user = "";
+        role = "";
+        conf = "";
+        name = "";
+        loca = "";
+        owner = "";
+        deleteLocalStorage('info');
+
+        toggleChage($('#idm1')); //.toggle(); // 게시판
+        toggleChage($('#idm2')); //.toggle(); // 지사마당 메뉴
+        toggleChage($('#idm3')); //.toggle(); // 구매
+        toggleChage($('#idm4')); //.toggle(); // 유치원관리
+        toggleChage($('#idm44')); //.toggle(); // 학습현황
+        toggleChage($('#idm45')); //.toggle(); // 게임
+        toggleChage($('#idm5')); //.toggle(); // admin menu
+        $('#idlogin').attr('href', "javascript:openModal()")
+        $('#idlogin').text("로그인");
+
+    }
+
+    toggleChage = (idAnchor) => {
+        return idAnchor.is(':visible') == true ? idAnchor.toggle() : null;
+    }
+
+    KeyPress = (event) => {
+
+        if (event.key === "Enter")
+            logon();
+    }
+
+    var myModal = new bootstrap.Modal(document.getElementById('idInfo'));
+    document.addEventListener('DOMContentLoaded', function() {
+
+        if (noticeJson[0]["show"] == "Y" || noticeJson[0]["show"] == "y") {
+            $("#idNotice").html(noticeJson[0]["content"])
+            if (handleStorage.getStorage("today")) {
+                myModal.hide();
+            } else {
+                myModal.show();
+            }
+        } else {
+            myModal.hide();
+        }
+    });
+    var handleStorage = {
+        // 스토리지에 데이터 쓰기(이름, 만료일)
+        setStorage: function(name, exp) {
+            // 만료 시간 구하기(exp를 ms단위로 변경)
+            var date = new Date();
+            date = date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+
+            // 로컬 스토리지에 저장하기
+            // (값을 따로 저장하지 않고 만료 시간을 저장)
+            localStorage.setItem(name, date)
+        },
+        // 스토리지 읽어오기
+        getStorage: function(name) {
+            var now = new Date();
+            now = now.setTime(now.getTime());
+            // 현재 시각과 스토리지에 저장된 시각을 각각 비교하여
+            // 시간이 남아 있으면 true, 아니면 false 리턴
+            return parseInt(localStorage.getItem(name)) > now
+        }
+    };
+
+    // 오늘하루 보지 않기 버튼
+    $("#idClose").on("click", function() {
+        // 로컬 스토리지에 today라는 이름으로 1일(24시간 뒤) 동안 보이지 않게
+        handleStorage.setStorage("today", 1);
         myModal.hide();
-    }
-});
-var handleStorage = {
-    // 스토리지에 데이터 쓰기(이름, 만료일)
-    setStorage: function(name, exp) {
-        // 만료 시간 구하기(exp를 ms단위로 변경)
-        var date = new Date();
-        date = date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-
-        // 로컬 스토리지에 저장하기
-        // (값을 따로 저장하지 않고 만료 시간을 저장)
-        localStorage.setItem(name, date)
-    },
-    // 스토리지 읽어오기
-    getStorage: function(name) {
-        var now = new Date();
-        now = now.setTime(now.getTime());
-        // 현재 시각과 스토리지에 저장된 시각을 각각 비교하여
-        // 시간이 남아 있으면 true, 아니면 false 리턴
-        return parseInt(localStorage.getItem(name)) > now
-    }
-};
-
-// 오늘하루 보지 않기 버튼
-$("#idClose").on("click", function() {
-    // 로컬 스토리지에 today라는 이름으로 1일(24시간 뒤) 동안 보이지 않게
-    handleStorage.setStorage("today", 1);
-    myModal.hide();
-});
+    });
 </script>
 
 </html>

@@ -1,20 +1,24 @@
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <style>
-    video {
+    /* video {
       background-color: black
-    }
+    } */
   </style>
 </head>
 
 <body>
-  <video height="100%" width="100%" src="" id="video" autoplay="true" controls="true" playsinline></video>
+  <!-- <video height="100%" width="100%" src="" id="myvideo" autoplay="false" controls="true" playsinline></video> -->
   <script>
 
     var vidSources = [
     ];
     const loc = ""
     //const loc = "https://www.eplat.co.kr/assets/img/online_study_room/v3/"
+    // https://jsfiddle.net/bnzqkpza/
     const searchParams = new URLSearchParams(location.search);
 
     for (const param of searchParams) {
@@ -24,21 +28,36 @@
 
     //studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
 
-    var vidElement = document.getElementById('video');
-    vidElement.src = vidSources[0];
-    vidElement.play();
+    studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4]);
 
-    vidElement.addEventListener('ended', function (e) {
-      video.pause();
-      if (Number(vidElement.currentTime) > 10)
-        studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
+    //var vidElement = document.getElementById('myvideo');
+    window.open(vidSources[0], '_self');
+    //window.location.href = vidSources[0];
+    //vidElement.src = vidSources[0];
+    //vidElement.play();
+    //playVideo();
 
-    });
+    // async function playVideo() {
+    //   const video = document.getElementById('myvideo');
 
-    window.onbeforeunload = function () {
-      if (Number(vidElement.currentTime) > 10)
-        studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
-    }
+    //   try {
+    //     await video.play();
+    //   } catch (error) {
+    //     console.error('Autoplay failed:', error);
+    //   }
+    // }
+
+    // vidElement.addEventListener('ended', function (e) {
+    //   video.pause();
+    //   if (Number(vidElement.currentTime) > 10)
+    //     studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
+
+    // });
+
+    // window.onbeforeunload = function () {
+    //   if (Number(vidElement.currentTime) > 10)
+    //     studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
+    // }
 
     function studyRecord(id, uid, vol, stp) {
       //alert('anchr click!');
@@ -59,6 +78,9 @@
           }
         }
       });
-    }    
+    }
+    // document.getElementById('myvideo').addEventListener('click', function () {
+    //   this.play();
+    // }); 
   </script>
 </body>
