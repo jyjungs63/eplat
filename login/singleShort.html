@@ -11,41 +11,29 @@
 </head>
 
 <iframe id="myframe" src="" width="1920" height="1028" frameborder="0" allow="autoplay; fullscreen;"></iframe>
-<!-- <video height="100%" width="100%" src="" id="myvideo" autoplay="false" controls="true" playsinline></video> -->
+
 <script>
 
   var vidSources = [
   ];
   const loc = ""
-  //const loc = "https://www.eplat.co.kr/assets/img/online_study_room/v3/"
   // https://jsfiddle.net/bnzqkpza/
   const searchParams = new URLSearchParams(location.search);
 
   for (const param of searchParams) {
-    console.log(param);
+    //console.log(param);
     vidSources.push(loc + param[1])
   }
 
-  //studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
-  $("#myframe").src = vidSources[0];
   studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4]);
+  $("#myframe").attr('src', vidSources[0]);
 
   //var vidElement = document.getElementById('myvideo');
-  window.open(vidSources[0], '_self');
+  //window.open(vidSources[0], '_self');
   //window.location.href = vidSources[0];
   //vidElement.src = vidSources[0];
   //vidElement.play();
   //playVideo();
-
-  // async function playVideo() {
-  //   const video = document.getElementById('myvideo');
-
-  //   try {
-  //     await video.play();
-  //   } catch (error) {
-  //     console.error('Autoplay failed:', error);
-  //   }
-  // }
 
   // vidElement.addEventListener('ended', function (e) {
   //   video.pause();
@@ -60,7 +48,6 @@
   // }
 
   function studyRecord(id, uid, vol, stp) {
-    //alert('anchr click!');
     // var data = {id: "admin", step: "S1", volume: "1", uid: "w1_1"};
     var data = { id: id, step: stp, volume: vol, uid: "#" + uid };
     $.ajax({
@@ -79,8 +66,5 @@
       }
     });
   }
-  // document.getElementById('myvideo').addEventListener('click', function () {
-  //   this.play();
-  // }); 
 </script>
 </body>
