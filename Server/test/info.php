@@ -4,23 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap 5 Label Example</title>
-
-    <!-- Bootstrap CSS from CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Vimeo Video Example</title>
 </head>
 
 <body>
 
-    <!-- Bootstrap 5 label using utility classes -->
-    <span class="badge bg-primary">Primary</span>
-    <span class="badge bg-secondary">Secondary</span>
-    <span class="badge bg-success">Success</span>
-    <span class="badge bg-danger">Danger</span>
-    <span class="badge bg-warning text-dark">Warning</span>
-    <span class="badge bg-info text-dark">Info</span>
-    <span class="badge bg-light text-dark">Light</span>
-    <span class="badge bg-dark">Dark</span>
+    <!-- Vimeo Video Embed Code -->
+    <iframe src="https://player.vimeo.com/video/922238323?h=5d08804fc3" width="1920" height="1028" frameborder="0"
+        allow="autoplay; fullscreen;"></iframe>
+    <!-- <p>Watch on Vimeo: <a href="https://player.vimeo.com/video/922238323?h=5d08804fc3" target="_blank">Vimeo Video</a>
+    </p> -->
 
 </body>
 
