@@ -10,7 +10,7 @@
   </style>
 </head>
 
-<video height="100%" width="100%" src="" id="myvideo" autoplay="true" controls="true" playsinline></video>
+<iframe id="myframe" src="" width="1920" height="1028" frameborder="0" allow="autoplay; fullscreen;"></iframe>
 
 <script>
 
@@ -25,25 +25,27 @@
     vidSources.push(loc + param[1])
   }
 
-  //$("#myframe").attr('src', vidSources[0]);
+  studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4]);
+  $("#myframe").attr('src', vidSources[0]);
 
-  var vidElement = document.getElementById('myvideo');
+  //var vidElement = document.getElementById('myvideo');
   //window.open(vidSources[0], '_self');
   //window.location.href = vidSources[0];
-  vidElement.src = vidSources[0];
-  vidElement.play();
+  //vidElement.src = vidSources[0];
+  //vidElement.play();
   //playVideo();
 
-  vidElement.addEventListener('ended', function (e) {
-    video.pause();
-    if (Number(vidElement.currentTime) > 10)
-      studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
-  });
+  // vidElement.addEventListener('ended', function (e) {
+  //   video.pause();
+  //   if (Number(vidElement.currentTime) > 10)
+  //     studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
 
-  window.onbeforeunload = function () {
-    if (Number(vidElement.currentTime) > 10)
-      studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
-  }
+  // });
+
+  // window.onbeforeunload = function () {
+  //   if (Number(vidElement.currentTime) > 10)
+  //     studyRecord(vidSources[1], vidSources[2], vidSources[3], vidSources[4])
+  // }
 
   function studyRecord(id, uid, vol, stp) {
     // var data = {id: "admin", step: "S1", volume: "1", uid: "w1_1"};
