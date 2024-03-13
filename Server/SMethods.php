@@ -232,9 +232,11 @@ function SShowOrderList($data)
 
     //$sqlString = "SELECT p.*, u.name FROM eplat_porlist p eplat_user u where confirm = 0";
     if ($id == "admin")
-        $sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0";
+        $sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id ";
+        //$sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0";
     else
-        $sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0 and u.id = '{$id}'";
+        $sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and  u.id = '{$id}'";
+        //$sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0 and u.id = '{$id}'";
 
     $rows = array();
 
@@ -338,16 +340,16 @@ function SPorDetailListRange($data)
 
 
     if ($name == "전지사")
-        $stmt = $tsql . "p.rdate between '{$start}' and '{$end}' order by id";
+        $stmt = $tsql . "p.rdate between '{$start}' and '{$end}' order by id , rdate desc";
 
     else if ($name == "전유치원")
-        $stmt = $tsql . "u.id = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+        $stmt = $tsql . "u.id = '{$id}' and p.rdate between '{$start}' and '{$end}' order by p.id, rdate desc";
 
     else {
         if ($id != "admin")
-            $stmt = $tsql . "p.order = '{$name}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+            $stmt = $tsql . " p.rdate between '{$start}' and '{$end}' order by p.id, rdate desc";
         else
-            $stmt = $tsql . "p.id = '{$name}' and p.rdate between '{$start}' and '{$end}' order by p.id";
+            $stmt = $tsql . "p.id = '{$name}' and p.rdate between '{$start}' and '{$end}' order by p.id, rdate desc";
     }
 
     try {
@@ -370,10 +372,10 @@ function SPorDetailListRange($data)
             );
         }
         array_push($ret,  array('list' => $rows));
-
-        $stmt = "select * from eplat_parcel where  DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";
+        $nstart = substr($start, 0, 7);
+        $stmt = "select * from eplat_parcel where  DATE_FORMAT(`date`,'%Y-%m') = '{$nstart}' ";
         if ($id != "전지사")
-            $stmt = "select * from eplat_parcel where id='{$id}' and DATE_FORMAT(`date`,'%Y-%m') = '{$start}' ";
+            $stmt = "select * from eplat_parcel where id='{$id}' and DATE_FORMAT(`date`,'%Y-%m') = '{$nstart}' ";
 
         $rs1 = mysqli_query($conn, $stmt);
         $rows = [];

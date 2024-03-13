@@ -5,6 +5,9 @@ include "../header.php";
 ?>
 
 <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <!-- <?php
             include '../include.php';
             ?>  -->
@@ -455,10 +458,11 @@ include "../header.php";
                 // Create a new option element
                 option = document.createElement('option');
 
-                option.text = el['por_id']; // Set the text of the new option
-                option.value = el['por_id']; // Set the value attribute (if needed)
-                // Append the new option to the select element
-                select.add(option);
+                if (el['confirm'] != 1) { // 배송이 안된 por list 만 selection box에 추가한다.
+                    option.text = el['por_id']; // Set the text of the new option
+                    option.value = el['por_id']; // Set the value attribute (if needed)
+                    select.add(option);
+                }
 
                 if (user == "admin") {
                     //blist.push([el['id'], el['bname']])

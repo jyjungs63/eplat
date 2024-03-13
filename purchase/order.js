@@ -525,7 +525,8 @@ listPorRange = (start, end, name, id) => {  // 달별 구매 목록
     var options = {
         functionName: 'SPorDetailListRange',
         otherData: {
-            start: start.slice(0,7), end: end, id: id, name: name
+            start: start, end: end, id: id, name: name
+            //start: start.slice(0,7), end: end, id: id, name: name
         }
     };
     dispList = (res) => {
@@ -635,7 +636,7 @@ addPurcharseList = (res, id) => {      // 구매 내역을 월별 지사별 summ
             newRow.append("<td> <div style='color: blue'>"+ stat+ "</div> <br/>");
         }
 
-        if ( user == "admin" && id == "")
+        if ( user == "admin" && id == "" && stat == "발송미완료")
             newRow.append("<td><div> <a href='javascript:cancelOrder()'>구매취소<a></div></td>");
         tbody.append(newRow);
             sum += total;

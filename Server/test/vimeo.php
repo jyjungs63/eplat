@@ -14,8 +14,6 @@
         allow="autoplay; fullscreen;"></iframe> -->
     <p>Watch on Vimeo 1: <a href="https://player.vimeo.com/video/922238323?h=5d08804fc3" target="_self">Vimeo Video</a>
     </p>
-    <p>Watch on Vimeo 2: <a href="https://player.vimeo.com/video/922246068" target="_self">Vimeo Video</a>
-    </p>
     <p>Watch on Vimeo 3: <a href="https://player.vimeo.com/video/922247618?h=b95aaefc0c" target="_self">Vimeo Video</a>
     </p>
     <p>Watch on Vimeo 4: <a href="https://player.vimeo.com/video/922242304?h=43be12b1de" target="_self">Vimeo Video</a>
