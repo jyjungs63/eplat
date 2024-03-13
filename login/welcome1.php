@@ -864,7 +864,8 @@ img {
     function assignHref(week) {
         var cont = ["cont1", "cont2", "cont3", "cont4", "cont5", "cont6", "cont7", "cont8"]
 
-        const loc = "https://player.vimeo.com/video/" // /v3/60-basic_01_Story_Town%20colors.mp4"
+        //const loc = "https://player.vimeo.com/video/" // /v3/60-basic_01_Story_Town%20colors.mp4"
+        const loc = "http://www.eplat-skl.co.kr/assets/img/online_study_room/"
         // asign video target
 
         var id = getUser();
@@ -895,19 +896,19 @@ img {
 
         res.forEach(el => { // 4 week i
             cont.forEach(element => {
-                //var result = loc + el['Volumn'] + '/' + res[i][element];
-                var result = loc + res[i][element];
+                var result = loc + el['Volumn'] + '/' + res[i][element];
+                //var result = loc + res[i][element];
                 var myid = "#w" + (i + 1) + "_" + k;
                 var mmyid = "w" + (i + 1) + "_" + k++;
                 $(myid + "_t").html('')
                 if (ck1) { // 개별 영상 무한 
-                    $(myid).prop('href', '#')
+                    //$(myid).prop('href', '#')
                     //$(myid).prop('href', 'singleLong.html?m1=' + result + "&id=" + id + "&uid=" + mmyid + "&vol=" + vol + "&stp=" + stp);
                     $(myid).prop('href', 'singleLong.html?m1=' + result);
                 } else { // 개별 영상 한번
-                    $(myid).prop('href', '#')
-                    $(myid).prop('href', 'singleShort.html?m1=' + result + "&id=" + id + "&uid=" +
-                        mmyid + "&vol=" + vol + "&stp=" + stp);
+                    //$(myid).prop('href', '#')
+                    //$(myid).prop('href', 'singleShort.html?m1=' + result + "&id=" + id + "&uid=" + mmyid + "&vol=" + vol + "&stp=" + stp);
+                    $(myid).prop('href', result)
                 }
                 if (week == res[i]['week'])
                     mp4list.push(res[i][element]);
