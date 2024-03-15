@@ -61,7 +61,8 @@ function execDaumPostcode(zip="idZip", addrs = "idAddr") {
 
 CallAjax = ( fucName, fntype="POST", options, retFn, errFn) => {
     var host = window.location.host;
-    var url = "http://localhost:3000/Server/"
+    //var url = "http://localhost:3000/Server/"
+    var url =  window.location.protocol + "//" + host + "/Server/"
     if ( host.includes('eplat'))
         url = "https://eplat.co.kr/Server/";
     var status = true;
@@ -84,7 +85,8 @@ CallAjax = ( fucName, fntype="POST", options, retFn, errFn) => {
 CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
     var status = true;
     var host = window.location.host;
-    var url = "http://localhost:3000/Server/"
+    var url =  window.location.protocol + "//" + host + "/Server/"
+    //var url = "http://localhost:3000/Server/"
     if ( host.includes('eplat'))
         url = "https://eplat.co.kr/Server/";
     $.ajax({
@@ -105,7 +107,8 @@ CallAjax1 = ( fucName, fntype="POST", options, retFn, errFn) => {
 
 CallAjax2 = ( fucName, fntype="POST", options, retFn, errFn) => {
     var host = window.location.host;
-    var url = "http://localhost:3000/Server/"
+    //var url = "http://localhost:3000/Server/"
+    var url =  window.location.protocol + "//" + host + "/Server/"
     if ( host.includes('eplat'))
         url = "https://eplat.co.kr/Server/";
     var status = true;

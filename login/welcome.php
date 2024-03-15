@@ -747,8 +747,8 @@ img {
     <script>
     // console.log(screen.width);
     // console.log(screen.height);
-    if (getUser() == "" || getUser() == undefined)
-        window.location.href = "../index.php";
+    // if (getUser() == "" || getUser() == undefined)
+    //     window.location.href = "../index.php";
     var cmap = {
         basic: "#38B6FF",
         step1: "#E60012",
