@@ -31,8 +31,17 @@
   //window.open(vidSources[0], '_self');
   //window.location.href = vidSources[0];
   vidElement.src = vidSources[0];
-  vidElement.play();
+  //vidElement.play();
   //playVideo();
+
+  vidElement.addEventListener('click', function() {
+    if (vidElement.paused) {
+      vidElement.play();      
+    }
+    else {
+      vidElement.pause();
+    }
+  })
 
   vidElement.addEventListener('ended', function (e) {
     video.pause();

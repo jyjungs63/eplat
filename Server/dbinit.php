@@ -5,14 +5,13 @@ $fullURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "
 $location = "localhost";
 
 try {
-    // if ( strpos ( $fullURL, "localhost") !== false || strpos ( $fullURL, "10.15") !== false) {
-    //     $conn = mysqli_connect('localhost','root','manager','happyzip');             // local test
-    // }
-    // else {
-    //     $conn = mysqli_connect('localhost','happyzip','skl32935028@','happyzip');  // local test
-    //     $location = "eplat";
-    // }
-    $conn = mysqli_connect('localhost','root','manager','happyzip');
+    if ( strpos ( $fullURL, "localhost") !== false || strpos ( $fullURL, "10.15") !== false) {
+        $conn = mysqli_connect('localhost','root','manager','happyzip');             // local test
+    }
+    else {
+        $conn = mysqli_connect('localhost','happyzip','skl32935028@','happyzip');  // local test
+        $location = "eplat";
+    }
     mysqli_select_db($conn,'happyzip');
 }
 catch (Exception $e) {
