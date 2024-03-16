@@ -26,3 +26,38 @@
 </script>
 
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Href using jQuery</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    // Function to generate dynamic URL
+    function generateDynamicURL(page) {
+        // Your logic to generate the dynamic URL here
+        // For example, generating a random URL
+        var randomNumber = Math.floor(Math.random() * 1000);
+        //return "https://example.com/page" + randomNumber;
+        return "https://example.com/page" + page;
+    }
+
+    // Set the href attribute of the anchor with ID "myLink" using the generateDynamicURL function
+    $("#myLink").attr("href", generateDynamicURL( Math.floor(Math.random() * 1000)));
+});
+</script>
+</head>
+<body>
+    <video id="myVideo" controls>
+        <!-- Add the first video source -->
+        <source src="https://www.eplat.co.kr/assets/img/online_study_room/v1/3-v1_b_hello.mp4" type="video/mp4">
+		
+        <!-- Add more video sources for other videos -->
+    </video>
+<a id="myLink" href="#">Link</a>
+
+</body>
+</html>
