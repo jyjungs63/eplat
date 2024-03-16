@@ -242,8 +242,12 @@ img {
                                         &nbsp;&nbsp;&nbsp;
                                         <a href="https://www.eplat.co.kr/login/login.php"
                                             style="text-decoration-line: none;"> <i class="fa fa-sign-out fa-3x"
-                                                style="color: steelbule;"></i></a>
+                                                style="color: steelbule;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#" onclick="myFunction(); return false;"
+                                            style="text-decoration-line: none;"> <i
+                                                class="fa-solid fa-arrows-rotate fa-3x" style="color: red;"></i></a>
                                         <!-- <a href="javascript:studyRecord();" style="text-decoration-line: none;" > Save </a> -->
+
                                     </span>
 
                                 </td>
@@ -252,7 +256,14 @@ img {
                 </div>
             </div>
         </div>
+        <script>
+        function myFunction() {
+            //window.location.href = "http://localhost:3000/login/welcome.php";
+            window.close();
+            window.open("http://www.eplat.co.kr/login/welcome.php", '_blank');
 
+        }
+        </script>
         <div class="col-lg-6 myctl">
             <div class="row  shadow" style="background-color: #DACBF4;border-radius: 25px;margin:0px 10px;">
                 <div class="" style="margin-top: 10px; text-align: center">
@@ -747,8 +758,8 @@ img {
     <script>
     // console.log(screen.width);
     // console.log(screen.height);
-    // if (getUser() == "" || getUser() == undefined)
-    //     window.location.href = "../index.php";
+    if (getUser() == "" || getUser() == undefined)
+        window.location.href = "../index.php";
     var cmap = {
         basic: "#38B6FF",
         step1: "#E60012",
@@ -892,7 +903,6 @@ img {
         studyRecordCount(id) // 사용자의 id에 저장된 조회 check for study count
         $("#w4_8_t").html(3);
 
-
         res.forEach(el => { // 4 week i
             cont.forEach(element => {
                 var result = loc + el['Volumn'] + '/' + res[i][element];
@@ -904,8 +914,9 @@ img {
                     //$(myid).prop('href', 'singleLong.html?m1=' + result + "&id=" + id + "&uid=" + mmyid + "&vol=" + vol + "&stp=" + stp);
                     $(myid).prop('href', 'singleLong.html?m1=' + result);
                 } else { // 개별 영상 한번
-                    $(myid).prop('href', '#')
-                    $(myid).prop('href', 'singleShort.html?m1=' + result + "&id=" + id + "&uid=" +
+                    // $(myid).prop('href', '#')
+                    var player = 'singleShort.html';
+                    $(myid).prop('href', player + '?m1=' + result + "&id=" + id + "&uid=" +
                         mmyid + "&vol=" + vol + "&stp=" + stp);
                 }
                 if (week == res[i]['week'])
@@ -944,6 +955,7 @@ img {
         $("#anchorAll").attr('href', 'mutifulvideoplay.html' + urlstr);
 
     }
+
 
     $(document).ready(function() {
 
