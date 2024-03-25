@@ -638,6 +638,7 @@ include "../header.php";
     }
 
     orderBook = () => {
+        var sum = 0;
         var item = table.getSelectedData();
         item.forEach(el => {
             if (Number(el['count']) > 0) {
@@ -650,8 +651,21 @@ include "../header.php";
                     "total": el['total']
                 }
                 table1.addRow(jarr);
+                sum += Number(el['price'])
             }
         })
+
+        if (Number(sum) < 100000) {
+            var jarr = {
+                "uid": "",
+                "grade": "",
+                "title": "택배비",
+                "price": "4500",
+                "count": "",
+                "total": "4500"
+            }
+            table1.addRow(jarr);
+        }
 
         table1.selectRow();
 
@@ -792,6 +806,11 @@ include "../header.php";
             drawRTextBox(8, 0, 3, 1, white, cvtCurrency(parseFloat(buyArr[i]['price'])), 10, black, "center");
             drawRTextBox(11, 0, 3, 1, white, buyArr[i]['count'], 10, black, "center");
             drawRTextBox(14, 0, 4.5, 1, white, cvtCurrency(parseFloat(buyArr[i]['total'])), 10, black, "center");
+            moveDown(1);
+        }
+        if (Number(total.replace(/,/g, '')) < 100000) {
+            drawRTextBox(0, 0, 14, 1, white, "택배비", 12, rgb(0, 0, 0), "center");
+            drawRTextBox(14, 0, 4.5, 1, white, "4,500", 12, rgb(0, 0, 0), "center");
             moveDown(1);
         }
         drawRTextBox(0, 0, 14, 1, white, "총결재금액", 12, rgb(0, 0, 0), "center");
