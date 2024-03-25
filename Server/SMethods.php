@@ -347,7 +347,7 @@ function SPorDetailListRange($data)
 
     else {
         if ($id != "admin")
-            $stmt = $tsql . " p.rdate between '{$start}' and '{$end}' order by p.id, rdate desc";
+            $stmt = $tsql . "p.id = '{$id}' and p.order =  '{$name}' and  p.rdate between '{$start}' and '{$end}' order by p.id, rdate desc";
         else
             $stmt = $tsql . "p.id = '{$name}' and p.rdate between '{$start}' and '{$end}' order by p.id, rdate desc";
     }
