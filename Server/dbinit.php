@@ -5,7 +5,7 @@ $fullURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "
 $location = "localhost";
 
 try {
-    if ( strpos ( $fullURL, "localhost") !== false) {
+    if ( strpos ( $fullURL, "localhost") !== false || strpos ( $fullURL, "10.15") !== false) {
         $conn = mysqli_connect('localhost','root','manager','happyzip');             // local test
     }
     else {

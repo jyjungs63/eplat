@@ -233,10 +233,10 @@ function SShowOrderList($data)
     //$sqlString = "SELECT p.*, u.name FROM eplat_porlist p eplat_user u where confirm = 0";
     if ($id == "admin")
         $sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id ";
-        //$sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0";
+    //$sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0";
     else
         $sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and  u.id = '{$id}'";
-        //$sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0 and u.id = '{$id}'";
+    //$sqlString = "SELECT p.*, u.owner bname FROM eplat_porlist p , eplat_user u where u.id = p.id and p.confirm = 0 and u.id = '{$id}'";
 
     $rows = array();
 
@@ -1353,6 +1353,8 @@ function SUploadBoard($data)
     $desc   = $data['idDesc'];
     $cate   = $data['idSelect2'];
     $user =  'admin';
+    $user =   $data['user'];;
+
 
     global $conn;
     $rows = array();
